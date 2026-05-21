@@ -520,6 +520,36 @@
         }
         .acc-plan-row svg { flex-shrink: 0; }
         .acc-plan-row strong { color: #cbd5e1; font-weight: 600; }
+        .acc-saas {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .acc-saas-msg {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin: 0 0 10px;
+        }
+        .acc-saas-msg.warn { color: #fbbf24; }
+        .acc-saas-meta {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin: 8px 0 10px;
+            line-height: 1.45;
+        }
+        .acc-saas-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin-top: 8px;
+        }
+        .acc-saas-table th,
+        .acc-saas-table td {
+            text-align: left;
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .acc-saas-table th { color: var(--muted); font-weight: 600; }
         .acc-usage-label { font-size: 0.95rem; color: #cbd5e1; margin-bottom: 8px; }
         .acc-usage-row {
             display: flex;
@@ -2449,6 +2479,45 @@
 
                         <div class="acc-license">License: <span id="accLicense">—</span></div>
 
+                        <div class="acc-saas" id="accSaasBlock">
+                            <div class="acc-plan-head" style="margin-top:4px;">
+                                <h3 class="acc-plan-title">Gói <span class="plan-strong">BeeSEO SaaS</span></h3>
+                                <span class="acc-plan-badge" id="accSaasPlanBadge">—</span>
+                            </div>
+                            <p class="acc-saas-msg" id="accSaasMessage" hidden></p>
+                            <div class="acc-plan-row">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M9 12l2 2 4-4" />
+                                    <circle cx="12" cy="12" r="10" />
+                                </svg>
+                                <span>Trạng thái: <strong id="accSaasStatus">—</strong></span>
+                            </div>
+                            <div class="acc-plan-row">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                                    <line x1="16" y1="2" x2="16" y2="6" />
+                                    <line x1="8" y1="2" x2="8" y2="6" />
+                                    <line x1="3" y1="10" x2="21" y2="10" />
+                                </svg>
+                                <span>Hết kỳ: <strong id="accSaasPeriodEnd">—</strong></span>
+                            </div>
+                            <p class="acc-saas-meta" id="accSaasTrialApi"></p>
+                            <div class="acc-usage-label">Quota tháng <span id="accSaasUsageMonth">—</span></div>
+                            <table class="acc-saas-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tính năng</th>
+                                        <th>Đã dùng</th>
+                                        <th>Giới hạn</th>
+                                        <th>Còn lại</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accSaasQuotaBody">
+                                    <tr><td colspan="4" style="color:var(--muted)">Đang tải…</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="acc-upgrade">
                             <div class="acc-upgrade-text">
                                 <span class="title">Upgrade plan</span>
@@ -3756,6 +3825,98 @@
         return (h.toString(16).padStart(8, "0") + "…");
     };
 
+    const fmtQuotaLimit = (n) => {
+        if (n === null || n === undefined) return "—";
+        if (Number(n) === -1) return "∞";
+        return String(n);
+    };
+    const fmtQuotaRemain = (n) => {
+        if (n === null || n === undefined) return "∞";
+        return String(n);
+    };
+
+    const renderSaasMe = (data) => {
+        const elBadge = document.getElementById("accSaasPlanBadge");
+        const elMsg = document.getElementById("accSaasMessage");
+        const elStatus = document.getElementById("accSaasStatus");
+        const elEnd = document.getElementById("accSaasPeriodEnd");
+        const elMonth = document.getElementById("accSaasUsageMonth");
+        const elTrialApi = document.getElementById("accSaasTrialApi");
+        const tbody = document.getElementById("accSaasQuotaBody");
+        if (!elBadge || !tbody) return;
+
+        if (data.plan_name || data.plan_slug) {
+            elBadge.textContent = data.plan_name || data.plan_slug;
+            elMsg.hidden = true;
+        } else {
+            elBadge.textContent = "Chưa có gói";
+            elMsg.hidden = false;
+            elMsg.textContent = data.message || "Bạn chưa có gói SaaS";
+            elMsg.className = "acc-saas-msg warn";
+        }
+
+        elStatus.textContent = data.subscription_status || "—";
+        elEnd.textContent = data.current_period_end ? fmtDate(data.current_period_end) : "—";
+        elMonth.textContent = data.usage_month || "—";
+
+        const trialBits = [];
+        if (data.trial_status) trialBits.push("Trial: " + data.trial_status);
+        if (data.trial_message) trialBits.push(data.trial_message);
+        trialBits.push("API access: " + (data.api_access_enabled ? "bật" : "tắt"));
+        elTrialApi.textContent = trialBits.join(" · ");
+
+        const quotas = data.quotas || [];
+        if (!quotas.length) {
+            tbody.innerHTML =
+                '<tr><td colspan="4" style="color:var(--muted)">Chưa có quota tháng này.</td></tr>';
+        } else {
+            tbody.innerHTML = "";
+            quotas.forEach((row) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML =
+                    "<td>" +
+                    String(row.feature_key || "") +
+                    "</td><td>" +
+                    String(row.quantity_used ?? 0) +
+                    "</td><td>" +
+                    fmtQuotaLimit(row.limit_value) +
+                    "</td><td>" +
+                    fmtQuotaRemain(row.quota_remaining) +
+                    "</td>";
+                tbody.appendChild(tr);
+            });
+        }
+    };
+
+    const loadSaasMe = async () => {
+        const tbody = document.getElementById("accSaasQuotaBody");
+        if (!token) {
+            if (tbody) {
+                tbody.innerHTML =
+                    '<tr><td colspan="4" style="color:var(--muted)">Đăng nhập để xem gói SaaS.</td></tr>';
+            }
+            return;
+        }
+        try {
+            const r = await fetch("/api/saas/me", {
+                headers: { Authorization: "Bearer " + token },
+            });
+            if (!r.ok) {
+                if (tbody) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" style="color:var(--muted)">Không tải được gói SaaS.</td></tr>';
+                }
+                return;
+            }
+            renderSaasMe(await r.json());
+        } catch (_) {
+            if (tbody) {
+                tbody.innerHTML =
+                    '<tr><td colspan="4" style="color:var(--muted)">Lỗi tải gói SaaS.</td></tr>';
+            }
+        }
+    };
+
     const render = (user, stats) => {
         const name = titleFromEmail(user.email);
         elName.textContent = name;
@@ -3798,6 +3959,7 @@
             const user = await r.json();
             showSigned();
             render(user, null);
+            await loadSaasMe();
         } catch (_) {
             showAnon();
         }

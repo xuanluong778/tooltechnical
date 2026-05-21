@@ -53,6 +53,7 @@ from app.routers.user_files import router as user_files_router
 from app.routers.admin import api_router as admin_api_router
 from app.routers.admin import router as admin_router
 from app.routers.saas_admin import router as saas_admin_router
+from app.routers.saas import router as saas_router
 from app.routers.chatbot import router as chatbot_router
 from app.services.internal_linking import models as il_models  # noqa: F401
 
@@ -116,6 +117,7 @@ app.include_router(admin_api_router, prefix="/admin/api")
 app.include_router(admin_api_router, prefix="/api/admin")  # legacy alias
 app.include_router(saas_admin_router, prefix="/admin/api")
 app.include_router(saas_admin_router, prefix="/api/admin")
+app.include_router(saas_router, prefix="/api")
 app.include_router(chatbot_router, prefix="/chatbot")
 app.include_router(chatbot_router, prefix="/api/chatbot")
 Base.metadata.create_all(bind=engine)

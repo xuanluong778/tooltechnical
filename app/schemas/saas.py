@@ -147,3 +147,25 @@ class AdminUserUsageResponse(BaseModel):
     subscription_id: int | None = None
     items: list[MonthlyUsageRow] = Field(default_factory=list)
     message: str | None = None
+
+
+class SaasQuotaItem(BaseModel):
+    feature_key: str
+    limit_value: int | None = None
+    quantity_used: int = 0
+    quota_remaining: int | None = None
+
+
+class SaasMeResponse(BaseModel):
+    user_id: int
+    plan_slug: str | None = None
+    plan_name: str | None = None
+    subscription_status: str | None = None
+    current_period_start: datetime | None = None
+    current_period_end: datetime | None = None
+    usage_month: str
+    quotas: list[SaasQuotaItem] = Field(default_factory=list)
+    trial_status: str | None = None
+    trial_message: str | None = None
+    api_access_enabled: bool = False
+    message: str | None = None
