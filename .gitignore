@@ -38,3 +38,6 @@ uploads/
 cache/
 tmp/
 temp/
+data/google_oauth.json
+data/*oauth*.json
+data/*token*.json
