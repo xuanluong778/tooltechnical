@@ -1,0 +1,39 @@
+{
+  "url": "https://www.example.com/product/123",
+  "canonical_resolution": {
+    "canonical_url": "https://www.example.com/product/123",
+    "final_effective_url": "https://www.example.com/product/123",
+    "is_canonical_self": true,
+    "canonical_mismatch": false,
+    "raw_http_final_url": "https://www.example.com/product/123"
+  },
+  "indexability": {
+    "indexable": true,
+    "indexability_reason": "HTTP 200 và không phát hiện noindex/none trong meta robots chính hoặc X-Robots-Tag đã xét.",
+    "indexability_confidence": 0.9,
+    "meta_robots_text": "index, follow",
+    "x_robots_tag": null,
+    "x_robots_tag_raw": null
+  },
+  "raw_vs_rendered": {
+    "identical": false,
+    "title_match": true,
+    "content_length_ratio": 1.42,
+    "js_likely_changed_dom": true,
+    "missing_elements_in_raw": ["H1"],
+    "missing_elements_in_rendered": [],
+    "canonical_raw_normalized": "",
+    "canonical_rendered_normalized": "https://www.example.com/product/123"
+  },
+  "js_seo_risk_score": 0.7,
+  "js_seo_risk_level": "high",
+  "cloaking_risk": false,
+  "cloaking_reason": "Không bật quy tắc cloaking heuristic.",
+  "seo_signals": {
+    "js_dependency": true,
+    "js_seo_risk_level": "high",
+    "cloaking_risk": false,
+    "render_difference": true,
+    "indexable": true
+  }
+}

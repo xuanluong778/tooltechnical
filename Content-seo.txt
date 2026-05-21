@@ -1,0 +1,185 @@
+Tỷ lệ unique 95-100%
+Không có lỗi chính tả, diễn đạt logic
+
+"Nếu được thì nên ưu tiên sử dụng đại từ nhân xưng ngôi thứ nhất như “Tôi” 
+“Chúng tôi” “Chúng tôi”, v.v. trong bài viết."
+Nên có các đoạn đưa ra các trải nghiệm thực tế và ý kiến ​​cá nhân trong bài viết
+"Nên dùng các từ như ""Trong nghiên cứu của mình, mình phát hiện ra...
+"" để thay thế các từ như "" Nghiên cứu chỉ ra rằng..."""
+"Nên dùng các từ như ""Khi sử dụng sản phẩm, mình nhận thấy nó có... 
+"" để thay thế các từ như "" Sản phẩm có..."""
+"Nên sử dụng ngôn ngữ mô tả trải nghiệm cá nhân của bạn với sản phẩm hoặc 
+dịch vụ thay vì chỉ chỉ sử dụng các thông tin khách quan."
+Tiêu đề không phóng đại, gây sốc, phóng đại
+Trong nội dung không cam kết những điều không làm được, như cam kết chữa khỏi 100%, …
+Không dùng banner điều hướng quá nhiều về dịch vụ sản phẩm
+Không dùng internal link đánh lừa người dùng đến trang bán hàng
+Tạo hồ sơ tác giả thực, không sử dụng tác giả ảo, bút danh, hay fake tác giả khác
+Thêm Schema Tác giả trên tất cả bài viết
+Tô màu các thẻ H2-3-4-5
+Có 1 đoạn văn dài
+Các đoạn ngắn.
+Neo văn bản
+Link Out
+
+Căn lề 2 bên, cỡ chữ 11, giãn cách dòng 1,5
+Bôi đậm ý, text cần nhấn mạnh tốt cho người dùng
+Đặt thẻ Heading trong file doc cho tiêu đề và các heading
+Viết các câu ngắn: 200-300 từ/câu (1,5-2 dòng)
+Đoạn ngắn: 2-3 câu (không quá 3 dòng)
+Khái quát câu đầu đoạn: định hướng nội dung cho cả đoạn
+Có câu kết luận cho mỗi Heading
+căn lên 2 bên, thống nhất font chữ & cỡ chữ, ưu tiên font chữ không chân
+Chèn từ khóa tinh tế
+ưu tiên dùng ảnh, video, infographic, định dạng ảnh với độ nét cao, chú thích được in nghiêng và căn giữa.
+Ảnh cần mang giá trị thông minh, minh hoạ cho nội dung trong bài, chèn phù hợp với ngữ cảnh
+
+Từ khóa chính trong slug
+Càng ngắn gọn, tinh giản càng tốt, có thể chỉ cần mỗi từ khóa chính
+
+Tiêu đề không phóng đại, gây sốc
+Từ khoá có trong Title ( Ưu tiên từ trái qua phải )
+Bao quát bài viết, nên chứa số, tính từ, ký tự đặc biệt,.. có tính xu hướng
+Nên ưu tiên để từ khoá chính ở đầu tiêu đề
+Độ dài trong khoảng 50 – 60 ký tự
+Từ khóa chính chỉ xuất hiện 1 lần chánh spam từ khoá
+Gồm 40-65 ký tự được hiển thị trên Google khi tìm kiếm.
+Title phải chứa từ khóa có lượt tìm kiếm thứ tự ưu tiên TRÁI qua PHẢI
+Là duy nhất và không trùng lặp trên website
+
+150 -160 ký tự
+Từ khóa chính xuất hiện 1 lần, từ khóa có người tìm kiếm ( CÓ VOLUM SEACH )
+Nên bao gồm một biến thể của từ khóa chính, Từ khoá phụ LSI
+Có chứa từ khóa thương hiệu ( BRAND NAME )
+Nên in đậm từ khóa chính đầu tiên
+
+Từ khoá chính xuất hiện trong 150 ký từ đầu tiên (1,5 dòng đầu tiên)
+Đoạn dẫn nhập gồm 1 đến 2 câu
+In đậm in nghiên và phải chứa từ khóa chính ở 100 ký tự đầu. 
+Chứa tiền tố và hậu tố từ khóa trong phần sau của đoạn dẫn nhập LSI
+"Trả lời đúng search intent bằng cách thể hiện, 
+tổng hợp nội dung bài hoặc nêu một số lý do nên đọc bài"
+Nội dung mở bài tốt cần trả lời được 3 câu hỏi: viết cho ai? Giúp họ như thế nào? Mang lại lợi ích gì?
+
+
+Từ khoá chính nên có trong thẻ H2 đầu tiên
+Nên có chứa một từ khóa phụ, liên quan, LSI...
+H2 làm rõ nghĩa cho H1, H3 làm rõ nghĩa cho H2
+Thẻ H2 thứ hai giải quyết lý do của H2 đầu tiên
+Viết Heading thú vị, hấp dẫn, chỉ ra lợi ích
+tối thiểu 3 heading H2
+đưa heading quan trọng lên đầu, nội dung các phần liên kết với nhau
+Có nguồn tham khảo từng phần, lên cấu trúc 1 cách khác biệt so với đối thủ
+Đặt đúng định dạng Heading H1, H2, H3
+tránh để heading dạng câu hỏi và quá dài
+Mỗi Heading 2 có ít nhất 1 ảnh
+2 Heading 3 liên tiếp cần có ít nhất 1 ảnh
+
+Từ khóa chính hoặc biến thể của nó trong Đoạn văn đầu tiên sau thẻ H2 đầu tiên
+Đoạn văn đầu tiên sau thẻ H2 đầu tiên trả lời cho lý do của "từ khoá" và dài không quá 300 kí tự
+Khoảng 300 - 350 từ xuất hiện 1 từ khóa
+Độ dài mỗi đoạn tối thiểu 400 words
+Có bôi đậm hoặc in nghiêng từ khóa chính trong đoạn văn
+Anchor text có thể là từ khóa hoặc là tiêu đề của internal link.
+có kêu gọi hành động vào xem Internal link, Externallink
+Tối thiểu 5 đoạn văn trong 1 bài
+Có tối thiểu 1 hình ảnh trong mỗi đoạn văn. Hoặc là tối thiếu 3 hình ảnh/1000 từ
+Chứa tối thiểu 2 từ khóa phụ trong mỗi đoạn văn.
+Độ dài tối thiểu 3 – 4 dòng nội dung phân đoạn ra một lần
+Cần có câu nối giữa Heading và bullet (•, -, ✓, →, …) 
+thêm Câu hỏi thường gặp (Nếu cần)
+
+Dài tối đa 4 dòng
+Bôi đậm từ khoá chính
+Tóm tắt, đánh giá được toàn bộ bài viết
+Từ khóa chính xuất hiện ở 150 ký tự cuối cùng (1.5 dòng cuối cùng)
+Có đoạn kết bài tổng kết vấn đề cần truyền tải
+thêm lời kêu gọi hành động (nếu có)
+
+Hình ảnh phù hợp với ngữ cảnh
+Đổi tên ảnh trước khi up, tên ảnh không dấu và chứa từ khóa
+Đặt tiêu đề ảnh chứa từ khóa
+Có caption ảnh, và nên chèn 1 vài từ khóa
+"Có link nguồn ảnh (để phục vụ cho việc đăng bài)
+Mỗi Heading 2 có ít nhất 1 ảnh
+2 Heading 3 liên tiếp cần có ít nhất 1 ảnh
+Chất lượng ảnh: sắc nét, màu sắc thu hút
+Từ khóa xuất hiện trong một / một vài thẻ alt hình ảnh
+Tất cả các hình ảnh đều có thẻ alt, mô tả hình ảnh, Thẻ ALT ảnh phải có nghĩa, chứa các từ khóa ngữ nghĩa, từ khóa mở rộng.
+Điền đầy đủ các mục: Title, Caption, alt text, description ở file ảnh gốc
+Có ảnh đại diện ( featured image ) bài viết
+Định dạng file JPG hoặc JPEG
+Hình ảnh không có watermark cùa thương hiệu khác
+Gắn Geotag (Không nhất thiết)
+Thêm thông tin Detail
+Dung lượng ảnh
+"Kích thước ảnh phải bằng nhau ở TẤT CẢ  các hình trong bài viết.
+Rộng 800px X, cao từ 400px tới 800px "
+"Tuyệt đối không được đặt tên file dạng số, hoặc phần sau là số 01, 02...
+Tất cả ảnh trước khi up lên web phải nén ảnh."
+
+Link về bài khác liên quan, cùng chủ đề
+Link về trang chủ
+Link về danh mục
+Link về tags ( nếu có)
+Từ khóa nên có mặt từ khóa chính, hoặc từ khóa liên quan
+Internal link từ bài có traffic cùng chủ đề và khác chủ đề
+
+1-3 link đến những trnag web cùng chủ đề, uy tín (wikipedia...)
+Set cài đặt mở link trong tap mới
+Gắn No-follow (Không bắt buộc nếu làm dịch vụ)
+
+"* Những từ khóa đứng trước từ khóa chính.
+* Ráp vào phía TRƯỚC từ khóa chính thành từ có nghĩa.
+* NHƯNG trong bài không bố trí đứng cùng từ khóa chính.
+* Có rất nhiều từ khóa tiền tố trong một bài viết."
+"* Những từ khóa đứng SAU từ khóa chính.
+* Ráp vào phía SAU từ khóa chính thành từ có nghĩa.
+* NHƯNG trong bài không bố trí đứng cùng từ khóa chính.
+* Có rất nhiều từ khóa Hậu tố trong một bài viết."
+
+Không spam từ khoá, không cố chèn nhiều từ khoá, từ khoá chỉ 1% là đủ
+
+Thêm các dạng Schema khác như Rating, FAQs, How to,... vào bài viết
+Thêm ít nhất một video để tăng thời gian người đọc ở lại trên website ( Nhứng Iframe )
+thêm vào bài viết nội dung dạng bảng
+Nên có infographic ( Hình ảnh minh hoạ )
+Chọn tag phù hợp
+
+
+Hãy in đậm điều mà bạn muốn khách hàng, người dùng ghi nhớ (chứ không phải chỉ mỗi từ khoá)
+Hãy đầu tư 70% thời gian và công sức để viết tiêu đề bài viết và sapo
+Hãy sáng tạo các tiêu đề phụ là các Heading H2, H3 trở nên hấp dẫn
+Hãy viết các câu ngắn, đoạn ngắn (câu ngắn: khoảng 20-30 từ, đoạn ngắn: tối đa 3 dòng)
+Văn phong súc tích: chọn cách diễn đạt đơn giản, dễ hiểu để người dùng dễ dàng nắm bắt thông điệp doanh nghiệp
+Thu hút thị giác bằng các Blockquote
+Trình bày văn bản chuyên nghiệp: căn lên 2 bên, thống nhất font chữ & cỡ chữ, ưu tiên font chữ không chân
+Triển khai nội dung mạch lạc, rõ ràng: bạn nên thiết lập sơ đồ tư duy gồm các ý lớn, ý nhỏ cần triển khai và tiến hành viết. Việc làm này sẽ giúp tránh được các lỗi lặp ý, rườm rà
+Đa dạng hoá nội dung: ưu tiên dùng ảnh, video, infographic, định dạng ảnh với độ nét cao, chú thích được in nghiêng và căn giữa. Ảnh cần mang giá trị thông minh, minh hoạ cho nội dung trong bài, chèn phù hợp với ngữ cảnh
+Trình bày theo mô hình phân cấp thị giác: có thể kể đến các mô hình nội dung chữ Z, chữ F,… vừa đảm bảo tính thẩm mỹ mà vẫn truyền tải thông tin quan trọng hiệu quả.
+Nên đưa thông tin quan trọng lên đầu bài viết để giúp người đọc tiết kiệm thời gian khi tìm kiếm thông tin
+Mô hình hoá thông tin: chuyển text thành mô hình, sơ đồ, biểu bảng
+
+Share ngày bài viết trên hệ thống Social Network mà chúng ta đang quản lý
+Internal link từ bài có traffic cùng chủ đề và khác chủ đề
+Gắn bài viết lên trang chủ, nơi đại diện cho doanh nghiệp và thường có nhiều traffic
+Chạy quảng cáo Google Ads, Facebooks Ads,…
+
+TOP danh sách từ khoá cho mỗi một trang đích, gồm: TOP 3,5,10,30 và 100
+Traffic mang lại từ việc lên TOP từ khoá
+CTR trung bình cho mỗi trang đích, CTR từng từ khoá trong mỗi trang đích
+TimeOnsite đối với mỗi trang đích
+Tỷ lệ đọc và cuộn chuột đến cuối bài: 10%, 30%, 50%, 70% và 100%
+Biểu đồ nhiệt và video quay lại thao tác của người dùng cho biết người dùng thực sự thích đoạn nội dung nào trong cả 1 bài viết
+Tỷ lệ click vào các CTA chuyển đổi từ mỗi bài viết như: gọi điện, điền form, bình luận,…
+
+* Nhúng Video vào bài viết (nếu có), ở phần đầu sau phần Sapo
+* Nhúng Google Maps đối với bài SEO chính
+
+Thêm tác giả ở cuối bài, in nghiên: 
+Đăng ký SOCIAL cho tác giả 
+Viết 1 bài giới thiệu tác giả khoảng 1000 từ
+Tên Thương hiệu
+Địa chỉ 
+Email
+SĐT 

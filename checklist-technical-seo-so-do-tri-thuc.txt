@@ -1,0 +1,1385 @@
+# CHECKLIST TECHNICAL SEO CHO SƠ ĐỒ TRI THỨC BEESEO
+
+Mục đích:
+File này dùng để đưa vào Knowledge Base / Sơ đồ tri thức **BeeSEO** (Global). Hệ thống AI có thể dùng dữ liệu này để phân tích lỗi technical SEO, giải thích nguyên nhân và gợi ý hướng xử lý cụ thể cho từng nhóm lỗi.
+
+Cấu trúc chuẩn cho mỗi lỗi Technical SEO:
+- issue_code: mã lỗi
+- issue_name: tên lỗi
+- pillar: nhóm Technical SEO
+- severity: mức độ nghiêm trọng gồm critical, high, medium, low
+- description: mô tả lỗi
+- why_it_matters: vì sao lỗi này quan trọng với SEO
+- how_to_fix: hướng xử lý cụ thể
+- how_to_check: cách kiểm tra lại sau khi sửa
+- owner_role: người nên xử lý, gồm SEO, Content, Developer, Admin
+- priority_score: điểm ưu tiên xử lý từ 0 đến 100
+- status: trạng thái gồm new, fixed, ignored, need_review
+
+============================================================
+1. SEO CƠ BẢN
+============================================================
+
+Mục tiêu:
+Kiểm tra các yếu tố SEO onpage nền tảng như title, meta description, H1, heading, canonical, slug và độ đầy đủ nội dung.
+
+Checklist cần kiểm tra:
+
+1.1. Thiếu SEO title
+- issue_code: missing_title
+- severity: high
+- description: Trang chưa có thẻ title.
+- why_it_matters: Title là yếu tố quan trọng giúp Google và người dùng hiểu nội dung chính của trang.
+- how_to_fix:
+  1. Thêm SEO title cho trang.
+  2. Title nên dưới 60 ký tự.
+  3. Chèn từ khóa chính tự nhiên.
+  4. Nêu rõ lợi ích hoặc chủ đề chính.
+- how_to_check: Crawl lại URL hoặc kiểm tra trong source HTML.
+- owner_role: SEO / Content
+- priority_score: 90
+
+1.2. Title quá dài
+- issue_code: title_too_long
+- severity: medium
+- description: Title vượt quá độ dài khuyến nghị và có thể bị Google cắt ngắn.
+- why_it_matters: Title bị cắt có thể làm giảm CTR.
+- how_to_fix:
+  1. Rút gọn title còn khoảng 50 đến 60 ký tự.
+  2. Đưa từ khóa chính lên gần đầu title.
+  3. Loại bỏ từ thừa, ký tự không cần thiết.
+- how_to_check: Kiểm tra độ dài title và crawl lại.
+- owner_role: SEO / Content
+- priority_score: 65
+
+1.3. Title quá ngắn
+- issue_code: title_too_short
+- severity: low
+- description: Title quá ngắn, chưa truyền tải đủ nội dung trang.
+- why_it_matters: Title ngắn có thể thiếu ngữ cảnh, khó thu hút người click.
+- how_to_fix:
+  1. Bổ sung từ khóa chính.
+  2. Thêm lợi ích, địa phương, thương hiệu hoặc USP nếu phù hợp.
+- how_to_check: Kiểm tra lại title trên trang.
+- owner_role: SEO / Content
+- priority_score: 40
+
+1.4. Title trùng lặp
+- issue_code: duplicate_title
+- severity: high
+- description: Nhiều URL dùng cùng một SEO title.
+- why_it_matters: Google khó phân biệt mục đích từng trang, có thể gây cạnh tranh nội bộ.
+- how_to_fix:
+  1. Xuất danh sách URL bị trùng title.
+  2. Xác định intent riêng của từng URL.
+  3. Viết lại title riêng cho từng trang.
+- how_to_check: Crawl lại toàn site và kiểm tra duplicate title.
+- owner_role: SEO / Content
+- priority_score: 85
+
+1.5. Thiếu meta description
+- issue_code: missing_meta_description
+- severity: medium
+- description: Trang chưa có meta description.
+- why_it_matters: Meta description có thể ảnh hưởng CTR khi trang hiển thị trên Google.
+- how_to_fix:
+  1. Viết meta description dài khoảng 140 đến 160 ký tự.
+  2. Chèn từ khóa chính tự nhiên.
+  3. Thêm lợi ích hoặc lời kêu gọi hành động.
+- how_to_check: Crawl lại URL hoặc kiểm tra source HTML.
+- owner_role: SEO / Content
+- priority_score: 70
+
+1.6. Meta description trùng lặp
+- issue_code: duplicate_meta_description
+- severity: medium
+- description: Nhiều URL dùng chung meta description.
+- why_it_matters: Làm giảm độ liên quan của từng trang và có thể giảm CTR.
+- how_to_fix:
+  1. Tìm các URL có meta trùng nhau.
+  2. Viết mô tả riêng theo nội dung từng trang.
+  3. Đảm bảo meta đúng search intent.
+- how_to_check: Crawl lại toàn site.
+- owner_role: SEO / Content
+- priority_score: 65
+
+1.7. Thiếu H1
+- issue_code: missing_h1
+- severity: high
+- description: Trang không có thẻ H1.
+- why_it_matters: H1 giúp Google và người đọc hiểu chủ đề chính của trang.
+- how_to_fix:
+  1. Thêm một H1 duy nhất.
+  2. H1 nên chứa chủ đề hoặc từ khóa chính.
+  3. Không dùng H1 cho logo hoặc phần trang trí.
+- how_to_check: Crawl lại hoặc kiểm tra HTML.
+- owner_role: SEO / Content / Developer
+- priority_score: 85
+
+1.8. Nhiều H1
+- issue_code: multiple_h1
+- severity: medium
+- description: Trang có nhiều hơn một H1.
+- why_it_matters: Có thể làm cấu trúc nội dung thiếu rõ ràng.
+- how_to_fix:
+  1. Giữ một H1 chính.
+  2. Chuyển các H1 phụ thành H2 hoặc H3.
+- how_to_check: Crawl lại trang và kiểm tra heading.
+- owner_role: SEO / Developer
+- priority_score: 60
+
+1.9. Cấu trúc heading sai
+- issue_code: heading_structure_error
+- severity: medium
+- description: Heading không theo thứ tự H1, H2, H3 hoặc bị lặp ý.
+- why_it_matters: Cấu trúc heading tốt giúp Google hiểu nội dung và giúp người đọc dễ theo dõi.
+- how_to_fix:
+  1. Dùng một H1 duy nhất.
+  2. Chia nội dung chính bằng H2.
+  3. Dùng H3 để giải thích chi tiết cho từng H2.
+  4. Không dùng heading chỉ để trang trí.
+- how_to_check: Kiểm tra outline heading của trang.
+- owner_role: SEO / Content
+- priority_score: 60
+
+1.10. Nội dung mỏng
+- issue_code: thin_content
+- severity: high
+- description: Trang có quá ít nội dung hoặc nội dung không đủ giải quyết search intent.
+- why_it_matters: Nội dung mỏng khó xếp hạng và dễ bị đánh giá là không hữu ích.
+- how_to_fix:
+  1. Bổ sung nội dung giải quyết đúng nhu cầu tìm kiếm.
+  2. Thêm ví dụ, bảng, FAQ, quy trình, lợi ích, hình ảnh.
+  3. Tránh viết lan man hoặc nhồi từ khóa.
+- how_to_check: Đánh giá lại word count, search intent và độ đầy đủ chủ đề.
+- owner_role: SEO / Content
+- priority_score: 90
+
+1.11. Thiếu canonical
+- issue_code: missing_canonical
+- severity: high
+- description: Trang chưa có canonical URL.
+- why_it_matters: Canonical giúp Google xác định URL chính và tránh trùng lặp nội dung.
+- how_to_fix:
+  1. Xác định URL chính cần index.
+  2. Thêm thẻ canonical trong head.
+  3. Đảm bảo canonical trỏ đúng URL bản chính.
+- how_to_check: Kiểm tra source HTML và crawl lại.
+- owner_role: SEO / Developer
+- priority_score: 85
+
+1.12. Slug URL không thân thiện SEO
+- issue_code: seo_unfriendly_slug
+- severity: low
+- description: URL quá dài, có ký tự lạ hoặc không mô tả nội dung.
+- why_it_matters: URL rõ ràng giúp người dùng và công cụ tìm kiếm hiểu nội dung trang.
+- how_to_fix:
+  1. Rút gọn slug.
+  2. Dùng tiếng Việt không dấu.
+  3. Chèn từ khóa chính nếu tự nhiên.
+  4. Redirect 301 từ URL cũ sang URL mới nếu thay đổi URL.
+- how_to_check: Kiểm tra URL và redirect sau khi sửa.
+- owner_role: SEO / Developer
+- priority_score: 40
+
+============================================================
+2. GSC & LẬP CHỈ MỤC
+============================================================
+
+Mục tiêu:
+Kiểm tra khả năng index, tín hiệu từ Google Search Console và các vấn đề khiến trang không được Google lập chỉ mục.
+
+Checklist cần kiểm tra:
+
+2.1. Trang bị noindex
+- issue_code: page_noindex
+- severity: critical
+- description: Trang có thẻ noindex hoặc header noindex.
+- why_it_matters: Google sẽ không lập chỉ mục trang này.
+- how_to_fix:
+  1. Kiểm tra meta robots hoặc X-Robots-Tag.
+  2. Gỡ noindex nếu trang cần SEO.
+  3. Gửi yêu cầu index lại trong Google Search Console.
+- how_to_check: Inspect URL trong GSC hoặc crawl lại.
+- owner_role: SEO / Developer
+- priority_score: 100
+
+2.2. Robots meta chặn follow
+- issue_code: robots_nofollow
+- severity: medium
+- description: Trang có nofollow khiến bot không theo các liên kết trên trang.
+- why_it_matters: Có thể làm giảm khả năng khám phá URL nội bộ.
+- how_to_fix:
+  1. Kiểm tra meta robots.
+  2. Gỡ nofollow nếu không cần thiết.
+- how_to_check: Crawl lại URL.
+- owner_role: SEO / Developer
+- priority_score: 60
+
+2.3. Canonical trỏ sai URL
+- issue_code: canonical_points_to_wrong_url
+- severity: high
+- description: Canonical trỏ sang URL không phải bản chính.
+- why_it_matters: Google có thể index sai trang hoặc bỏ qua URL cần SEO.
+- how_to_fix:
+  1. Kiểm tra canonical hiện tại.
+  2. Sửa canonical về URL chính xác.
+  3. Đảm bảo URL canonical trả về 200 và indexable.
+- how_to_check: Crawl lại và inspect trong GSC.
+- owner_role: SEO / Developer
+- priority_score: 90
+
+2.4. URL có impression cao nhưng CTR thấp
+- issue_code: high_impression_low_ctr
+- severity: medium
+- description: URL có nhiều hiển thị nhưng tỷ lệ click thấp.
+- why_it_matters: CTR thấp làm lãng phí cơ hội traffic từ Google.
+- how_to_fix:
+  1. Kiểm tra query chính trong GSC.
+  2. Viết lại SEO title hấp dẫn hơn.
+  3. Tối ưu meta description có lợi ích và CTA.
+  4. Thêm số liệu, địa phương hoặc USP nếu phù hợp.
+  5. Theo dõi CTR sau 7 đến 14 ngày.
+- how_to_check: Kiểm tra GSC Search Analytics.
+- owner_role: SEO / Content
+- priority_score: 70
+
+2.5. Query có cơ hội tăng trưởng
+- issue_code: opportunity_query
+- severity: medium
+- description: Từ khóa có impression nhưng vị trí chưa tốt hoặc chưa có click.
+- why_it_matters: Đây là cơ hội tăng traffic bằng tối ưu nội dung.
+- how_to_fix:
+  1. Bổ sung nội dung liên quan đến query đó.
+  2. Tối ưu heading và đoạn trả lời nhanh.
+  3. Thêm internal link về URL mục tiêu.
+  4. Cải thiện title/meta nếu cần.
+- how_to_check: Theo dõi ranking, impression và click trong GSC.
+- owner_role: SEO / Content
+- priority_score: 75
+
+2.6. Trang crawl được nhưng chưa index
+- issue_code: crawled_not_indexed
+- severity: high
+- description: Google đã crawl nhưng chưa lập chỉ mục.
+- why_it_matters: Trang không có traffic tự nhiên nếu chưa được index.
+- how_to_fix:
+  1. Kiểm tra chất lượng nội dung.
+  2. Kiểm tra canonical, noindex, robots.
+  3. Thêm internal link từ trang quan trọng.
+  4. Submit URL trong GSC.
+- how_to_check: Inspect URL trong GSC.
+- owner_role: SEO / Content / Developer
+- priority_score: 85
+
+============================================================
+3. WEBSITE
+============================================================
+
+Mục tiêu:
+Kiểm tra nền tảng website, khả năng truy cập, cấu trúc URL, render nội dung và khả năng crawl.
+
+Checklist cần kiểm tra:
+
+3.1. Website không truy cập được
+- issue_code: site_unreachable
+- severity: critical
+- description: Website hoặc URL không thể truy cập.
+- why_it_matters: Bot và người dùng không thể truy cập nội dung.
+- how_to_fix:
+  1. Kiểm tra hosting.
+  2. Kiểm tra DNS.
+  3. Kiểm tra SSL.
+  4. Kiểm tra firewall hoặc WAF.
+- how_to_check: Truy cập lại URL và crawl lại.
+- owner_role: Admin / Developer
+- priority_score: 100
+
+3.2. URL timeout
+- issue_code: url_timeout
+- severity: high
+- description: URL phản hồi quá lâu hoặc bị timeout khi crawl.
+- why_it_matters: Bot có thể giảm tần suất crawl và người dùng rời trang.
+- how_to_fix:
+  1. Kiểm tra hosting và server load.
+  2. Bật cache.
+  3. Tối ưu database.
+  4. Dùng CDN nếu cần.
+- how_to_check: Crawl lại và kiểm tra response time.
+- owner_role: Developer / Admin
+- priority_score: 85
+
+3.3. HTTP và HTTPS cùng truy cập được
+- issue_code: http_https_duplicate
+- severity: critical
+- description: Website tồn tại cả bản HTTP và HTTPS.
+- why_it_matters: Gây trùng lặp URL và phân tán tín hiệu SEO.
+- how_to_fix:
+  1. Chọn HTTPS làm bản chính.
+  2. Redirect 301 toàn bộ HTTP sang HTTPS.
+  3. Cập nhật canonical và sitemap về HTTPS.
+- how_to_check: Test cả http:// và https://.
+- owner_role: Developer / Admin
+- priority_score: 95
+
+3.4. WWW và non-WWW cùng hoạt động
+- issue_code: www_non_www_duplicate
+- severity: high
+- description: Cả phiên bản www và không www đều truy cập được.
+- why_it_matters: Có thể tạo duplicate content.
+- how_to_fix:
+  1. Chọn một phiên bản chính.
+  2. Redirect 301 phiên bản còn lại.
+  3. Cập nhật canonical, sitemap và internal link.
+- how_to_check: Test cả www và non-www.
+- owner_role: Developer / Admin
+- priority_score: 85
+
+3.5. Trailing slash không thống nhất
+- issue_code: trailing_slash_duplicate
+- severity: medium
+- description: URL có và không có dấu gạch chéo cuối cùng cùng truy cập được.
+- why_it_matters: Có thể tạo hai URL cho cùng một nội dung.
+- how_to_fix:
+  1. Chọn chuẩn URL có hoặc không có slash.
+  2. Redirect 301 bản còn lại.
+  3. Đồng bộ canonical và internal link.
+- how_to_check: Test hai phiên bản URL.
+- owner_role: Developer / SEO
+- priority_score: 60
+
+3.6. Nội dung raw HTML quá ít
+- issue_code: low_html_content
+- severity: medium
+- description: HTML ban đầu có quá ít nội dung, có thể phụ thuộc nhiều vào JavaScript.
+- why_it_matters: Bot có thể khó đọc nội dung nếu render không ổn định.
+- how_to_fix:
+  1. So sánh raw HTML và rendered HTML.
+  2. Nếu nội dung chính chỉ có sau JS, cân nhắc SSR hoặc prerender.
+  3. Đảm bảo nội dung quan trọng có trong HTML render được.
+- how_to_check: Crawl bằng requests và Playwright.
+- owner_role: Developer
+- priority_score: 70
+
+3.7. Trang mồ côi
+- issue_code: orphan_page
+- severity: medium
+- description: URL tồn tại nhưng không có internal link trỏ đến.
+- why_it_matters: Google khó khám phá và đánh giá tầm quan trọng của trang.
+- how_to_fix:
+  1. Thêm internal link từ trang liên quan.
+  2. Đưa URL vào sitemap nếu cần index.
+  3. Liên kết từ danh mục hoặc bài viết có traffic.
+- how_to_check: Crawl lại internal link graph.
+- owner_role: SEO / Content
+- priority_score: 70
+
+============================================================
+4. SITEMAP
+============================================================
+
+Mục tiêu:
+Kiểm tra sitemap có tồn tại, hợp lệ và chỉ chứa URL cần index.
+
+Checklist cần kiểm tra:
+
+4.1. Thiếu sitemap
+- issue_code: missing_sitemap
+- severity: high
+- description: Không tìm thấy sitemap XML.
+- why_it_matters: Sitemap giúp Google khám phá URL quan trọng nhanh hơn.
+- how_to_fix:
+  1. Tạo sitemap XML.
+  2. Đưa các URL canonical cần index vào sitemap.
+  3. Submit sitemap trong GSC.
+- how_to_check: Truy cập /sitemap.xml và kiểm tra GSC.
+- owner_role: SEO / Developer
+- priority_score: 80
+
+4.2. Sitemap trả 404 hoặc 500
+- issue_code: sitemap_unreachable
+- severity: high
+- description: Sitemap không truy cập được hoặc trả lỗi server.
+- why_it_matters: Google không thể đọc danh sách URL.
+- how_to_fix:
+  1. Kiểm tra URL sitemap.
+  2. Sửa plugin hoặc route tạo sitemap.
+  3. Đảm bảo sitemap trả HTTP 200.
+- how_to_check: Truy cập sitemap và crawl lại.
+- owner_role: Developer / SEO
+- priority_score: 85
+
+4.3. Sitemap rỗng
+- issue_code: empty_sitemap
+- severity: high
+- description: Sitemap tồn tại nhưng không có URL.
+- why_it_matters: Google không nhận được danh sách URL cần crawl.
+- how_to_fix:
+  1. Kiểm tra cấu hình CMS/plugin SEO.
+  2. Bật loại nội dung cần đưa vào sitemap.
+  3. Tạo lại sitemap.
+- how_to_check: Mở sitemap và kiểm tra danh sách URL.
+- owner_role: SEO / Developer
+- priority_score: 80
+
+4.4. Sitemap chứa URL 404
+- issue_code: sitemap_contains_404
+- severity: high
+- description: Sitemap chứa URL không tồn tại.
+- why_it_matters: Lãng phí crawl budget và làm giảm chất lượng sitemap.
+- how_to_fix:
+  1. Xóa URL 404 khỏi sitemap.
+  2. Nếu có trang thay thế, redirect 301.
+  3. Submit lại sitemap.
+- how_to_check: Crawl toàn bộ URL trong sitemap.
+- owner_role: SEO / Developer
+- priority_score: 85
+
+4.5. Sitemap chứa URL noindex
+- issue_code: sitemap_contains_noindex
+- severity: high
+- description: Sitemap chứa URL bị noindex.
+- why_it_matters: Gửi tín hiệu mâu thuẫn cho Google.
+- how_to_fix:
+  1. Nếu URL cần index, gỡ noindex.
+  2. Nếu không cần index, xóa khỏi sitemap.
+- how_to_check: Crawl sitemap và kiểm tra indexability.
+- owner_role: SEO / Developer
+- priority_score: 85
+
+4.6. Sitemap chứa URL redirect
+- issue_code: sitemap_contains_redirect
+- severity: medium
+- description: Sitemap chứa URL chuyển hướng.
+- why_it_matters: Sitemap chỉ nên chứa URL cuối cùng trả 200.
+- how_to_fix:
+  1. Thay URL redirect bằng URL đích cuối.
+  2. Tạo lại sitemap.
+- how_to_check: Crawl sitemap.
+- owner_role: SEO / Developer
+- priority_score: 65
+
+============================================================
+5. ROBOTS.TXT
+============================================================
+
+Mục tiêu:
+Kiểm tra robots.txt không chặn nhầm bot và có khai báo sitemap.
+
+Checklist cần kiểm tra:
+
+5.1. Thiếu robots.txt
+- issue_code: robots_missing
+- severity: medium
+- description: Website không có file robots.txt.
+- why_it_matters: Robots.txt giúp hướng dẫn bot crawl website.
+- how_to_fix:
+  1. Tạo file /robots.txt.
+  2. Thêm Allow hoặc Disallow phù hợp.
+  3. Thêm sitemap.
+- how_to_check: Truy cập domain.com/robots.txt.
+- owner_role: SEO / Developer
+- priority_score: 60
+
+5.2. Robots.txt không truy cập được
+- issue_code: robots_unreachable
+- severity: high
+- description: Robots.txt trả 4xx hoặc 5xx.
+- why_it_matters: Bot có thể gặp khó khi hiểu quy tắc crawl.
+- how_to_fix:
+  1. Sửa server để robots.txt trả 200.
+  2. Kiểm tra quyền file và route.
+- how_to_check: Truy cập /robots.txt và crawl lại.
+- owner_role: Developer / Admin
+- priority_score: 80
+
+5.3. Robots.txt chặn toàn site
+- issue_code: robots_disallow_all
+- severity: critical
+- description: Robots có dòng Disallow: / cho toàn bộ bot.
+- why_it_matters: Googlebot có thể không crawl được website.
+- how_to_fix:
+  1. Mở file robots.txt.
+  2. Gỡ Disallow: / nếu website không phải staging.
+  3. Dùng Allow: / nếu muốn cho crawl toàn site.
+  4. Kiểm tra lại trong GSC.
+- how_to_check: Test robots.txt bằng GSC.
+- owner_role: SEO / Developer
+- priority_score: 100
+
+5.4. Robots chặn thư mục quan trọng
+- issue_code: robots_blocks_important_paths
+- severity: high
+- description: Robots chặn các thư mục cần SEO như blog, dịch vụ, sản phẩm.
+- why_it_matters: Trang quan trọng có thể không được crawl.
+- how_to_fix:
+  1. Kiểm tra các rule Disallow.
+  2. Mở crawl cho thư mục quan trọng.
+  3. Chỉ chặn thư mục không cần index như admin, cart, search nội bộ.
+- how_to_check: Test URL bằng robots tester.
+- owner_role: SEO / Developer
+- priority_score: 90
+
+5.5. Robots thiếu sitemap
+- issue_code: robots_missing_sitemap
+- severity: medium
+- description: Robots.txt không khai báo sitemap.
+- why_it_matters: Bot có thể chậm phát hiện sitemap.
+- how_to_fix:
+  1. Thêm dòng Sitemap: https://domain.com/sitemap.xml.
+  2. Đảm bảo sitemap URL trả 200.
+- how_to_check: Mở robots.txt.
+- owner_role: SEO / Developer
+- priority_score: 55
+
+Robots.txt mẫu an toàn:
+User-agent: *
+Allow: /
+
+Sitemap: https://domain.com/sitemap.xml
+
+============================================================
+6. SCHEMA
+============================================================
+
+Mục tiêu:
+Kiểm tra structured data giúp Google hiểu nội dung và đủ điều kiện hiển thị rich results.
+
+Checklist cần kiểm tra:
+
+6.1. Thiếu schema
+- issue_code: missing_schema
+- severity: medium
+- description: Trang không có structured data phù hợp.
+- why_it_matters: Schema giúp Google hiểu nội dung tốt hơn và có thể hỗ trợ rich results.
+- how_to_fix:
+  1. Xác định loại trang.
+  2. Thêm schema phù hợp như Article, FAQPage, Product, LocalBusiness, BreadcrumbList.
+  3. Test lại bằng schema validator.
+- how_to_check: Kiểm tra JSON-LD trong HTML.
+- owner_role: SEO / Developer
+- priority_score: 60
+
+6.2. JSON-LD lỗi cú pháp
+- issue_code: invalid_json_ld
+- severity: high
+- description: JSON-LD không parse được.
+- why_it_matters: Google có thể bỏ qua toàn bộ schema lỗi.
+- how_to_fix:
+  1. Kiểm tra dấu ngoặc, dấu phẩy, dấu nháy.
+  2. Dùng JSON validator.
+  3. Test lại bằng Rich Results Test hoặc schema validator.
+- how_to_check: Parse JSON-LD và validate.
+- owner_role: Developer / SEO
+- priority_score: 85
+
+6.3. Sai loại schema
+- issue_code: wrong_schema_type
+- severity: medium
+- description: Trang dùng schema không phù hợp với nội dung.
+- why_it_matters: Google có thể không hiểu đúng loại nội dung.
+- how_to_fix:
+  1. Trang bài viết dùng Article hoặc BlogPosting.
+  2. Trang dịch vụ local dùng LocalBusiness hoặc Service.
+  3. Trang sản phẩm dùng Product.
+  4. Trang FAQ dùng FAQPage.
+- how_to_check: Đối chiếu schema type với page type.
+- owner_role: SEO / Developer
+- priority_score: 65
+
+6.4. Schema thiếu field quan trọng
+- issue_code: schema_missing_required_fields
+- severity: high
+- description: Schema thiếu các field quan trọng như name, image, author, datePublished, acceptedAnswer.
+- why_it_matters: Có thể làm mất eligibility rich results.
+- how_to_fix:
+  1. Xác định schema type.
+  2. Bổ sung field bắt buộc hoặc khuyến nghị.
+  3. Validate lại.
+- how_to_check: Dùng schema validator.
+- owner_role: SEO / Developer
+- priority_score: 80
+
+6.5. Duplicate schema
+- issue_code: duplicate_schema
+- severity: medium
+- description: Trang có nhiều schema trùng chức năng.
+- why_it_matters: Có thể tạo tín hiệu không nhất quán.
+- how_to_fix:
+  1. Kiểm tra schema do theme và plugin tạo.
+  2. Giữ lại bản schema chính xác nhất.
+  3. Tắt schema trùng từ plugin nếu cần.
+- how_to_check: Crawl lại JSON-LD trên trang.
+- owner_role: SEO / Developer
+- priority_score: 60
+
+6.6. FAQ schema thiếu acceptedAnswer
+- issue_code: faq_schema_missing_accepted_answer
+- severity: high
+- description: FAQPage schema thiếu acceptedAnswer.text.
+- why_it_matters: Google không thể hiểu đầy đủ câu hỏi và câu trả lời.
+- how_to_fix:
+  1. Mỗi câu hỏi cần có name.
+  2. Mỗi câu trả lời cần acceptedAnswer.text.
+  3. Validate lại FAQPage.
+- how_to_check: Schema validator.
+- owner_role: SEO / Developer
+- priority_score: 80
+
+============================================================
+7. HÌNH ẢNH
+============================================================
+
+Mục tiêu:
+Kiểm tra ảnh phục vụ SEO hình ảnh, tốc độ tải trang và trải nghiệm người dùng.
+
+Checklist cần kiểm tra:
+
+7.1. Ảnh thiếu ALT
+- issue_code: image_missing_alt
+- severity: medium
+- description: Ảnh không có thuộc tính alt.
+- why_it_matters: Google khó hiểu nội dung ảnh và accessibility bị giảm.
+- how_to_fix:
+  1. Thêm ALT mô tả đúng nội dung ảnh.
+  2. Chèn từ khóa tự nhiên nếu phù hợp.
+  3. Không nhồi nhét từ khóa.
+- how_to_check: Crawl lại ảnh trên trang.
+- owner_role: SEO / Content
+- priority_score: 65
+
+Ví dụ ALT tốt:
+alt="Kỹ thuật viên sửa máy tính tận nơi tại TP.HCM"
+
+7.2. ALT rỗng với ảnh quan trọng
+- issue_code: image_empty_alt
+- severity: medium
+- description: Ảnh có alt nhưng để trống.
+- why_it_matters: Ảnh quan trọng không truyền tải được ý nghĩa cho bot và người dùng dùng screen reader.
+- how_to_fix:
+  1. Xác định ảnh trang trí và ảnh nội dung.
+  2. Ảnh nội dung cần ALT mô tả rõ ràng.
+- how_to_check: Kiểm tra thuộc tính alt.
+- owner_role: SEO / Content
+- priority_score: 55
+
+7.3. Ảnh lỗi 404
+- issue_code: image_404
+- severity: high
+- description: URL ảnh không tồn tại.
+- why_it_matters: Làm hỏng trải nghiệm người dùng và giảm chất lượng trang.
+- how_to_fix:
+  1. Upload lại ảnh.
+  2. Sửa đường dẫn ảnh.
+  3. Nếu ảnh không cần thiết, xóa khỏi HTML.
+- how_to_check: Crawl lại ảnh và kiểm tra HTTP status.
+- owner_role: Developer / Content
+- priority_score: 85
+
+7.4. Ảnh quá nặng
+- issue_code: image_too_large
+- severity: high
+- description: Ảnh có dung lượng lớn làm chậm trang.
+- why_it_matters: Ảnh nặng ảnh hưởng LCP và tốc độ tải trang.
+- how_to_fix:
+  1. Resize ảnh đúng kích thước hiển thị.
+  2. Nén ảnh.
+  3. Chuyển sang WebP nếu phù hợp.
+  4. Dùng CDN cho ảnh.
+- how_to_check: Kiểm tra dung lượng ảnh và PageSpeed.
+- owner_role: Developer / Content
+- priority_score: 80
+
+7.5. Thiếu width/height
+- issue_code: image_missing_width_height
+- severity: medium
+- description: Ảnh thiếu width và height trong HTML.
+- why_it_matters: Có thể gây layout shift, ảnh hưởng CLS.
+- how_to_fix:
+  1. Thêm width và height cho ảnh.
+  2. Đảm bảo CSS responsive không làm méo ảnh.
+- how_to_check: Crawl lại HTML.
+- owner_role: Developer
+- priority_score: 60
+
+7.6. Không có lazy loading
+- issue_code: image_missing_lazy_loading
+- severity: low
+- description: Ảnh dưới màn hình đầu chưa có loading lazy.
+- why_it_matters: Có thể làm trang tải chậm hơn.
+- how_to_fix:
+  1. Thêm loading="lazy" cho ảnh dưới fold.
+  2. Không lazy load ảnh hero quan trọng.
+- how_to_check: Kiểm tra HTML ảnh.
+- owner_role: Developer
+- priority_score: 40
+
+7.7. Link ảnh local khi publish
+- issue_code: image_local_url_in_publish
+- severity: high
+- description: Bài đăng dùng ảnh local như /static/uploads/... thay vì URL public trên website đích.
+- why_it_matters: Ảnh có thể bị lỗi khi đăng lên website khác.
+- how_to_fix:
+  1. Upload ảnh lên Media Library, CDN hoặc website đích.
+  2. Thay src local bằng public URL.
+  3. Validate lại HTML trước khi publish.
+- how_to_check: Mở bài đã publish và kiểm tra ảnh.
+- owner_role: Developer / Admin
+- priority_score: 90
+
+7.8. Tên file ảnh không thân thiện SEO
+- issue_code: image_filename_not_seo_friendly
+- severity: low
+- description: Tên file ảnh không mô tả nội dung.
+- why_it_matters: Tên file ảnh có thể hỗ trợ SEO hình ảnh.
+- how_to_fix:
+  1. Đặt tên file ảnh mô tả nội dung.
+  2. Dùng chữ thường, không dấu, phân tách bằng dấu gạch ngang.
+  3. Ví dụ: sua-may-tinh-tan-noi-tphcm.webp.
+- how_to_check: Kiểm tra URL ảnh.
+- owner_role: SEO / Content
+- priority_score: 35
+
+============================================================
+8. VIDEO
+============================================================
+
+Mục tiêu:
+Kiểm tra video không làm chậm trang, có dữ liệu cấu trúc và nội dung hỗ trợ SEO.
+
+Checklist cần kiểm tra:
+
+8.1. Video embed lỗi
+- issue_code: broken_video_embed
+- severity: medium
+- description: Video iframe hoặc embed không hoạt động.
+- why_it_matters: Gây trải nghiệm xấu và làm giảm chất lượng trang.
+- how_to_fix:
+  1. Kiểm tra link video.
+  2. Sửa iframe embed.
+  3. Nếu video bị xóa, thay video mới.
+- how_to_check: Mở trang và kiểm tra video.
+- owner_role: Content / Developer
+- priority_score: 60
+
+8.2. Thiếu VideoObject schema
+- issue_code: missing_video_schema
+- severity: medium
+- description: Trang có video quan trọng nhưng thiếu VideoObject schema.
+- why_it_matters: Google khó hiểu video và khó hiển thị video rich result.
+- how_to_fix:
+  1. Thêm VideoObject schema.
+  2. Bổ sung name, description, thumbnailUrl, uploadDate, contentUrl hoặc embedUrl.
+  3. Validate schema.
+- how_to_check: Schema validator.
+- owner_role: SEO / Developer
+- priority_score: 65
+
+8.3. Video thiếu thumbnail
+- issue_code: video_missing_thumbnail
+- severity: medium
+- description: Video không có thumbnail rõ ràng.
+- why_it_matters: Thumbnail ảnh hưởng CTR và trải nghiệm người dùng.
+- how_to_fix:
+  1. Thêm ảnh thumbnail phù hợp.
+  2. Đảm bảo thumbnail có URL public và kích thước tốt.
+- how_to_check: Kiểm tra video schema hoặc embed.
+- owner_role: Content / SEO
+- priority_score: 55
+
+8.4. Video tự host quá nặng
+- issue_code: heavy_self_hosted_video
+- severity: high
+- description: Video tự host làm trang tải chậm.
+- why_it_matters: Có thể ảnh hưởng tốc độ và LCP.
+- how_to_fix:
+  1. Dùng YouTube, Vimeo hoặc CDN video.
+  2. Dùng lazy loading cho video.
+  3. Dùng placeholder thumbnail.
+- how_to_check: Kiểm tra waterfall và PageSpeed.
+- owner_role: Developer / Content
+- priority_score: 75
+
+8.5. Thiếu transcript video
+- issue_code: missing_video_transcript
+- severity: low
+- description: Video không có phần transcript hoặc tóm tắt nội dung.
+- why_it_matters: Transcript giúp Google hiểu nội dung video và hỗ trợ người dùng.
+- how_to_fix:
+  1. Thêm transcript hoặc tóm tắt dưới video.
+  2. Chèn heading rõ ràng.
+- how_to_check: Kiểm tra nội dung trang.
+- owner_role: Content / SEO
+- priority_score: 40
+
+============================================================
+9. TỐC ĐỘ
+============================================================
+
+Mục tiêu:
+Kiểm tra Core Web Vitals, tốc độ tải và các yếu tố ảnh hưởng trải nghiệm.
+
+Checklist cần kiểm tra:
+
+9.1. LCP cao
+- issue_code: high_lcp
+- severity: high
+- description: Largest Contentful Paint cao.
+- why_it_matters: LCP ảnh hưởng trải nghiệm tải trang và Core Web Vitals.
+- how_to_fix:
+  1. Xác định phần tử LCP, thường là ảnh hero hoặc block nội dung đầu trang.
+  2. Nén và resize ảnh hero.
+  3. Preload tài nguyên quan trọng.
+  4. Giảm CSS/JS blocking.
+  5. Bật cache hoặc CDN.
+- how_to_check: PageSpeed Insights hoặc CrUX.
+- owner_role: Developer
+- priority_score: 85
+
+9.2. INP cao
+- issue_code: high_inp
+- severity: high
+- description: Interaction to Next Paint cao, trang phản hồi chậm khi tương tác.
+- why_it_matters: INP ảnh hưởng trực tiếp trải nghiệm người dùng.
+- how_to_fix:
+  1. Giảm JavaScript không cần thiết.
+  2. Chia nhỏ task dài.
+  3. Tối ưu event handler.
+  4. Trì hoãn script bên thứ ba.
+- how_to_check: PageSpeed Insights hoặc field data.
+- owner_role: Developer
+- priority_score: 85
+
+9.3. CLS cao
+- issue_code: high_cls
+- severity: high
+- description: Layout shift cao.
+- why_it_matters: Trang bị nhảy layout làm người dùng khó thao tác và ảnh hưởng CWV.
+- how_to_fix:
+  1. Thêm width/height cho ảnh và video.
+  2. Dành sẵn không gian cho banner/ads.
+  3. Tránh inject nội dung phía trên vùng đang đọc.
+- how_to_check: PageSpeed Insights.
+- owner_role: Developer
+- priority_score: 80
+
+9.4. TTFB cao
+- issue_code: high_ttfb
+- severity: high
+- description: Server phản hồi chậm.
+- why_it_matters: TTFB cao kéo chậm toàn bộ quá trình tải trang.
+- how_to_fix:
+  1. Kiểm tra hosting.
+  2. Bật cache server.
+  3. Tối ưu database.
+  4. Dùng CDN.
+- how_to_check: PageSpeed hoặc đo response time.
+- owner_role: Developer / Admin
+- priority_score: 80
+
+9.5. CSS/JS chặn render
+- issue_code: render_blocking_resources
+- severity: medium
+- description: CSS hoặc JS làm chậm hiển thị nội dung đầu trang.
+- why_it_matters: Làm tăng FCP và LCP.
+- how_to_fix:
+  1. Minify CSS/JS.
+  2. Defer hoặc async JS không quan trọng.
+  3. Tách critical CSS.
+- how_to_check: PageSpeed waterfall.
+- owner_role: Developer
+- priority_score: 70
+
+9.6. Thiếu browser cache
+- issue_code: missing_browser_cache
+- severity: medium
+- description: Static assets chưa có cache header phù hợp.
+- why_it_matters: Người dùng quay lại phải tải lại tài nguyên không cần thiết.
+- how_to_fix:
+  1. Cấu hình Cache-Control cho ảnh, CSS, JS.
+  2. Dùng versioning file để tránh cache sai.
+- how_to_check: Kiểm tra response headers.
+- owner_role: Developer / Admin
+- priority_score: 60
+
+============================================================
+10. HTTPS & BẢO MẬT
+============================================================
+
+Mục tiêu:
+Kiểm tra SSL, HTTPS và các lỗi bảo mật ảnh hưởng SEO/trải nghiệm.
+
+Checklist cần kiểm tra:
+
+10.1. Website chưa dùng HTTPS
+- issue_code: no_https
+- severity: critical
+- description: Website chưa dùng HTTPS.
+- why_it_matters: HTTPS là tiêu chuẩn bảo mật và ảnh hưởng niềm tin người dùng.
+- how_to_fix:
+  1. Cài SSL certificate.
+  2. Redirect HTTP sang HTTPS.
+  3. Cập nhật sitemap, canonical, internal link sang HTTPS.
+- how_to_check: Truy cập HTTPS và kiểm tra redirect.
+- owner_role: Developer / Admin
+- priority_score: 100
+
+10.2. Mixed content
+- issue_code: mixed_content
+- severity: high
+- description: Trang HTTPS nhưng tải ảnh, CSS, JS qua HTTP.
+- why_it_matters: Trình duyệt có thể chặn tài nguyên hoặc cảnh báo không an toàn.
+- how_to_fix:
+  1. Tìm tài nguyên đang dùng http://.
+  2. Đổi sang https://.
+  3. Nếu nguồn không hỗ trợ HTTPS, thay nguồn khác.
+- how_to_check: DevTools console hoặc crawl tài nguyên.
+- owner_role: Developer
+- priority_score: 85
+
+10.3. SSL hết hạn
+- issue_code: ssl_expired
+- severity: critical
+- description: Chứng chỉ SSL đã hết hạn.
+- why_it_matters: Người dùng và bot có thể không truy cập được website an toàn.
+- how_to_fix:
+  1. Gia hạn SSL.
+  2. Bật auto-renew.
+  3. Kiểm tra chain certificate.
+- how_to_check: SSL checker hoặc trình duyệt.
+- owner_role: Admin / Developer
+- priority_score: 100
+
+10.4. HTTP không redirect sang HTTPS
+- issue_code: missing_https_redirect
+- severity: high
+- description: HTTP không tự chuyển sang HTTPS.
+- why_it_matters: Tạo duplicate URL và giảm bảo mật.
+- how_to_fix:
+  1. Thêm redirect 301 HTTP sang HTTPS.
+  2. Kiểm tra tất cả biến thể URL.
+- how_to_check: Test http://domain.com.
+- owner_role: Developer / Admin
+- priority_score: 90
+
+10.5. Thiếu security headers
+- issue_code: missing_security_headers
+- severity: low
+- description: Website thiếu một số security headers.
+- why_it_matters: Tăng rủi ro bảo mật và giảm niềm tin hệ thống.
+- how_to_fix:
+  1. Thêm HSTS nếu HTTPS ổn định.
+  2. Thêm X-Frame-Options, X-Content-Type-Options, Referrer-Policy nếu phù hợp.
+  3. Test lại header.
+- how_to_check: Kiểm tra response headers.
+- owner_role: Developer / Admin
+- priority_score: 45
+
+============================================================
+11. MÃ PHẢN HỒI
+============================================================
+
+Mục tiêu:
+Kiểm tra HTTP status code, redirect, lỗi 404/500 và soft 404.
+
+Checklist cần kiểm tra:
+
+11.1. URL chính không trả 200
+- issue_code: main_url_not_200
+- severity: high
+- description: URL cần SEO không trả HTTP 200.
+- why_it_matters: Google có thể không index hoặc đánh giá URL không ổn định.
+- how_to_fix:
+  1. Kiểm tra HTTP status.
+  2. Nếu URL chuyển hướng, cập nhật internal link sang URL cuối.
+  3. Nếu lỗi server, sửa backend/CMS.
+- how_to_check: Crawl lại status code.
+- owner_role: Developer / SEO
+- priority_score: 85
+
+11.2. Redirect chain
+- issue_code: redirect_chain
+- severity: high
+- description: URL chuyển hướng qua nhiều bước.
+- why_it_matters: Làm chậm crawl và giảm trải nghiệm.
+- how_to_fix:
+  1. Xác định chuỗi redirect.
+  2. Sửa rule để URL cũ trỏ thẳng đến URL cuối.
+  3. Cập nhật internal link.
+- how_to_check: Crawl lại redirect path.
+- owner_role: Developer / SEO
+- priority_score: 80
+
+11.3. Redirect loop
+- issue_code: redirect_loop
+- severity: critical
+- description: URL bị lặp redirect vô hạn.
+- why_it_matters: Người dùng và bot không truy cập được trang.
+- how_to_fix:
+  1. Kiểm tra rule htaccess/nginx/plugin redirect.
+  2. Xóa rule xung đột.
+  3. Test lại URL.
+- how_to_check: Curl hoặc crawler.
+- owner_role: Developer / Admin
+- priority_score: 100
+
+11.4. Trang 404
+- issue_code: page_404
+- severity: high
+- description: URL trả 404.
+- why_it_matters: Nếu URL có backlink, internal link hoặc traffic, sẽ mất giá trị SEO.
+- how_to_fix:
+  1. Nếu trang còn giá trị, tạo lại nội dung.
+  2. Nếu có trang thay thế, redirect 301.
+  3. Nếu không cần, xóa internal link và sitemap.
+- how_to_check: Crawl lại và kiểm tra GSC.
+- owner_role: SEO / Developer
+- priority_score: 85
+
+11.5. Lỗi 500
+- issue_code: server_500
+- severity: critical
+- description: URL trả lỗi server 5xx.
+- why_it_matters: Bot và người dùng không truy cập được nội dung.
+- how_to_fix:
+  1. Kiểm tra server log.
+  2. Tắt plugin/module gây lỗi nếu có.
+  3. Sửa code hoặc cấu hình server.
+  4. Crawl lại sau khi sửa.
+- how_to_check: Crawl lại status code.
+- owner_role: Developer / Admin
+- priority_score: 100
+
+11.6. Soft 404
+- issue_code: soft_404
+- severity: medium
+- description: Trang trả 200 nhưng nội dung giống trang lỗi hoặc quá rỗng.
+- why_it_matters: Google có thể xem đây là trang kém chất lượng.
+- how_to_fix:
+  1. Nếu trang không tồn tại, trả 404 đúng.
+  2. Nếu trang cần tồn tại, bổ sung nội dung thật.
+  3. Gỡ khỏi sitemap nếu không cần index.
+- how_to_check: Kiểm tra nội dung và GSC.
+- owner_role: SEO / Developer
+- priority_score: 70
+
+============================================================
+12. MOBILE
+============================================================
+
+Mục tiêu:
+Kiểm tra khả năng hiển thị và trải nghiệm trên thiết bị di động.
+
+Checklist cần kiểm tra:
+
+12.1. Thiếu viewport meta
+- issue_code: missing_viewport
+- severity: high
+- description: Trang thiếu viewport meta.
+- why_it_matters: Website có thể hiển thị sai trên mobile.
+- how_to_fix:
+  1. Thêm thẻ sau vào head:
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+- how_to_check: Kiểm tra source HTML.
+- owner_role: Developer
+- priority_score: 80
+
+12.2. Font quá nhỏ
+- issue_code: small_font_mobile
+- severity: medium
+- description: Chữ trên mobile quá nhỏ.
+- why_it_matters: Người dùng khó đọc và trải nghiệm kém.
+- how_to_fix:
+  1. Đặt font body tối thiểu khoảng 16px.
+  2. Tăng line-height.
+  3. Kiểm tra lại trên màn hình nhỏ.
+- how_to_check: Test mobile viewport.
+- owner_role: Developer / Designer
+- priority_score: 55
+
+12.3. Tap target quá gần nhau
+- issue_code: tap_targets_too_close
+- severity: medium
+- description: Link hoặc nút bấm quá gần nhau trên mobile.
+- why_it_matters: Người dùng dễ bấm nhầm.
+- how_to_fix:
+  1. Tăng padding nút.
+  2. Tăng khoảng cách giữa các link.
+  3. Đảm bảo vùng bấm đủ lớn.
+- how_to_check: Test mobile layout.
+- owner_role: Developer / Designer
+- priority_score: 60
+
+12.4. Trang bị tràn ngang
+- issue_code: horizontal_overflow_mobile
+- severity: high
+- description: Trang có scroll ngang trên mobile.
+- why_it_matters: Trải nghiệm mobile kém và có thể ảnh hưởng đánh giá mobile friendly.
+- how_to_fix:
+  1. Tìm phần tử có width cố định lớn hơn viewport.
+  2. Sửa CSS max-width: 100%.
+  3. Với bảng, dùng wrapper overflow-x:auto.
+  4. Với ảnh, dùng max-width:100%; height:auto.
+- how_to_check: Test mobile viewport.
+- owner_role: Developer
+- priority_score: 75
+
+12.5. Ảnh không responsive
+- issue_code: non_responsive_image
+- severity: medium
+- description: Ảnh không co giãn theo màn hình.
+- why_it_matters: Gây tràn layout và trải nghiệm kém.
+- how_to_fix:
+  1. Thêm CSS max-width:100%; height:auto.
+  2. Dùng srcset nếu cần ảnh responsive.
+- how_to_check: Test trên mobile.
+- owner_role: Developer
+- priority_score: 60
+
+12.6. Menu mobile khó dùng
+- issue_code: mobile_menu_usability_issue
+- severity: medium
+- description: Menu mobile khó bấm hoặc không hoạt động tốt.
+- why_it_matters: Người dùng khó điều hướng, làm giảm chuyển đổi.
+- how_to_fix:
+  1. Kiểm tra menu hamburger.
+  2. Tăng vùng bấm.
+  3. Đảm bảo menu không che nội dung quan trọng.
+- how_to_check: Test trên mobile thật hoặc responsive mode.
+- owner_role: Developer / Designer
+- priority_score: 55
+
+============================================================
+13. QUỐC TẾ
+============================================================
+
+Mục tiêu:
+Kiểm tra lang, hreflang và tín hiệu ngôn ngữ/quốc gia.
+
+Checklist cần kiểm tra:
+
+13.1. Thiếu thuộc tính lang
+- issue_code: missing_html_lang
+- severity: medium
+- description: Thẻ html thiếu thuộc tính lang.
+- why_it_matters: Giúp công cụ tìm kiếm và trình đọc màn hình hiểu ngôn ngữ trang.
+- how_to_fix:
+  1. Nếu website tiếng Việt, thêm <html lang="vi">.
+  2. Nếu tiếng Anh, thêm <html lang="en">.
+- how_to_check: Kiểm tra source HTML.
+- owner_role: Developer / SEO
+- priority_score: 50
+
+13.2. Thiếu hreflang trên website đa ngôn ngữ
+- issue_code: missing_hreflang
+- severity: medium
+- description: Website đa ngôn ngữ nhưng thiếu hreflang.
+- why_it_matters: Google khó phân phối đúng phiên bản ngôn ngữ/quốc gia.
+- how_to_fix:
+  1. Thêm hreflang cho từng phiên bản ngôn ngữ.
+  2. Đảm bảo hreflang trỏ hai chiều.
+  3. Thêm x-default nếu phù hợp.
+- how_to_check: Crawl hreflang.
+- owner_role: SEO / Developer
+- priority_score: 65
+
+13.3. Hreflang sai URL hoặc sai mã ngôn ngữ
+- issue_code: invalid_hreflang
+- severity: medium
+- description: Hreflang dùng mã sai hoặc trỏ URL lỗi.
+- why_it_matters: Có thể làm Google chọn sai phiên bản trang.
+- how_to_fix:
+  1. Kiểm tra mã ngôn ngữ như vi, en, en-us.
+  2. Đảm bảo URL hreflang trả 200.
+  3. Đảm bảo canonical và hreflang không mâu thuẫn.
+- how_to_check: Crawl hreflang.
+- owner_role: SEO / Developer
+- priority_score: 65
+
+13.4. Nội dung trộn nhiều ngôn ngữ
+- issue_code: mixed_language_content
+- severity: low
+- description: Một trang trộn nhiều ngôn ngữ không có cấu trúc rõ ràng.
+- why_it_matters: Có thể làm giảm trải nghiệm và tín hiệu ngôn ngữ.
+- how_to_fix:
+  1. Tách nội dung theo ngôn ngữ.
+  2. Dùng URL riêng cho từng ngôn ngữ nếu cần.
+- how_to_check: Kiểm tra nội dung trang.
+- owner_role: Content / SEO
+- priority_score: 35
+
+============================================================
+14. KHÁC
+============================================================
+
+Mục tiêu:
+Kiểm tra các yếu tố hỗ trợ vận hành, tracking, accessibility và kiểm soát URL.
+
+Checklist cần kiểm tra:
+
+14.1. Thiếu GA4 hoặc GTM
+- issue_code: missing_ga4_gtm
+- severity: low
+- description: Website chưa cài GA4 hoặc GTM.
+- why_it_matters: Khó đo lường traffic và chuyển đổi.
+- how_to_fix:
+  1. Cài GA4 hoặc GTM.
+  2. Kiểm tra page_view và event quan trọng.
+  3. Test bằng DebugView hoặc Tag Assistant.
+- how_to_check: Kiểm tra source hoặc Tag Assistant.
+- owner_role: Marketing / Developer
+- priority_score: 45
+
+14.2. Thiếu favicon
+- issue_code: missing_favicon
+- severity: low
+- description: Website không có favicon.
+- why_it_matters: Ảnh hưởng nhận diện thương hiệu và trải nghiệm trình duyệt.
+- how_to_fix:
+  1. Thêm favicon chuẩn.
+  2. Kiểm tra hiển thị trên trình duyệt.
+- how_to_check: Mở website và kiểm tra favicon.
+- owner_role: Developer / Designer
+- priority_score: 25
+
+14.3. Trang 404 nghèo nàn
+- issue_code: poor_404_page
+- severity: low
+- description: Trang 404 không có điều hướng hữu ích.
+- why_it_matters: Người dùng dễ thoát khỏi website.
+- how_to_fix:
+  1. Thêm thông báo lỗi thân thiện.
+  2. Thêm ô tìm kiếm hoặc link về trang chủ.
+  3. Gợi ý danh mục/bài viết phổ biến.
+- how_to_check: Truy cập URL không tồn tại.
+- owner_role: Developer / UX
+- priority_score: 35
+
+14.4. URL parameter tạo trùng lặp
+- issue_code: duplicate_parameter_urls
+- severity: medium
+- description: URL có parameter như ?sort=, ?filter= tạo nhiều trang trùng nội dung.
+- why_it_matters: Gây duplicate content và lãng phí crawl budget.
+- how_to_fix:
+  1. Xác định parameter không cần index.
+  2. Thêm canonical về URL gốc.
+  3. Không đưa URL parameter vào sitemap.
+  4. Chặn crawl parameter không quan trọng nếu phù hợp.
+- how_to_check: Crawl URL parameter và kiểm tra canonical.
+- owner_role: SEO / Developer
+- priority_score: 65
+
+14.5. Thiếu dữ liệu log server
+- issue_code: missing_server_log_data
+- severity: low
+- description: Chưa có log server để phân tích bot crawl nâng cao.
+- why_it_matters: Khó biết Googlebot crawl URL nào, tần suất ra sao, lỗi gì.
+- how_to_fix:
+  1. Thu thập access log.
+  2. Lọc Googlebot thật.
+  3. Phân tích crawl budget và lỗi server.
+- how_to_check: Kiểm tra hệ thống log.
+- owner_role: Admin / Developer / SEO
+- priority_score: 35
+
+14.6. Thiếu checklist backup trước khi sửa technical lớn
+- issue_code: missing_backup_before_deploy
+- severity: medium
+- description: Không có quy trình backup trước khi chỉnh sửa technical SEO lớn.
+- why_it_matters: Dễ mất dữ liệu hoặc làm hỏng website khi deploy.
+- how_to_fix:
+  1. Backup database và source code.
+  2. Test thay đổi trên staging.
+  3. Có kế hoạch rollback.
+- how_to_check: Kiểm tra quy trình deploy.
+- owner_role: Admin / Developer
+- priority_score: 55
+
+============================================================
+FORMAT OUTPUT GỢI Ý CHO AI KHI TRẢ LỜI NGƯỜI DÙNG
+============================================================
+
+Khi hệ thống phát hiện lỗi, hãy trả kết quả theo format:
+
+Lỗi: [issue_name]
+Nhóm: [pillar]
+Mức độ: [severity]
+URL bị ảnh hưởng: [affected_url]
+
+Vì sao quan trọng:
+[why_it_matters]
+
+Nguyên nhân thường gặp:
+- Nguyên nhân 1
+- Nguyên nhân 2
+- Nguyên nhân 3
+
+Hướng xử lý:
+1. Bước xử lý 1
+2. Bước xử lý 2
+3. Bước xử lý 3
+
+Người nên xử lý:
+[owner_role]
+
+Ưu tiên:
+[priority_score]/100
+
+Cách kiểm tra lại:
+[how_to_check]
+
+============================================================
+ƯU TIÊN XỬ LÝ TECHNICAL SEO
+============================================================
+
+Ưu tiên rất cao:
+1. Website không truy cập được
+2. Robots.txt chặn toàn site
+3. Trang cần SEO bị noindex
+4. HTTPS lỗi hoặc SSL hết hạn
+5. Redirect loop
+6. Lỗi server 500
+7. HTTP/HTTPS duplicate
+8. Canonical trỏ sai
+
+Ưu tiên cao:
+1. Missing title
+2. Missing H1
+3. Missing canonical
+4. Duplicate title
+5. Sitemap chứa URL 404/noindex
+6. Redirect chain
+7. Trang 404 có internal link hoặc backlink
+8. Ảnh lỗi 404
+9. LCP/INP/CLS kém
+10. URL timeout
+
+Ưu tiên trung bình:
+1. Thiếu meta description
+2. Heading sai cấu trúc
+3. Meta trùng lặp
+4. Ảnh thiếu ALT
+5. Thiếu schema
+6. Mixed content
+7. Mobile overflow
+8. WWW/non-WWW duplicate
+
+Ưu tiên thấp:
+1. Thiếu favicon
+2. Tên file ảnh chưa tối ưu
+3. Thiếu transcript video
+4. Thiếu security headers phụ
+5. Trang 404 chưa thân thiện
+
+============================================================
+QUY TẮC CHO AI KHI DÙNG FILE NÀY
+============================================================
+
+1. Không chỉ báo lỗi, phải luôn đưa hướng xử lý cụ thể.
+2. Không kết luận quá chắc nếu crawl trust_level thấp.
+3. Nếu thiếu dữ liệu API như PageSpeed hoặc GSC, phải ghi rõ “Chưa có dữ liệu API, chỉ đánh giá theo heuristic”.
+4. Không tự bịa số liệu PageSpeed, GSC, traffic hoặc ranking.
+5. Với lỗi nghiêm trọng như noindex, robots disallow all, SSL expired, redirect loop, server 500, phải đánh dấu ưu tiên xử lý ngay.
+6. Với lỗi content như title, meta, heading, thin content, người xử lý chính là SEO/Content.
+7. Với lỗi server, HTTPS, redirect, mobile layout, tốc độ, người xử lý chính là Developer/Admin.
+8. Với lỗi ảnh, schema, internal link, người xử lý có thể là SEO/Content/Developer tùy mức độ.

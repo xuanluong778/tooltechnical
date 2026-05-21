@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/static/css/beeseo_pricing.css?v=4" />
+
+<div id="globalUserDockWrap" class="global-user-dock-wrap" aria-label="Tài khoản & nâng cấp">
+    <div class="global-user-dock-inner">
+        <div class="global-ud-pill" id="globalUserDockPill">
+            <span class="global-ud-avatar is-guest" id="globalUserDockAvatar">?</span>
+            <span class="global-ud-name" id="globalUserDockLabel">Chưa đăng nhập</span>
+            <button type="button" class="global-ud-dismiss" id="globalUserDockDismiss" aria-label="Ẩn">×</button>
+        </div>
+        <button type="button" class="beeseo-upgrade-strip" data-beeseo-pricing-open>
+            Upgrade plan
+        </button>
+    </div>
+</div>
+
+<div id="beeseoPricingBackdrop" class="beeseo-pricing-backdrop" role="dialog" aria-modal="true" aria-labelledby="beeseoPricingTitle">
+    <div class="beeseo-pricing-modal" id="beeseoPricingModal">
+        <div class="beeseo-pricing-head">
+            <div>
+                <h2 id="beeseoPricingTitle">BeeSEO Pricing</h2>
+                <p>Choose the plan that fits your needs</p>
+            </div>
+            <button type="button" class="beeseo-pricing-close" id="beeseoPricingClose" aria-label="Đóng">×</button>
+        </div>
+        <div class="beeseo-pricing-toolbar">
+            <div class="beeseo-toggle-group" role="group" aria-label="Duration">
+                <button type="button" class="beeseo-toggle-btn beeseo-dur-btn is-active" data-dur="m6">6 months</button>
+                <button type="button" class="beeseo-toggle-btn beeseo-dur-btn" data-dur="y1">1 year</button>
+                <button type="button" class="beeseo-toggle-btn beeseo-dur-btn" data-dur="y2">2 years</button>
+                <button type="button" class="beeseo-toggle-btn beeseo-dur-btn" data-dur="life">Lifetime</button>
+            </div>
+            <div class="beeseo-toggle-group" role="group" aria-label="Payment">
+                <button type="button" class="beeseo-toggle-btn beeseo-pay-btn is-active" data-pay="payos">PayOS (VND)</button>
+                <button type="button" class="beeseo-toggle-btn beeseo-pay-btn" data-pay="paypal">PayPal (USD)</button>
+            </div>
+            <div class="beeseo-coupon-wrap">
+                <label for="beeseoCouponInput">Discount code (Coupon)</label>
+                <input type="text" id="beeseoCouponInput" placeholder="Enter coupon code..." autocomplete="off" />
+            </div>
+        </div>
+        <div class="beeseo-pricing-scroll">
+            <div class="beeseo-pricing-grid" id="beeseoPricingGrid"></div>
+        </div>
+        <div class="beeseo-pricing-foot">
+            Giá hiển thị mang tính tham khảo theo gói BeeSEO. Thanh toán trực tuyến (PayOS / PayPal) sẽ được tích hợp trong bản cập nhật tiếp theo.
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/beeseo_pricing.js?v=2" defer></script>

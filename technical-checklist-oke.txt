@@ -1,0 +1,155 @@
+1. Google Search Console — Trang / Lý do không lập chỉ mục (số trong ngoặc đồng bộ từ báo cáo GSC, file data/gsc_indexing_counts.json)
+
+- Theo trạng thái phản hồi
+Số lượng lớn về Excluded (đã loại trừ) URL trong Google Search Console
+Số lượng lỗi nhiều trong phần Lập chỉ mục
+- bị chặn bằng tệp robots.txt - (0)
+- Trang có lệnh chuyển hướng - (0)
+- Không tìm thấy (404) - (0)
+- Trang thay thế có thẻ chính tắc thích hợp - (0)
+- Bị chặn do một vấn đề 4xx khác - (0)
+- Lỗi máy chủ (5xx) - (0)
+- Bị loại trừ bởi thẻ 'noindex' - (0)
+- Đã thu thập dữ liệu – hiện chưa được lập chỉ mục - (0)
+- Đã phát hiện thấy – hiện chưa được lập chỉ mục - (0)
+Trang có video
+Sơ đồ trang web (sitemap)
+Bảo mật là thao tác thủ công
+- Thao tác thủ công
+- Vấn đề bảo mật
+
+2. WEBSITE
+Kiểm tra loại giao thức chính mà trang web đang sử dụng (HTTP hay HTTPS)?
+Tất cả các trang đã redirect 301 từ HTTP về HTTPS đúng chuẩn hay chưa?
+Không có trang 404 tùy chỉnh
+Trang 404 không được định cấu hình đúng cách
+Navigation sử dụng JavaScript
+Trang web đã chặn danh mục blog, thẻ và trang lưu trữ (blog category, tags & archive pages)
+Trang web sử dụng thẻ nofollow không hiệu quả
+Trang web trả về lỗi 500 từ việc tạm thời bảo trì hoặc xử lý vấn đề
+Máy chủ từ chối các công cụ tìm kiếm truy cập vào một số URLs
+Lỗi máy chủ đang có xu hướng tăng lên
+Trang web chứa nhiều URLs sử dụng cloacking
+URL được phân trang không có thẻ rel = ”next” và rel = ”prev”
+Googlebot đang thu thập dữ liệu các trang không tồn tại trong chuỗi phân trang
+Trang có sử dụng sub domain (tên miền con) hay không?
+Trang có sử dụng favicon (icon biểu tượng) hay không?
+Kiểm tra các liên kết nội bộ bị gãy / redirect
+Kiểm tra các liên kết ngoài (outlink) bị gãy / redirect
+Kiểm tra mã độc và phần mềm gián điệp
+Kiểm tra domain có nằm trong backlist hay không?
+Kiểm tra tốc độ trang web
+Có bất kỳ trang nào bị trùng lặp do cấu trúc trang web chưa được tối ưu hay không?
+Kiểm tra mã schema
+Có trang nào có lỗi Canonical không?
+Các trang chạy quảng cáo Adsense và Affiliate có gắn thẻ no-follow hay không?
+Trang web có thể sử dụng và thu thập thông tin mà không cần bật javascript hay không?
+Có trang nào có outlink hơn 100 hay không?
+Các button side-bar thấp nhất 8px để tối ưu cho người dùng + tránh lỗi từ Google Search Console
+
+3. Sitemap
+Website có XML Sitemap cho website
+Broken links in XML sitemap
+Sitemaps không được gửi tới Google Search Console (hoặc Bing)
+Thiếu hoặc thừa cụ thể một số sitemaps
+Lỗi XML sitemap
+Không có trang 200 trong sitemap
+Không có thẻ canonical URLs trong sitemap
+Các trang trong sitemaps bị Block
+Dung lượng Sitemap quá lớn
+Sitemap không được tổ chức ngăn nắp & đầy đủ
+
+4. Robots.txt
+Có file Robots.txt
+Một số trang không được bỏ vào file robots.txt
+Không có bất kì sitemaps nào được bỏ trong robot.txt
+Các trang bị chặn trong Robots.txt không nên bị chặn
+File robot.txt có lỗi
+Tệp Robots.txt được lưu trữ trong thư mục con
+
+5. Semantic Markup
+Không có cấu trúc dữ liệu (structure data)
+Lỗi Schema
+Thiếu schema cho local business
+
+6. Images
+Image được đặt trên subdomains/domains khác
+Hình ảnh quá lớn
+Hình ảnh không có hoặc có ALT text không liên quan 
+Không có image sitemap
+ 
+7. Video
+Thiếu video sitemap
+Video sitemap được google search console báo sai
+Trang chứa Video Thiếu text (content) 
+Phiên bản di động của video không được thân thiện
+
+8. Site Speed
+PageSpeed Mobile
+PageSpeed DeskTop
+Page Caching
+Tốc độ tải trang kém hơn so với đối thủ
+Site sử dụng CSS nội dòng
+Site sử dụng Javascript nội dòng
+Site không rút gọn JavaScript & CSS
+
+9. Dịch chuyển HTTPS
+Secure content bị lỗi
+Server key đã hết hạn
+Server key yếu
+Trang an toàn (https) thiếu thẻ canonical ở bản thân nó
+Https thiếu file robots.txt
+Disavow file chưa update cho bản Https
+Bản https bị chặn
+Sitemaps chưa được submit ở bản https
+Cài đặt của Search Console chưa chuyển qua bản https
+The Hreflang chưa được update cho bản https
+Certificate (xác thực) được đăng kí ở sai tên host/phiên bản
+
+10. Response Code
+3xx code
+4xx code
+
+11. ONPAGE
+Meta Tags
+Trang thiếu thẻ Title (tiêu đề)
+Trang có những Tiêu đề dài quá mức cho phép 
+Trang có Thẻ Title trùng lặp
+Trùng lặp Meta description 
+Trùng lặp Meta tags
+Thiếu số thẻ Heading 1 & 2
+Trùng lặp thẻ Heading 1 & Heading 2
+
+12. MOBILE
+Site không thân thiện với di động
+JavaScript hoặc/và CSS bị blocked
+Sử dụng không đúng thẻ rel="alternate" & rel="canonical”
+Trang web trên mobile sử dụng quảng cáo xen kẽ
+Mobile thiếu sitemap
+Bản Mobile xuất hiện trên tìm kiếm desktop
+Tốc độ của bản Mobile quá chậm
+Site đang có bản mobile bị lỗi 404
+Quảng cáo xen kẽ tải xuống ứng dụng của trang web làm gián đoạn duyệt trên mobile
+Trang trên mobile có quảng cáo chuyển tiếp ứng dụng toàn trang
+Không phóng to được hình ảnh
+Trang web không sử dụng amp
+Trang AMP thiếu thẻ canonical\
+
+13. International
+Trang sử dụng hỗn hợp dịch
+Site sử dụng sai thẻ hreflang & canonicals
+Site đang thiếu xót các links hreflang
+Site’s thiếu xót phần thẻ self-referential 
+Site sử dụng sai giá trị hreflang 
+URLs có thuộc tính hreflang sai
+Site sử dụng geo parameters
+Nhiều phiên bản của trang web cùng một ngôn ngữ
+Ngôn ngữ phải được nêu thẳng trong HTML
+Các phiên bản quốc tế của trang web thiếu liên kết theo quốc gia cụ thể
+Site sử dụng thuộc tính  “lang” cũ
+
+14. CÁC LỖI KHÁC
+Dữ liệu thừa
+Schema thừa
+Thanh menu
+Độ trải nghiệm Thanh menu

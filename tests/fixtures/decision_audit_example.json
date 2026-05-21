@@ -1,0 +1,22 @@
+{
+  "url": "https://www.example.com/blog/post-1",
+  "summary": {
+    "total_issues": 3,
+    "critical_count": 1,
+    "score": 77.0
+  },
+  "issues": [
+    {
+      "rule_id": "js_shell_missing_critical",
+      "issue": "HTML thô thiếu thành phần SEO quan trọng sau render: H1",
+      "severity": "medium",
+      "confidence": 0.7,
+      "category": "structure",
+      "why_it_matters": "Nếu bot thấy shell trống, snippet và ranking có thể không phản ánh UX người dùng.",
+      "detected_from": ["raw_vs_rendered.missing_elements_in_raw", "seo_signals.js_dependency"],
+      "possible_causes": ["CSR shell", "SSR tắt cho bot", "A/B framework"],
+      "how_to_fix": ["SSR/prerender cho title/meta/H1 hoặc static HTML fallback."],
+      "validation_steps": ["So sánh title trong raw vs rendered.", "GSC View crawled page."]
+    }
+  ]
+}

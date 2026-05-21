@@ -1,0 +1,306 @@
+{
+  "version": 1,
+  "description": "Khung chuyên mục audit technical (GSC, Website, Sitemap, Robots, Schema, …). Dùng làm tham chiếu UI và roadmap rule; badge sidebar lấy tổng mục theo độ dài items.",
+  "pillars": [
+    {
+      "id": "gsc",
+      "label_vi": "Google Search Console",
+      "items": [
+        "Xu hướng Crawl Rate — theo trạng thái phản hồi (Crawl stats / nhật ký crawl)",
+        "Số lượng lớn URL Excluded (đã loại trừ) trong báo cáo Coverage / Lập chỉ mục",
+        "Lập chỉ mục — nhiều URL theo từng lý do: Trang có lệnh chuyển hướng",
+        "Lập chỉ mục — Trang thay thế có thẻ chính tắc (canonical) thích hợp",
+        "Lập chỉ mục — Bị loại trừ bởi thẻ noindex",
+        "Lập chỉ mục — Bị chặn do quyền truy cập bị cấm (403)",
+        "Lập chỉ mục — Đã phát hiện thấy, hiện chưa được lập chỉ mục",
+        "Lập chỉ mục — Đã thu thập dữ liệu, hiện chưa được lập chỉ mục",
+        "Trang có video (Video indexing / trải nghiệm video trong kết quả)",
+        "Sơ đồ trang web (Sitemaps): đã gửi, lỗi, phát hiện URL trong GSC",
+        "Bảo mật — Thao tác thủ công (Manual actions)",
+        "Bảo mật — Vấn đề bảo mật (Security issues)",
+        "Kiểm tra property Search Console (domain-prefix vs URL-prefix) và quyền truy cập",
+        "Đối chiếu / export số liệu theo từng «Lý do» và xu hướng theo thời gian (CSV, báo cáo)"
+      ]
+    },
+    {
+      "id": "website",
+      "label_vi": "Website",
+      "items": [
+        "Giao thức chính HTTP vs HTTPS",
+        "Redirect 301 HTTP → HTTPS đúng chuẩn",
+        "404 tùy chỉnh — thiếu hoặc cấu hình sai",
+        "Navigation / menu phụ thuộc JavaScript",
+        "Chặn index danh mục blog, thẻ, archive",
+        "Thẻ nofollow không hiệu quả / lạm dụng",
+        "Lỗi 500 do bảo trì hoặc backend",
+        "Máy chủ từ chối bot trên một số URL",
+        "Xu hướng lỗi máy chủ tăng",
+        "Nghi vấn cloaking URL",
+        "Subdomain — chiến lược & canonical",
+        "Favicon",
+        "Liên kết nội bộ gãy / redirect",
+        "Outlink gãy / redirect",
+        "Malware & phần mềm gián điệp",
+        "Domain trong blacklist",
+        "Tốc độ tổng thể & so sánh đối thủ",
+        "Trùng lặp do cấu trúc site",
+        "Trang phụ thuộc JS để crawl/index",
+        "Outlink > 100 trên trang",
+        "Nút / vùng bấm tối thiểu 8px (UX + GSC)"
+      ]
+    },
+    {
+      "id": "sitemap",
+      "label_vi": "Sitemap",
+      "items": [
+        "XML Sitemap tồn tại & hợp lệ",
+        "Broken links trong XML sitemap",
+        "Sitemap chưa gửi GSC / Bing",
+        "Thiếu / thừa sitemap cụ thể",
+        "Lỗi cú pháp / cấu trúc XML sitemap",
+        "Không có trang 200 trong sitemap",
+        "Thiếu canonical URLs trong sitemap",
+        "URL trong sitemap bị robots/meta chặn",
+        "Dung lượng sitemap quá lớn",
+        "Sitemap không ngăn nắp & đầy đủ"
+      ]
+    },
+    {
+      "id": "robots",
+      "label_vi": "Robots.txt",
+      "items": [
+        "Có file robots.txt",
+        "Một số trang nên / không nên trong robots.txt",
+        "Sitemap khai báo trong robots.txt",
+        "Trang quan trọng bị chặn nhầm trong robots.txt",
+        "Lỗi cú pháp / logic robots.txt",
+        "Robots.txt phục vụ từ thư mục con (sai vị trí)"
+      ]
+    },
+    {
+      "id": "schema",
+      "label_vi": "Schema / Semantic",
+      "items": [
+        "Structured data (JSON-LD) & Rich Results",
+        "Lỗi Schema trong GSC / Validator",
+        "Schema LocalBusiness (đủ trường bắt buộc)",
+        "Dữ liệu thừa / trùng schema",
+        "Độ trải nghiệm / thanh menu liên quan markup"
+      ]
+    },
+    {
+      "id": "images",
+      "label_vi": "Hình ảnh",
+      "items": [
+        "Ảnh host trên subdomain/domain khác",
+        "Hình ảnh quá nặng",
+        "Thiếu ALT hoặc ALT không liên quan",
+        "Image sitemap"
+      ]
+    },
+    {
+      "id": "video",
+      "label_vi": "Video",
+      "items": [
+        "Video sitemap",
+        "Video sitemap báo lỗi trong GSC",
+        "Trang video thiếu text đi kèm",
+        "Phiên bản mobile video không thân thiện"
+      ]
+    },
+    {
+      "id": "site_speed",
+      "label_vi": "Tốc độ",
+      "items": [
+        "PageSpeed Mobile",
+        "PageSpeed Desktop",
+        "Page Caching",
+        "So sánh tốc độ với đối thủ",
+        "CSS inline",
+        "JavaScript inline",
+        "Chưa minify JS & CSS",
+        "Core Web Vitals (LCP, INP, CLS, …)"
+      ]
+    },
+    {
+      "id": "https_security",
+      "label_vi": "HTTPS & bảo mật",
+      "items": [
+        "Mixed content / secure content lỗi",
+        "Certificate hết hạn",
+        "Certificate yếu / thuật toán cũ",
+        "HTTPS thiếu self-referential canonical",
+        "HTTPS thiếu robots.txt",
+        "Disavow chưa cập nhật cho HTTPS",
+        "HTTPS bị chặn crawl/index",
+        "Sitemap chưa submit ở bản HTTPS",
+        "Search Console chưa chuyển sang HTTPS",
+        "Hreflang chưa cập nhật cho HTTPS",
+        "Certificate sai host / phiên bản",
+        "Thao tác thủ công & cảnh báo bảo mật (GSC Security)"
+      ]
+    },
+    {
+      "id": "http_codes",
+      "label_vi": "Mã phản hồi",
+      "items": [
+        "Chuỗi redirect 3xx & chuỗi dài",
+        "Lỗi 4xx / 5xx trên URL quan trọng"
+      ]
+    },
+    {
+      "id": "onpage",
+      "label_vi": "SEO cơ bản",
+      "items": [
+        {
+          "title_vi": "Kiểm tra thẻ Title",
+          "detail_en": "This webpage is using a title tag.",
+          "priority": "high"
+        },
+        {
+          "title_vi": "Kiểm tra thẻ Meta Description",
+          "detail_en": "This webpage is using a meta description tag with a sensible length. Use well-written descriptions (avoid keyword stuffing).",
+          "priority": "high"
+        },
+        {
+          "title_vi": "Kiểm tra Meta Tags mạng xã hội",
+          "detail_en": "This webpage is using social media meta tags (Open Graph / Twitter Card).",
+          "priority": "medium"
+        },
+        {
+          "title_vi": "Xem trước trên Google",
+          "detail_en": "Preview how title, URL, and description may appear in search results (reference only).",
+          "priority": "reference"
+        },
+        {
+          "title_vi": "Từ khóa phổ biến nhất",
+          "detail_en": "There is likely no optimal keyword density — search engine algorithms have evolved beyond simple keyword density.",
+          "priority": "reference"
+        },
+        {
+          "title_vi": "Phân bố từ khóa",
+          "detail_en": "Primary keywords should appear consistently in title, meta description, and headings — not only in body text.",
+          "priority": "high"
+        },
+        {
+          "title_vi": "Đám mây từ khóa",
+          "detail_en": "Keyword cloud / token visualization for the page (reference signal).",
+          "priority": "reference"
+        },
+        {
+          "title_vi": "Kiểm tra thẻ Heading",
+          "detail_en": "Heading structure (H1–H6): avoid too many H2s that do not reinforce the page topics.",
+          "priority": "high"
+        },
+        {
+          "title_vi": "Kiểm tra Robots.txt",
+          "detail_en": "This website is using a robots.txt file and crawlers can fetch it.",
+          "priority": "high"
+        },
+        {
+          "title_vi": "Kiểm tra Sitemap",
+          "detail_en": "This website has a sitemap file (XML/HTML) and it responds as expected.",
+          "priority": "high"
+        },
+        {
+          "title_vi": "Kiểm tra Favicon",
+          "detail_en": "This website appears to have a favicon / site icon for browsers.",
+          "priority": "low"
+        },
+        {
+          "title_vi": "Kiểm tra Google Analytics",
+          "detail_en": "This webpage is using Google Analytics (or similar measurement tags).",
+          "priority": "medium"
+        },
+        {
+          "title_vi": "Kiểm tra dữ liệu có cấu trúc",
+          "detail_en": "Use HTML Microdata or JSON-LD where appropriate for rich results and clarity.",
+          "priority": "medium"
+        },
+        {
+          "title_vi": "Kiểm tra Charset",
+          "detail_en": "This webpage has a character encoding declaration (e.g. UTF-8 in HTML or HTTP headers).",
+          "priority": "low"
+        },
+        {
+          "title_vi": "Kiểm tra thẻ HTML lỗi thời",
+          "detail_en": "This webpage should not rely on deprecated HTML tags for critical layout or SEO signals.",
+          "priority": "low"
+        },
+        {
+          "title_vi": "Kiểm tra thẻ Noindex",
+          "detail_en": "Ensure meta robots does not accidentally block indexing when the page should be indexed.",
+          "priority": "low"
+        },
+        {
+          "title_vi": "Kiểm tra thẻ Canonical",
+          "detail_en": "This webpage should use a canonical link tag pointing to the preferred URL when duplicates exist.",
+          "priority": "low"
+        },
+        {
+          "title_vi": "Kiểm tra thẻ Nofollow",
+          "detail_en": "Sitewide nofollow meta is uncommon; verify intent if present (usually informational).",
+          "priority": "reference"
+        },
+        {
+          "title_vi": "Kiểm tra Disallow trong Robots.txt",
+          "detail_en": "Understand Disallow rules — they can prevent crawling of important paths.",
+          "priority": "reference"
+        },
+        {
+          "title_vi": "Kiểm tra Meta Refresh",
+          "detail_en": "Avoid client-side meta refresh for navigation; prefer HTTP redirects.",
+          "priority": "low"
+        },
+        {
+          "title_vi": "Kiểm tra Ads.txt",
+          "detail_en": "ads.txt should be served with a text/plain Content-Type and valid seller declarations.",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "id": "mobile",
+      "label_vi": "Mobile",
+      "items": [
+        "Mobile-friendly",
+        "JS/CSS blocked cho mobile Googlebot",
+        "rel=alternate & canonical mobile/desktop",
+        "Quảng cáo xen kẽ trên mobile",
+        "Mobile sitemap",
+        "Mobile hiển thị trên desktop search",
+        "Mobile quá chậm",
+        "Mobile 404",
+        "App interstitial / chuyển tiếp full-page",
+        "Tap target / zoom ảnh",
+        "AMP & canonical AMP"
+      ]
+    },
+    {
+      "id": "international",
+      "label_vi": "Quốc tế",
+      "items": [
+        "Nội dung hỗn hợp ngôn ngữ",
+        "hreflang & canonical sai",
+        "Thiếu link hreflang",
+        "Thiếu self-referential hreflang",
+        "Giá trị hreflang sai",
+        "Geo parameters",
+        "Nhiều phiên bản cùng ngôn ngữ",
+        "Thuộc tính lang trong HTML",
+        "Phiên bản quốc tế thiếu liên kết theo quốc gia",
+        "Thuộc tính lang cũ / không chuẩn"
+      ]
+    },
+    {
+      "id": "other",
+      "label_vi": "Khác",
+      "items": [
+        "Dữ liệu thừa / nhiễu crawl",
+        "Crawl quality thấp",
+        "Log & giới hạn kiểm tra URL nội bộ",
+        "Ghi chú audit thủ công khác"
+      ]
+    }
+  ]
+}

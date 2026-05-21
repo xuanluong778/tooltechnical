@@ -1,0 +1,12 @@
+{
+  "Kiểm tra loại giao thức chính mà trang web đang sử dụng (HTTP hay HTTPS)?": {
+    "evidence_text": "DẪN CHỨNG CẦN LẤY TẠI THỜI ĐIỂM KIỂM TRA (ghi ngày/giờ vào báo cáo):\n\n1) Thanh địa chỉ trình duyệt: chụp màn hình cả khối URL — phải thấy https:// và biểu tượng ổ khóa (hoặc ghi rõ nếu cảnh báo «Không bảo mật» / không có khóa).\n\n2) Chi tiết chứng chỉ: bấm vào ổ khóa → «Kết nối an toàn» hoặc «Chứng chỉ hợp lệ» → tab «Chi tiết» — chụp tên CA, ngày hết hạn (Not after).\n\n3) DevTools: F12 → Network → Ctrl+R — chụp một request document (trang chủ): cột Scheme/Protocol phải là https; nếu có file CSS/JS/font còn http:// thì ghi tên file (mixed content).\n\n4) Dòng lệnh (PowerShell hoặc Git Bash): chạy curl -I https://tenmien.com (thay đúng host) — chụp hoặc dán nguyên dòng HTTP/2 200 hoặc HTTP/1.1 200 và các header Strict-Transport-Security nếu có.\n\n5) So sánh HTTP thuần: curl -I http://tenmien.com — kỳ vọng 301/302 với Location: https://... (nếu vẫn trả 200 trên HTTP thì ghi nhận là chưa ép HTTPS).",
+    "image": "/static/reports/https-evidence-hint.svg",
+    "reference_url": "https://developers.google.com/search/docs/crawling-indexing/https"
+  },
+  "Tất cả các trang đã redirect 301 từ HTTP về HTTPS đúng chuẩn hay chưa?": {
+    "evidence_text": "DẪN CHỨNG:\n\n1) curl -I http://tenmien.com và http://www.tenmien.com — mỗi phản hồi phải có HTTP/1.1 301 (hoặc 308) và Location trỏ URL https tương ứng, không 302 tạm thời.\n\n2) Trong GSC → Cài đặt → chuyển đổi sang HTTPS (nếu dùng) hoặc kiểm tra URL Inspection với URL http:// — phải báo redirect sang https.\n\n3) Chụp màn hình chuỗi redirect từ Redirect Checker hoặc tab Network (Preserve log) khi gõ http.",
+    "image": "/static/reports/https-evidence-hint.svg",
+    "reference_url": "https://developers.google.com/search/docs/crawling-indexing/https"
+  }
+}

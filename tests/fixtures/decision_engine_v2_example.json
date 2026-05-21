@@ -1,0 +1,38 @@
+{
+  "url": "https://www.example.com/deals",
+  "resolved_signals": {
+    "final_indexability": true,
+    "indexability_source": "meta",
+    "canonical_truth": "https://www.example.com/deals",
+    "canonical_type": "self",
+    "canonical_valid": true,
+    "js_dependency_level": "medium",
+    "content_reliability": "rendered",
+    "x_robots_tag_document": null,
+    "meta_robots_rendered": "index, follow"
+  },
+  "summary": {
+    "score": 86.4,
+    "total_issues": 2,
+    "critical_count": 0,
+    "total_weighted_impact": 13.6
+  },
+  "issues": [
+    {
+      "rule_id": "js_seo_risk_medium",
+      "issue": "Mức rủi ro JS trung bình — nên rà soát nội dung quan trọng trong HTML tĩnh.",
+      "severity": "medium",
+      "confidence": 0.756,
+      "category": "technical",
+      "adjusted_score_impact": 9.12,
+      "decision_source": "multi_signal_v2",
+      "suppressed": false,
+      "suppression_reason": null,
+      "why_it_matters": "Giảm phụ thuộc JS giúp ổn định snippet và indexing khi render chậm.",
+      "detected_from": ["js_seo_risk_level", "js_seo_risk_score", "seo_signals.js_dependency"],
+      "possible_causes": ["Hydration thay đổi text", "Component mount muộn"],
+      "how_to_fix": ["Đưa title, meta description, H1 chính vào HTML server hoặc pre-render."],
+      "validation_steps": ["Kiểm tra missing_elements_in_raw trong raw_vs_rendered.json."]
+    }
+  ]
+}

@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Technical Tool</title>
+    <script src="/static/js/beeseo-i18n.js"></script>
+    {% include "partials/beeseo_theme_head.html" %}
+    <style>
+        :root {
+            --bg: #050b18;
+            --accent-green: #00e676;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-soft: #eff6ff;
+            --shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.12);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.55;
+            padding-bottom: 100px;
+        }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* —— Header —— */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #050B18;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+        }
+        .header-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px;
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: nowrap;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .brand:hover { text-decoration: none; color: #00e676; }
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+        /* .main-nav layout/sizing: static/css/beeseo-nav.css */
+        .main-nav {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .main-nav > a[href="/report"] {
+            color: #fff;
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c3aed 100%);
+            border-color: rgba(165, 180, 252, 0.55);
+        }
+        .main-nav > a[href="/report"]:hover {
+            color: #fff;
+            background: linear-gradient(135deg, #4338ca 0%, #5b63f3 55%, #6d28d9 100%);
+            border-color: rgba(199, 210, 254, 0.75);
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+        }
+        .nav-dd {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-self: center;
+            z-index: 20;
+        }
+        /* Cầu vô hình: rê từ nút xuống menu không bị “rơi” khỏi vùng hover */
+        .nav-dd::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: max(100%, 220px);
+            top: 100%;
+            height: 14px;
+            z-index: 99;
+        }
+        .nav-dd-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 9px 14px;
+            font-family: inherit;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+        .nav-dd:hover .nav-dd-btn,
+        .nav-dd:focus-within .nav-dd-btn {
+            color: #00e676;
+            background: rgba(0, 230, 118, 0.1);
+            border-color: rgba(0, 230, 118, 0.55);
+            box-shadow: 0 2px 10px rgba(0, 230, 118, 0.2);
+        }
+        .nav-dd-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: calc(100% + 14px);
+            min-width: 220px;
+            padding: 8px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #c7d2fe;
+            border-radius: 14px;
+            box-shadow:
+                0 10px 40px rgba(15, 23, 42, 0.12),
+                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 100;
+        }
+        /* Chỉ cần rê chuột vào “Keyword” (hoặc khu vực nối) là mở menu */
+        .nav-dd:hover .nav-dd-menu,
+        .nav-dd:focus-within .nav-dd-menu {
+            display: flex;
+        }
+        .nav-dd-menu a {
+            display: block;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0;
+            border: 1px solid transparent;
+            transition: background 0.12s ease, border-color 0.12s ease;
+        }
+        .nav-dd-menu a:hover {
+            background: rgba(0, 230, 118, 0.12);
+            color: #00a86b;
+            border-color: rgba(0, 230, 118, 0.35);
+            text-decoration: none;
+        }
+        .nav-pro-badge {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #111827;
+            vertical-align: middle;
+            letter-spacing: 0.04em;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .brand { flex-shrink: 0; }
+        @media (max-width: 1100px) {
+            .header-inner { flex-wrap: wrap; }
+            .main-nav { order: 3; flex-basis: 100%; justify-content: flex-start; padding: 4px 0 10px; }
+        }
+        .lang-flag {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            background: var(--surface);
+        }
+        .btn-login {
+            padding: 9px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+            background: var(--surface);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-login:hover { background: var(--primary-soft); }
+        .btn-login[hidden] { display: none !important; }
+        .btn-tool {
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-tool:hover { background: #f1f5f9; text-decoration: none; }
+        .menu-action-hidden { display: none !important; }
+        .auth-inline-msg {
+            font-size: 0.8rem;
+            color: var(--muted);
+            max-width: 200px;
+            text-align: right;
+        }
+        .auth-inline-msg.ok { color: #15803d; }
+        .auth-inline-msg.error { color: #b91c1c; }
+
+        /* —— Hero —— */
+        .hero {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 20px 40px;
+            text-align: center;
+        }
+        .hero h1 {
+            margin: 0 0 16px;
+            font-size: clamp(1.75rem, 4vw, 2.35rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+        .hero .lead {
+            margin: 0 0 28px;
+            font-size: 1.05rem;
+            color: #ffffff;
+        }
+        .hero .lead strong { color: #ffffff; }
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .btn-primary {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 0;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover { background: var(--primary-hover); color: #fff; text-decoration: none; }
+        .btn-secondary {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-secondary:hover { background: #f1f5f9; text-decoration: none; color: var(--text); }
+        .hero-note {
+            font-size: 0.88rem;
+            color: #ffffff;
+        }
+        .hero-note::before { content: "✓ "; color: #16a34a; font-weight: 700; }
+
+        /* —— Features —— */
+        .features-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 24px 20px 72px;
+        }
+        .features-wrap h2 {
+            text-align: center;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin: 0 0 8px;
+            color: #ffffff;
+        }
+        .features-sub {
+            text-align: center;
+            color: #ffffff;
+            margin: 0 0 32px;
+            font-size: 0.95rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        .feature-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: #cbd5e1;
+        }
+        .feature-illus {
+            height: 100px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+            border: 1px solid var(--line);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            overflow: hidden;
+        }
+        .feature-illus--image {
+            padding: 0;
+            background: #050B18;
+        }
+        .feature-illus--image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .feature-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+        .feature-card p {
+            margin: 0 0 14px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        .feature-card .more {
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+        .site-footer {
+            border-top: 1px solid var(--line);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+            background: var(--surface);
+        }
+
+        /* —— Auth modal (giống /tool) —— */
+        .auth-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            padding: 20px;
+        }
+        .auth-modal[hidden] { display: none; }
+        .auth-panel {
+            width: min(460px, 100%);
+            background: #fff;
+            color: #334155;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, .28);
+        }
+        .auth-panel h2 { margin: 0 0 4px; text-align: center; color: #334155; }
+        .auth-panel > p { margin: 0 0 14px; text-align: center; color: #64748b; font-size: 0.92rem; }
+        .auth-panel input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #334155;
+            background: #f8fafc;
+            border: 1px solid #dbe3ef;
+            font-size: 0.95rem;
+        }
+        .auth-panel .btn-outline {
+            width: 100%;
+            margin-top: 4px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff;
+            color: #334155;
+            border: 1px solid #dbe3ef;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .auth-panel .btn-submit {
+            width: 100%;
+            margin-top: 8px;
+            padding: 11px;
+            border-radius: 8px;
+            border: 0;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .auth-panel .btn-submit:hover { background: var(--primary-hover); }
+        .modal-close {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #eef2ff;
+            color: #334155;
+            border: 0;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .modal-hint { font-size: 0.78rem; color: #94a3b8; margin: -8px 0 10px; text-align: center; }
+        .auth-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid #dbe3ef;
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .auth-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        .auth-tab-panel[hidden] { display: none !important; }
+        .auth-tab-panel > p { margin: 0 0 12px; text-align: center; color: #64748b; font-size: 0.9rem; }
+        .auth-switch-link {
+            display: block;
+            width: 100%;
+            margin: 4px 0 10px;
+            padding: 0;
+            border: 0;
+            background: none;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            font-family: inherit;
+            text-decoration: underline;
+        }
+        .modal-auth-msg {
+            margin: 8px 0 0;
+            min-height: 1.25em;
+            font-size: 0.88rem;
+            color: #64748b;
+            white-space: pre-wrap;
+        }
+        .modal-auth-msg.ok { color: #15803d; }
+        .modal-auth-msg.error { color: #b91c1c; }
+        .pw-wrap { position: relative; margin-bottom: 10px; }
+        .pw-wrap input { margin-bottom: 0; padding-right: 48px; }
+        .pw-toggle {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 34px;
+            padding: 0;
+            border: 0;
+            border-radius: 8px;
+            background: #e2e8f0;
+            color: #475569;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .pw-rules {
+            list-style: none;
+            margin: 0 0 10px;
+            padding: 0;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        .pw-rules li { margin-bottom: 4px; padding-left: 1em; position: relative; }
+        .pw-rules li::before { content: "○"; position: absolute; left: 0; font-size: 0.65em; top: 0.1em; }
+        .pw-rules li.ok { color: #15803d; }
+        .pw-rules li.ok::before { content: "✓"; color: #15803d; }
+        label.pw-label { display: block; font-weight: 600; color: #475569; margin-top: 4px; font-size: 0.85rem; }
+
+        /* Dock tài khoản — góc trái dưới (chỉ thẻ trắng, không khung tối) */
+        .home-user-dock-wrap {
+            position: fixed;
+            left: 12px;
+            bottom: 12px;
+            z-index: 190;
+            width: min(200px, calc(100vw - 24px));
+        }
+        .home-user-dock {
+            position: relative;
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
+        }
+        .home-ud-popover {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: calc(100% - 4px);
+            margin-bottom: 4px;
+            padding: 6px;
+            background: #1a1b26;
+            border-radius: 10px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .home-ud-popover[hidden] {
+            display: none !important;
+        }
+        .home-ud-popover::after {
+            content: "";
+            position: absolute;
+            bottom: -7px;
+            left: 22px;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 7px solid #1a1b26;
+        }
+        .home-ud-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 11px;
+            margin: 0;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: #f8fafc;
+            font-size: 0.88rem;
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+        .home-ud-menu-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .home-ud-menu-item svg {
+            flex-shrink: 0;
+            opacity: 0.92;
+        }
+        .home-ud-chev {
+            margin-left: auto;
+            opacity: 0.55;
+            font-size: 0.75rem;
+        }
+        .home-ud-top {
+            display: none;
+        }
+        .home-ud-top-chev {
+            font-size: 0.65rem;
+            color: rgba(148, 163, 184, 0.9);
+            user-select: none;
+        }
+        .home-ud-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            width: 100%;
+            margin: 0;
+            padding: 6px 8px;
+            border-radius: 9px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+        }
+        .home-ud-pill:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        .home-ud-avatar {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .home-ud-avatar.is-guest {
+            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .home-ud-name {
+            flex: 1;
+            min-width: 0;
+            font-size: 0.74rem;
+            line-height: 1.15;
+            font-weight: 500;
+            color: #475569;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .home-ud-dismiss {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            margin: 0;
+            padding: 0;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .home-ud-dismiss:hover {
+            color: #64748b;
+            background: rgba(148, 163, 184, 0.15);
+        }
+        .account-mini-modal-home {
+            z-index: 260;
+        }
+        .account-mini-panel-home h2 {
+            text-align: left;
+            margin-top: 0;
+        }
+        .account-mini-panel-home p {
+            margin: 0 0 8px;
+            color: #475569;
+            font-size: 0.88rem;
+            word-break: break-all;
+            text-align: left;
+        }
+        .account-mini-meta-home {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        @keyframes homeDockFlash {
+            0%, 100% { box-shadow: inset 0 0 0 0 transparent; }
+            40% { box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.4); }
+        }
+        .features-wrap.home-dock-flash {
+            animation: homeDockFlash 0.9s ease 2;
+        }
+        .package-panel-home .package-list-home {
+            max-height: min(52vh, 440px);
+            overflow: auto;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .package-card-home {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            text-align: left;
+        }
+        .package-card-home h3 {
+            margin: 0 0 6px;
+            font-size: 1rem;
+            color: #0f172a;
+        }
+        .package-card-home .pkg-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin: 0 0 6px;
+        }
+        .package-card-home p:last-child {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.45;
+        }
+
+        /* BeeSEO bright-green accent overrides */
+        .brand { color: #00e676 !important; }
+        .brand:hover { color: #1aeb84 !important; }
+        .brand-mark { background: linear-gradient(135deg, #00e676 0%, #00c264 100%) !important; color: #04140a !important; }
+        .hero h1 { color: #00e676 !important; }
+        .nav-dd-menu a:hover { background: rgba(0, 230, 118, 0.12) !important; color: #00e676 !important; }
+    </style>
+</head>
+<body data-user-dock="sidebar">
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="/">
+                <span class="brand-mark">SEO</span>
+                <span>SEO Technical Tool</span>
+            </a>
+            <nav class="main-nav nav" data-i18n-aria="nav.aria" aria-label="Menu chính">
+                {% include "partials/beeseo_main_nav.html" %}
+            </nav>
+            <div class="header-actions">
+                <span class="lang-flag" title="Tiếng Việt">🇻🇳</span>
+                <span id="authMsg" class="auth-inline-msg" aria-live="polite"></span>
+                <button type="button" class="btn-login" id="btnOpenLogin" data-i18n="auth.login">Đăng nhập</button>
+                <a class="btn-tool menu-action-hidden" id="linkGoTool" href="/tool" hidden data-i18n="auth.open_tool">Vào công cụ</a>
+                <button type="button" class="btn-tool menu-action-hidden" id="btnLogout" hidden data-i18n="auth.logout">Đăng xuất</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Kiểm tra technical SEO &amp; từ khóa trên một nền tảng</h1>
+        <p class="lead">
+            <strong>Quét URL</strong>, xem dashboard audit, nghiên cứu <strong>từ khóa</strong> (volume + intent), gom <strong>cụm SERP</strong>, và sinh <strong>JSON-LD</strong> — phù hợp team SEO kỹ thuật.
+        </p>
+        <div class="hero-cta">
+            <a class="btn-primary" href="/tool">Nhập URL → Phân tích</a>
+            <a class="btn-secondary" href="/docs">Swagger / API</a>
+        </div>
+        <p class="hero-note">Đăng nhập để lưu project và xuất checklist (CSV/PDF).</p>
+    </section>
+
+    <section class="features-wrap">
+        <h2>Tính năng</h2>
+        <p class="features-sub">Các module chính của ứng dụng</p>
+        <div class="feature-grid">
+            <article class="feature-card">
+                <div class="feature-illus feature-illus--image" aria-hidden="true">
+                    <img src="/static/images/technical-seo-hero.png" alt="Technical SEO — Build a Strong Foundation. Rank Higher." loading="lazy">
+                </div>
+                <h3>Phân tích Technical SEO</h3>
+                <p>Crawl URL, checklist lỗi kỹ thuật, liên kết nội bộ — lưu theo project khi đã đăng nhập.</p>
+                <a class="more" href="/tool">Mở công cụ →</a>
+            </article>
+            <article class="feature-card">
+                <div class="feature-illus" aria-hidden="true">📊</div>
+                <h3>Dashboard audit</h3>
+                <p>Tổng quan các lần quét, Technical-SEO.txt và bảng hành động.</p>
+                <a class="more" href="/report">Xem dashboard →</a>
+            </article>
+            <article class="feature-card">
+                <div class="feature-illus" aria-hidden="true">🔑</div>
+                <h3>Keyword Research</h3>
+                <p>Mở rộng từ seed + SERP, volume theo tháng (có cờ ước lượng), intent.</p>
+                <a class="more" href="/keywords/tools/research">Mở research →</a>
+            </article>
+            <article class="feature-card">
+                <div class="feature-illus" aria-hidden="true">🧩</div>
+                <h3>Keyword Clustering</h3>
+                <p>Gom cụm theo overlap URL SERP + embedding, nhóm theo ý định tìm kiếm.</p>
+                <a class="more" href="/keywords/tools/research?tab=group">Mở gom nhóm →</a>
+            </article>
+            <article class="feature-card">
+                <div class="feature-illus" aria-hidden="true">📋</div>
+                <h3>Schema Generator</h3>
+                <p>JSON-LD đa kiểu (Article, FAQ, Product…), kiểm tra và gợi ý theo SERP.</p>
+                <a class="more" href="/schema">Mở Schema →</a>
+            </article>
+            <article class="feature-card">
+                <div class="feature-illus" aria-hidden="true">⚡</div>
+                <h3>API &amp; tích hợp</h3>
+                <p>REST API (Swagger), health check, tích hợp Google (sau khi đăng nhập trên tool).</p>
+                <a class="more" href="/docs">Mở Swagger →</a>
+            </article>
+        </div>
+    </section>
+
+    <div class="auth-modal" id="authModal" hidden>
+        <div class="auth-panel">
+            <div class="auth-tabs" role="tablist" aria-label="Đăng nhập hoặc đăng ký">
+                <button type="button" class="auth-tab active" id="authTabLogin" data-auth-tab="login" role="tab" aria-selected="true">Đăng nhập</button>
+                <button type="button" class="auth-tab" id="authTabRegister" data-auth-tab="register" role="tab" aria-selected="false">Đăng ký</button>
+            </div>
+            <div id="authPanelLogin" class="auth-tab-panel" role="tabpanel">
+            <p id="authLoginHint">Nhập email và mật khẩu đã đăng ký để đăng nhập.</p>
+            <input type="email" id="authEmail" placeholder="Email đăng nhập" autocomplete="username">
+            <div class="pw-wrap">
+                <input type="password" id="authPassword" placeholder="Mật khẩu" minlength="8" autocomplete="current-password">
+                <button type="button" class="pw-toggle" id="btnTogglePw" title="Hiện/ẩn mật khẩu" aria-label="Hiện mật khẩu">👁</button>
+            </div>
+            <button type="button" class="auth-switch-link" id="linkGoRegister">Chưa có tài khoản? Đăng ký</button>
+            <button type="button" id="btnSubmitAuth" class="btn-submit">Đăng nhập</button>
+            </div>
+
+            <div id="authPanelRegister" class="auth-tab-panel" role="tabpanel" hidden>
+                <p>Tạo tài khoản Gmail: nhận OTP → nhập OTP → đặt mật khẩu → bấm <strong>Đăng ký</strong>.</p>
+                <input type="email" id="regEmail" placeholder="Email Gmail" autocomplete="email">
+                <p class="modal-hint">Chỉ Gmail (@gmail.com) nhận được mã OTP.</p>
+                <button type="button" id="btnRegOtpSend" class="btn-outline">Nhận mã OTP (gửi về Gmail)</button>
+                <input type="text" id="regOtp" placeholder="Mã OTP trong email" inputmode="numeric" autocomplete="one-time-code">
+                <label class="pw-label" for="regPassword">Tiêu chí mật khẩu</label>
+                <ul id="regPwRules" class="pw-rules" aria-live="polite">
+                    <li id="reg-rule-len">Ít nhất 8 ký tự</li>
+                    <li id="reg-rule-up">Ít nhất 1 chữ hoa (A–Z)</li>
+                    <li id="reg-rule-low">Ít nhất 1 chữ thường (a–z)</li>
+                    <li id="reg-rule-num">Ít nhất 1 chữ số (0–9)</li>
+                </ul>
+                <div class="pw-wrap">
+                    <input type="password" id="regPassword" placeholder="Mật khẩu mới" minlength="8" autocomplete="new-password">
+                    <button type="button" class="pw-toggle" id="btnToggleRegPw" title="Hiện/ẩn mật khẩu" aria-label="Hiện mật khẩu">👁</button>
+                </div>
+                <button type="button" class="auth-switch-link" id="linkGoLogin">Đã có tài khoản? Đăng nhập</button>
+                <button type="button" id="btnSubmitRegister" class="btn-submit">Đăng ký</button>
+            </div>
+
+            <div id="modalAuthMsg" class="modal-auth-msg"></div>
+            <div style="height:8px;"></div>
+            <button type="button" id="btnGoogleLogin" class="btn-outline">Đăng nhập với Google</button>
+            <button type="button" id="btnCloseModal" class="modal-close">Đóng</button>
+        </div>
+    </div>
+
+    <div class="auth-modal account-mini-modal-home" id="accountMiniModalHome" hidden>
+        <div class="auth-panel account-mini-panel-home">
+            <h2>Tài khoản</h2>
+            <p id="accountMiniEmailHome"></p>
+            <p id="accountMiniCreatedHome" class="account-mini-meta-home"></p>
+            <button type="button" id="accountMiniCloseHome" class="modal-close">Đóng</button>
+        </div>
+    </div>
+
+    <div class="home-user-dock-wrap" id="homeUserDockWrap" aria-label="Menu tài khoản">
+        <div class="home-user-dock" id="homeUserDock">
+            <div class="home-ud-popover" id="homeUserMenuPopover" hidden role="menu">
+                <button type="button" class="home-ud-menu-item" id="homeUserMenuAccount" role="menuitem">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    Tài khoản
+                </button>
+                <button type="button" class="home-ud-menu-item" id="homeUserMenuHistory" role="menuitem">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    Lịch sử
+                    <span class="home-ud-chev" aria-hidden="true">›</span>
+                </button>
+                <button type="button" class="home-ud-menu-item" id="homeUserMenuPackage" role="menuitem">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    Gói dịch vụ
+                </button>
+                <button type="button" class="home-ud-menu-item" id="homeUserMenuSession" role="menuitem">
+                    <svg id="homeUserSessionIconIn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    <svg id="homeUserSessionIconOut" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span id="homeUserSessionLabel">Đăng nhập</span>
+                </button>
+            </div>
+            <div class="home-ud-top" aria-hidden="true"><span class="home-ud-top-chev">▼</span></div>
+            <div class="home-ud-pill" id="homeUserPill" role="button" tabindex="0" aria-haspopup="menu" aria-expanded="false" aria-controls="homeUserMenuPopover">
+                <span class="home-ud-avatar is-guest" id="homeUserAvatar">?</span>
+                <span class="home-ud-name" id="homeUserLabel">Chưa đăng nhập</span>
+                <button type="button" class="home-ud-dismiss" id="homeUserPillDismiss" aria-label="Đóng menu tài khoản">×</button>
+            </div>
+            <button type="button" class="beeseo-upgrade-strip" data-beeseo-pricing-open>Upgrade plan</button>
+        </div>
+    </div>
+
+    <script>
+(function () {
+    const authMsg = document.getElementById("authMsg");
+    const authModal = document.getElementById("authModal");
+    const btnOpenLogin = document.getElementById("btnOpenLogin");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnSubmitAuth = document.getElementById("btnSubmitAuth");
+    const btnGoogleLogin = document.getElementById("btnGoogleLogin");
+    const btnLogout = document.getElementById("btnLogout");
+    const linkGoTool = document.getElementById("linkGoTool");
+    const authEmail = document.getElementById("authEmail");
+    const authPassword = document.getElementById("authPassword");
+    const authLoginHint = document.getElementById("authLoginHint");
+    const btnTogglePw = document.getElementById("btnTogglePw");
+
+    const authPanelLogin = document.getElementById("authPanelLogin");
+    const authPanelRegister = document.getElementById("authPanelRegister");
+    const authTabLogin = document.getElementById("authTabLogin");
+    const authTabRegister = document.getElementById("authTabRegister");
+    const regEmail = document.getElementById("regEmail");
+    const regOtp = document.getElementById("regOtp");
+    const regPassword = document.getElementById("regPassword");
+    const btnRegOtpSend = document.getElementById("btnRegOtpSend");
+    const btnSubmitRegister = document.getElementById("btnSubmitRegister");
+    const linkGoRegister = document.getElementById("linkGoRegister");
+    const linkGoLogin = document.getElementById("linkGoLogin");
+    const btnToggleRegPw = document.getElementById("btnToggleRegPw");
+
+    function setAuthTab(tab) {
+        const isLogin = tab === "login";
+        if (authTabLogin) {
+            authTabLogin.classList.toggle("active", isLogin);
+            authTabLogin.setAttribute("aria-selected", isLogin ? "true" : "false");
+        }
+        if (authTabRegister) {
+            authTabRegister.classList.toggle("active", !isLogin);
+            authTabRegister.setAttribute("aria-selected", !isLogin ? "true" : "false");
+        }
+        if (authPanelLogin) authPanelLogin.hidden = !isLogin;
+        if (authPanelRegister) authPanelRegister.hidden = isLogin;
+        setModalAuthMsg("", "");
+    }
+
+    function fillLoginFromRegister(email, password) {
+        if (authEmail) authEmail.value = email;
+        if (authPassword) authPassword.value = password;
+        updatePwRuleEls();
+    }
+
+    function updateRegPwRuleEls() {
+        if (!regPassword) return false;
+        const v = regPassword.value;
+        const len = v.length >= 8;
+        const up = /[A-Z]/.test(v);
+        const low = /[a-z]/.test(v);
+        const num = /[0-9]/.test(v);
+        const set = (id, ok) => { const el = document.getElementById(id); if (el) el.className = ok ? "ok" : ""; };
+        set("reg-rule-len", len); set("reg-rule-up", up); set("reg-rule-low", low); set("reg-rule-num", num);
+        return len && up && low && num;
+    }
+
+    if (regPassword) regPassword.addEventListener("input", updateRegPwRuleEls);
+    if (btnToggleRegPw && regPassword) {
+        btnToggleRegPw.addEventListener("click", function () {
+            const isPw = regPassword.type === "password";
+            regPassword.type = isPw ? "text" : "password";
+            btnToggleRegPw.textContent = isPw ? "🙈" : "👁";
+        });
+    }
+
+    document.querySelectorAll("[data-auth-tab]").forEach((btn) => {
+        btn.addEventListener("click", () => setAuthTab(btn.getAttribute("data-auth-tab") || "login"));
+    });
+    if (linkGoRegister) linkGoRegister.addEventListener("click", () => setAuthTab("register"));
+    if (linkGoLogin) linkGoLogin.addEventListener("click", () => setAuthTab("login"));
+
+    async function sendRegOtp() {
+        const email = (regEmail && regEmail.value || "").trim().toLowerCase();
+        if (!email) { setModalAuthMsg("Nhập Gmail trước.", "error"); return; }
+        if (!email.endsWith("@gmail.com") && !email.endsWith("@googlemail.com")) {
+            setModalAuthMsg("Chỉ gửi OTP cho Gmail.", "error"); return;
+        }
+        try {
+            setModalAuthMsg("Đang gửi mã OTP...", "");
+            const r = await fetch("/auth/otp/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email }),
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(apiDetail(d));
+            setModalAuthMsg(d.message || "Đã gửi OTP. Kiểm tra Gmail.", "ok");
+        } catch (e) {
+            setModalAuthMsg(String(e.message || e), "error");
+        }
+    }
+
+    async function doRegister() {
+        const email = (regEmail && regEmail.value || "").trim().toLowerCase();
+        const password = regPassword ? regPassword.value : "";
+        const otp = (regOtp && regOtp.value || "").trim().replace(/\s/g, "");
+        if (!email || !password || !otp) {
+            setModalAuthMsg("Nhập đủ Gmail, OTP và mật khẩu.", "error");
+            return;
+        }
+        if (!email.endsWith("@gmail.com") && !email.endsWith("@googlemail.com")) {
+            setModalAuthMsg("Chỉ đăng ký bằng Gmail (@gmail.com).", "error");
+            return;
+        }
+        if (!updateRegPwRuleEls()) {
+            setModalAuthMsg("Mật khẩu chưa đủ tiêu chí.", "error");
+            return;
+        }
+        try {
+            setModalAuthMsg("Đang đăng ký...", "");
+            const r = await fetch("/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email, password: password, otp: otp }),
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(apiDetail(d));
+            fillLoginFromRegister(email, password);
+            setAuthTab("login");
+            setModalAuthMsg(
+                (d.message || "Đăng ký thành công.") + " Đã điền sẵn email và mật khẩu — bấm Đăng nhập.",
+                "ok"
+            );
+        } catch (e) {
+            setModalAuthMsg(String(e.message || e), "error");
+        }
+    }
+
+    if (btnRegOtpSend) btnRegOtpSend.addEventListener("click", sendRegOtp);
+    if (btnSubmitRegister) btnSubmitRegister.addEventListener("click", doRegister);
+
+    let token = sessionStorage.getItem("seo_token") || "";
+
+    function apiDetail(d) {
+        if (d == null || typeof d !== "object") return "Lỗi không xác định";
+        if (typeof d.detail === "string") return d.detail;
+        if (Array.isArray(d.detail)) {
+            const parts = d.detail.map(function (e) {
+                if (typeof e === "string") return e;
+                if (e && typeof e === "object") return e.msg || e.message || "";
+                return String(e);
+            });
+            const s = parts.filter(Boolean).join("; ");
+            return s || "Dữ liệu gửi lên không hợp lệ.";
+        }
+        if (typeof d.message === "string" && d.message.trim()) return d.message.trim();
+        if (d.detail != null && typeof d.detail === "object" && !Array.isArray(d.detail)) {
+            const x = d.detail;
+            if (typeof x.msg === "string" && x.msg) return x.msg;
+            if (typeof x.message === "string" && x.message) return x.message;
+        }
+        if (Object.keys(d).length === 0) return "Máy chủ không gửi mô tả lỗi.";
+        try {
+            const s = JSON.stringify(d);
+            return s.length > 400 ? s.slice(0, 400) + "…" : s;
+        } catch (e) {
+            return "Lỗi không xác định";
+        }
+    }
+
+    function setAuthMsg(text, cls) {
+        authMsg.textContent = text || "";
+        authMsg.className = "auth-inline-msg " + (cls || "");
+    }
+
+    function setModalAuthMsg(text, cls) {
+        const el = document.getElementById("modalAuthMsg");
+        el.textContent = text || "";
+        el.className = "modal-auth-msg " + (cls || "");
+    }
+
+    function updatePwRuleEls() {
+        const v = authPassword.value;
+        const len = v.length >= 8;
+        const up = /[A-Z]/.test(v);
+        const low = /[a-z]/.test(v);
+        const num = /[0-9]/.test(v);
+        const setRule = (id, ok) => { const el = document.getElementById(id); if (el) el.className = ok ? "ok" : ""; };
+        setRule("rule-len", len); setRule("rule-up", up); setRule("rule-low", low); setRule("rule-num", num);
+        setRule("reg-rule-len", len); setRule("reg-rule-up", up); setRule("reg-rule-low", low); setRule("reg-rule-num", num);
+        return len && up && low && num;
+    }
+
+    authPassword.addEventListener("input", updatePwRuleEls);
+
+    btnTogglePw.addEventListener("click", function () {
+        const isPw = authPassword.type === "password";
+        authPassword.type = isPw ? "text" : "password";
+        btnTogglePw.textContent = isPw ? "🙈" : "👁";
+        btnTogglePw.setAttribute("aria-label", isPw ? "Ẩn mật khẩu" : "Hiện mật khẩu");
+    });
+
+    const homeUserDockWrap = document.getElementById("homeUserDockWrap");
+    const homeUserMenuPopover = document.getElementById("homeUserMenuPopover");
+    const homeUserPill = document.getElementById("homeUserPill");
+    const homeUserLabel = document.getElementById("homeUserLabel");
+    const homeUserAvatar = document.getElementById("homeUserAvatar");
+    const homeUserPillDismiss = document.getElementById("homeUserPillDismiss");
+    const homeUserMenuAccount = document.getElementById("homeUserMenuAccount");
+    const homeUserMenuHistory = document.getElementById("homeUserMenuHistory");
+    const homeUserMenuPackage = document.getElementById("homeUserMenuPackage");
+    const homeUserMenuSession = document.getElementById("homeUserMenuSession");
+    const homeUserSessionLabel = document.getElementById("homeUserSessionLabel");
+    const homeUserSessionIconIn = document.getElementById("homeUserSessionIconIn");
+    const homeUserSessionIconOut = document.getElementById("homeUserSessionIconOut");
+    const accountMiniModalHome = document.getElementById("accountMiniModalHome");
+    const accountMiniEmailHome = document.getElementById("accountMiniEmailHome");
+    const accountMiniCreatedHome = document.getElementById("accountMiniCreatedHome");
+    const accountMiniCloseHome = document.getElementById("accountMiniCloseHome");
+    const homeUserDockTop = document.querySelector("#homeUserDock .home-ud-top");
+    const featuresWrapEl = document.querySelector(".features-wrap");
+
+    let lastMeHome = null;
+
+    function closeHomeUserMenu() {
+        if (!homeUserMenuPopover || homeUserMenuPopover.hidden) return;
+        homeUserMenuPopover.hidden = true;
+        if (homeUserPill) homeUserPill.setAttribute("aria-expanded", "false");
+    }
+
+    function openHomeUserMenu() {
+        if (!homeUserMenuPopover) return;
+        homeUserMenuPopover.hidden = false;
+        if (homeUserPill) homeUserPill.setAttribute("aria-expanded", "true");
+    }
+
+    function toggleHomeUserMenu() {
+        if (!homeUserMenuPopover) return;
+        if (homeUserMenuPopover.hidden) openHomeUserMenu();
+        else closeHomeUserMenu();
+    }
+
+    function setHomeDockSessionRow(loggedIn) {
+        if (!homeUserSessionLabel) return;
+        homeUserSessionLabel.textContent = loggedIn ? "Đăng xuất" : "Đăng nhập";
+        if (homeUserSessionIconIn) homeUserSessionIconIn.hidden = !!loggedIn;
+        if (homeUserSessionIconOut) homeUserSessionIconOut.hidden = !loggedIn;
+    }
+
+    function friendlyEmailLabelHome(email) {
+        if (!email || typeof email !== "string") return "Tài khoản";
+        var s = email.trim();
+        if (s.length <= 30) return s;
+        return s.slice(0, 28) + "…";
+    }
+
+    function avatarLetterHome(email) {
+        var local = (email || "").split("@")[0] || "";
+        var ch = local.trim().charAt(0);
+        return ch ? ch.toUpperCase() : "?";
+    }
+
+    function formatCreatedViHome(iso) {
+        if (!iso) return "";
+        try {
+            var d = new Date(iso);
+            if (Number.isNaN(d.getTime())) return "";
+            return "Ngày tạo tài khoản: " + d.toLocaleString("vi-VN", { dateStyle: "medium", timeStyle: "short" });
+        } catch (e) {
+            return "";
+        }
+    }
+
+    async function refreshHomeUserDock() {
+        if (!homeUserLabel || !homeUserAvatar) return;
+        if (!token) {
+            lastMeHome = null;
+            homeUserLabel.textContent = "Chưa đăng nhập";
+            homeUserAvatar.textContent = "?";
+            homeUserAvatar.classList.add("is-guest");
+            setHomeDockSessionRow(false);
+            closeHomeUserMenu();
+            return;
+        }
+        setHomeDockSessionRow(true);
+        homeUserAvatar.classList.remove("is-guest");
+        try {
+            var r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
+            var d = await r.json().catch(function () { return {}; });
+            if (!r.ok) throw new Error("me");
+            lastMeHome = d;
+            homeUserLabel.textContent = friendlyEmailLabelHome(d.email || "");
+            homeUserAvatar.textContent = avatarLetterHome(d.email);
+        } catch (e) {
+            lastMeHome = null;
+            homeUserLabel.textContent = "Tài khoản";
+            homeUserAvatar.textContent = "U";
+        }
+    }
+
+    function applyAuthState() {
+        const loggedIn = !!token;
+        btnOpenLogin.hidden = loggedIn;
+        linkGoTool.hidden = !loggedIn;
+        btnLogout.hidden = true;
+        btnGoogleLogin.disabled = loggedIn;
+        authModal.hidden = true;
+        setAuthMsg("", "");
+        refreshHomeUserDock();
+    }
+
+    async function doLogin() {
+        const email = authEmail.value.trim().toLowerCase();
+        const password = authPassword.value;
+        if (!email || !password) {
+            setModalAuthMsg("Vui lòng nhập đủ email và mật khẩu.", "error");
+            return;
+        }
+        try {
+            setModalAuthMsg("Đang đăng nhập...", "");
+            const body = { email: email, password: password };
+            const r = await fetch("/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+            const rawText = await r.text();
+            let d = {};
+            if (rawText) {
+                try {
+                    const parsed = JSON.parse(rawText);
+                    if (parsed != null && typeof parsed === "object" && !Array.isArray(parsed)) d = parsed;
+                } catch (e) {
+                    if (!r.ok) throw new Error(rawText.slice(0, 200) || "Phản hồi không phải JSON.");
+                    throw new Error("Phản hồi đăng nhập không hợp lệ.");
+                }
+            }
+            if (!r.ok) throw new Error(apiDetail(d));
+            token = d.access_token || "";
+            if (!token) {
+                setModalAuthMsg("Đăng nhập thất bại: không có mã truy cập. Thử lại.", "error");
+                return;
+            }
+            sessionStorage.setItem("seo_token", token);
+            document.cookie = "seo_token=" + encodeURIComponent(token) + "; path=/; SameSite=Lax; max-age=86400";
+            setModalAuthMsg("");
+            authModal.hidden = true;
+            applyAuthState();
+            window.location.href = "/tool";
+        } catch (e) {
+            setModalAuthMsg(String(e.message || e), "error");
+        }
+    }
+
+    btnOpenLogin.addEventListener("click", function () {
+        setModalAuthMsg("");
+        authPassword.value = "";
+        updatePwRuleEls();
+        authModal.hidden = false;
+        setAuthTab("login");
+    });
+    btnGoogleLogin.addEventListener("click", function () {
+        setModalAuthMsg("Chưa cấu hình OAuth Google trong backend.", "error");
+    });
+    btnSubmitAuth.addEventListener("click", function () { doLogin(); });
+    btnCloseModal.addEventListener("click", function () {
+        authModal.hidden = true;
+        setModalAuthMsg("");
+    });
+    btnLogout.addEventListener("click", function () {
+        token = "";
+        if (typeof window.beeSEOLogout === "function") window.beeSEOLogout();
+        else {
+            sessionStorage.removeItem("seo_token");
+            document.cookie = "seo_token=; path=/; max-age=0; SameSite=Lax";
+        }
+        applyAuthState();
+    });
+
+    if (homeUserPill && homeUserMenuPopover) {
+        homeUserPill.addEventListener("click", function (e) {
+            if (e.target.closest("#homeUserPillDismiss")) return;
+            toggleHomeUserMenu();
+        });
+        homeUserPill.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggleHomeUserMenu();
+            }
+        });
+    }
+    if (homeUserPillDismiss) {
+        homeUserPillDismiss.addEventListener("click", function (e) {
+            e.stopPropagation();
+            closeHomeUserMenu();
+        });
+    }
+    if (homeUserDockTop) {
+        homeUserDockTop.addEventListener("click", function () {
+            toggleHomeUserMenu();
+        });
+    }
+    document.addEventListener("mousedown", function (e) {
+        if (!homeUserDockWrap || !homeUserMenuPopover || homeUserMenuPopover.hidden) return;
+        if (!homeUserDockWrap.contains(e.target)) closeHomeUserMenu();
+    });
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeHomeUserMenu();
+    });
+
+    if (homeUserMenuAccount) {
+        homeUserMenuAccount.addEventListener("click", async function () {
+            closeHomeUserMenu();
+            if (!token) {
+                btnOpenLogin.click();
+                return;
+            }
+            var d = lastMeHome;
+            if (!d || !d.email) {
+                try {
+                    var r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
+                    var parsed = await r.json().catch(function () { return null; });
+                    if (r.ok && parsed) {
+                        d = parsed;
+                        lastMeHome = parsed;
+                    }
+                } catch (e) {
+                    d = null;
+                }
+            }
+            if (accountMiniEmailHome) accountMiniEmailHome.textContent = d && d.email ? String(d.email) : "—";
+            if (accountMiniCreatedHome) {
+                accountMiniCreatedHome.textContent = d && d.created_at ? formatCreatedViHome(d.created_at) : "";
+            }
+            if (accountMiniModalHome) accountMiniModalHome.hidden = false;
+        });
+    }
+    if (homeUserMenuHistory) {
+        homeUserMenuHistory.addEventListener("click", function () {
+            closeHomeUserMenu();
+            if (featuresWrapEl) {
+                featuresWrapEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                featuresWrapEl.classList.remove("home-dock-flash");
+                void featuresWrapEl.offsetWidth;
+                featuresWrapEl.classList.add("home-dock-flash");
+                window.setTimeout(function () {
+                    featuresWrapEl.classList.remove("home-dock-flash");
+                }, 2000);
+            }
+        });
+    }
+    async function openPackageModalHome() {
+        closeHomeUserMenu();
+        setAuthMsg("", "");
+        if (window.openBeeSEOPricingModal) window.openBeeSEOPricingModal();
+    }
+
+    if (homeUserMenuPackage) {
+        homeUserMenuPackage.addEventListener("click", function () {
+            openPackageModalHome();
+        });
+    }
+    if (homeUserMenuSession) {
+        homeUserMenuSession.addEventListener("click", function () {
+            closeHomeUserMenu();
+            if (token) btnLogout.click();
+            else btnOpenLogin.click();
+        });
+    }
+    if (accountMiniCloseHome) {
+        accountMiniCloseHome.addEventListener("click", function () {
+            if (accountMiniModalHome) accountMiniModalHome.hidden = true;
+        });
+    }
+    if (accountMiniModalHome) {
+        accountMiniModalHome.addEventListener("click", function (e) {
+            if (e.target === accountMiniModalHome) accountMiniModalHome.hidden = true;
+        });
+    }
+
+    applyAuthState();
+})();
+    </script>
+<script>
+(() => {
+    try {
+        const path = (window.location && window.location.pathname) ? window.location.pathname.replace(/\/+$/, "") : "";
+        document.querySelectorAll('.main-nav a, .nav a, nav[aria-label="Menu chính"] a').forEach((a) => {
+            const href = (a.getAttribute("href") || "").trim();
+            if (!href || href.startsWith("http")) return;
+            const h = href.replace(/\/+$/, "");
+            if (h && h === path) a.classList.add("active");
+        });
+        if (path === "/settings") {
+            document.querySelectorAll(".main-nav a[href="/settings"]").forEach((b) => b.classList.add("active"));
+        }
+    } catch (_) {}
+})();
+</script>
+{% include "partials/beeseo_i18n.html" %}
+{% include "partials/beeseo_pricing_bundle.html" %}
+</body>
+</html>

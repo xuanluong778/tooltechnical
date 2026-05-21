@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Environment files - không đưa API key/mật khẩu lên Git
+.env
+env.local
+.env.local
+
+# Database local - không đưa dữ liệu user lên Git
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node / frontend nếu có
+node_modules/
+.next/
+dist/
+build/
+
+# Upload/cache nếu có
+uploads/
+cache/
+tmp/
+temp/

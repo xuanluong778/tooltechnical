@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/static/css/beeseo-nav.css?v=3">
+<script src="/static/js/beeseo-i18n.js"></script>
+<script src="/static/js/beeseo-nav-active.js"></script>
+{% include "partials/beeseo_chatbot.html" %}
+<script src="/static/js/beeseo-chatbot.js?v=4" defer></script>
+<script>
+(function () {
+    function boot() {
+        if (window.BeeSeoI18n) window.BeeSeoI18n.init();
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+    } else {
+        boot();
+    }
+    window.addEventListener("beeseo:system-prefs", function (e) {
+        if (e.detail && e.detail.language && window.BeeSeoI18n) {
+            window.BeeSeoI18n.apply(e.detail.language);
+        }
+    });
+})();
+</script>

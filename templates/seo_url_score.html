@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chấm điểm SEO URL</title>
+    <script src="/static/js/beeseo-i18n.js"></script>
+    {% include "partials/beeseo_theme_head.html" %}
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #050b18 0%, #0c1424 50%, #050b18 100%);
+            --accent-green: #00e676;
+            --accent-green-soft: rgba(0, 230, 118, 0.18);
+            --card: rgba(255, 255, 255, 0.12);
+            --line: rgba(255, 255, 255, 0.22);
+            --text: #eef2ff;
+            --muted: #cbd5e1;
+            --ok: #86efac;
+            --warn: #fde68a;
+            --err: #fecaca;
+            --accent: #5b67ff;
+            --seo-sidebar-w: min(288px, 92vw);
+        }
+        * { box-sizing: border-box; }
+        body.seo-score-page {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Inter", system-ui, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+        .seo-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--seo-sidebar-w);
+            height: 100vh;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            background: rgba(15, 23, 42, 0.92);
+            border-right: 1px solid var(--line);
+            backdrop-filter: blur(12px);
+            padding: 14px 12px 12px;
+        }
+        .seo-sidebar-head {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #c7d2fe;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--line);
+        }
+        .seo-sidebar-list {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            margin: 0 -4px;
+            padding: 0 4px 8px;
+        }
+        .hist-entry {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 8px;
+            padding: 6px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .hist-main {
+            flex: 1 1 auto;
+            min-width: 0;
+            text-align: left;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 8px 6px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            font-size: 0.78rem;
+            line-height: 1.35;
+        }
+        .hist-main:hover {
+            background: rgba(99, 102, 241, 0.25);
+            border-color: var(--line);
+        }
+        .hist-main .u {
+            font-weight: 600;
+            word-break: break-all;
+            color: #e0e7ff;
+        }
+        .hist-main .meta {
+            color: #94a3b8;
+            font-size: 0.72rem;
+            margin-top: 4px;
+        }
+        .hist-actions {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .hist-actions button {
+            padding: 4px 6px;
+            font-size: 0.68rem;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            cursor: pointer;
+            font-weight: 600;
+            background: rgba(15, 23, 42, 0.6);
+            color: #e2e8f0;
+        }
+        .hist-actions .hist-del {
+            color: #fecaca;
+            border-color: rgba(252, 165, 165, 0.35);
+        }
+        .hist-actions .hist-xls {
+            color: #bbf7d0;
+            border-color: rgba(134, 239, 172, 0.35);
+        }
+        .hist-actions button:hover {
+            filter: brightness(1.12);
+        }
+        .btn-reset {
+            flex-shrink: 0;
+            margin-top: 8px;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: rgba(30, 41, 59, 0.75);
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+        .btn-reset:hover {
+            background: rgba(51, 65, 85, 0.9);
+        }
+        .seo-main {
+            margin-left: var(--seo-sidebar-w);
+            min-height: 100vh;
+            padding: 20px 0 40px;
+        }
+        .page-wrap {
+            width: 90%;
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        @media (max-width: 820px) {
+            .seo-sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: 220px;
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+            .seo-main {
+                margin-left: 0;
+            }
+        }
+        /* Top nav: static/css/beeseo-nav.css */
+        .nav-dd {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .nav-dd-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 220px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 8px;
+            z-index: 20;
+        }
+        .nav-dd:hover .nav-dd-menu,
+        .nav-dd:focus-within .nav-dd-menu {
+            display: block;
+        }
+        .nav-dd-menu a {
+            display: block;
+            padding: 9px 10px;
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+        .nav-dd-menu a:hover {
+            background: rgba(0, 230, 118, 0.12);
+            border-color: rgba(0, 230, 118, 0.25);
+            color: #00e676;
+            text-decoration: none;
+        }
+        h1 { margin: 0 0 8px; font-size: 1.45rem; }
+        .sub { color: var(--muted); margin: 0 0 18px; font-size: 0.92rem; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+            width: 100%;
+            max-width: 100%;
+        }
+        label { display: block; font-weight: 600; margin: 10px 0 6px; font-size: 0.88rem; }
+        input {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: rgba(15, 23, 42, 0.35);
+            color: var(--text);
+        }
+        button.primary {
+            margin-top: 14px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(90deg, var(--accent), #45d3ff);
+        }
+        button.primary:disabled { opacity: 0.55; cursor: not-allowed; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 100%; }
+        @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+        #msg { margin-top: 12px; font-size: 0.88rem; white-space: pre-wrap; }
+        #msg.err { color: var(--err); }
+        #msg.ok { color: var(--ok); }
+        #out[hidden] { display: none !important; }
+        .total {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin: 4px 0 12px;
+        }
+        .bar-row { margin-bottom: 10px; }
+        .bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+        .bar-track {
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.45);
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #6366f1, #22d3ee);
+        }
+        pre.explain {
+            font-size: 0.78rem;
+            color: var(--muted);
+            background: rgba(15, 23, 42, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            overflow: auto;
+            max-height: 220px;
+        }
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin: 10px 0 18px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: rgba(15, 23, 42, 0.35);
+        }
+        .seo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            min-width: 920px;
+        }
+        .seo-table th,
+        .seo-table td {
+            border: 1px solid var(--line);
+            padding: 10px 10px;
+            vertical-align: top;
+            text-align: left;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+        .seo-table th {
+            background: rgba(15, 23, 42, 0.65);
+            color: #c7d2fe;
+            font-weight: 700;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .seo-table td.ref a,
+        .seo-table td.deploy a {
+            color: #93c5fd;
+            word-break: break-all;
+        }
+        .seo-table tr:nth-child(even) td { background: rgba(255, 255, 255, 0.03); }
+
+        /* BeeSEO bright-green accent overrides */
+        h1 { color: #00e676 !important; }
+        .nav-pro-badge {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #111827;
+            vertical-align: middle;
+            letter-spacing: 0.04em;
+        }
+    </style>
+</head>
+<body class="seo-score-page">
+<aside class="seo-sidebar" id="seoSidebar" aria-label="Lịch sử chấm điểm SEO">
+    <div class="seo-sidebar-head">URL đã chấm</div>
+    <div class="seo-sidebar-list" id="historyList"></div>
+    <button type="button" class="btn-reset" id="btnReset" title="Chỉ xóa nội dung ô nhập và kết quả hiển thị — không xóa lịch sử sidebar">Làm mới</button>
+</aside>
+<main class="seo-main">
+<div class="page-wrap">
+    {% set nav_active = 'seo_score' %}
+    {% include "partials/beeseo_nav.html" %}
+    <h1>Chấm điểm SEO (1 URL)</h1>
+    <p class="sub">Đăng nhập tại <a href="/tool" style="color:#c7d2fe;">/tool</a> để gọi API. Kết quả tập trung trong bảng checklist (15 nhóm + kỹ thuật).</p>
+
+    <div class="card">
+        <label for="u">URL</label>
+        <input type="url" id="u" placeholder="https://example.com/page" autocomplete="url">
+
+        <label for="kw">Keyword mục tiêu (tuỳ chọn — bật SERP + Opportunity)</label>
+        <input type="text" id="kw" placeholder="ví dụ: mua hosting wordpress" autocomplete="off">
+
+        <div class="grid2">
+            <div>
+                <label for="vol">Volume/tháng (tuỳ chọn)</label>
+                <input type="number" id="vol" min="0" placeholder="1200">
+            </div>
+            <div>
+                <label for="rank">Thứ hạng hiện tại (tuỳ chọn, 1–100)</label>
+                <input type="number" id="rank" min="1" max="100" placeholder="12">
+            </div>
+        </div>
+
+        <button type="button" class="primary" id="btn">Chấm điểm</button>
+        <div id="msg"></div>
+    </div>
+
+    <div class="card" id="out" hidden>
+        <div>Tổng điểm SEO (15 nhóm, có cap intent)</div>
+        <div class="total" id="total15">—</div>
+        <p style="margin:0 0 10px;font-size:0.82rem;color:#94a3b8;">12 trụ (thanh dưới) = mô hình legacy; điểm lớn = checklist 15 nhóm.</p>
+        <div id="bars"></div>
+        <h2 style="margin:18px 0 8px;font-size:1rem;">Bảng checklist SEO</h2>
+        <p style="color:#94a3b8;font-size:0.82rem;margin:0 0 8px;">15 nhóm + dòng [Kỹ thuật]. Cột: Checklist → Đánh giá → Dẫn chứng → Giải pháp → Link tham khảo → Hiện trạng → Link triển khai → Note.</p>
+        <div class="table-wrap">
+            <table class="seo-table" aria-label="Bảng checklist SEO URL">
+                <thead>
+                    <tr>
+                        <th>CHECKLIST</th>
+                        <th>ĐÁNH GIÁ</th>
+                        <th>DẪN CHỨNG CHI TIẾT</th>
+                        <th>GIẢI PHÁP</th>
+                        <th>LINK THAM KHẢO</th>
+                        <th>HIỆN TRẠNG</th>
+                        <th>LINK TRIỂN KHAI</th>
+                        <th>NOTE</th>
+                    </tr>
+                </thead>
+                <tbody id="chkTableBody"></tbody>
+            </table>
+        </div>
+        <details style="margin-top:16px;color:#94a3b8;font-size:0.82rem;">
+            <summary>Breakdown JSON (tùy chọn)</summary>
+            <pre class="explain" id="raw" style="max-height:280px;margin-top:8px;"></pre>
+        </details>
+    </div>
+</div>
+</main>
+
+    <script>
+(function () {
+    const LS_HISTORY = "seo_url_score_history_v1";
+    const LS_LAST = "seo_url_score_last_response_v1";
+    const LS_CACHE = "seo_url_score_resp_cache_v1";
+    const MAX_HISTORY = 50;
+    const MAX_CACHE = 15;
+
+    const token = sessionStorage.getItem("seo_token") || "";
+    const btn = document.getElementById("btn");
+    const msg = document.getElementById("msg");
+    const out = document.getElementById("out");
+    const historyList = document.getElementById("historyList");
+    const btnReset = document.getElementById("btnReset");
+
+    function setMsg(t, cls) {
+        msg.textContent = t || "";
+        msg.className = cls || "";
+    }
+
+    function esc(s) {
+        const t = String(s == null ? "" : s);
+        const d = document.createElement("div");
+        d.textContent = t;
+        return d.innerHTML;
+    }
+
+    function cellLinks(text, cls) {
+        const td = document.createElement("td");
+        td.className = cls;
+        const raw = String(text || "").trim();
+        if (!raw || raw === "—") {
+            td.textContent = "—";
+            return td;
+        }
+        raw.split(/\n/).forEach(function (line, i) {
+            const u = line.trim();
+            if (!u) return;
+            if (u.indexOf("http://") === 0 || u.indexOf("https://") === 0) {
+                const a = document.createElement("a");
+                a.href = u;
+                a.rel = "noopener noreferrer";
+                a.target = "_blank";
+                a.textContent = u;
+                if (i) td.appendChild(document.createElement("br"));
+                td.appendChild(a);
+            } else {
+                if (i) td.appendChild(document.createElement("br"));
+                td.appendChild(document.createTextNode(u));
+            }
+        });
+        return td;
+    }
+
+    function renderChecklistTable(rows) {
+        const tb = document.getElementById("chkTableBody");
+        tb.innerHTML = "";
+        if (!rows || !rows.length) {
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+            td.colSpan = 8;
+            td.style.color = "#94a3b8";
+            td.textContent = "Chưa có dòng checklist (chạy lại sau khi có issues).";
+            tr.appendChild(td);
+            tb.appendChild(tr);
+            return;
+        }
+        rows.forEach(function (row) {
+            const tr = document.createElement("tr");
+            ["checklist", "danh_gia", "dan_chung_chi_tiet", "giai_phap"].forEach(function (key) {
+                const td = document.createElement("td");
+                td.innerHTML = esc(row[key] != null ? row[key] : "");
+                tr.appendChild(td);
+            });
+            tr.appendChild(cellLinks(row.link_tham_khao, "ref"));
+            const tdH = document.createElement("td");
+            tdH.innerHTML = esc(row.hien_trang != null ? row.hien_trang : "");
+            tr.appendChild(tdH);
+            tr.appendChild(cellLinks(row.link_trien_khai, "deploy"));
+            const tdN = document.createElement("td");
+            tdN.innerHTML = esc(row.note != null ? row.note : "");
+            tr.appendChild(tdN);
+            tb.appendChild(tr);
+        });
+    }
+
+    function loadHistory() {
+        try {
+            const raw = localStorage.getItem(LS_HISTORY);
+            const arr = raw ? JSON.parse(raw) : [];
+            return Array.isArray(arr) ? arr : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function normEntry(x) {
+        return {
+            url: String(x.url || "").trim(),
+            keyword: String(x.keyword || "").trim(),
+            vol: String(x.vol != null ? x.vol : "").trim(),
+            rank: String(x.rank != null ? x.rank : "").trim(),
+        };
+    }
+
+    function itemKey(item) {
+        const n = normEntry(item);
+        return n.url + "\n" + n.keyword + "\n" + n.vol + "\n" + n.rank;
+    }
+
+    function loadCacheStore() {
+        try {
+            const raw = localStorage.getItem(LS_CACHE);
+            const o = raw ? JSON.parse(raw) : {};
+            return o && typeof o === "object" ? o : {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function pruneCache(store) {
+        const keys = Object.keys(store);
+        if (keys.length <= MAX_CACHE) return store;
+        const entries = keys.map(function (k) {
+            return { k: k, at: Number(store[k] && store[k].savedAt) || 0 };
+        });
+        entries.sort(function (a, b) {
+            return a.at - b.at;
+        });
+        const drop = entries.length - MAX_CACHE;
+        for (let i = 0; i < drop; i++) delete store[entries[i].k];
+        return store;
+    }
+
+    function saveResponseCache(entry, responseObj) {
+        try {
+            const k = itemKey(entry);
+            const store = loadCacheStore();
+            store[k] = { savedAt: Date.now(), data: responseObj };
+            pruneCache(store);
+            localStorage.setItem(LS_CACHE, JSON.stringify(store));
+        } catch (e) {}
+    }
+
+    function loadResponseCache(item) {
+        try {
+            const k = itemKey(item);
+            const w = loadCacheStore()[k];
+            return w && w.data ? w.data : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function deleteResponseCache(item) {
+        try {
+            const k = itemKey(item);
+            const store = loadCacheStore();
+            delete store[k];
+            localStorage.setItem(LS_CACHE, JSON.stringify(store));
+        } catch (e) {}
+    }
+
+    function saveHistory(entry) {
+        let arr = loadHistory();
+        const key = itemKey(entry);
+        arr = arr.filter(function (x) {
+            return itemKey(x) !== key;
+        });
+        arr.unshift({
+            url: normEntry(entry).url,
+            keyword: normEntry(entry).keyword,
+            vol: normEntry(entry).vol,
+            rank: normEntry(entry).rank,
+            ts: entry.ts || Date.now(),
+        });
+        arr = arr.slice(0, MAX_HISTORY);
+        localStorage.setItem(LS_HISTORY, JSON.stringify(arr));
+    }
+
+    function tryLoadLastResponse() {
+        try {
+            const raw = localStorage.getItem(LS_LAST);
+            if (!raw) return null;
+            const o = JSON.parse(raw);
+            if (!o || !o.response) return null;
+            return {
+                url: o.url,
+                keyword: o.keyword || "",
+                vol: o.vol != null ? String(o.vol) : "",
+                rank: o.rank != null ? String(o.rank) : "",
+                response: o.response,
+            };
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function saveLastResponse(url, keyword, responseObj, vol, rank) {
+        try {
+            const payload = JSON.stringify({
+                url: url,
+                keyword: keyword || "",
+                vol: vol != null ? String(vol) : "",
+                rank: rank != null ? String(rank) : "",
+                ts: Date.now(),
+                response: responseObj,
+            });
+            if (payload.length > 4_500_000) return;
+            localStorage.setItem(LS_LAST, payload);
+        } catch (e) {
+            try {
+                localStorage.removeItem(LS_LAST);
+            } catch (e2) {}
+        }
+    }
+
+    function removeLastIfMatches(removed) {
+        const last = tryLoadLastResponse();
+        if (!last || !removed) return;
+        if (itemKey(last) === itemKey(removed)) {
+            try {
+                localStorage.removeItem(LS_LAST);
+            } catch (e) {}
+        }
+    }
+
+    function deleteHistoryAt(idx) {
+        const arr = loadHistory();
+        if (idx < 0 || idx >= arr.length) return;
+        const removed = arr[idx];
+        arr.splice(idx, 1);
+        try {
+            localStorage.setItem(LS_HISTORY, JSON.stringify(arr));
+        } catch (e) {}
+        deleteResponseCache(removed);
+        removeLastIfMatches(removed);
+        renderHistory();
+    }
+
+    async function fetchScoreboardForItem(item) {
+        const url = String(item.url || "").trim();
+        if (!url) throw new Error("Thiếu URL.");
+        const body = { url: url };
+        const keyword = String(item.keyword || "").trim();
+        if (keyword) body.keyword = keyword;
+        const volS = String(item.vol != null ? item.vol : "").trim();
+        if (volS) body.search_volume = parseInt(volS, 10);
+        const rankS = String(item.rank != null ? item.rank : "").trim();
+        if (rankS) body.current_serp_position = parseInt(rankS, 10);
+        const r = await fetch("/analyze/url-seo-scoreboard", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(body),
+        });
+        const d = await r.json().catch(function () {
+            return {};
+        });
+        if (!r.ok) {
+            const errMsg = d.detail ? (typeof d.detail === "string" ? d.detail : JSON.stringify(d.detail)) : "Lỗi " + r.status;
+            throw new Error(errMsg);
+        }
+        return d;
+    }
+
+    function csvCell(x) {
+        const s = String(x == null ? "" : x)
+            .replace(/\r\n/g, "\n")
+            .replace(/\r/g, "\n");
+        return '"' + s.replace(/"/g, '""') + '"';
+    }
+
+    function linksPlain(text) {
+        const raw = String(text || "").trim();
+        if (!raw || raw === "—") return "";
+        return raw
+            .split(/\n/)
+            .map(function (l) {
+                return l.trim();
+            })
+            .filter(Boolean)
+            .join("; ");
+    }
+
+    function exportChecklistToCsv(d, item) {
+        const rows = [];
+        const n = normEntry(item);
+        rows.push([csvCell("URL"), csvCell(n.url), "", "", "", "", "", ""].join(","));
+        const t15 = d.scores && d.scores.checklist_15_total;
+        const total =
+            t15 != null && t15 !== ""
+                ? String(t15)
+                : d.scores && d.scores.total != null
+                  ? String(d.scores.total)
+                  : "";
+        rows.push([csvCell("Tổng điểm"), csvCell(total), "", "", "", "", "", ""].join(","));
+        rows.push("");
+        rows.push(
+            [
+                csvCell("CHECKLIST"),
+                csvCell("ĐÁNH GIÁ"),
+                csvCell("DẪN CHỨNG CHI TIẾT"),
+                csvCell("GIẢI PHÁP"),
+                csvCell("LINK THAM KHẢO"),
+                csvCell("HIỆN TRẠNG"),
+                csvCell("LINK TRIỂN KHAI"),
+                csvCell("NOTE"),
+            ].join(",")
+        );
+        const list = (d.optimization_report && d.optimization_report.checklist_table) || [];
+        list.forEach(function (row) {
+            rows.push(
+                [
+                    csvCell(row.checklist),
+                    csvCell(row.danh_gia),
+                    csvCell(row.dan_chung_chi_tiet),
+                    csvCell(row.giai_phap),
+                    csvCell(linksPlain(row.link_tham_khao)),
+                    csvCell(row.hien_trang),
+                    csvCell(linksPlain(row.link_trien_khai)),
+                    csvCell(row.note),
+                ].join(",")
+            );
+        });
+        if (!list.length) {
+            rows.push([csvCell("(Không có dòng checklist)"), "", "", "", "", "", "", ""].join(","));
+        }
+        return "\uFEFF" + rows.join("\r\n");
+    }
+
+    function triggerDownload(filename, text) {
+        const blob = new Blob([text], { type: "text/csv;charset=utf-8;" });
+        const u = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = u;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(u);
+    }
+
+    function slugFromUrl(u) {
+        try {
+            const withProto = /^https?:\/\//i.test(u) ? u : "https://" + u;
+            const h = new URL(withProto).hostname.replace(/[^\w.-]+/g, "-").slice(0, 48);
+            return h || "url";
+        } catch (e) {
+            return "url";
+        }
+    }
+
+    async function downloadExcelForItem(item, triggerBtn) {
+        if (!token) {
+            setMsg("Chưa có phiên đăng nhập.", "err");
+            return;
+        }
+        let d = loadResponseCache(item);
+        if (!d) {
+            const last = tryLoadLastResponse();
+            if (last && itemKey(last) === itemKey(item)) d = last.response;
+        }
+        if (triggerBtn) triggerBtn.disabled = true;
+        try {
+            if (!d) {
+                setMsg("Đang tải dữ liệu để xuất file…", "");
+                d = await fetchScoreboardForItem(item);
+                saveResponseCache(item, d);
+            }
+            const fn = "cham-diem-seo-" + slugFromUrl(item.url) + "-" + new Date().toISOString().slice(0, 10) + ".csv";
+            triggerDownload(fn, exportChecklistToCsv(d, item));
+            setMsg("Đã tải file CSV UTF-8 (mở trực tiếp bằng Excel).", "ok");
+        } catch (e) {
+            setMsg(String(e.message || e), "err");
+        } finally {
+            if (triggerBtn) triggerBtn.disabled = false;
+        }
+    }
+
+    function applyScoreboardResponse(d) {
+        const t15 = d.scores && d.scores.checklist_15_total;
+        document.getElementById("total15").textContent =
+            t15 != null && t15 !== "" ? String(t15) : (d.scores && d.scores.total != null ? String(d.scores.total) : "—");
+        const comp = (d.scores && d.scores.components) || {};
+        const w = d.weights || {};
+        const bars = document.getElementById("bars");
+        bars.innerHTML = "";
+        Object.keys(comp).forEach(function (k) {
+            const sc = Number(comp[k]) || 0;
+            const wt = (w[k] != null ? (w[k] * 100).toFixed(1) : "?") + "% trọng số";
+            const row = document.createElement("div");
+            row.className = "bar-row";
+            row.innerHTML =
+                '<div class="bar-label"><span>' + k + '</span><span>' + sc.toFixed(1) + " · " + wt + "</span></div>" +
+                '<div class="bar-track"><div class="bar-fill" style="width:' + Math.min(100, sc) + '%"></div></div>';
+            bars.appendChild(row);
+        });
+        const rep = d.optimization_report || {};
+        renderChecklistTable(rep.checklist_table || []);
+        const rawEl = document.getElementById("raw");
+        if (rawEl) {
+            rawEl.textContent = JSON.stringify(
+                {
+                    breakdown: d.breakdown || {},
+                    pillar_definitions: d.pillar_definitions || {},
+                    opportunity: d.opportunity || null,
+                    serp_top10_crawl: d.serp_top10_crawl || null,
+                },
+                null,
+                2
+            );
+        }
+        out.hidden = false;
+    }
+
+    function applyHistoryItem(item) {
+        document.getElementById("u").value = item.url || "";
+        document.getElementById("kw").value = item.keyword || "";
+        document.getElementById("vol").value = item.vol || "";
+        document.getElementById("rank").value = item.rank || "";
+        const cached = loadResponseCache(item);
+        if (cached) {
+            applyScoreboardResponse(cached);
+            setMsg("Đã tải kết quả từ bộ nhớ (không gọi lại API).", "ok");
+            return;
+        }
+        const last = tryLoadLastResponse();
+        if (last && itemKey(last) === itemKey(item)) {
+            applyScoreboardResponse(last.response);
+            saveResponseCache(item, last.response);
+            setMsg("Đã tải kết quả đã lưu (không gọi lại API).", "ok");
+            return;
+        }
+        out.hidden = true;
+        setMsg("Đã điền form — bấm «Chấm điểm» để phân tích lại.", "");
+    }
+
+    function renderHistory() {
+        if (!historyList) return;
+        historyList.innerHTML = "";
+        const arr = loadHistory();
+        if (!arr.length) {
+            const p = document.createElement("p");
+            p.style.cssText = "color:#64748b;font-size:0.78rem;margin:8px 4px;";
+            p.textContent = "Chưa có URL nào. Sau khi chấm điểm thành công, URL sẽ lưu ở đây.";
+            historyList.appendChild(p);
+            return;
+        }
+        arr.forEach(function (item, idx) {
+            const wrap = document.createElement("div");
+            wrap.className = "hist-entry";
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "hist-main";
+            const u = item.url || "—";
+            const short = u.length > 56 ? u.slice(0, 54) + "…" : u;
+            const kw = item.keyword ? " · " + item.keyword : "";
+            let when = "";
+            try {
+                when = new Date(item.ts || 0).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" });
+            } catch (e2) {
+                when = "";
+            }
+            b.innerHTML =
+                '<div class="u">' + esc(short) + "</div>" +
+                '<div class="meta">' + esc(when) + esc(kw) + "</div>";
+            b.addEventListener("click", function () {
+                applyHistoryItem(item);
+            });
+            const actions = document.createElement("div");
+            actions.className = "hist-actions";
+            const delBtn = document.createElement("button");
+            delBtn.type = "button";
+            delBtn.className = "hist-del";
+            delBtn.textContent = "Xóa";
+            delBtn.title = "Xóa mục này khỏi lịch sử";
+            delBtn.addEventListener("click", function (ev) {
+                ev.stopPropagation();
+                if (!confirm("Xóa mục này khỏi lịch sử?")) return;
+                deleteHistoryAt(idx);
+            });
+            const xlsBtn = document.createElement("button");
+            xlsBtn.type = "button";
+            xlsBtn.className = "hist-xls";
+            xlsBtn.textContent = "Excel";
+            xlsBtn.title = "Tải CSV UTF-8 (mở bằng Excel)";
+            xlsBtn.addEventListener("click", function (ev) {
+                ev.stopPropagation();
+                downloadExcelForItem(item, xlsBtn);
+            });
+            actions.appendChild(delBtn);
+            actions.appendChild(xlsBtn);
+            wrap.appendChild(b);
+            wrap.appendChild(actions);
+            historyList.appendChild(wrap);
+        });
+    }
+
+    function clearFormAndResults() {
+        document.getElementById("u").value = "";
+        document.getElementById("kw").value = "";
+        document.getElementById("vol").value = "";
+        document.getElementById("rank").value = "";
+        setMsg("", "");
+        out.hidden = true;
+        document.getElementById("bars").innerHTML = "";
+        renderChecklistTable([]);
+        const rawEl = document.getElementById("raw");
+        if (rawEl) rawEl.textContent = "";
+    }
+
+    renderHistory();
+
+    if (!token) {
+        msg.textContent = "Chưa có phiên đăng nhập. Mở /tool → Đăng nhập, rồi quay lại trang này.";
+        msg.className = "err";
+        btn.disabled = true;
+        if (btnReset) btnReset.disabled = true;
+        return;
+    }
+
+    if (btnReset) {
+        btnReset.addEventListener("click", function () {
+            clearFormAndResults();
+        });
+    }
+
+    const last = tryLoadLastResponse();
+    if (last && last.response) {
+        document.getElementById("u").value = last.url || "";
+        document.getElementById("kw").value = last.keyword || "";
+        document.getElementById("vol").value = last.vol || "";
+        document.getElementById("rank").value = last.rank || "";
+        applyScoreboardResponse(last.response);
+        saveResponseCache(
+            { url: last.url, keyword: last.keyword, vol: last.vol, rank: last.rank },
+            last.response
+        );
+        setMsg("Đã khôi phục kết quả lần chấm gần nhất (từ trình duyệt).", "ok");
+    }
+
+    btn.addEventListener("click", async function () {
+        const url = document.getElementById("u").value.trim();
+        const keyword = document.getElementById("kw").value.trim();
+        const volRaw = document.getElementById("vol").value.trim();
+        const rankRaw = document.getElementById("rank").value.trim();
+        if (!url) {
+            setMsg("Nhập URL.", "err");
+            return;
+        }
+        const body = { url: url };
+        if (keyword) body.keyword = keyword;
+        if (volRaw) body.search_volume = parseInt(volRaw, 10);
+        if (rankRaw) body.current_serp_position = parseInt(rankRaw, 10);
+        btn.disabled = true;
+        setMsg("Đang phân tích…", "");
+        out.hidden = true;
+        try {
+            const r = await fetch("/analyze/url-seo-scoreboard", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
+                body: JSON.stringify(body),
+            });
+            const d = await r.json().catch(function () { return {}; });
+            if (!r.ok) {
+                setMsg(d.detail ? (typeof d.detail === "string" ? d.detail : JSON.stringify(d.detail)) : "Lỗi " + r.status, "err");
+                return;
+            }
+            setMsg("Xong.", "ok");
+            applyScoreboardResponse(d);
+            const histEntry = {
+                url: url,
+                keyword: keyword,
+                vol: volRaw,
+                rank: rankRaw,
+                ts: Date.now(),
+            };
+            saveHistory(histEntry);
+            saveResponseCache(histEntry, d);
+            saveLastResponse(url, keyword, d, volRaw, rankRaw);
+            renderHistory();
+        } catch (e) {
+            setMsg(String(e.message || e), "err");
+        } finally {
+            btn.disabled = false;
+        }
+    });
+})();
+    </script>
+<script>
+(() => {
+    try {
+        const path = (window.location && window.location.pathname) ? window.location.pathname.replace(/\/+$/, "") : "";
+        document.querySelectorAll('.nav a, nav[aria-label="Menu chính"] a').forEach((a) => {
+            const href = (a.getAttribute("href") || "").trim();
+            if (!href || href.startsWith("http")) return;
+            const h = href.replace(/\/+$/, "");
+            if (h && h === path) a.classList.add("active");
+        });
+        if (path === "/settings") {
+            document.querySelectorAll('a[href="/settings"]').forEach((b) => b.classList.add("active"));
+        }
+    } catch (_) {}
+})();
+</script>
+{% include "partials/beeseo_i18n.html" %}
+{% include "partials/beeseo_pricing_bundle.html" %}
+</body>
+</html>

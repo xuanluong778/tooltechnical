@@ -1,0 +1,40 @@
+{
+  "url": "https://example.com/products/widget",
+  "final_indexability": {
+    "final_indexable": true,
+    "decision_source": "fallback",
+    "confidence": 0.82,
+    "conflict_detected": false
+  },
+  "canonical_behavior": {
+    "canonical_chosen": "https://example.com/products/widget",
+    "canonical_source": "self",
+    "canonical_valid": true,
+    "canonical_reason": "Self URL or no alternate canonical; effective URL is the primary document."
+  },
+  "primary_url": {
+    "primary_url": "https://example.com/products/widget",
+    "is_primary": true
+  },
+  "indexing_simulation": {
+    "will_index": true,
+    "indexation_reason": "Signals consistent with normal indexing for this URL.",
+    "duplicate_cluster": [],
+    "trust_score": 0.812
+  },
+  "signal_reliability": {
+    "http_reliability": 1.0,
+    "header_reliability": 0.95,
+    "meta_reliability": 0.88,
+    "dom_reliability": 0.92,
+    "overall_reliability": 0.935
+  },
+  "conflicts": {
+    "conflicts": [],
+    "severity": "low"
+  },
+  "signals_snapshot": {
+    "http_status": 200,
+    "resolved": "See full audit search_behavior.json when AUDIT_DEBUG_DIR is set."
+  }
+}

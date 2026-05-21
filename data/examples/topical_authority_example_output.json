@@ -1,0 +1,62 @@
+{
+  "per_url_example": {
+    "url": "https://example.com/blog/seo-guide",
+    "status": 200,
+    "topic": {
+      "primary_topic": "seo",
+      "cluster_id": "c0",
+      "relevance_score": 0.71
+    },
+    "authority": {
+      "cluster_authority_score": 58.4,
+      "authority_level": "medium"
+    },
+    "ranking": {
+      "ranking_score": 64.2,
+      "ranking_potential": "medium",
+      "limiting_factors": ["js_dependency_medium"],
+      "topical_modifiers": {
+        "applied": true
+      }
+    }
+  },
+  "site_wide_example": {
+    "topic_clusters": {
+      "c0": {
+        "topic_label": "seo",
+        "pages": [
+          "https://example.com/",
+          "https://example.com/blog/seo-guide",
+          "https://example.com/services/seo"
+        ],
+        "cluster_size": 3
+      },
+      "c1": {
+        "topic_label": "pricing",
+        "pages": ["https://example.com/pricing"],
+        "cluster_size": 1
+      }
+    },
+    "authority_summary": {
+      "cluster_count": 2,
+      "main_cluster_id": "c0",
+      "main_cluster_share": 0.75,
+      "mean_cluster_authority": 44.5
+    },
+    "topic_gaps": {
+      "weak_clusters": [
+        {
+          "cluster_id": "c1",
+          "topic_label": "pricing",
+          "cluster_size": 1,
+          "authority_score": 28.0,
+          "reasons": ["few_pages", "weak_internal_linking"]
+        }
+      ],
+      "missing_topics": [],
+      "expansion_opportunities": [
+        "Tăng số trang và liên kết nội bộ trong các cluster yếu để tạo khối chủ đề rõ ràng."
+      ]
+    }
+  }
+}

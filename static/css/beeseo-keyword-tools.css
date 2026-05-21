@@ -1,0 +1,113 @@
+/* Hai nút chuyển công cụ từ khóa — thường nằm trong box trắng, căn giữa */
+.kw-tools-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.kw-tools-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kw-tools-btn:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+    color: #0f172a;
+}
+
+.kw-tools-btn.active {
+    color: #059669 !important;
+    border-color: rgba(5, 150, 105, 0.75) !important;
+    background: #ecfdf5 !important;
+    box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.35);
+}
+
+/* Vùng chứa trong panel trắng */
+.kw-tools-panel {
+    padding: 18px 20px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    background: #ffffff;
+}
+
+.kw-white-panel {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.18);
+    overflow: hidden;
+}
+
+.kw-white-panel > .kw-tools-panel {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Hub: chỉ có 2 nút trong box trắng */
+.kw-white-panel--hub {
+    max-width: 640px;
+    margin: 20px auto 0;
+    padding: 28px 24px 32px;
+}
+
+.kw-white-panel--hub .kw-tools-panel {
+    border-bottom: none;
+    padding: 0;
+}
+
+.kw-white-panel--hub .kw-tools-nav {
+    padding: 0;
+}
+
+/* Trang tối không có box trắng (fallback ngoài panel) */
+body:not(:has(.kw-white-panel)) .kw-tools-nav .kw-tools-btn {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+}
+
+body:not(:has(.kw-white-panel)) .kw-tools-nav .kw-tools-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(147, 197, 253, 0.75);
+    color: #fff;
+}
+
+body:not(:has(.kw-white-panel)) .kw-tools-nav .kw-tools-btn.active {
+    color: #00e676 !important;
+    border-color: rgba(0, 230, 118, 0.85) !important;
+    background: rgba(2, 8, 20, 0.88) !important;
+    box-shadow: 0 0 0 1px rgba(0, 230, 118, 0.45), 0 0 16px rgba(0, 230, 118, 0.22);
+}
+
+html[data-theme="light"] .kw-tools-btn,
+html[data-theme="system"][data-theme-resolved="light"] .kw-tools-btn {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+html[data-theme="light"] .kw-tools-btn:hover,
+html[data-theme="system"][data-theme-resolved="light"] .kw-tools-btn:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+}
+
+html[data-theme="light"] .kw-tools-btn.active,
+html[data-theme="system"][data-theme-resolved="light"] .kw-tools-btn.active {
+    color: #059669 !important;
+    border-color: rgba(5, 150, 105, 0.75) !important;
+    background: #ecfdf5 !important;
+    box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.35);
+}

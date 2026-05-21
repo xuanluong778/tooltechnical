@@ -1,0 +1,51 @@
+[
+  {
+    "id": "e1b7999c-7fd6-42a0-887b-9854a9374e11",
+    "user_id": 6,
+    "platform": "wordpress",
+    "name": "Backlink",
+    "url": "https://backlinkbrand.com",
+    "username": "xuanluong",
+    "app_password": "enc:v1:gAAAAABqC-6ET8WGYAJ19o2zR9LrkYwCKBd15k_T3iiENDGKWSALGQfAkeLGMlSL0_f2BTYw6F36K8LghWwatbV-AXgwMq-uXj7cjm3R1ZflKg6tGLNmB2I=",
+    "default_status": "draft",
+    "verified": false,
+    "plugin_installed": false,
+    "favicon_url": "",
+    "last_checked_at": "",
+    "last_message": "",
+    "created_at": "2026-05-19T05:00:52.599423+00:00",
+    "updated_at": "2026-05-19T05:00:52.599423+00:00"
+  },
+  {
+    "id": "06f5f8fe-b59b-42e6-b962-d2e92e0fbf80",
+    "platform": "wordpress",
+    "name": "Thế Giới Digi",
+    "url": "https://thegioidigi.com",
+    "username": "thegioimarketingdigi@gmail.com",
+    "app_password": "enc:v1:gAAAAABqC-6EtIaNMvzeZwrh9Fe7IQXkrQFj0DwBp-gKOMqpTfC3qO85_HwnlXtedrEpuolDSpWkFZwinhSzt7o8v8BuYZ1CYkS6h4m946u3Vz8nO10M9fc=",
+    "default_status": "draft",
+    "verified": false,
+    "plugin_installed": false,
+    "favicon_url": "",
+    "last_checked_at": "",
+    "last_message": "",
+    "created_at": "2026-05-18T14:04:45.997644+00:00",
+    "updated_at": "2026-05-18T14:04:45.997644+00:00"
+  },
+  {
+    "id": "5483613b-4bd6-4d65-a27b-a4f457c92779",
+    "platform": "wordpress",
+    "name": "IT Siêu Việt",
+    "url": "https://itsieuviet.com",
+    "username": "quantri",
+    "app_password": "enc:v1:gAAAAABqC-6EmSRWjqKprA8FElZaU1OPefcM0LTaFai9ih7Bn_b478_e06iaslhW4N3f7MXwrcpR_zVESBUheCj4TA2oETzbQRj_9963rim0kYFl4VFjk5c=",
+    "default_status": "draft",
+    "verified": true,
+    "plugin_installed": false,
+    "favicon_url": "",
+    "last_checked_at": "2026-05-13T07:39:01.479474+00:00",
+    "last_message": "Kết nối WordPress thành công. BeeSEO SEO Helper chưa cài.",
+    "created_at": "2026-05-13T07:38:58.000029+00:00",
+    "updated_at": "2026-05-18T13:51:11.037263+00:00"
+  }
+]

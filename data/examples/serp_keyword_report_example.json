@@ -1,0 +1,56 @@
+{
+  "keyword": "technical seo audit",
+  "search_volume": 2400,
+  "difficulty": {
+    "difficulty_score": 58.5,
+    "difficulty_level": "medium",
+    "reasoning": [
+      "Average competitor authority is moderate — niche may still be contestable."
+    ]
+  },
+  "serp_features": {
+    "has_featured_snippet": false,
+    "has_ads": false,
+    "has_video": false,
+    "has_faq": true,
+    "has_sitelinks": false,
+    "feature_density_score": 0.2
+  },
+  "serp_analysis": {
+    "avg_authority": 0.42,
+    "max_authority": 0.78,
+    "authority_distribution": { "p50": 0.41, "p90": 0.68 },
+    "weak_pages_count": 2,
+    "competitors": []
+  },
+  "ranking_gap": {
+    "best_matching_url": "https://example.com/blog/technical-seo",
+    "position_estimate": 11,
+    "authority_gap": 0.22,
+    "content_gap": 180,
+    "topical_gap": 0.28,
+    "actionable_gap": [
+      "Grow internal links and topical hubs to lift PageRank toward SERP leaders."
+    ]
+  },
+  "opportunity": {
+    "keyword": "technical seo audit",
+    "opportunity_score": 52.0,
+    "opportunity_level": "medium",
+    "why": [],
+    "actions": []
+  },
+  "simulation": {
+    "estimated_position_range": [7, 14],
+    "probability_top10": 0.41,
+    "limiting_factors": [
+      "Average top-10 competitor authority proxy exceeds your page strength."
+    ]
+  },
+  "serp_fetch_meta": {
+    "source": "mock",
+    "location": "US",
+    "device": "desktop",
+    "organic_count": 15
+  }
+}

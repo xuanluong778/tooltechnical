@@ -1,0 +1,75 @@
+# Large-scale crawl stack: Postgres + Redis + API + Celery workers (scale replicas).
+# Usage: docker compose -f docker-compose.distributed.yml up -d --build
+# Scale workers: docker compose -f docker-compose.distributed.yml up -d --scale worker=4
+#
+# Set env (or .env next to this file):
+#   DATABASE_URL=postgresql+psycopg2://crawl:crawl@postgres:5432/crawl
+#   REDIS_URL=redis://redis:6379/0
+#   PROXY_LIST=http://user:pass@gate.provider.com:8080
+#   CELERY_TASK_MAX_RETRIES=7
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: crawl
+      POSTGRES_PASSWORD: crawl
+      POSTGRES_DB: crawl
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crawl -d crawl"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://crawl:crawl@postgres:5432/crawl
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    working_dir: /app
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A app.queue.celery_app worker -l info -P prefork --concurrency 1
+    environment:
+      DATABASE_URL: postgresql+psycopg2://crawl:crawl@postgres:5432/crawl
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    working_dir: /app
+
+volumes:
+  pgdata: {}

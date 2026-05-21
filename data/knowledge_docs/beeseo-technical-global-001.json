@@ -1,0 +1,895 @@
+{
+  "documents": [
+    {
+      "id": "e4d49772-4225-45a0-9318-c63ac5d6be52",
+      "filename": "So do tri thuc — BeeSEO (Global).txt",
+      "title": "Sơ đồ tri thức — BeeSEO (Global)",
+      "content_format": "text",
+      "char_count": 44675,
+      "token_estimate": 11168,
+      "chunks": [
+        {
+          "index": 0,
+          "text": "# SƠ ĐỒ TRI THỨC — BEESEO (GLOBAL)\n\nKnowledge graph dùng chung cho mọi website BeeSEO.\n\n# CHECKLIST TECHNICAL SEO CHO SƠ ĐỒ TRI THỨC BEESEO\n\nMục đích:\nFile này dùng để đưa vào Knowledge Base / Sơ đồ tri thức **BeeSEO** (Global). Hệ thống AI có thể dùng dữ liệu này để phân tích lỗi Technical SEO, giải thích nguyên nhân và gợi ý hướng xử lý cụ thể cho từng nhóm lỗi.",
+          "embedded": false
+        },
+        {
+          "index": 1,
+          "text": "Cấu trúc chuẩn cho mỗi lỗi Technical SEO:\n- issue_code: mã lỗi\n- issue_name: tên lỗi\n- pillar: nhóm Technical SEO\n- severity: mức độ nghiêm trọng gồm critical, high, medium, low\n- description: mô tả lỗi\n- why_it_matters: vì sao lỗi này quan trọng với SEO\n- how_to_fix: hướng xử lý cụ thể\n- how_to_check: cách kiểm tra lại sau khi sửa\n- owner_role: người nên xử lý, gồm SEO, Content, Developer, Admin\n- priority_score: điểm ưu tiên xử lý từ 0 đến 100\n- status: trạng thái gồm new, fixed, ignored, need_review",
+          "embedded": false
+        },
+        {
+          "index": 2,
+          "text": "============================================================\n1. SEO CƠ BẢN\n============================================================\n\nMục tiêu:\nKiểm tra các yếu tố SEO onpage nền tảng như title, meta description, H1, heading, canonical, slug và độ đầy đủ nội dung.\n\nChecklist cần kiểm tra:",
+          "embedded": false
+        },
+        {
+          "index": 3,
+          "text": "1.1. Thiếu SEO title\n- issue_code: missing_title\n- severity: high\n- description: Trang chưa có thẻ title.\n- why_it_matters: Title là yếu tố quan trọng giúp Google và người dùng hiểu nội dung chính của trang.\n- how_to_fix:\n  1. Thêm SEO title cho trang.\n  2. Title nên dưới 60 ký tự.\n  3. Chèn từ khóa chính tự nhiên.\n  4. Nêu rõ lợi ích hoặc chủ đề chính.\n- how_to_check: Crawl lại URL hoặc kiểm tra trong source HTML.\n- owner_role: SEO / Content\n- priority_score: 90",
+          "embedded": false
+        },
+        {
+          "index": 4,
+          "text": "1.2. Title quá dài\n- issue_code: title_too_long\n- severity: medium\n- description: Title vượt quá độ dài khuyến nghị và có thể bị Google cắt ngắn.\n- why_it_matters: Title bị cắt có thể làm giảm CTR.\n- how_to_fix:\n  1. Rút gọn title còn khoảng 50 đến 60 ký tự.\n  2. Đưa từ khóa chính lên gần đầu title.\n  3. Loại bỏ từ thừa, ký tự không cần thiết.\n- how_to_check: Kiểm tra độ dài title và crawl lại.\n- owner_role: SEO / Content\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 5,
+          "text": "1.3. Title quá ngắn\n- issue_code: title_too_short\n- severity: low\n- description: Title quá ngắn, chưa truyền tải đủ nội dung trang.\n- why_it_matters: Title ngắn có thể thiếu ngữ cảnh, khó thu hút người click.\n- how_to_fix:\n  1. Bổ sung từ khóa chính.\n  2. Thêm lợi ích, địa phương, thương hiệu hoặc USP nếu phù hợp.\n- how_to_check: Kiểm tra lại title trên trang.\n- owner_role: SEO / Content\n- priority_score: 40",
+          "embedded": false
+        },
+        {
+          "index": 6,
+          "text": "1.4. Title trùng lặp\n- issue_code: duplicate_title\n- severity: high\n- description: Nhiều URL dùng cùng một SEO title.\n- why_it_matters: Google khó phân biệt mục đích từng trang, có thể gây cạnh tranh nội bộ.\n- how_to_fix:\n  1. Xuất danh sách URL bị trùng title.\n  2. Xác định intent riêng của từng URL.\n  3. Viết lại title riêng cho từng trang.\n- how_to_check: Crawl lại toàn site và kiểm tra duplicate title.\n- owner_role: SEO / Content\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 7,
+          "text": "1.5. Thiếu meta description\n- issue_code: missing_meta_description\n- severity: medium\n- description: Trang chưa có meta description.\n- why_it_matters: Meta description có thể ảnh hưởng CTR khi trang hiển thị trên Google.\n- how_to_fix:\n  1. Viết meta description dài khoảng 140 đến 160 ký tự.\n  2. Chèn từ khóa chính tự nhiên.\n  3. Thêm lợi ích hoặc lời kêu gọi hành động.\n- how_to_check: Crawl lại URL hoặc kiểm tra source HTML.\n- owner_role: SEO / Content\n- priority_score: 70",
+          "embedded": false
+        },
+        {
+          "index": 8,
+          "text": "1.6. Meta description trùng lặp\n- issue_code: duplicate_meta_description\n- severity: medium\n- description: Nhiều URL dùng chung meta description.\n- why_it_matters: Làm giảm độ liên quan của từng trang và có thể giảm CTR.\n- how_to_fix:\n  1. Tìm các URL có meta trùng nhau.\n  2. Viết mô tả riêng theo nội dung từng trang.\n  3. Đảm bảo meta đúng search intent.\n- how_to_check: Crawl lại toàn site.\n- owner_role: SEO / Content\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 9,
+          "text": "1.7. Thiếu H1\n- issue_code: missing_h1\n- severity: high\n- description: Trang không có thẻ H1.\n- why_it_matters: H1 giúp Google và người đọc hiểu chủ đề chính của trang.\n- how_to_fix:\n  1. Thêm một H1 duy nhất.\n  2. H1 nên chứa chủ đề hoặc từ khóa chính.\n  3. Không dùng H1 cho logo hoặc phần trang trí.\n- how_to_check: Crawl lại hoặc kiểm tra HTML.\n- owner_role: SEO / Content / Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 10,
+          "text": "1.8. Nhiều H1\n- issue_code: multiple_h1\n- severity: medium\n- description: Trang có nhiều hơn một H1.\n- why_it_matters: Có thể làm cấu trúc nội dung thiếu rõ ràng.\n- how_to_fix:\n  1. Giữ một H1 chính.\n  2. Chuyển các H1 phụ thành H2 hoặc H3.\n- how_to_check: Crawl lại trang và kiểm tra heading.\n- owner_role: SEO / Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 11,
+          "text": "1.9. Cấu trúc heading sai\n- issue_code: heading_structure_error\n- severity: medium\n- description: Heading không theo thứ tự H1, H2, H3 hoặc bị lặp ý.\n- why_it_matters: Cấu trúc heading tốt giúp Google hiểu nội dung và giúp người đọc dễ theo dõi.\n- how_to_fix:\n  1. Dùng một H1 duy nhất.\n  2. Chia nội dung chính bằng H2.\n  3. Dùng H3 để giải thích chi tiết cho từng H2.\n  4. Không dùng heading chỉ để trang trí.\n- how_to_check: Kiểm tra outline heading của trang.\n- owner_role: SEO / Content\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 12,
+          "text": "1.10. Nội dung mỏng\n- issue_code: thin_content\n- severity: high\n- description: Trang có quá ít nội dung hoặc nội dung không đủ giải quyết search intent.\n- why_it_matters: Nội dung mỏng khó xếp hạng và dễ bị đánh giá là không hữu ích.\n- how_to_fix:\n  1. Bổ sung nội dung giải quyết đúng nhu cầu tìm kiếm.\n  2. Thêm ví dụ, bảng, FAQ, quy trình, lợi ích, hình ảnh.\n  3. Tránh viết lan man hoặc nhồi từ khóa.\n- how_to_check: Đánh giá lại word count, search intent và độ đầy đủ chủ đề.\n- owner_role: SEO / Content\n- priority_score: 90",
+          "embedded": false
+        },
+        {
+          "index": 13,
+          "text": "1.11. Thiếu canonical\n- issue_code: missing_canonical\n- severity: high\n- description: Trang chưa có canonical URL.\n- why_it_matters: Canonical giúp Google xác định URL chính và tránh trùng lặp nội dung.\n- how_to_fix:\n  1. Xác định URL chính cần index.\n  2. Thêm thẻ canonical trong head.\n  3. Đảm bảo canonical trỏ đúng URL bản chính.\n- how_to_check: Kiểm tra source HTML và crawl lại.\n- owner_role: SEO / Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 14,
+          "text": "1.12. Slug URL không thân thiện SEO\n- issue_code: seo_unfriendly_slug\n- severity: low\n- description: URL quá dài, có ký tự lạ hoặc không mô tả nội dung.\n- why_it_matters: URL rõ ràng giúp người dùng và công cụ tìm kiếm hiểu nội dung trang.\n- how_to_fix:\n  1. Rút gọn slug.\n  2. Dùng tiếng Việt không dấu.\n  3. Chèn từ khóa chính nếu tự nhiên.\n  4. Redirect 301 từ URL cũ sang URL mới nếu thay đổi URL.\n- how_to_check: Kiểm tra URL và redirect sau khi sửa.\n- owner_role: SEO / Developer\n- priority_score: 40",
+          "embedded": false
+        },
+        {
+          "index": 15,
+          "text": "============================================================\n2. GSC & LẬP CHỈ MỤC\n============================================================\n\nMục tiêu:\nKiểm tra khả năng index, tín hiệu từ Google Search Console và các vấn đề khiến trang không được Google lập chỉ mục.\n\nChecklist cần kiểm tra:",
+          "embedded": false
+        },
+        {
+          "index": 16,
+          "text": "2.1. Trang bị noindex\n- issue_code: page_noindex\n- severity: critical\n- description: Trang có thẻ noindex hoặc header noindex.\n- why_it_matters: Google sẽ không lập chỉ mục trang này.\n- how_to_fix:\n  1. Kiểm tra meta robots hoặc X-Robots-Tag.\n  2. Gỡ noindex nếu trang cần SEO.\n  3. Gửi yêu cầu index lại trong Google Search Console.\n- how_to_check: Inspect URL trong GSC hoặc crawl lại.\n- owner_role: SEO / Developer\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 17,
+          "text": "2.2. Robots meta chặn follow\n- issue_code: robots_nofollow\n- severity: medium\n- description: Trang có nofollow khiến bot không theo các liên kết trên trang.\n- why_it_matters: Có thể làm giảm khả năng khám phá URL nội bộ.\n- how_to_fix:\n  1. Kiểm tra meta robots.\n  2. Gỡ nofollow nếu không cần thiết.\n- how_to_check: Crawl lại URL.\n- owner_role: SEO / Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 18,
+          "text": "2.3. Canonical trỏ sai URL\n- issue_code: canonical_points_to_wrong_url\n- severity: high\n- description: Canonical trỏ sang URL không phải bản chính.\n- why_it_matters: Google có thể index sai trang hoặc bỏ qua URL cần SEO.\n- how_to_fix:\n  1. Kiểm tra canonical hiện tại.\n  2. Sửa canonical về URL chính xác.\n  3. Đảm bảo URL canonical trả về 200 và indexable.\n- how_to_check: Crawl lại và inspect trong GSC.\n- owner_role: SEO / Developer\n- priority_score: 90",
+          "embedded": false
+        },
+        {
+          "index": 19,
+          "text": "2.4. URL có impression cao nhưng CTR thấp\n- issue_code: high_impression_low_ctr\n- severity: medium\n- description: URL có nhiều hiển thị nhưng tỷ lệ click thấp.\n- why_it_matters: CTR thấp làm lãng phí cơ hội traffic từ Google.\n- how_to_fix:\n  1. Kiểm tra query chính trong GSC.\n  2. Viết lại SEO title hấp dẫn hơn.\n  3. Tối ưu meta description có lợi ích và CTA.\n  4. Thêm số liệu, địa phương hoặc USP nếu phù hợp.\n  5. Theo dõi CTR sau 7 đến 14 ngày.\n- how_to_check: Kiểm tra GSC Search Analytics.\n- owner_role: SEO / Content\n- priority_score: 70",
+          "embedded": false
+        },
+        {
+          "index": 20,
+          "text": "2.5. Query có cơ hội tăng trưởng\n- issue_code: opportunity_query\n- severity: medium\n- description: Từ khóa có impression nhưng vị trí chưa tốt hoặc chưa có click.\n- why_it_matters: Đây là cơ hội tăng traffic bằng tối ưu nội dung.\n- how_to_fix:\n  1. Bổ sung nội dung liên quan đến query đó.\n  2. Tối ưu heading và đoạn trả lời nhanh.\n  3. Thêm internal link về URL mục tiêu.\n  4. Cải thiện title/meta nếu cần.\n- how_to_check: Theo dõi ranking, impression và click trong GSC.\n- owner_role: SEO / Content\n- priority_score: 75",
+          "embedded": false
+        },
+        {
+          "index": 21,
+          "text": "2.6. Trang crawl được nhưng chưa index\n- issue_code: crawled_not_indexed\n- severity: high\n- description: Google đã crawl nhưng chưa lập chỉ mục.\n- why_it_matters: Trang không có traffic tự nhiên nếu chưa được index.\n- how_to_fix:\n  1. Kiểm tra chất lượng nội dung.\n  2. Kiểm tra canonical, noindex, robots.\n  3. Thêm internal link từ trang quan trọng.\n  4. Submit URL trong GSC.\n- how_to_check: Inspect URL trong GSC.\n- owner_role: SEO / Content / Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 22,
+          "text": "============================================================\n3. WEBSITE\n============================================================\n\nMục tiêu:\nKiểm tra nền tảng website, khả năng truy cập, cấu trúc URL, render nội dung và khả năng crawl.\n\nChecklist cần kiểm tra:",
+          "embedded": false
+        },
+        {
+          "index": 23,
+          "text": "3.1. Website không truy cập được\n- issue_code: site_unreachable\n- severity: critical\n- description: Website hoặc URL không thể truy cập.\n- why_it_matters: Bot và người dùng không thể truy cập nội dung.\n- how_to_fix:\n  1. Kiểm tra hosting.\n  2. Kiểm tra DNS.\n  3. Kiểm tra SSL.\n  4. Kiểm tra firewall hoặc WAF.\n- how_to_check: Truy cập lại URL và crawl lại.\n- owner_role: Admin / Developer\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 24,
+          "text": "3.2. URL timeout\n- issue_code: url_timeout\n- severity: high\n- description: URL phản hồi quá lâu hoặc bị timeout khi crawl.\n- why_it_matters: Bot có thể giảm tần suất crawl và người dùng rời trang.\n- how_to_fix:\n  1. Kiểm tra hosting và server load.\n  2. Bật cache.\n  3. Tối ưu database.\n  4. Dùng CDN nếu cần.\n- how_to_check: Crawl lại và kiểm tra response time.\n- owner_role: Developer / Admin\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 25,
+          "text": "3.3. HTTP và HTTPS cùng truy cập được\n- issue_code: http_https_duplicate\n- severity: critical\n- description: Website tồn tại cả bản HTTP và HTTPS.\n- why_it_matters: Gây trùng lặp URL và phân tán tín hiệu SEO.\n- how_to_fix:\n  1. Chọn HTTPS làm bản chính.\n  2. Redirect 301 toàn bộ HTTP sang HTTPS.\n  3. Cập nhật canonical và sitemap về HTTPS.\n- how_to_check: Test cả http:// và https://.\n- owner_role: Developer / Admin\n- priority_score: 95",
+          "embedded": false
+        },
+        {
+          "index": 26,
+          "text": "3.4. WWW và non-WWW cùng hoạt động\n- issue_code: www_non_www_duplicate\n- severity: high\n- description: Cả phiên bản www và không www đều truy cập được.\n- why_it_matters: Có thể tạo duplicate content.\n- how_to_fix:\n  1. Chọn một phiên bản chính.\n  2. Redirect 301 phiên bản còn lại.\n  3. Cập nhật canonical, sitemap và internal link.\n- how_to_check: Test cả www và non-www.\n- owner_role: Developer / Admin\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 27,
+          "text": "3.5. Trailing slash không thống nhất\n- issue_code: trailing_slash_duplicate\n- severity: medium\n- description: URL có và không có dấu gạch chéo cuối cùng cùng truy cập được.\n- why_it_matters: Có thể tạo hai URL cho cùng một nội dung.\n- how_to_fix:\n  1. Chọn chuẩn URL có hoặc không có slash.\n  2. Redirect 301 bản còn lại.\n  3. Đồng bộ canonical và internal link.\n- how_to_check: Test hai phiên bản URL.\n- owner_role: Developer / SEO\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 28,
+          "text": "3.6. Nội dung raw HTML quá ít\n- issue_code: low_html_content\n- severity: medium\n- description: HTML ban đầu có quá ít nội dung, có thể phụ thuộc nhiều vào JavaScript.\n- why_it_matters: Bot có thể khó đọc nội dung nếu render không ổn định.\n- how_to_fix:\n  1. So sánh raw HTML và rendered HTML.\n  2. Nếu nội dung chính chỉ có sau JS, cân nhắc SSR hoặc prerender.\n  3. Đảm bảo nội dung quan trọng có trong HTML render được.\n- how_to_check: Crawl bằng requests và Playwright.\n- owner_role: Developer\n- priority_score: 70",
+          "embedded": false
+        },
+        {
+          "index": 29,
+          "text": "3.7. Trang mồ côi\n- issue_code: orphan_page\n- severity: medium\n- description: URL tồn tại nhưng không có internal link trỏ đến.\n- why_it_matters: Google khó khám phá và đánh giá tầm quan trọng của trang.\n- how_to_fix:\n  1. Thêm internal link từ trang liên quan.\n  2. Đưa URL vào sitemap nếu cần index.\n  3. Liên kết từ danh mục hoặc bài viết có traffic.\n- how_to_check: Crawl lại internal link graph.\n- owner_role: SEO / Content\n- priority_score: 70\n\n============================================================\n4. SITEMAP\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 30,
+          "text": "Mục tiêu:\nKiểm tra sitemap có tồn tại, hợp lệ và chỉ chứa URL cần index.\n\nChecklist cần kiểm tra:\n\n4.1. Thiếu sitemap\n- issue_code: missing_sitemap\n- severity: high\n- description: Không tìm thấy sitemap XML.\n- why_it_matters: Sitemap giúp Google khám phá URL quan trọng nhanh hơn.\n- how_to_fix:\n  1. Tạo sitemap XML.\n  2. Đưa các URL canonical cần index vào sitemap.\n  3. Submit sitemap trong GSC.\n- how_to_check: Truy cập /sitemap.xml và kiểm tra GSC.\n- owner_role: SEO / Developer\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 31,
+          "text": "4.2. Sitemap trả 404 hoặc 500\n- issue_code: sitemap_unreachable\n- severity: high\n- description: Sitemap không truy cập được hoặc trả lỗi server.\n- why_it_matters: Google không thể đọc danh sách URL.\n- how_to_fix:\n  1. Kiểm tra URL sitemap.\n  2. Sửa plugin hoặc route tạo sitemap.\n  3. Đảm bảo sitemap trả HTTP 200.\n- how_to_check: Truy cập sitemap và crawl lại.\n- owner_role: Developer / SEO\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 32,
+          "text": "4.3. Sitemap rỗng\n- issue_code: empty_sitemap\n- severity: high\n- description: Sitemap tồn tại nhưng không có URL.\n- why_it_matters: Google không nhận được danh sách URL cần crawl.\n- how_to_fix:\n  1. Kiểm tra cấu hình CMS/plugin SEO.\n  2. Bật loại nội dung cần đưa vào sitemap.\n  3. Tạo lại sitemap.\n- how_to_check: Mở sitemap và kiểm tra danh sách URL.\n- owner_role: SEO / Developer\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 33,
+          "text": "4.4. Sitemap chứa URL 404\n- issue_code: sitemap_contains_404\n- severity: high\n- description: Sitemap chứa URL không tồn tại.\n- why_it_matters: Lãng phí crawl budget và làm giảm chất lượng sitemap.\n- how_to_fix:\n  1. Xóa URL 404 khỏi sitemap.\n  2. Nếu có trang thay thế, redirect 301.\n  3. Submit lại sitemap.\n- how_to_check: Crawl toàn bộ URL trong sitemap.\n- owner_role: SEO / Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 34,
+          "text": "4.5. Sitemap chứa URL noindex\n- issue_code: sitemap_contains_noindex\n- severity: high\n- description: Sitemap chứa URL bị noindex.\n- why_it_matters: Gửi tín hiệu mâu thuẫn cho Google.\n- how_to_fix:\n  1. Nếu URL cần index, gỡ noindex.\n  2. Nếu không cần index, xóa khỏi sitemap.\n- how_to_check: Crawl sitemap và kiểm tra indexability.\n- owner_role: SEO / Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 35,
+          "text": "4.6. Sitemap chứa URL redirect\n- issue_code: sitemap_contains_redirect\n- severity: medium\n- description: Sitemap chứa URL chuyển hướng.\n- why_it_matters: Sitemap chỉ nên chứa URL cuối cùng trả 200.\n- how_to_fix:\n  1. Thay URL redirect bằng URL đích cuối.\n  2. Tạo lại sitemap.\n- how_to_check: Crawl sitemap.\n- owner_role: SEO / Developer\n- priority_score: 65\n\n============================================================\n5. ROBOTS.TXT\n============================================================\n\nMục tiêu:\nKiểm tra robots.txt không chặn nhầm bot và có khai báo sitemap.\n\nChecklist cần kiểm tra:",
+          "embedded": false
+        },
+        {
+          "index": 36,
+          "text": "5.1. Thiếu robots.txt\n- issue_code: robots_missing\n- severity: medium\n- description: Website không có file robots.txt.\n- why_it_matters: Robots.txt giúp hướng dẫn bot crawl website.\n- how_to_fix:\n  1. Tạo file /robots.txt.\n  2. Thêm Allow hoặc Disallow phù hợp.\n  3. Thêm sitemap.\n- how_to_check: Truy cập domain.com/robots.txt.\n- owner_role: SEO / Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 37,
+          "text": "5.2. Robots.txt không truy cập được\n- issue_code: robots_unreachable\n- severity: high\n- description: Robots.txt trả 4xx hoặc 5xx.\n- why_it_matters: Bot có thể gặp khó khi hiểu quy tắc crawl.\n- how_to_fix:\n  1. Sửa server để robots.txt trả 200.\n  2. Kiểm tra quyền file và route.\n- how_to_check: Truy cập /robots.txt và crawl lại.\n- owner_role: Developer / Admin\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 38,
+          "text": "5.3. Robots.txt chặn toàn site\n- issue_code: robots_disallow_all\n- severity: critical\n- description: Robots có dòng Disallow: / cho toàn bộ bot.\n- why_it_matters: Googlebot có thể không crawl được website.\n- how_to_fix:\n  1. Mở file robots.txt.\n  2. Gỡ Disallow: / nếu website không phải staging.\n  3. Dùng Allow: / nếu muốn cho crawl toàn site.\n  4. Kiểm tra lại trong GSC.\n- how_to_check: Test robots.txt bằng GSC.\n- owner_role: SEO / Developer\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 39,
+          "text": "5.4. Robots chặn thư mục quan trọng\n- issue_code: robots_blocks_important_paths\n- severity: high\n- description: Robots chặn các thư mục cần SEO như blog, dịch vụ, sản phẩm.\n- why_it_matters: Trang quan trọng có thể không được crawl.\n- how_to_fix:\n  1. Kiểm tra các rule Disallow.\n  2. Mở crawl cho thư mục quan trọng.\n  3. Chỉ chặn thư mục không cần index như admin, cart, search nội bộ.\n- how_to_check: Test URL bằng robots tester.\n- owner_role: SEO / Developer\n- priority_score: 90",
+          "embedded": false
+        },
+        {
+          "index": 40,
+          "text": "5.5. Robots thiếu sitemap\n- issue_code: robots_missing_sitemap\n- severity: medium\n- description: Robots.txt không khai báo sitemap.\n- why_it_matters: Bot có thể chậm phát hiện sitemap.\n- how_to_fix:\n  1. Thêm dòng Sitemap: https://domain.com/sitemap.xml.\n  2. Đảm bảo sitemap URL trả 200.\n- how_to_check: Mở robots.txt.\n- owner_role: SEO / Developer\n- priority_score: 55\n\nRobots.txt mẫu an toàn:\nUser-agent: *\nAllow: /\n\nSitemap: https://domain.com/sitemap.xml\n\n============================================================\n6. SCHEMA\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 41,
+          "text": "Mục tiêu:\nKiểm tra structured data giúp Google hiểu nội dung và đủ điều kiện hiển thị rich results.\n\nChecklist cần kiểm tra:\n\n6.1. Thiếu schema\n- issue_code: missing_schema\n- severity: medium\n- description: Trang không có structured data phù hợp.\n- why_it_matters: Schema giúp Google hiểu nội dung tốt hơn và có thể hỗ trợ rich results.\n- how_to_fix:\n  1. Xác định loại trang.\n  2. Thêm schema phù hợp như Article, FAQPage, Product, LocalBusiness, BreadcrumbList.\n  3. Test lại bằng schema validator.\n- how_to_check: Kiểm tra JSON-LD trong HTML.\n- owner_role: SEO / Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 42,
+          "text": "6.2. JSON-LD lỗi cú pháp\n- issue_code: invalid_json_ld\n- severity: high\n- description: JSON-LD không parse được.\n- why_it_matters: Google có thể bỏ qua toàn bộ schema lỗi.\n- how_to_fix:\n  1. Kiểm tra dấu ngoặc, dấu phẩy, dấu nháy.\n  2. Dùng JSON validator.\n  3. Test lại bằng Rich Results Test hoặc schema validator.\n- how_to_check: Parse JSON-LD và validate.\n- owner_role: Developer / SEO\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 43,
+          "text": "6.3. Sai loại schema\n- issue_code: wrong_schema_type\n- severity: medium\n- description: Trang dùng schema không phù hợp với nội dung.\n- why_it_matters: Google có thể không hiểu đúng loại nội dung.\n- how_to_fix:\n  1. Trang bài viết dùng Article hoặc BlogPosting.\n  2. Trang dịch vụ local dùng LocalBusiness hoặc Service.\n  3. Trang sản phẩm dùng Product.\n  4. Trang FAQ dùng FAQPage.\n- how_to_check: Đối chiếu schema type với page type.\n- owner_role: SEO / Developer\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 44,
+          "text": "6.4. Schema thiếu field quan trọng\n- issue_code: schema_missing_required_fields\n- severity: high\n- description: Schema thiếu các field quan trọng như name, image, author, datePublished, acceptedAnswer.\n- why_it_matters: Có thể làm mất eligibility rich results.\n- how_to_fix:\n  1. Xác định schema type.\n  2. Bổ sung field bắt buộc hoặc khuyến nghị.\n  3. Validate lại.\n- how_to_check: Dùng schema validator.\n- owner_role: SEO / Developer\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 45,
+          "text": "6.5. Duplicate schema\n- issue_code: duplicate_schema\n- severity: medium\n- description: Trang có nhiều schema trùng chức năng.\n- why_it_matters: Có thể tạo tín hiệu không nhất quán.\n- how_to_fix:\n  1. Kiểm tra schema do theme và plugin tạo.\n  2. Giữ lại bản schema chính xác nhất.\n  3. Tắt schema trùng từ plugin nếu cần.\n- how_to_check: Crawl lại JSON-LD trên trang.\n- owner_role: SEO / Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 46,
+          "text": "6.6. FAQ schema thiếu acceptedAnswer\n- issue_code: faq_schema_missing_accepted_answer\n- severity: high\n- description: FAQPage schema thiếu acceptedAnswer.text.\n- why_it_matters: Google không thể hiểu đầy đủ câu hỏi và câu trả lời.\n- how_to_fix:\n  1. Mỗi câu hỏi cần có name.\n  2. Mỗi câu trả lời cần acceptedAnswer.text.\n  3. Validate lại FAQPage.\n- how_to_check: Schema validator.\n- owner_role: SEO / Developer\n- priority_score: 80\n\n============================================================\n7. HÌNH ẢNH\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 47,
+          "text": "Mục tiêu:\nKiểm tra ảnh phục vụ SEO hình ảnh, tốc độ tải trang và trải nghiệm người dùng.\n\nChecklist cần kiểm tra:\n\n7.1. Ảnh thiếu ALT\n- issue_code: image_missing_alt\n- severity: medium\n- description: Ảnh không có thuộc tính alt.\n- why_it_matters: Google khó hiểu nội dung ảnh và accessibility bị giảm.\n- how_to_fix:\n  1. Thêm ALT mô tả đúng nội dung ảnh.\n  2. Chèn từ khóa tự nhiên nếu phù hợp.\n  3. Không nhồi nhét từ khóa.\n- how_to_check: Crawl lại ảnh trên trang.\n- owner_role: SEO / Content\n- priority_score: 65\n\nVí dụ ALT tốt:\nalt=\"Kỹ thuật viên sửa máy tính tận nơi tại TP.HCM\"",
+          "embedded": false
+        },
+        {
+          "index": 48,
+          "text": "7.2. ALT rỗng với ảnh quan trọng\n- issue_code: image_empty_alt\n- severity: medium\n- description: Ảnh có alt nhưng để trống.\n- why_it_matters: Ảnh quan trọng không truyền tải được ý nghĩa cho bot và người dùng dùng screen reader.\n- how_to_fix:\n  1. Xác định ảnh trang trí và ảnh nội dung.\n  2. Ảnh nội dung cần ALT mô tả rõ ràng.\n- how_to_check: Kiểm tra thuộc tính alt.\n- owner_role: SEO / Content\n- priority_score: 55",
+          "embedded": false
+        },
+        {
+          "index": 49,
+          "text": "7.3. Ảnh lỗi 404\n- issue_code: image_404\n- severity: high\n- description: URL ảnh không tồn tại.\n- why_it_matters: Làm hỏng trải nghiệm người dùng và giảm chất lượng trang.\n- how_to_fix:\n  1. Upload lại ảnh.\n  2. Sửa đường dẫn ảnh.\n  3. Nếu ảnh không cần thiết, xóa khỏi HTML.\n- how_to_check: Crawl lại ảnh và kiểm tra HTTP status.\n- owner_role: Developer / Content\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 50,
+          "text": "7.4. Ảnh quá nặng\n- issue_code: image_too_large\n- severity: high\n- description: Ảnh có dung lượng lớn làm chậm trang.\n- why_it_matters: Ảnh nặng ảnh hưởng LCP và tốc độ tải trang.\n- how_to_fix:\n  1. Resize ảnh đúng kích thước hiển thị.\n  2. Nén ảnh.\n  3. Chuyển sang WebP nếu phù hợp.\n  4. Dùng CDN cho ảnh.\n- how_to_check: Kiểm tra dung lượng ảnh và PageSpeed.\n- owner_role: Developer / Content\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 51,
+          "text": "7.5. Thiếu width/height\n- issue_code: image_missing_width_height\n- severity: medium\n- description: Ảnh thiếu width và height trong HTML.\n- why_it_matters: Có thể gây layout shift, ảnh hưởng CLS.\n- how_to_fix:\n  1. Thêm width và height cho ảnh.\n  2. Đảm bảo CSS responsive không làm méo ảnh.\n- how_to_check: Crawl lại HTML.\n- owner_role: Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 52,
+          "text": "7.6. Không có lazy loading\n- issue_code: image_missing_lazy_loading\n- severity: low\n- description: Ảnh dưới màn hình đầu chưa có loading lazy.\n- why_it_matters: Có thể làm trang tải chậm hơn.\n- how_to_fix:\n  1. Thêm loading=\"lazy\" cho ảnh dưới fold.\n  2. Không lazy load ảnh hero quan trọng.\n- how_to_check: Kiểm tra HTML ảnh.\n- owner_role: Developer\n- priority_score: 40",
+          "embedded": false
+        },
+        {
+          "index": 53,
+          "text": "7.7. Link ảnh local khi publish\n- issue_code: image_local_url_in_publish\n- severity: high\n- description: Bài đăng dùng ảnh local như /static/uploads/... thay vì URL public trên website đích.\n- why_it_matters: Ảnh có thể bị lỗi khi đăng lên website khác.\n- how_to_fix:\n  1. Upload ảnh lên Media Library, CDN hoặc website đích.\n  2. Thay src local bằng public URL.\n  3. Validate lại HTML trước khi publish.\n- how_to_check: Mở bài đã publish và kiểm tra ảnh.\n- owner_role: Developer / Admin\n- priority_score: 90",
+          "embedded": false
+        },
+        {
+          "index": 54,
+          "text": "7.8. Tên file ảnh không thân thiện SEO\n- issue_code: image_filename_not_seo_friendly\n- severity: low\n- description: Tên file ảnh không mô tả nội dung.\n- why_it_matters: Tên file ảnh có thể hỗ trợ SEO hình ảnh.\n- how_to_fix:\n  1. Đặt tên file ảnh mô tả nội dung.\n  2. Dùng chữ thường, không dấu, phân tách bằng dấu gạch ngang.\n  3. Ví dụ: sua-may-tinh-tan-noi-tphcm.webp.\n- how_to_check: Kiểm tra URL ảnh.\n- owner_role: SEO / Content\n- priority_score: 35\n\n============================================================\n8. VIDEO\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 55,
+          "text": "Mục tiêu:\nKiểm tra video không làm chậm trang, có dữ liệu cấu trúc và nội dung hỗ trợ SEO.\n\nChecklist cần kiểm tra:\n\n8.1. Video embed lỗi\n- issue_code: broken_video_embed\n- severity: medium\n- description: Video iframe hoặc embed không hoạt động.\n- why_it_matters: Gây trải nghiệm xấu và làm giảm chất lượng trang.\n- how_to_fix:\n  1. Kiểm tra link video.\n  2. Sửa iframe embed.\n  3. Nếu video bị xóa, thay video mới.\n- how_to_check: Mở trang và kiểm tra video.\n- owner_role: Content / Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 56,
+          "text": "8.2. Thiếu VideoObject schema\n- issue_code: missing_video_schema\n- severity: medium\n- description: Trang có video quan trọng nhưng thiếu VideoObject schema.\n- why_it_matters: Google khó hiểu video và khó hiển thị video rich result.\n- how_to_fix:\n  1. Thêm VideoObject schema.\n  2. Bổ sung name, description, thumbnailUrl, uploadDate, contentUrl hoặc embedUrl.\n  3. Validate schema.\n- how_to_check: Schema validator.\n- owner_role: SEO / Developer\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 57,
+          "text": "8.3. Video thiếu thumbnail\n- issue_code: video_missing_thumbnail\n- severity: medium\n- description: Video không có thumbnail rõ ràng.\n- why_it_matters: Thumbnail ảnh hưởng CTR và trải nghiệm người dùng.\n- how_to_fix:\n  1. Thêm ảnh thumbnail phù hợp.\n  2. Đảm bảo thumbnail có URL public và kích thước tốt.\n- how_to_check: Kiểm tra video schema hoặc embed.\n- owner_role: Content / SEO\n- priority_score: 55",
+          "embedded": false
+        },
+        {
+          "index": 58,
+          "text": "8.4. Video tự host quá nặng\n- issue_code: heavy_self_hosted_video\n- severity: high\n- description: Video tự host làm trang tải chậm.\n- why_it_matters: Có thể ảnh hưởng tốc độ và LCP.\n- how_to_fix:\n  1. Dùng YouTube, Vimeo hoặc CDN video.\n  2. Dùng lazy loading cho video.\n  3. Dùng placeholder thumbnail.\n- how_to_check: Kiểm tra waterfall và PageSpeed.\n- owner_role: Developer / Content\n- priority_score: 75",
+          "embedded": false
+        },
+        {
+          "index": 59,
+          "text": "8.5. Thiếu transcript video\n- issue_code: missing_video_transcript\n- severity: low\n- description: Video không có phần transcript hoặc tóm tắt nội dung.\n- why_it_matters: Transcript giúp Google hiểu nội dung video và hỗ trợ người dùng.\n- how_to_fix:\n  1. Thêm transcript hoặc tóm tắt dưới video.\n  2. Chèn heading rõ ràng.\n- how_to_check: Kiểm tra nội dung trang.\n- owner_role: Content / SEO\n- priority_score: 40\n\n============================================================\n9. TỐC ĐỘ\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 60,
+          "text": "Mục tiêu:\nKiểm tra Core Web Vitals, tốc độ tải và các yếu tố ảnh hưởng trải nghiệm.\n\nChecklist cần kiểm tra:\n\n9.1. LCP cao\n- issue_code: high_lcp\n- severity: high\n- description: Largest Contentful Paint cao.\n- why_it_matters: LCP ảnh hưởng trải nghiệm tải trang và Core Web Vitals.\n- how_to_fix:\n  1. Xác định phần tử LCP, thường là ảnh hero hoặc block nội dung đầu trang.\n  2. Nén và resize ảnh hero.\n  3. Preload tài nguyên quan trọng.\n  4. Giảm CSS/JS blocking.\n  5. Bật cache hoặc CDN.\n- how_to_check: PageSpeed Insights hoặc CrUX.\n- owner_role: Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 61,
+          "text": "9.2. INP cao\n- issue_code: high_inp\n- severity: high\n- description: Interaction to Next Paint cao, trang phản hồi chậm khi tương tác.\n- why_it_matters: INP ảnh hưởng trực tiếp trải nghiệm người dùng.\n- how_to_fix:\n  1. Giảm JavaScript không cần thiết.\n  2. Chia nhỏ task dài.\n  3. Tối ưu event handler.\n  4. Trì hoãn script bên thứ ba.\n- how_to_check: PageSpeed Insights hoặc field data.\n- owner_role: Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 62,
+          "text": "9.3. CLS cao\n- issue_code: high_cls\n- severity: high\n- description: Layout shift cao.\n- why_it_matters: Trang bị nhảy layout làm người dùng khó thao tác và ảnh hưởng CWV.\n- how_to_fix:\n  1. Thêm width/height cho ảnh và video.\n  2. Dành sẵn không gian cho banner/ads.\n  3. Tránh inject nội dung phía trên vùng đang đọc.\n- how_to_check: PageSpeed Insights.\n- owner_role: Developer\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 63,
+          "text": "9.4. TTFB cao\n- issue_code: high_ttfb\n- severity: high\n- description: Server phản hồi chậm.\n- why_it_matters: TTFB cao kéo chậm toàn bộ quá trình tải trang.\n- how_to_fix:\n  1. Kiểm tra hosting.\n  2. Bật cache server.\n  3. Tối ưu database.\n  4. Dùng CDN.\n- how_to_check: PageSpeed hoặc đo response time.\n- owner_role: Developer / Admin\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 64,
+          "text": "9.5. CSS/JS chặn render\n- issue_code: render_blocking_resources\n- severity: medium\n- description: CSS hoặc JS làm chậm hiển thị nội dung đầu trang.\n- why_it_matters: Làm tăng FCP và LCP.\n- how_to_fix:\n  1. Minify CSS/JS.\n  2. Defer hoặc async JS không quan trọng.\n  3. Tách critical CSS.\n- how_to_check: PageSpeed waterfall.\n- owner_role: Developer\n- priority_score: 70",
+          "embedded": false
+        },
+        {
+          "index": 65,
+          "text": "9.6. Thiếu browser cache\n- issue_code: missing_browser_cache\n- severity: medium\n- description: Static assets chưa có cache header phù hợp.\n- why_it_matters: Người dùng quay lại phải tải lại tài nguyên không cần thiết.\n- how_to_fix:\n  1. Cấu hình Cache-Control cho ảnh, CSS, JS.\n  2. Dùng versioning file để tránh cache sai.\n- how_to_check: Kiểm tra response headers.\n- owner_role: Developer / Admin\n- priority_score: 60\n\n============================================================\n10. HTTPS & BẢO MẬT\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 66,
+          "text": "Mục tiêu:\nKiểm tra SSL, HTTPS và các lỗi bảo mật ảnh hưởng SEO/trải nghiệm.\n\nChecklist cần kiểm tra:\n\n10.1. Website chưa dùng HTTPS\n- issue_code: no_https\n- severity: critical\n- description: Website chưa dùng HTTPS.\n- why_it_matters: HTTPS là tiêu chuẩn bảo mật và ảnh hưởng niềm tin người dùng.\n- how_to_fix:\n  1. Cài SSL certificate.\n  2. Redirect HTTP sang HTTPS.\n  3. Cập nhật sitemap, canonical, internal link sang HTTPS.\n- how_to_check: Truy cập HTTPS và kiểm tra redirect.\n- owner_role: Developer / Admin\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 67,
+          "text": "10.2. Mixed content\n- issue_code: mixed_content\n- severity: high\n- description: Trang HTTPS nhưng tải ảnh, CSS, JS qua HTTP.\n- why_it_matters: Trình duyệt có thể chặn tài nguyên hoặc cảnh báo không an toàn.\n- how_to_fix:\n  1. Tìm tài nguyên đang dùng http://.\n  2. Đổi sang https://.\n  3. Nếu nguồn không hỗ trợ HTTPS, thay nguồn khác.\n- how_to_check: DevTools console hoặc crawl tài nguyên.\n- owner_role: Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 68,
+          "text": "10.3. SSL hết hạn\n- issue_code: ssl_expired\n- severity: critical\n- description: Chứng chỉ SSL đã hết hạn.\n- why_it_matters: Người dùng và bot có thể không truy cập được website an toàn.\n- how_to_fix:\n  1. Gia hạn SSL.\n  2. Bật auto-renew.\n  3. Kiểm tra chain certificate.\n- how_to_check: SSL checker hoặc trình duyệt.\n- owner_role: Admin / Developer\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 69,
+          "text": "10.4. HTTP không redirect sang HTTPS\n- issue_code: missing_https_redirect\n- severity: high\n- description: HTTP không tự chuyển sang HTTPS.\n- why_it_matters: Tạo duplicate URL và giảm bảo mật.\n- how_to_fix:\n  1. Thêm redirect 301 HTTP sang HTTPS.\n  2. Kiểm tra tất cả biến thể URL.\n- how_to_check: Test http://domain.com.\n- owner_role: Developer / Admin\n- priority_score: 90",
+          "embedded": false
+        },
+        {
+          "index": 70,
+          "text": "10.5. Thiếu security headers\n- issue_code: missing_security_headers\n- severity: low\n- description: Website thiếu một số security headers.\n- why_it_matters: Tăng rủi ro bảo mật và giảm niềm tin hệ thống.\n- how_to_fix:\n  1. Thêm HSTS nếu HTTPS ổn định.\n  2. Thêm X-Frame-Options, X-Content-Type-Options, Referrer-Policy nếu phù hợp.\n  3. Test lại header.\n- how_to_check: Kiểm tra response headers.\n- owner_role: Developer / Admin\n- priority_score: 45\n\n============================================================\n11. MÃ PHẢN HỒI\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 71,
+          "text": "Mục tiêu:\nKiểm tra HTTP status code, redirect, lỗi 404/500 và soft 404.\n\nChecklist cần kiểm tra:\n\n11.1. URL chính không trả 200\n- issue_code: main_url_not_200\n- severity: high\n- description: URL cần SEO không trả HTTP 200.\n- why_it_matters: Google có thể không index hoặc đánh giá URL không ổn định.\n- how_to_fix:\n  1. Kiểm tra HTTP status.\n  2. Nếu URL chuyển hướng, cập nhật internal link sang URL cuối.\n  3. Nếu lỗi server, sửa backend/CMS.\n- how_to_check: Crawl lại status code.\n- owner_role: Developer / SEO\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 72,
+          "text": "11.2. Redirect chain\n- issue_code: redirect_chain\n- severity: high\n- description: URL chuyển hướng qua nhiều bước.\n- why_it_matters: Làm chậm crawl và giảm trải nghiệm.\n- how_to_fix:\n  1. Xác định chuỗi redirect.\n  2. Sửa rule để URL cũ trỏ thẳng đến URL cuối.\n  3. Cập nhật internal link.\n- how_to_check: Crawl lại redirect path.\n- owner_role: Developer / SEO\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 73,
+          "text": "11.3. Redirect loop\n- issue_code: redirect_loop\n- severity: critical\n- description: URL bị lặp redirect vô hạn.\n- why_it_matters: Người dùng và bot không truy cập được trang.\n- how_to_fix:\n  1. Kiểm tra rule htaccess/nginx/plugin redirect.\n  2. Xóa rule xung đột.\n  3. Test lại URL.\n- how_to_check: Curl hoặc crawler.\n- owner_role: Developer / Admin\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 74,
+          "text": "11.4. Trang 404\n- issue_code: page_404\n- severity: high\n- description: URL trả 404.\n- why_it_matters: Nếu URL có backlink, internal link hoặc traffic, sẽ mất giá trị SEO.\n- how_to_fix:\n  1. Nếu trang còn giá trị, tạo lại nội dung.\n  2. Nếu có trang thay thế, redirect 301.\n  3. Nếu không cần, xóa internal link và sitemap.\n- how_to_check: Crawl lại và kiểm tra GSC.\n- owner_role: SEO / Developer\n- priority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 75,
+          "text": "11.5. Lỗi 500\n- issue_code: server_500\n- severity: critical\n- description: URL trả lỗi server 5xx.\n- why_it_matters: Bot và người dùng không truy cập được nội dung.\n- how_to_fix:\n  1. Kiểm tra server log.\n  2. Tắt plugin/module gây lỗi nếu có.\n  3. Sửa code hoặc cấu hình server.\n  4. Crawl lại sau khi sửa.\n- how_to_check: Crawl lại status code.\n- owner_role: Developer / Admin\n- priority_score: 100",
+          "embedded": false
+        },
+        {
+          "index": 76,
+          "text": "11.6. Soft 404\n- issue_code: soft_404\n- severity: medium\n- description: Trang trả 200 nhưng nội dung giống trang lỗi hoặc quá rỗng.\n- why_it_matters: Google có thể xem đây là trang kém chất lượng.\n- how_to_fix:\n  1. Nếu trang không tồn tại, trả 404 đúng.\n  2. Nếu trang cần tồn tại, bổ sung nội dung thật.\n  3. Gỡ khỏi sitemap nếu không cần index.\n- how_to_check: Kiểm tra nội dung và GSC.\n- owner_role: SEO / Developer\n- priority_score: 70\n\n============================================================\n12. MOBILE\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 77,
+          "text": "Mục tiêu:\nKiểm tra khả năng hiển thị và trải nghiệm trên thiết bị di động.\n\nChecklist cần kiểm tra:\n\n12.1. Thiếu viewport meta\n- issue_code: missing_viewport\n- severity: high\n- description: Trang thiếu viewport meta.\n- why_it_matters: Website có thể hiển thị sai trên mobile.\n- how_to_fix:\n  1. Thêm thẻ sau vào head:\n     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n- how_to_check: Kiểm tra source HTML.\n- owner_role: Developer\n- priority_score: 80",
+          "embedded": false
+        },
+        {
+          "index": 78,
+          "text": "12.2. Font quá nhỏ\n- issue_code: small_font_mobile\n- severity: medium\n- description: Chữ trên mobile quá nhỏ.\n- why_it_matters: Người dùng khó đọc và trải nghiệm kém.\n- how_to_fix:\n  1. Đặt font body tối thiểu khoảng 16px.\n  2. Tăng line-height.\n  3. Kiểm tra lại trên màn hình nhỏ.\n- how_to_check: Test mobile viewport.\n- owner_role: Developer / Designer\n- priority_score: 55",
+          "embedded": false
+        },
+        {
+          "index": 79,
+          "text": "12.3. Tap target quá gần nhau\n- issue_code: tap_targets_too_close\n- severity: medium\n- description: Link hoặc nút bấm quá gần nhau trên mobile.\n- why_it_matters: Người dùng dễ bấm nhầm.\n- how_to_fix:\n  1. Tăng padding nút.\n  2. Tăng khoảng cách giữa các link.\n  3. Đảm bảo vùng bấm đủ lớn.\n- how_to_check: Test mobile layout.\n- owner_role: Developer / Designer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 80,
+          "text": "12.4. Trang bị tràn ngang\n- issue_code: horizontal_overflow_mobile\n- severity: high\n- description: Trang có scroll ngang trên mobile.\n- why_it_matters: Trải nghiệm mobile kém và có thể ảnh hưởng đánh giá mobile friendly.\n- how_to_fix:\n  1. Tìm phần tử có width cố định lớn hơn viewport.\n  2. Sửa CSS max-width: 100%.\n  3. Với bảng, dùng wrapper overflow-x:auto.\n  4. Với ảnh, dùng max-width:100%; height:auto.\n- how_to_check: Test mobile viewport.\n- owner_role: Developer\n- priority_score: 75",
+          "embedded": false
+        },
+        {
+          "index": 81,
+          "text": "12.5. Ảnh không responsive\n- issue_code: non_responsive_image\n- severity: medium\n- description: Ảnh không co giãn theo màn hình.\n- why_it_matters: Gây tràn layout và trải nghiệm kém.\n- how_to_fix:\n  1. Thêm CSS max-width:100%; height:auto.\n  2. Dùng srcset nếu cần ảnh responsive.\n- how_to_check: Test trên mobile.\n- owner_role: Developer\n- priority_score: 60",
+          "embedded": false
+        },
+        {
+          "index": 82,
+          "text": "12.6. Menu mobile khó dùng\n- issue_code: mobile_menu_usability_issue\n- severity: medium\n- description: Menu mobile khó bấm hoặc không hoạt động tốt.\n- why_it_matters: Người dùng khó điều hướng, làm giảm chuyển đổi.\n- how_to_fix:\n  1. Kiểm tra menu hamburger.\n  2. Tăng vùng bấm.\n  3. Đảm bảo menu không che nội dung quan trọng.\n- how_to_check: Test trên mobile thật hoặc responsive mode.\n- owner_role: Developer / Designer\n- priority_score: 55\n\n============================================================\n13. QUỐC TẾ\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 83,
+          "text": "Mục tiêu:\nKiểm tra lang, hreflang và tín hiệu ngôn ngữ/quốc gia.\n\nChecklist cần kiểm tra:\n\n13.1. Thiếu thuộc tính lang\n- issue_code: missing_html_lang\n- severity: medium\n- description: Thẻ html thiếu thuộc tính lang.\n- why_it_matters: Giúp công cụ tìm kiếm và trình đọc màn hình hiểu ngôn ngữ trang.\n- how_to_fix:\n  1. Nếu website tiếng Việt, thêm <html lang=\"vi\">.\n  2. Nếu tiếng Anh, thêm <html lang=\"en\">.\n- how_to_check: Kiểm tra source HTML.\n- owner_role: Developer / SEO\n- priority_score: 50",
+          "embedded": false
+        },
+        {
+          "index": 84,
+          "text": "13.2. Thiếu hreflang trên website đa ngôn ngữ\n- issue_code: missing_hreflang\n- severity: medium\n- description: Website đa ngôn ngữ nhưng thiếu hreflang.\n- why_it_matters: Google khó phân phối đúng phiên bản ngôn ngữ/quốc gia.\n- how_to_fix:\n  1. Thêm hreflang cho từng phiên bản ngôn ngữ.\n  2. Đảm bảo hreflang trỏ hai chiều.\n  3. Thêm x-default nếu phù hợp.\n- how_to_check: Crawl hreflang.\n- owner_role: SEO / Developer\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 85,
+          "text": "13.3. Hreflang sai URL hoặc sai mã ngôn ngữ\n- issue_code: invalid_hreflang\n- severity: medium\n- description: Hreflang dùng mã sai hoặc trỏ URL lỗi.\n- why_it_matters: Có thể làm Google chọn sai phiên bản trang.\n- how_to_fix:\n  1. Kiểm tra mã ngôn ngữ như vi, en, en-us.\n  2. Đảm bảo URL hreflang trả 200.\n  3. Đảm bảo canonical và hreflang không mâu thuẫn.\n- how_to_check: Crawl hreflang.\n- owner_role: SEO / Developer\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 86,
+          "text": "13.4. Nội dung trộn nhiều ngôn ngữ\n- issue_code: mixed_language_content\n- severity: low\n- description: Một trang trộn nhiều ngôn ngữ không có cấu trúc rõ ràng.\n- why_it_matters: Có thể làm giảm trải nghiệm và tín hiệu ngôn ngữ.\n- how_to_fix:\n  1. Tách nội dung theo ngôn ngữ.\n  2. Dùng URL riêng cho từng ngôn ngữ nếu cần.\n- how_to_check: Kiểm tra nội dung trang.\n- owner_role: Content / SEO\n- priority_score: 35\n\n============================================================\n14. KHÁC\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 87,
+          "text": "Mục tiêu:\nKiểm tra các yếu tố hỗ trợ vận hành, tracking, accessibility và kiểm soát URL.\n\nChecklist cần kiểm tra:\n\n14.1. Thiếu GA4 hoặc GTM\n- issue_code: missing_ga4_gtm\n- severity: low\n- description: Website chưa cài GA4 hoặc GTM.\n- why_it_matters: Khó đo lường traffic và chuyển đổi.\n- how_to_fix:\n  1. Cài GA4 hoặc GTM.\n  2. Kiểm tra page_view và event quan trọng.\n  3. Test bằng DebugView hoặc Tag Assistant.\n- how_to_check: Kiểm tra source hoặc Tag Assistant.\n- owner_role: Marketing / Developer\n- priority_score: 45",
+          "embedded": false
+        },
+        {
+          "index": 88,
+          "text": "14.2. Thiếu favicon\n- issue_code: missing_favicon\n- severity: low\n- description: Website không có favicon.\n- why_it_matters: Ảnh hưởng nhận diện thương hiệu và trải nghiệm trình duyệt.\n- how_to_fix:\n  1. Thêm favicon chuẩn.\n  2. Kiểm tra hiển thị trên trình duyệt.\n- how_to_check: Mở website và kiểm tra favicon.\n- owner_role: Developer / Designer\n- priority_score: 25",
+          "embedded": false
+        },
+        {
+          "index": 89,
+          "text": "14.3. Trang 404 nghèo nàn\n- issue_code: poor_404_page\n- severity: low\n- description: Trang 404 không có điều hướng hữu ích.\n- why_it_matters: Người dùng dễ thoát khỏi website.\n- how_to_fix:\n  1. Thêm thông báo lỗi thân thiện.\n  2. Thêm ô tìm kiếm hoặc link về trang chủ.\n  3. Gợi ý danh mục/bài viết phổ biến.\n- how_to_check: Truy cập URL không tồn tại.\n- owner_role: Developer / UX\n- priority_score: 35",
+          "embedded": false
+        },
+        {
+          "index": 90,
+          "text": "14.4. URL parameter tạo trùng lặp\n- issue_code: duplicate_parameter_urls\n- severity: medium\n- description: URL có parameter như ?sort=, ?filter= tạo nhiều trang trùng nội dung.\n- why_it_matters: Gây duplicate content và lãng phí crawl budget.\n- how_to_fix:\n  1. Xác định parameter không cần index.\n  2. Thêm canonical về URL gốc.\n  3. Không đưa URL parameter vào sitemap.\n  4. Chặn crawl parameter không quan trọng nếu phù hợp.\n- how_to_check: Crawl URL parameter và kiểm tra canonical.\n- owner_role: SEO / Developer\n- priority_score: 65",
+          "embedded": false
+        },
+        {
+          "index": 91,
+          "text": "14.5. Thiếu dữ liệu log server\n- issue_code: missing_server_log_data\n- severity: low\n- description: Chưa có log server để phân tích bot crawl nâng cao.\n- why_it_matters: Khó biết Googlebot crawl URL nào, tần suất ra sao, lỗi gì.\n- how_to_fix:\n  1. Thu thập access log.\n  2. Lọc Googlebot thật.\n  3. Phân tích crawl budget và lỗi server.\n- how_to_check: Kiểm tra hệ thống log.\n- owner_role: Admin / Developer / SEO\n- priority_score: 35",
+          "embedded": false
+        },
+        {
+          "index": 92,
+          "text": "14.6. Thiếu checklist backup trước khi sửa technical lớn\n- issue_code: missing_backup_before_deploy\n- severity: medium\n- description: Không có quy trình backup trước khi chỉnh sửa technical SEO lớn.\n- why_it_matters: Dễ mất dữ liệu hoặc làm hỏng website khi deploy.\n- how_to_fix:\n  1. Backup database và source code.\n  2. Test thay đổi trên staging.\n  3. Có kế hoạch rollback.\n- how_to_check: Kiểm tra quy trình deploy.\n- owner_role: Admin / Developer\n- priority_score: 55",
+          "embedded": false
+        },
+        {
+          "index": 93,
+          "text": "============================================================\nFORMAT OUTPUT GỢI Ý CHO AI KHI TRẢ LỜI NGƯỜI DÙNG\n============================================================\n\nKhi hệ thống phát hiện lỗi, hãy trả kết quả theo format:\n\nLỗi: [issue_name]\nNhóm: [pillar]\nMức độ: [severity]\nURL bị ảnh hưởng: [affected_url]\n\nVì sao quan trọng:\n[why_it_matters]\n\nNguyên nhân thường gặp:\n- Nguyên nhân 1\n- Nguyên nhân 2\n- Nguyên nhân 3\n\nHướng xử lý:\n1. Bước xử lý 1\n2. Bước xử lý 2\n3. Bước xử lý 3\n\nNgười nên xử lý:\n[owner_role]\n\nƯu tiên:\n[priority_score]/100\n\nCách kiểm tra lại:\n[how_to_check]",
+          "embedded": false
+        },
+        {
+          "index": 94,
+          "text": "============================================================\nƯU TIÊN XỬ LÝ TECHNICAL SEO\n============================================================\n\nƯu tiên rất cao:\n1. Website không truy cập được\n2. Robots.txt chặn toàn site\n3. Trang cần SEO bị noindex\n4. HTTPS lỗi hoặc SSL hết hạn\n5. Redirect loop\n6. Lỗi server 500\n7. HTTP/HTTPS duplicate\n8. Canonical trỏ sai\n\nƯu tiên cao:\n1. Missing title\n2. Missing H1\n3. Missing canonical\n4. Duplicate title\n5. Sitemap chứa URL 404/noindex\n6. Redirect chain\n7. Trang 404 có internal link hoặc backlink\n8. Ảnh lỗi 404\n9. LCP/INP/CLS kém\n10. URL timeout",
+          "embedded": false
+        },
+        {
+          "index": 95,
+          "text": "Ưu tiên trung bình:\n1. Thiếu meta description\n2. Heading sai cấu trúc\n3. Meta trùng lặp\n4. Ảnh thiếu ALT\n5. Thiếu schema\n6. Mixed content\n7. Mobile overflow\n8. WWW/non-WWW duplicate\n\nƯu tiên thấp:\n1. Thiếu favicon\n2. Tên file ảnh chưa tối ưu\n3. Thiếu transcript video\n4. Thiếu security headers phụ\n5. Trang 404 chưa thân thiện\n\n============================================================\nQUY TẮC CHO AI KHI DÙNG FILE NÀY\n============================================================",
+          "embedded": false
+        },
+        {
+          "index": 96,
+          "text": "1. Không chỉ báo lỗi, phải luôn đưa hướng xử lý cụ thể.\n2. Không kết luận quá chắc nếu crawl trust_level thấp.\n3. Nếu thiếu dữ liệu API như PageSpeed hoặc GSC, phải ghi rõ “Chưa có dữ liệu API, chỉ đánh giá theo heuristic”.\n4. Không tự bịa số liệu PageSpeed, GSC, traffic hoặc ranking.\n5. Với lỗi nghiêm trọng như noindex, robots disallow all, SSL expired, redirect loop, server 500, phải đánh dấu ưu tiên xử lý ngay.\n6. Với lỗi content như title, meta, heading, thin content, người xử lý chính là SEO/Content.\n7. Với lỗi server, HTTPS, redirect, mobile layout, tốc độ, người xử lý chính là Developer",
+          "embedded": false
+        },
+        {
+          "index": 97,
+          "text": "i server, HTTPS, redirect, mobile layout, tốc độ, người xử lý chính là Developer/Admin.\n8. Với lỗi ảnh, schema, internal link, người xử lý có thể là SEO/Content/Developer tùy mức độ.",
+          "embedded": false
+        }
+      ],
+      "created_at": "2026-05-19T14:51:08.657414+00:00",
+      "updated_at": "2026-05-19T14:51:08.657414+00:00"
+    },
+    {
+      "id": "da145920-c8e0-4299-a560-026973cdde82",
+      "filename": "global-seo-knowledge-graph-dung-chung.txt",
+      "title": "global-seo-knowledge-graph-dung-chung",
+      "content_format": "text",
+      "char_count": 18775,
+      "token_estimate": 4693,
+      "chunks": [
+        {
+          "index": 0,
+          "text": "GLOBAL SEO KNOWLEDGE GRAPH\nSƠ ĐỒ TRI THỨC SEO DÙNG CHUNG CHO TẤT CẢ WEBSITE\n\nMục đích:\nTài liệu này dùng làm Global Knowledge Base / Global SEO Knowledge Graph cho web app BeeSEO + Content SEO.\nDữ liệu trong file này là kiến thức SEO nền tảng dùng chung cho mọi website, không chứa thông tin riêng của từng thương hiệu, website, dịch vụ, bảng giá, hotline hoặc case study cụ thể.",
+          "embedded": false
+        },
+        {
+          "index": 1,
+          "text": "Nguyên tắc sử dụng:\n- Dùng cho tất cả user và tất cả website.\n- Dùng để AI hiểu Technical SEO, Content SEO, Search Intent, Schema, Image SEO, Local SEO, EEAT, CTA và cách xử lý lỗi.\n- Dữ liệu riêng từng website nên đưa vào Project Knowledge Base, không đưa vào Global Knowledge Graph.\n- Khi AI không có dữ liệu riêng về giá, cam kết, số liệu, case study thì không được tự bịa.\n- Nếu thiếu dữ liệu, AI phải ghi: “Cần bổ sung dữ liệu”.\n\n==================================================\n1. TECHNICAL SEO KNOWLEDGE\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 2,
+          "text": "Các nhóm Technical SEO dùng chung:\n- SEO cơ bản\n- GSC & lập chỉ mục\n- Website\n- Sitemap\n- Robots.txt\n- Schema\n- Hình ảnh\n- Video\n- Tốc độ\n- HTTPS & bảo mật\n- Mã phản hồi HTTP\n- Mobile\n- Quốc tế / hreflang\n- Khác: DNS, CDN, log server, tracking, backup\n\nMỗi lỗi Technical SEO nên có:\n- issue_code\n- issue_name\n- pillar\n- severity: critical | high | medium | low\n- description\n- why_it_matters\n- how_to_check\n- how_to_fix\n- owner_role: SEO | Content | Developer | Admin\n- priority_score\n- affected_urls\n- status: new | fixed | ignored | need_review",
+          "embedded": false
+        },
+        {
+          "index": 3,
+          "text": "Ví dụ:\nissue_code: missing_title\nissue_name: Thiếu SEO title\npillar: SEO cơ bản\nseverity: high\ndescription: Trang chưa có thẻ title.\nwhy_it_matters: Google khó hiểu chủ đề trang, có thể ảnh hưởng xếp hạng và CTR.\nhow_to_check: Crawl URL hoặc kiểm tra thẻ <title> trong source HTML.\nhow_to_fix:\n1. Thêm title dưới 60 ký tự.\n2. Chèn từ khóa chính tự nhiên.\n3. Thêm lợi ích rõ ràng hoặc yếu tố khác biệt.\n4. Crawl lại URL để kiểm tra.\nowner_role: SEO / Content\npriority_score: 85",
+          "embedded": false
+        },
+        {
+          "index": 4,
+          "text": "==================================================\n2. CONTENT SEO KNOWLEDGE\n==================================================\n\nCác nhóm tri thức Content SEO:\n- Cách viết SEO Title\n- Cách viết Meta Description\n- Cách tạo H1, H2, H3\n- Cách viết mở bài chuẩn SEO\n- Cách phân bổ từ khóa chính\n- Cách dùng từ khóa phụ / semantic keywords\n- Cách tối ưu internal link\n- Cách dùng external link\n- Cách viết FAQ\n- Cách tối ưu Featured Snippet\n- Cách viết CTA\n- Cách tăng EEAT\n- Cách tuân thủ Helpful Content",
+          "embedded": false
+        },
+        {
+          "index": 5,
+          "text": "Nguyên tắc viết SEO Title:\n- Dưới 60 ký tự.\n- Có từ khóa chính.\n- Nêu rõ lợi ích hoặc kết quả.\n- Không nhồi nhét từ khóa.\n- Có thể thêm địa phương nếu là Local SEO.\n- Có thể thêm thương hiệu nếu phù hợp.\n\nNguyên tắc viết Meta Description:\n- Độ dài 140–160 ký tự.\n- Có từ khóa chính.\n- Có lợi ích rõ ràng.\n- Có CTA nhẹ.\n- Không nhồi nhét từ khóa.\n- Không viết chung chung.\n\nNguyên tắc viết H1:\n- Mỗi trang chỉ nên có 1 H1 chính.\n- H1 nên chứa chủ đề chính hoặc từ khóa chính.\n- H1 phải đúng search intent.\n- Không dùng H1 quá dài hoặc quá chung chung.",
+          "embedded": false
+        },
+        {
+          "index": 6,
+          "text": "Nguyên tắc viết H2/H3:\n- H2 chia các ý lớn.\n- H3 giải thích chi tiết cho từng H2.\n- Heading phải có logic từ tổng quan đến chi tiết.\n- Không lặp ý giữa các heading.\n- Không tạo outline sơ sài kiểu chỉ có “Định nghĩa”, “Lợi ích”, “Tiêu chí lựa chọn” nếu không đủ intent.\n\nNguyên tắc mở bài:\n- Nêu đúng vấn đề người đọc đang gặp.\n- Có từ khóa chính trong 100 từ đầu.\n- Trả lời nhanh người đọc sẽ nhận được gì.\n- Không vòng vo.",
+          "embedded": false
+        },
+        {
+          "index": 7,
+          "text": "Nguyên tắc Helpful Content:\n- Nội dung phải giúp người đọc giải quyết vấn đề.\n- Có ví dụ thực tế nếu phù hợp.\n- Có checklist, bảng, quy trình hoặc FAQ nếu cần.\n- Không viết chỉ để nhồi từ khóa.\n- Không bịa số liệu, giá, cam kết hoặc case study.\n\n==================================================\n3. SEARCH INTENT KNOWLEDGE\n==================================================\n\nCác loại search intent:\n1. Informational\nNgười dùng muốn tìm thông tin, kiến thức, hướng dẫn.\nVí dụ: “technical seo là gì”, “cách viết bài chuẩn seo”.",
+          "embedded": false
+        },
+        {
+          "index": 8,
+          "text": "2. Commercial\nNgười dùng đang so sánh, cân nhắc giải pháp, dịch vụ hoặc sản phẩm.\nVí dụ: “dịch vụ seo tổng thể tốt nhất”, “nên học seo ở đâu”.\n\n3. Transactional\nNgười dùng có ý định mua, đăng ký, thuê dịch vụ hoặc hành động ngay.\nVí dụ: “thuê dịch vụ seo”, “đăng ký khóa học seo”.\n\n4. Navigational\nNgười dùng tìm một thương hiệu, website hoặc công cụ cụ thể.\nVí dụ: “Ahrefs login”, “Google Search Console”.\n\n5. Local Intent\nNgười dùng tìm dịch vụ theo khu vực.\nVí dụ: “sửa máy tính tận nơi TP.HCM”, “dịch vụ seo Hà Nội”.",
+          "embedded": false
+        },
+        {
+          "index": 9,
+          "text": "Quy tắc:\n- Keyword local cần outline có khu vực phục vụ, quy trình, giá, cam kết, FAQ, CTA.\n- Keyword dịch vụ cần outline có ai nên dùng, dịch vụ gồm gì, quy trình, bảng giá, lý do chọn, FAQ, CTA.\n- Keyword khóa học cần outline có ai nên học, học được gì, lộ trình, thực hành, giảng viên, học phí, FAQ, CTA.\n- Keyword thông tin cần outline có định nghĩa, lợi ích, cách làm, lỗi thường gặp, ví dụ, FAQ.\n\n==================================================\n4. KEYWORD RESEARCH KNOWLEDGE\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 10,
+          "text": "Các khái niệm:\n- Seed keyword\n- Keyword ideas\n- Search volume\n- CPC\n- Competition\n- Keyword difficulty\n- Search intent\n- Funnel stage\n- Main keyword\n- Secondary keyword\n- Semantic keyword\n- Entity keyword\n- Long-tail keyword\n- Keyword cluster\n- Pillar page\n- Supporting article",
+          "embedded": false
+        },
+        {
+          "index": 11,
+          "text": "Quy tắc:\n- Không dùng AI để tự bịa search volume.\n- Volume, CPC, competition nên lấy từ DataForSEO, Google Ads API hoặc nguồn dữ liệu thật.\n- AI dùng để phân loại intent, gom nhóm keyword, đặt tên cluster, chọn main keyword, gợi ý content type và tạo outline.\n- Mỗi cluster nên có 1 main keyword và nhiều supporting keywords.\n- Không gom chung keyword khác intent vào cùng một bài.\n- Keyword transactional nên ưu tiên landing page/dịch vụ.\n- Keyword informational nên ưu tiên blog/hướng dẫn.\n- Keyword local nên có địa phương và CTA rõ ràng.",
+          "embedded": false
+        },
+        {
+          "index": 12,
+          "text": "Ví dụ cluster:\ncluster_name: Dịch vụ SEO tổng thể\nmain_keyword: dịch vụ seo tổng thể\nsupporting_keywords:\n- báo giá seo tổng thể\n- công ty seo tổng thể\n- quy trình seo tổng thể\n- seo tổng thể là gì\nintent: commercial / transactional\ncontent_type: landing page dịch vụ\n\n==================================================\n5. SEO OUTLINE PATTERNS\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 13,
+          "text": "Các mẫu outline dùng chung:\n- Outline cho bài thông tin\n- Outline cho bài dịch vụ\n- Outline cho bài Local SEO\n- Outline cho bài khóa học\n- Outline cho bài sản phẩm\n- Outline cho bài so sánh\n- Outline cho bài review\n- Outline cho landing page\n- Outline cho bài blog hướng dẫn\n\nMẫu outline cho bài dịch vụ:\nH1: Dịch vụ [tên dịch vụ] uy tín\n\nH2: Dịch vụ [tên dịch vụ] là gì?\nH2: Ai nên sử dụng dịch vụ này?\nH2: Dịch vụ bao gồm những hạng mục nào?\nH2: Quy trình thực hiện\nH2: Bảng giá hoặc yếu tố ảnh hưởng đến chi phí\nH2: Vì sao nên chọn đơn vị uy tín?\nH2: Câu hỏi thường gặp\nH2: Liên hệ tư vấn / CTA",
+          "embedded": false
+        },
+        {
+          "index": 14,
+          "text": "Mẫu outline cho Local SEO:\nH1: [Dịch vụ] tại [Khu vực]\n\nH2: Dịch vụ phù hợp với ai?\nH2: Các vấn đề thường gặp\nH2: Dịch vụ/hạng mục hỗ trợ\nH2: Quy trình hỗ trợ tại khu vực\nH2: Bảng giá hoặc yếu tố ảnh hưởng chi phí\nH2: Khu vực phục vụ\nH2: Cam kết / bảo hành\nH2: Câu hỏi thường gặp\nH2: Liên hệ ngay\n\nMẫu outline cho bài khóa học:\nH1: Khóa học [chủ đề] cho [đối tượng]",
+          "embedded": false
+        },
+        {
+          "index": 15,
+          "text": "H2: Ai nên tham gia khóa học này?\nH2: Sau khóa học bạn sẽ làm được gì?\nH2: Lộ trình học gồm những phần nào?\nH2: Nội dung thực hành / dự án mẫu\nH2: Giảng viên hoặc người hướng dẫn\nH2: Học phí và hình thức học\nH2: Hỗ trợ sau khóa học\nH2: Câu hỏi thường gặp\nH2: Đăng ký tư vấn / CTA\n\nMẫu outline cho bài sản phẩm:\nH1: [Tên sản phẩm] có đáng mua không?\n\nH2: Tổng quan về sản phẩm\nH2: Sản phẩm phù hợp với ai?\nH2: Tính năng nổi bật\nH2: Lợi ích khi sử dụng\nH2: So sánh với lựa chọn khác\nH2: Giá bán / ưu đãi\nH2: Câu hỏi thường gặp\nH2: Mua ở đâu / CTA",
+          "embedded": false
+        },
+        {
+          "index": 16,
+          "text": "Mẫu outline cho bài review:\nH1: Review [sản phẩm/dịch vụ] chi tiết\n\nH2: Tổng quan nhanh\nH2: Điểm mạnh\nH2: Điểm hạn chế\nH2: Trải nghiệm thực tế\nH2: So sánh với lựa chọn khác\nH2: Có nên mua/sử dụng không?\nH2: FAQ\nH2: CTA\n\n==================================================\n6. SCHEMA KNOWLEDGE\n==================================================\n\nCác loại schema dùng chung:\n- Article\n- BlogPosting\n- FAQPage\n- BreadcrumbList\n- LocalBusiness\n- Product\n- Service\n- Course\n- Organization\n- WebSite\n- VideoObject\n- Review",
+          "embedded": false
+        },
+        {
+          "index": 17,
+          "text": "Quy tắc chọn schema:\n- Bài blog: Article hoặc BlogPosting.\n- Trang dịch vụ: Service + BreadcrumbList + FAQPage nếu có FAQ.\n- Website doanh nghiệp địa phương: LocalBusiness.\n- Trang sản phẩm: Product + Review nếu có đánh giá thật.\n- Trang khóa học: Course.\n- Trang có video: VideoObject.\n- Trang có FAQ: FAQPage.\n- Website tổng thể: Organization hoặc WebSite.",
+          "embedded": false
+        },
+        {
+          "index": 18,
+          "text": "Lỗi schema thường gặp:\n- Không có schema.\n- JSON-LD lỗi cú pháp.\n- Dùng sai schema type.\n- Thiếu field quan trọng.\n- Duplicate schema.\n- FAQPage thiếu acceptedAnswer.\n- BreadcrumbList sai thứ tự.\n- Product schema thiếu price hoặc availability.\n- LocalBusiness thiếu NAP: name, address, phone.\n\nHướng xử lý:\n- Chọn schema đúng loại trang.\n- Kiểm tra JSON-LD hợp lệ.\n- Bổ sung field bắt buộc.\n- Test lại bằng Schema Markup Validator hoặc Rich Results Test.\n- Không bịa review, rating, giá nếu không có dữ liệu thật.",
+          "embedded": false
+        },
+        {
+          "index": 19,
+          "text": "==================================================\n7. IMAGE SEO KNOWLEDGE\n==================================================\n\nCác tiêu chí Image SEO:\n- ALT text chuẩn SEO.\n- Tên file ảnh thân thiện SEO.\n- Kích thước ảnh phù hợp.\n- Định dạng WebP nếu có thể.\n- Nén ảnh giảm dung lượng.\n- Lazy loading.\n- Có width/height.\n- Ảnh đại diện bài viết.\n- Ảnh trong bài theo từng H2/H3.\n- Prompt tạo ảnh theo ngữ cảnh.",
+          "embedded": false
+        },
+        {
+          "index": 20,
+          "text": "Quy tắc ảnh blog:\n- Kích thước mặc định: 1200x675.\n- Thumbnail/Facebook share: 1200x630.\n- Định dạng ưu tiên: WebP.\n- ALT mô tả đúng nội dung ảnh.\n- Không nhồi nhét từ khóa.\n- Có width/height để giảm CLS.\n- Không dùng link local khi publish lên website.\n- Ảnh phải có URL public hợp lệ khi đăng lên WordPress/Haravan/custom website.\n\nVí dụ ALT tốt:\nalt=\"Kỹ thuật viên sửa máy tính tận nơi tại TP.HCM\"\nalt=\"Dashboard kiểm tra lỗi Technical SEO của website\"\nalt=\"Quy trình nghiên cứu từ khóa cho bài viết SEO\"\n\nVí dụ ALT xấu:\nalt=\"seo seo seo\"\nalt=\"image1\"\nalt=\"ảnh đẹp\"",
+          "embedded": false
+        },
+        {
+          "index": 21,
+          "text": "==================================================\n8. LOCAL SEO KNOWLEDGE\n==================================================\n\nCác yếu tố Local SEO:\n- Tên dịch vụ + địa phương.\n- Khu vực phục vụ.\n- Google Business Profile.\n- NAP: Name, Address, Phone.\n- LocalBusiness schema.\n- Review/đánh giá thật.\n- Bản đồ.\n- Hotline.\n- Giờ làm việc.\n- Trang quận/huyện.\n- Nội dung theo địa phương.\n- CTA đặt lịch/gọi điện.\n\nMẫu outline Local SEO:\nH1: [Dịch vụ] tại [Khu vực]",
+          "embedded": false
+        },
+        {
+          "index": 22,
+          "text": "H2: Dịch vụ [tên dịch vụ] tại [khu vực] phù hợp với ai?\nH2: Các vấn đề khách hàng thường gặp\nH2: Các hạng mục dịch vụ hỗ trợ\nH2: Quy trình tiếp nhận và xử lý\nH2: Bảng giá hoặc yếu tố ảnh hưởng chi phí\nH2: Khu vực phục vụ\nH2: Vì sao nên chọn đơn vị uy tín?\nH2: Câu hỏi thường gặp\nH2: Liên hệ đặt lịch / CTA\n\nQuy tắc:\n- Có địa phương trong title/H1 nếu keyword local.\n- Có khu vực phục vụ cụ thể.\n- Có hotline/CTA rõ ràng.\n- Có FAQ liên quan đến thời gian, chi phí, bảo hành, quy trình.\n- Có LocalBusiness schema nếu phù hợp.",
+          "embedded": false
+        },
+        {
+          "index": 23,
+          "text": "==================================================\n9. EEAT & HELPFUL CONTENT KNOWLEDGE\n==================================================\n\nEEAT gồm:\n- Experience: kinh nghiệm thực tế.\n- Expertise: chuyên môn.\n- Authoritativeness: độ uy tín.\n- Trustworthiness: độ tin cậy.\n\nCác yếu tố tăng EEAT:\n- Tác giả rõ ràng.\n- Kinh nghiệm thực tế.\n- Quy trình thực tế.\n- Case study thật.\n- Feedback khách hàng thật.\n- Nguồn tham khảo uy tín.\n- Thông tin liên hệ rõ ràng.\n- Chính sách minh bạch.\n- Cập nhật nội dung định kỳ.\n- Không bịa số liệu, giá, cam kết.",
+          "embedded": false
+        },
+        {
+          "index": 24,
+          "text": "Quy tắc Helpful Content:\n- Viết cho người đọc trước, SEO sau.\n- Trả lời đúng vấn đề tìm kiếm.\n- Có ví dụ, quy trình, checklist.\n- Tránh nội dung chung chung.\n- Không copy hoặc xào lại vô giá trị.\n- Không tạo nội dung chỉ để thao túng công cụ tìm kiếm.\n\nQuy tắc an toàn:\n- Nếu Knowledge Base không có giá, không tự tạo giá.\n- Nếu Knowledge Base không có cam kết, không tự tạo cam kết.\n- Nếu Knowledge Base không có case study, không tự tạo case study.\n- Nếu thiếu dữ liệu, ghi: “Cần bổ sung dữ liệu”.",
+          "embedded": false
+        },
+        {
+          "index": 25,
+          "text": "==================================================\n10. CTA & CONVERSION KNOWLEDGE\n==================================================\n\nCác loại CTA:\n- Gọi điện.\n- Inbox.\n- Đăng ký tư vấn.\n- Nhận báo giá.\n- Đặt lịch.\n- Tải tài liệu.\n- Tham gia Zoom.\n- Dùng thử.\n- Đăng ký tài khoản.\n- Nhận audit miễn phí.\n\nMẫu CTA:\n- Gọi ngay để được tư vấn.\n- Đăng ký nhận báo giá chi tiết.\n- Nhận kiểm tra website miễn phí.\n- Đặt lịch tư vấn 1:1.\n- Inbox để được hỗ trợ nhanh.\n- Đăng ký dùng thử ngay hôm nay.\n- Nhận kế hoạch SEO sơ bộ miễn phí.",
+          "embedded": false
+        },
+        {
+          "index": 26,
+          "text": "Quy tắc CTA:\n- CTA phải phù hợp intent.\n- Bài informational dùng CTA nhẹ.\n- Bài dịch vụ dùng CTA mạnh hơn.\n- Bài local dùng CTA gọi điện/đặt lịch.\n- Landing page cần CTA lặp lại ở nhiều vị trí hợp lý.\n- Không dùng CTA quá nhiều gây khó chịu.\n\n==================================================\n11. WEBSITE TYPE KNOWLEDGE\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 27,
+          "text": "Các loại website:\n- Website dịch vụ.\n- Website bán hàng.\n- Website tin tức/blog.\n- Website khóa học.\n- Website SaaS/tool.\n- Website affiliate.\n- Website local business.\n- Website doanh nghiệp.\n- Website cá nhân/thương hiệu cá nhân.\n\nWebsite dịch vụ cần:\n- Trang dịch vụ chính.\n- Trang dịch vụ con.\n- Quy trình.\n- Bảng giá/yếu tố ảnh hưởng giá.\n- FAQ.\n- Case study nếu có.\n- CTA tư vấn.\n- Schema Service/LocalBusiness nếu phù hợp.",
+          "embedded": false
+        },
+        {
+          "index": 28,
+          "text": "Website bán hàng cần:\n- Danh mục sản phẩm.\n- Trang sản phẩm.\n- Mô tả sản phẩm.\n- Review thật.\n- Chính sách giao hàng/đổi trả.\n- Product schema.\n- Tối ưu ảnh sản phẩm.\n- CTA mua hàng.\n\nWebsite khóa học cần:\n- Trang khóa học.\n- Đối tượng học viên.\n- Lộ trình học.\n- Kết quả sau học.\n- Giảng viên.\n- Học phí.\n- FAQ.\n- CTA đăng ký.\n- Course schema.\n\nWebsite SaaS/tool cần:\n- Tính năng.\n- Use case.\n- Bảng giá.\n- Demo.\n- So sánh.\n- Tài liệu hướng dẫn.\n- FAQ.\n- CTA dùng thử.",
+          "embedded": false
+        },
+        {
+          "index": 29,
+          "text": "Website affiliate cần:\n- Review sản phẩm.\n- So sánh.\n- Ưu/nhược điểm.\n- Trải nghiệm thực tế nếu có.\n- Disclosure affiliate.\n- CTA mua hàng.\n\n==================================================\n12. SEO ERROR FIX KNOWLEDGE BY ROLE\n==================================================\n\nSEO xử lý:\n- SEO title.\n- Meta description.\n- Heading.\n- Canonical cơ bản.\n- Sitemap submit.\n- Internal link.\n- Thin content.\n- Search intent.\n- Keyword mapping.\n- CTR thấp.",
+          "embedded": false
+        },
+        {
+          "index": 30,
+          "text": "Content xử lý:\n- Bổ sung nội dung.\n- Viết FAQ.\n- Tối ưu CTA.\n- Tối ưu ALT ảnh.\n- Viết lại mở bài.\n- Tăng ví dụ thực tế.\n- Viết lại title/meta theo intent.\n- Bổ sung bảng, checklist, quy trình.\n\nDeveloper xử lý:\n- HTTPS.\n- Redirect.\n- Robots.txt.\n- Schema code.\n- PageSpeed.\n- Mobile.\n- 404/500.\n- JS render.\n- Crawl trap.\n- Structured data lỗi kỹ thuật.\n\nAdmin/Hosting xử lý:\n- DNS.\n- CDN.\n- SSL.\n- Backup.\n- Server timeout.\n- Firewall.\n- Hosting.\n- Cache server.\n- Uptime.\n\n==================================================\n13. PROMPT TEMPLATES\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 31,
+          "text": "Prompt tạo outline SEO:\nBạn là chuyên gia Content SEO. Hãy tạo outline chuẩn SEO dựa trên keyword, search intent, loại website, loại keyword và dữ liệu Knowledge Base.\nKhông tạo outline sơ sài.\nOutline phải có H1, H2, H3 rõ ràng, bám intent, có FAQ và CTA.\nNếu là keyword local, bắt buộc có khu vực phục vụ, quy trình, chi phí/báo giá, bảo hành/cam kết và CTA.\nNếu thiếu dữ liệu thương hiệu, giá, cam kết hoặc case study thì ghi “Cần bổ sung dữ liệu”, không tự bịa.",
+          "embedded": false
+        },
+        {
+          "index": 32,
+          "text": "Prompt viết bài SEO:\nBạn là chuyên gia Content SEO và Technical SEO. Hãy viết bài chuẩn SEO theo Helpful Content và EEAT.\nOutput gồm: SEO title, meta description, slug, H1, outline H2/H3, bài viết HTML, FAQ, schema gợi ý, internal link gợi ý, external source gợi ý, ALT ảnh, checklist SEO.\nKhông nhồi nhét từ khóa.\nKhông bịa giá, số liệu, cam kết, case study.\nNếu thiếu dữ liệu thì ghi “Cần bổ sung dữ liệu”.",
+          "embedded": false
+        },
+        {
+          "index": 33,
+          "text": "Prompt tạo image prompt:\nTạo prompt ảnh bằng tiếng Anh dựa trên title, keyword, H2/H3 và nội dung section.\nẢnh phải đúng ngữ cảnh bài viết, phù hợp website chuyên nghiệp.\nKhông chèn chữ khó đọc lên ảnh.\nKhông dùng logo nếu chưa có file logo.\nOutput gồm: image_prompt, alt_text, caption, placement_after_heading.\n\nPrompt giải thích lỗi Technical SEO:\nGiải thích lỗi Technical SEO theo cấu trúc:\n- Lỗi gì\n- Vì sao quan trọng\n- URL bị ảnh hưởng\n- Nguyên nhân thường gặp\n- Hướng xử lý từng bước\n- Ai nên xử lý\n- Mức ưu tiên\n- Cách kiểm tra lại sau khi sửa",
+          "embedded": false
+        },
+        {
+          "index": 34,
+          "text": "Prompt gom nhóm keyword:\nDựa trên danh sách keyword và dữ liệu volume/CPC nếu có, hãy gom nhóm keyword theo intent và chủ đề.\nKhông tự bịa volume/CPC.\nOutput gồm: cluster_name, main_keyword, supporting_keywords, intent, funnel_stage, content_type, suggested_title, suggested_outline.\n\n==================================================\n14. AI SAFETY RULES\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 35,
+          "text": "Quy tắc bắt buộc:\n- Không bịa giá.\n- Không bịa cam kết.\n- Không bịa số liệu.\n- Không bịa case study.\n- Không bịa địa chỉ, hotline, chính sách.\n- Không dùng dữ liệu của website này cho website khác.\n- Không dùng Project Knowledge Base của user khác.\n- Không trả API key/token/secrets.\n- Nếu dữ liệu không có trong Knowledge Base, ghi “Cần bổ sung dữ liệu”.\n- Nếu không chắc, nói rõ là cần kiểm tra thêm.\n- Global Knowledge Graph chỉ dùng kiến thức chung.\n- Dữ liệu thương hiệu, dịch vụ, bảng giá, hotline, địa chỉ phải lấy từ Project Knowledge Base.",
+          "embedded": false
+        },
+        {
+          "index": 36,
+          "text": "==================================================\n15. GLOBAL VS PROJECT KNOWLEDGE\n==================================================\n\nGlobal Knowledge Graph dùng cho:\n- Kiến thức SEO nền tảng.\n- Checklist Technical SEO.\n- Quy tắc Content SEO.\n- Search intent.\n- Keyword research framework.\n- Outline pattern.\n- Schema pattern.\n- Image SEO.\n- Local SEO framework.\n- EEAT.\n- CTA framework.\n- Prompt template.\n- AI safety rules.",
+          "embedded": false
+        },
+        {
+          "index": 37,
+          "text": "Project Knowledge Base dùng cho:\n- Tên thương hiệu.\n- Website/domain.\n- Dịch vụ/sản phẩm.\n- Bảng giá.\n- Hotline.\n- Địa chỉ.\n- Khu vực phục vụ.\n- Chính sách.\n- Case study.\n- Feedback khách hàng.\n- FAQ riêng.\n- Tone of voice.\n- Internal link riêng.\n- Dữ liệu đối thủ.\n- Dữ liệu keyword riêng.\n\nQuy tắc ưu tiên khi AI tạo content:\nProject Knowledge Base > User Knowledge Base > Global Knowledge Graph\n\nNếu có xung đột:\n- Ưu tiên Project Knowledge Base.\n- Nếu Project KB thiếu, dùng User KB.\n- Nếu User KB thiếu, dùng Global Knowledge Graph.\n- Không tự suy diễn dữ liệu riêng nếu không có.",
+          "embedded": false
+        },
+        {
+          "index": 38,
+          "text": "KẾT LUẬN:\nGlobal Knowledge Graph là bộ não SEO nền dùng chung cho toàn hệ thống.\nNó giúp AI hiểu cách audit Technical SEO, tạo outline, viết content, gợi ý schema, tối ưu ảnh, phân loại intent và đưa hướng xử lý lỗi.\nMọi dữ liệu riêng của từng website phải được lưu ở Project Knowledge Base để tránh lẫn dữ liệu giữa các website.",
+          "embedded": false
+        }
+      ],
+      "created_at": "2026-05-19T15:11:22.232193+00:00",
+      "updated_at": "2026-05-19T15:11:22.232193+00:00"
+    },
+    {
+      "id": "cd46ab37-ef5d-4c38-bbeb-69abf57041bd",
+      "filename": "internal-link-knowledge-graph.txt",
+      "title": "internal-link-knowledge-graph",
+      "content_format": "text",
+      "char_count": 15618,
+      "token_estimate": 3904,
+      "chunks": [
+        {
+          "index": 0,
+          "text": "INTERNAL LINK KNOWLEDGE GRAPH\nSƠ ĐỒ TRI THỨC CHO TÍNH NĂNG INTERNAL LINK TRONG CONTENT AI\n\nMục đích:\nTài liệu này dùng để đưa vào Knowledge Base / Sơ đồ tri thức cho web app BeeSEO + Content SEO.\nMục tiêu là giúp hệ thống gợi ý và chèn internal link chính xác hơn, đúng ngữ cảnh hơn, không tự bịa URL, không link sai chủ đề và không gây lỗi SEO.",
+          "embedded": false
+        },
+        {
+          "index": 1,
+          "text": "Nguyên tắc cốt lõi:\n- AI không được tự tạo URL.\n- Chỉ được chọn URL từ danh sách URL nội bộ đã crawl/import.\n- Không chèn link nếu URL chưa được xác thực.\n- Không đi link chỉ theo keyword, phải dựa trên ngữ cảnh nội dung.\n- Không tự động apply toàn bộ nếu confidence_score thấp.\n- Mỗi gợi ý internal link phải có lý do, điểm phù hợp và trạng thái URL.\n- User nên được duyệt, chỉnh anchor hoặc từ chối trước khi chèn link.\n\n==================================================\n1. DỮ LIỆU CẦN CÓ CHO INTERNAL LINK\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 2,
+          "text": "Mỗi website/project cần có kho URL nội bộ gồm:\n\n- url\n- title\n- meta_description\n- h1\n- h2_h3_main\n- content_summary\n- main_keyword\n- secondary_keywords\n- semantic_keywords\n- topic_cluster\n- page_type: post | page | service | category | product | landing | course | blog\n- search_intent: informational | commercial | transactional | navigational | local\n- status_code\n- indexable: true | false\n- canonical_url\n- robots_status\n- last_crawled_at\n- internal_links_in\n- internal_links_out\n- priority_page: true | false\n- target_seo_keyword\n- conversion_value: low | medium | high",
+          "embedded": false
+        },
+        {
+          "index": 3,
+          "text": "Không nên đi internal link tới các URL:\n- 404\n- 500\n- redirect\n- noindex\n- robots blocked\n- canonical sang URL khác\n- chưa publish\n- URL trùng nội dung\n- URL không liên quan\n- URL không thuộc cùng project/user\n- URL local hoặc staging nếu không phải website thật\n\n==================================================\n2. BẢNG DỮ LIỆU NÊN CÓ\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 4,
+          "text": "Bảng internal_link_pages:\n- id\n- user_id\n- project_id\n- url\n- title\n- meta_description\n- h1\n- h2_h3_main\n- content_summary\n- main_keyword\n- secondary_keywords\n- semantic_keywords\n- topic_cluster\n- page_type\n- search_intent\n- status_code\n- indexable\n- canonical_url\n- robots_status\n- internal_links_in\n- internal_links_out\n- priority_page\n- target_seo_keyword\n- last_crawled_at\n- created_at\n- updated_at\n\nBảng internal_link_edges:\n- id\n- user_id\n- project_id\n- source_url\n- target_url\n- anchor_text\n- context_text\n- position\n- source_section_heading\n- created_at",
+          "embedded": false
+        },
+        {
+          "index": 5,
+          "text": "Bảng internal_link_suggestions:\n- id\n- user_id\n- project_id\n- content_ai_project_id\n- source_url\n- target_url\n- anchor_text\n- context_text\n- placement_after_heading\n- reason\n- confidence_score\n- status: pending | applied | rejected | edited\n- created_at\n- updated_at\n\n==================================================\n3. CÁCH CHỌN INTERNAL LINK ĐÚNG NGỮ CẢNH\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 6,
+          "text": "Hệ thống cần phân tích:\n- Chủ đề bài viết hiện tại\n- Keyword chính\n- Search intent\n- Outline H2/H3\n- Nội dung từng section\n- Các cụm từ có thể làm anchor\n- Dữ liệu URL nội bộ đã crawl/import\n- Project Knowledge Base nếu có\n- Topic cluster nếu có\n\nCông thức chấm điểm gợi ý internal link:",
+          "embedded": false
+        },
+        {
+          "index": 7,
+          "text": "Điểm phù hợp =\n+ semantic similarity giữa đoạn content và target page\n+ keyword match\n+ cùng topic_cluster\n+ cùng hoặc bổ trợ search_intent\n+ page_type phù hợp\n+ target URL là trang ưu tiên SEO\n+ target URL đang thiếu internal link\n+ anchor tự nhiên trong câu\n- URL đã được link quá nhiều lần\n- anchor bị lặp nhiều\n- exact match anchor bị nhồi\n- target URL không liên quan trực tiếp\n- target URL có rủi ro kỹ thuật",
+          "embedded": false
+        },
+        {
+          "index": 8,
+          "text": "Các tín hiệu nên dùng:\n- Target title khớp chủ đề section\n- Target H1/H2 khớp nội dung đang viết\n- Target main keyword hoặc semantic keyword xuất hiện tự nhiên trong đoạn\n- Target page cùng cụm chủ đề\n- Target page có giá trị chuyển đổi cao nếu bài hiện tại có intent thương mại\n- Target page là pillar page nếu bài hiện tại là supporting article\n- Target page là supporting article nếu bài hiện tại là pillar page và cần giải thích sâu\n\n==================================================\n4. QUY TẮC CHÈN INTERNAL LINK CHUẨN SEO\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 9,
+          "text": "Quy tắc chung:\n1. Không link về chính URL bài viết hiện tại.\n2. Không dùng URL không tồn tại.\n3. Không tự bịa URL.\n4. Không link tới URL lỗi, redirect, noindex hoặc canonical sai.\n5. Không chèn quá 1 link trong cùng một đoạn ngắn.\n6. Không nhồi internal link.\n7. Không lặp cùng một anchor quá nhiều lần.\n8. Không nhồi exact match anchor.\n9. Ưu tiên anchor tự nhiên trong câu.\n10. Mỗi gợi ý phải có reason và confidence_score.\n11. Chỉ tự động chèn khi confidence_score đủ cao.\n12. Nếu confidence thấp, để user duyệt thủ công.\n13. Không phá HTML hiện tại của bài viết.\n14. Không chèn link vào heading n",
+          "embedded": false
+        },
+        {
+          "index": 10,
+          "text": "ông.\n13. Không phá HTML hiện tại của bài viết.\n14. Không chèn link vào heading nếu không cần thiết.\n15. Không chèn link vào CTA chính nếu link không phục vụ chuyển đổi.",
+          "embedded": false
+        },
+        {
+          "index": 11,
+          "text": "Số lượng internal link gợi ý:\n- Bài dưới 800 từ: 2–3 internal links.\n- Bài 1000–1500 từ: 3–6 internal links.\n- Bài 1500–2500 từ: 5–8 internal links.\n- Landing page dịch vụ: ưu tiên link tới case study, bảng giá, quy trình, bài hỗ trợ liên quan.\n- Bài blog thông tin: ưu tiên link tới pillar page, bài hướng dẫn liên quan, trang dịch vụ nếu phù hợp intent.\n\n==================================================\n5. ANCHOR TEXT CHUẨN SEO\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 12,
+          "text": "Anchor text tốt:\n- Tự nhiên trong câu.\n- Có liên quan trực tiếp đến URL đích.\n- Không quá dài.\n- Không quá chung chung.\n- Có thể chứa keyword hoặc biến thể keyword.\n- Đa dạng hóa exact match, partial match, branded anchor, natural anchor.\n\nVí dụ anchor tốt:\n- dịch vụ SEO tổng thể\n- quy trình SEO tổng thể\n- bảng giá SEO\n- cách viết bài chuẩn SEO\n- audit Technical SEO\n- tối ưu internal link\n- chiến lược Content SEO\n- công cụ nghiên cứu từ khóa\n- sửa máy tính tận nơi TP.HCM\n- cài Windows tận nơi\n- cứu dữ liệu máy tính",
+          "embedded": false
+        },
+        {
+          "index": 13,
+          "text": "Anchor text nên tránh:\n- click vào đây\n- xem thêm\n- tại đây\n- link này\n- đọc tiếp\n- dịch vụ SEO dịch vụ SEO dịch vụ SEO\n- anchor không liên quan đến trang đích\n- anchor quá dài nguyên cả câu\n\nCác loại anchor:\n1. Exact match:\nVí dụ: “dịch vụ SEO tổng thể”\nDùng ít, không lạm dụng.\n\n2. Partial match:\nVí dụ: “giải pháp SEO tổng thể cho doanh nghiệp”\nAn toàn và tự nhiên hơn.\n\n3. Branded anchor:\nVí dụ: tên thương hiệu.\nDùng cho trang thương hiệu hoặc trang giới thiệu.\n\n4. Natural anchor:\nVí dụ: “quy trình triển khai SEO bài bản”\nNên ưu tiên vì tự nhiên và ít rủi ro.",
+          "embedded": false
+        },
+        {
+          "index": 14,
+          "text": "5. URL anchor:\nVí dụ: https://domain.com/dich-vu-seo/\nHạn chế dùng trong nội dung bài viết thông thường.\n\n==================================================\n6. INTERNAL LINK THEO PILLAR PAGE VÀ SUPPORTING ARTICLE\n==================================================\n\nPillar Page:\n- Là trang chủ đề lớn, quan trọng.\n- Thường là trang dịch vụ, landing page, danh mục hoặc bài tổng quan chuyên sâu.\n- Cần nhận internal link từ nhiều bài hỗ trợ liên quan.\n- Nên có anchor đa dạng, không chỉ exact match.",
+          "embedded": false
+        },
+        {
+          "index": 15,
+          "text": "Supporting Article:\n- Là bài viết hỗ trợ cho Pillar Page.\n- Giải thích một khía cạnh nhỏ của chủ đề.\n- Nên link về Pillar Page.\n- Pillar Page cũng có thể link ngược về supporting article nếu cần giải thích sâu.\n\nQuy tắc:\n- Bài supporting nên link về pillar page chính.\n- Pillar page nên link tới các supporting article quan trọng.\n- Các supporting article cùng cụm chủ đề có thể link qua lại nếu thật sự liên quan.\n- Không link chéo lung tung giữa các cụm chủ đề khác nhau.",
+          "embedded": false
+        },
+        {
+          "index": 16,
+          "text": "Ví dụ:\nPillar Page: /dich-vu-seo-tong-the/\nSupporting Articles:\n- /seo-la-gi/\n- /quy-trinh-seo-tong-the/\n- /bao-gia-seo/\n- /cach-viet-bai-chuan-seo/\n- /technical-seo-la-gi/\n\n==================================================\n7. INTERNAL LINK THEO LOẠI BÀI VIẾT\n==================================================\n\nBài dịch vụ:\n- Ưu tiên link tới bảng giá, quy trình, case study, FAQ, bài giải thích liên quan.\n- Có thể link tới bài blog hỗ trợ để tăng niềm tin.\n- Không nên link quá nhiều sang bài thông tin làm người đọc rời khỏi CTA chính.",
+          "embedded": false
+        },
+        {
+          "index": 17,
+          "text": "Bài blog thông tin:\n- Link tới pillar page hoặc trang dịch vụ khi phù hợp intent.\n- Link tới các bài hướng dẫn sâu hơn.\n- Link tới bài liên quan trong cùng topic cluster.\n\nBài Local SEO:\n- Link tới trang dịch vụ chính.\n- Link tới trang khu vực/quận/huyện nếu có.\n- Link tới bài FAQ về chi phí, thời gian, bảo hành.\n- Không link sang khu vực không liên quan.\n\nBài sản phẩm:\n- Link tới sản phẩm liên quan.\n- Link tới danh mục.\n- Link tới bài review/so sánh.\n- Link tới chính sách bảo hành, giao hàng, đổi trả.",
+          "embedded": false
+        },
+        {
+          "index": 18,
+          "text": "Bài khóa học:\n- Link tới trang khóa học chính.\n- Link tới lộ trình học, học phí, giảng viên, FAQ.\n- Link tới bài hướng dẫn nhập môn hoặc case học viên nếu có dữ liệu thật.\n\nLanding page:\n- Link ít, có chọn lọc.\n- Ưu tiên giữ người dùng ở lại CTA.\n- Chỉ link tới trang hỗ trợ quyết định mua: case study, bảng giá, quy trình, FAQ.\n\n==================================================\n8. CÁCH GỢI Ý VỊ TRÍ CHÈN LINK\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 19,
+          "text": "Nên chèn link:\n- Trong đoạn văn có ngữ cảnh liên quan.\n- Sau khi nhắc đến một khái niệm cần giải thích sâu.\n- Ở phần H2/H3 có nội dung cùng chủ đề với URL đích.\n- Trong đoạn dẫn tới hành động nếu link phục vụ chuyển đổi.\n- Ở đoạn nói về quy trình, chi phí, dịch vụ, lỗi thường gặp hoặc giải pháp.\n\nKhông nên chèn link:\n- Trong H1.\n- Trong quá nhiều heading.\n- Trong câu không liên quan.\n- Trong đoạn quá ngắn.\n- Trong CTA chính nếu URL đích làm lệch mục tiêu chuyển đổi.\n- Trong đoạn đã có nhiều link.\n- Trong anchor bị gượng ép.",
+          "embedded": false
+        },
+        {
+          "index": 20,
+          "text": "Ví dụ gợi ý:\nSection: “Quy trình triển khai SEO tổng thể”\nAnchor: “quy trình SEO tổng thể”\nTarget URL: /quy-trinh-seo-tong-the/\nReason: URL đích giải thích sâu hơn về quy trình, phù hợp với section hiện tại.\nConfidence: 92%\n\n==================================================\n9. TÍCH HỢP VỚI KNOWLEDGE BASE / SƠ ĐỒ TRI THỨC\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 21,
+          "text": "Global Knowledge Graph nên chứa:\n- Quy tắc internal link chung\n- Cách chọn URL đích\n- Cách chọn anchor text\n- Cách chấm điểm phù hợp\n- Các lỗi cần tránh\n- Cách đi link theo loại bài\n- Quy tắc Pillar Page và Supporting Article\n\nProject Knowledge Base nên chứa:\n- Danh sách URL thật của website\n- Pillar Page của website\n- Supporting Article của website\n- Topic cluster riêng\n- Trang dịch vụ cần đẩy SEO\n- Trang có giá trị chuyển đổi cao\n- Anchor text ưu tiên\n- Anchor text cần tránh\n- URL không nên link tới\n- Trang cần tăng internal link\n- Trang đã có quá nhiều internal link",
+          "embedded": false
+        },
+        {
+          "index": 22,
+          "text": "Quy tắc ưu tiên dữ liệu:\nProject Knowledge Base > User Knowledge Base > Global Knowledge Graph\n\nNếu không có dữ liệu URL thật:\n- Không tự bịa URL.\n- Hiển thị cảnh báo: “Chưa có dữ liệu URL nội bộ hợp lệ, vui lòng quét website trước.”\n\n==================================================\n10. KIỂM TRA URL TRƯỚC KHI GỢI Ý\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 23,
+          "text": "Mỗi target URL phải được kiểm tra:\n- status_code = 200\n- không noindex\n- không robots blocked\n- canonical_url là chính nó hoặc hợp lệ\n- không redirect\n- không 404/500\n- thuộc cùng domain/project\n- không phải local path\n- đã publish\n- không phải staging nếu không được phép\n- có nội dung đủ liên quan\n\nNếu URL không đạt:\n- Không gợi ý.\n- Hoặc hiển thị trạng thái invalid và không cho Apply.\n\nCác trạng thái URL:\n- valid\n- invalid_404\n- invalid_redirect\n- invalid_noindex\n- invalid_canonical_mismatch\n- invalid_robots_blocked\n- invalid_not_published\n- invalid_cross_domain\n- invalid_low_relevance",
+          "embedded": false
+        },
+        {
+          "index": 24,
+          "text": "==================================================\n11. OUTPUT GỢI Ý INTERNAL LINK\n==================================================\n\nMỗi gợi ý nên có cấu trúc:\n\n- source_url\n- source_section_heading\n- context_text\n- anchor_text\n- target_url\n- target_title\n- target_page_type\n- reason\n- confidence_score\n- url_status\n- suggested_position\n- status: pending | applied | rejected | edited\n\nVí dụ:",
+          "embedded": false
+        },
+        {
+          "index": 25,
+          "text": "source_url: bài viết đang tạo\nsource_section_heading: Quy trình triển khai SEO tổng thể\ncontext_text: “Một chiến dịch SEO hiệu quả cần có quy trình rõ ràng từ audit, nghiên cứu từ khóa đến tối ưu nội dung.”\nanchor_text: quy trình SEO tổng thể\ntarget_url: https://domain.com/quy-trinh-seo-tong-the/\ntarget_title: Quy trình SEO tổng thể từ A-Z\ntarget_page_type: blog\nreason: URL đích giải thích chi tiết hơn về quy trình SEO, phù hợp với ngữ cảnh đoạn hiện tại.\nconfidence_score: 92\nurl_status: valid\nstatus: pending",
+          "embedded": false
+        },
+        {
+          "index": 26,
+          "text": "==================================================\n12. CÁC LỖI INTERNAL LINK CẦN TRÁNH\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 27,
+          "text": "Lỗi phổ biến:\n- AI tự bịa URL không tồn tại.\n- Link sai chủ đề.\n- Link tới URL 404.\n- Link tới URL redirect.\n- Link tới URL noindex.\n- Link tới URL canonical sai.\n- Link về chính bài viết hiện tại.\n- Link quá nhiều trong một bài.\n- Nhiều link trong một đoạn ngắn.\n- Anchor text bị lặp exact match.\n- Anchor text quá chung chung.\n- Link tới trang không có giá trị SEO/chuyển đổi.\n- Link chéo lung tung giữa các topic cluster.\n- Apply link tự động không có kiểm duyệt.\n- Link tới ảnh/file thay vì trang nội dung.\n- Link tới URL local hoặc staging.",
+          "embedded": false
+        },
+        {
+          "index": 28,
+          "text": "Hướng xử lý:\n- Luôn crawl/import URL trước khi gợi ý.\n- Luôn validate URL trước khi Apply.\n- Gán confidence_score cho từng gợi ý.\n- Cho user duyệt thủ công nếu điểm thấp.\n- Lưu lịch sử link đã chèn.\n- Theo dõi anchor đã dùng để tránh lặp.\n- Không link nếu không có ngữ cảnh phù hợp.\n\n==================================================\n13. PROMPT MẪU CHO AI GỢI Ý INTERNAL LINK\n==================================================\n\nBạn là chuyên gia Internal Link SEO.\nNhiệm vụ của bạn là gợi ý internal link cho bài viết dựa trên nội dung hiện tại và danh sách URL nội bộ đã được xác thực.",
+          "embedded": false
+        },
+        {
+          "index": 29,
+          "text": "Quy tắc bắt buộc:\n- Không tự tạo URL mới.\n- Chỉ chọn URL từ danh sách provided_urls.\n- Không link tới URL 404, redirect, noindex, canonical sai hoặc robots blocked.\n- Không link về chính source_url.\n- Không chèn link nếu không đủ ngữ cảnh.\n- Anchor text phải tự nhiên trong câu.\n- Không nhồi exact match anchor.\n- Mỗi gợi ý phải có reason và confidence_score.\n- Nếu không có URL phù hợp, trả về: “Không có URL nội bộ phù hợp để gợi ý.”\n\nInput:\n- source_url\n- article_title\n- main_keyword\n- search_intent\n- article_html\n- outline\n- provided_urls\n- project_knowledge_base",
+          "embedded": false
+        },
+        {
+          "index": 30,
+          "text": "Output:\n- anchor_text\n- target_url\n- source_section_heading\n- context_text\n- reason\n- confidence_score\n- url_status\n\n==================================================\n14. CHECKLIST TRIỂN KHAI TÍNH NĂNG INTERNAL LINK\n==================================================",
+          "embedded": false
+        },
+        {
+          "index": 31,
+          "text": "1. Tạo kho URL nội bộ theo project.\n2. Crawl/import URL + title/H1/summary/status/indexable.\n3. Loại bỏ URL lỗi: 404, redirect, noindex, canonical sai.\n4. Tạo thuật toán chấm điểm link phù hợp.\n5. Gợi ý anchor text tự nhiên.\n6. UI duyệt gợi ý trước khi chèn.\n7. Apply link vào article_html.\n8. Lưu lịch sử link đã chèn.\n9. Tích hợp Project Knowledge Base/topic cluster.\n10. Kết nối WordPress để biết URL đã publish.\n11. Export danh sách link đã chèn nếu cần.\n12. Cảnh báo URL lỗi trước khi publish.",
+          "embedded": false
+        },
+        {
+          "index": 32,
+          "text": "==================================================\n15. KẾT LUẬN\n==================================================\n\nĐể internal link chính xác, hệ thống phải nhớ:\n\n- Không để AI tự bịa URL.\n- Không chèn link nếu URL chưa được xác thực.\n- Không đi link chỉ theo keyword, phải theo ngữ cảnh.\n- Không tự động apply toàn bộ nếu confidence thấp.\n- Phải có lý do, điểm phù hợp và quyền duyệt của user.\n- Quy tắc internal link chung đưa vào Global Knowledge Graph.\n- URL, anchor, pillar page của từng website đưa vào Project Knowledge Base.",
+          "embedded": false
+        },
+        {
+          "index": 33,
+          "text": "Internal Link tốt giúp:\n- Google hiểu cấu trúc website tốt hơn.\n- Tăng sức mạnh cho trang quan trọng.\n- Cải thiện crawl/index.\n- Dẫn người đọc đến nội dung liên quan.\n- Tăng chuyển đổi nếu link đúng ngữ cảnh.",
+          "embedded": false
+        }
+      ],
+      "created_at": "2026-05-19T15:37:52.729164+00:00",
+      "updated_at": "2026-05-19T15:37:52.729164+00:00"
+    }
+  ]
+}

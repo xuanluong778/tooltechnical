@@ -1,0 +1,26 @@
+{# Floating chatbot — bottom right; avatar: /static/img/beeseo-chatbot-avatar.png #}
+<div id="beeseoChatbotRoot" class="beeseo-chatbot-root" aria-hidden="true">
+    <div class="beeseo-chatbot-panel" id="beeseoChatbotPanel" role="dialog" aria-labelledby="beeseoChatbotTitle" aria-modal="false">
+        <header class="beeseo-chatbot-head">
+            <img class="beeseo-chatbot-avatar" src="/static/img/beeseo-chatbot-avatar.png" width="44" height="44" alt="" aria-hidden="true">
+            <div class="beeseo-chatbot-head-text">
+                <strong id="beeseoChatbotTitle">Trợ lý BeeSEO</strong>
+                <span class="beeseo-chatbot-status"><span class="beeseo-chatbot-status-dot" aria-hidden="true"></span> Đang trực tuyến</span>
+            </div>
+            <button type="button" class="beeseo-chatbot-close" id="beeseoChatbotClose" aria-label="Đóng chat">×</button>
+        </header>
+        <div class="beeseo-chatbot-messages" id="beeseoChatbotMessages" role="log" aria-live="polite"></div>
+        <div class="beeseo-chatbot-quick" id="beeseoChatbotQuick" aria-label="Câu hỏi nhanh"></div>
+        <footer class="beeseo-chatbot-foot">
+            <textarea class="beeseo-chatbot-input" id="beeseoChatbotInput" rows="1" placeholder="Nhập câu hỏi…" maxlength="4000" aria-label="Tin nhắn"></textarea>
+            <button type="button" class="beeseo-chatbot-send" id="beeseoChatbotSend" aria-label="Gửi">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+            </button>
+        </footer>
+    </div>
+    <button type="button" class="beeseo-chatbot-fab" id="beeseoChatbotFab" aria-label="Mở trợ lý chat" title="Chat với BeeSEO">
+        <img src="/static/img/beeseo-chatbot-avatar.png" width="56" height="56" alt="">
+    </button>
+</div>

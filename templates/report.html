@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="vi">
+{# Icon checklist — cùng logic minh họa /tool #}
+{% macro issue_icon_svg(t) -%}
+{%- set t = (t or '')|string -%}
+{%- if t in ('broken_internal_link', 'broken_internal_http_error') -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#7f1d1d"/><path fill="none" stroke="#fecaca" stroke-width="3" d="M14 18h8v8M26 22h8M18 30h12"/><text x="24" y="21" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">HTTP</text></svg>
+{%- elif t == 'redirect_chain' -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#78350f"/><path fill="none" stroke="#fde68a" stroke-width="2.5" d="M10 24h28M32 18l6 6-6 6"/></svg>
+{%- elif t.startswith('robots_') or t == 'robots_unreachable' -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#14532d"/><text x="24" y="30" text-anchor="middle" fill="#bbf7d0" font-size="11" font-weight="700">R</text></svg>
+{%- elif t.startswith('sitemap_') -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#1e3a5f"/><path fill="#93c5fd" d="M12 32V16h8l4 4h12v12z"/></svg>
+{%- elif t in ('https_not_used', 'crawl_page_non_200', 'http_status_error', 'http_status_non_200') -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#991b1b"/><text x="24" y="31" text-anchor="middle" fill="#fecaca" font-size="14" font-weight="800">!</text></svg>
+{%- elif 'title' in t or 'h1' in t or 'meta' in t or 'canonical' in t or 'favicon' in t or 'lang' in t -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#312e81"/><text x="24" y="30" text-anchor="middle" fill="#e0e7ff" font-size="10" font-weight="700">TAG</text></svg>
+{%- elif 'image' in t or 'alt' in t -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#14532d"/><rect x="12" y="14" width="24" height="18" rx="3" fill="none" stroke="#86efac" stroke-width="2"/><circle cx="18" cy="20" r="2" fill="#86efac"/></svg>
+{%- elif t.startswith('indexability') or t == 'page_unlikely_indexed' -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#4c1d95"/><text x="24" y="31" text-anchor="middle" fill="#e9d5ff" font-size="10" font-weight="700">IDX</text></svg>
+{%- elif 'cloaking' in t -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#7c2d12"/><path fill="none" stroke="#fed7aa" stroke-width="2" d="M16 32l16-16M16 16l16 16"/></svg>
+{%- elif t.startswith('js_') -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#0e7490"/><text x="24" y="31" text-anchor="middle" fill="#cffafe" font-size="11" font-weight="700">JS</text></svg>
+{%- else -%}
+<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="10" fill="#334155"/><text x="24" y="31" text-anchor="middle" fill="#cbd5e1" font-size="18">?</text></svg>
+{%- endif -%}
+{%- endmacro %}
+<head>
+    <script src="/static/js/beeseo-i18n.js"></script>
+    {% include "partials/beeseo_theme_head.html" %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical SEO Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text: #eef2ff;
+            --muted: #cbd5e1;
+            --accent: #5b67ff;
+            --accent-2: #45d3ff;
+            --card: rgba(255, 255, 255, 0.12);
+            --line: rgba(255, 255, 255, 0.22);
+            --err: #fecaca;
+            --ok: #bbf7d0;
+            --report-fg: #1f2937;
+        }
+        * { box-sizing: border-box; }
+        /* Giống /tool: nền gradient + sidebar cố định trái, cuộn nội dung bên phải */
+        body.page-report {
+            margin: 0;
+            min-height: 100vh;
+            padding: 0;
+            font-family: "Inter", system-ui, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(1200px 700px at 10% 20%, rgba(0, 230, 118, 0.06) 0%, transparent 60%),
+                radial-gradient(900px 600px at 90% 10%, rgba(0, 230, 118, 0.04) 0%, transparent 58%),
+                linear-gradient(135deg, #050b18 0%, #0c1424 50%, #050b18 100%);
+        }
+        .layout { min-height: 100vh; }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 288px;
+            max-width: 38vw;
+            flex: 0 0 288px;
+            padding: 106px 12px 16px 14px;
+            background: rgba(15, 23, 42, 0.88);
+            border-right: none;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            overflow-x: hidden;
+            overflow-y: auto;
+            z-index: 25;
+            overscroll-behavior: contain;
+        }
+        .sidebar h3 {
+            margin: 0 0 6px;
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #e0e7ff;
+        }
+        .sidebar .sb-hint {
+            margin: 0 0 14px;
+            font-size: 0.72rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+        .sb-list { list-style: none; margin: 0; padding: 0; }
+        .sb-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px 10px 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .sb-domain { font-weight: 700; font-size: 0.88rem; word-break: break-all; color: #fff; }
+        .sb-meta { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
+        .sb-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .sb-actions button, .sb-del {
+            width: 100%;
+            padding: 7px 6px;
+            font-size: 0.72rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 0;
+        }
+        .sb-actions .sb-excel {
+            background: linear-gradient(90deg, #059669, #34d399);
+            color: #fff;
+        }
+        .sb-actions .sb-pdf {
+            background: linear-gradient(90deg, #dc2626, #f87171);
+            color: #fff;
+        }
+        .sb-del {
+            margin-top: 6px;
+            background: rgba(254, 202, 202, 0.15);
+            color: #fecaca;
+            border: 1px solid rgba(254, 202, 202, 0.35);
+        }
+        .sb-empty { font-size: 0.8rem; color: var(--muted); padding: 8px 4px; line-height: 1.5; }
+        .main {
+            margin-left: 288px;
+            min-height: 100vh;
+            padding: 22px 24px 36px;
+            max-width: calc(100vw - 288px);
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            color: var(--report-fg);
+            width: 100%;
+            min-width: 0;
+        }
+        /* Top nav: static/css/beeseo-nav.css — không viền dọc giữa các tab */
+        body.page-report .report-top > a {
+            border: none !important;
+            box-shadow: none !important;
+        }
+        body.page-report .report-top > a:hover,
+        body.page-report .report-top > a.active {
+            border: none !important;
+        }
+        body.page-report .report-top > a.active {
+            box-shadow: inset 0 0 0 1px rgba(0, 230, 118, 0.55), 0 0 14px rgba(0, 230, 118, 0.22) !important;
+        }
+        /* Nút chính: vào tool phân tích */
+        .report-top a[href="/tool"] {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c3aed 100%);
+            border-color: rgba(165, 180, 252, 0.55);
+        }
+        .report-top a[href="/tool"]:hover {
+            color: #fff;
+            background: linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #6d28d9 100%);
+            border-color: rgba(199, 210, 254, 0.75);
+        }
+        .report-top .nav-dd {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-self: center;
+            z-index: 20;
+        }
+        .report-top .nav-dd::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: max(100%, 220px);
+            top: 100%;
+            height: 14px;
+            z-index: 199;
+        }
+        /* .nav-dd-btn sizing: beeseo-nav.css */
+        .report-top .nav-dd-menu {
+            display: none; position: absolute; left: 0; top: calc(100% + 14px);
+            min-width: 240px; flex-direction: column; gap: 4px; padding: 8px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,.28);
+            background: rgba(15,23,42,.96); box-shadow: 0 12px 32px rgba(0,0,0,.35); z-index: 200;
+        }
+        .report-top .nav-dd:hover .nav-dd-menu,
+        .report-top .nav-dd:focus-within .nav-dd-menu { display: flex; }
+        .report-top .nav-dd-menu a { margin: 0; }
+        .title { color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+        .title { margin-bottom: 16px; }
+        /* Nền dashboard tối: nhãn lọc + tiêu đề section (không ảnh hưởng thẻ .card trắng) */
+        body.page-report .container .toolbar label,
+        body.page-report .container > h2 {
+            color: #ffffff;
+        }
+        .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+        .card { background: #fff; border-radius: 10px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+        .value { font-size: 24px; font-weight: 700; margin-top: 6px; }
+        .table-wrap { background: #fff; border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); overflow: hidden; }
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Bảng checklist / action plan: cuộn ngang + dọc (override overflow:hidden của .table-wrap) */
+        .table-wrap.table-scroll-sticky {
+            width: 100%;
+            max-width: 100%;
+            max-height: min(72vh, 900px);
+            min-height: 220px;
+            overflow-x: auto;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-gutter: stable;
+        }
+        .table-scroll-sticky {
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 720px; }
+        table.wide { min-width: 1280px; }
+        table.sticky-matrix {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: max-content;
+            min-width: 1280px;
+        }
+        /* Bảng audit /tool: cột Giải pháp 400px — table-layout fixed + colgroup để không bị co theo viewport */
+        table.audit-scan-matrix {
+            table-layout: fixed;
+            width: 1790px;
+            min-width: 1790px;
+            max-width: none;
+        }
+        table.audit-scan-matrix col.col-audit-checklist {
+            width: 200px;
+        }
+        table.audit-scan-matrix col.col-audit-severity {
+            width: 120px;
+        }
+        table.audit-scan-matrix col.col-audit-evidence {
+            width: 420px;
+        }
+        table.audit-scan-matrix col.col-audit-solution {
+            width: 400px;
+        }
+        table.audit-scan-matrix col.col-audit-ref {
+            width: 150px;
+        }
+        table.audit-scan-matrix col.col-audit-status {
+            width: 160px;
+        }
+        table.audit-scan-matrix col.col-audit-deploy {
+            width: 120px;
+        }
+        table.audit-scan-matrix col.col-audit-note {
+            width: 220px;
+        }
+        table.action-plan-matrix {
+            table-layout: fixed;
+            width: 1980px;
+            min-width: 1980px;
+            max-width: none;
+        }
+        table.action-plan-matrix col.col-ap-c0 {
+            width: 88px;
+        }
+        table.action-plan-matrix col.col-ap-c1 {
+            width: 120px;
+        }
+        table.action-plan-matrix col.col-ap-c2 {
+            width: 72px;
+        }
+        table.action-plan-matrix col.col-ap-c3 {
+            width: 200px;
+        }
+        table.action-plan-matrix col.col-ap-c4 {
+            width: 110px;
+        }
+        table.action-plan-matrix col.col-ap-c5 {
+            width: 300px;
+        }
+        table.action-plan-matrix col.col-ap-c6 {
+            width: 400px;
+        }
+        table.action-plan-matrix col.col-ap-c7 {
+            width: 150px;
+        }
+        table.action-plan-matrix col.col-ap-c8 {
+            width: 100px;
+        }
+        table.action-plan-matrix col.col-ap-c9 {
+            width: 120px;
+        }
+        table.action-plan-matrix col.col-ap-c10 {
+            width: 220px;
+        }
+        table.audit-scan-matrix thead th:nth-child(4),
+        table.audit-scan-matrix tbody td:nth-child(4) {
+            width: 400px !important;
+            min-width: 400px !important;
+            max-width: 400px !important;
+            box-sizing: border-box !important;
+        }
+        table.action-plan-matrix thead th:nth-child(7),
+        table.action-plan-matrix tbody td:nth-child(7) {
+            width: 400px !important;
+            min-width: 400px !important;
+            max-width: 400px !important;
+            box-sizing: border-box !important;
+        }
+        table.action-plan-matrix td.evidence-cell {
+            max-width: none !important;
+        }
+        table.sticky-matrix th,
+        table.sticky-matrix td {
+            border-bottom: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+        }
+        table.sticky-matrix th:last-child,
+        table.sticky-matrix td:last-child { border-right: none; }
+        table.sticky-matrix thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: #f3f4f6;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            box-shadow: 0 1px 0 #e5e7eb;
+        }
+        table.sticky-matrix tbody td:first-child,
+        table.sticky-matrix thead th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            background: #fff;
+            box-shadow: 4px 0 10px rgba(15, 23, 42, 0.06);
+        }
+        table.sticky-matrix thead th:first-child {
+            z-index: 3;
+            background: #e5e7eb;
+        }
+        th, td { text-align: left; padding: 10px; vertical-align: top; }
+        /* Bảng action plan: CHECKLIST / GIẢI PHÁP / LINK THAM KHẢO hẹp, chữ xuống dòng */
+        table.action-plan-matrix .col-ap-checklist,
+        table.action-plan-matrix .col-ap-checklist-th {
+            min-width: 0;
+            max-width: 200px;
+            width: 200px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 1.45;
+            hyphens: auto;
+        }
+        table.action-plan-matrix .col-ap-solution,
+        table.action-plan-matrix .col-ap-solution-th {
+            width: 400px;
+            min-width: 400px;
+            max-width: 400px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 1.45;
+            box-sizing: border-box;
+        }
+        table.action-plan-matrix .col-ap-ref,
+        table.action-plan-matrix .col-ap-ref-th {
+            min-width: 0;
+            max-width: 140px;
+            width: 140px;
+            white-space: normal;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+            line-height: 1.4;
+        }
+        table.action-plan-matrix .col-ap-ref a {
+            display: inline;
+            word-break: break-all;
+        }
+        table.action-plan-matrix .evidence-cell {
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 1.45;
+        }
+        table.action-plan-matrix .evidence-cell .evidence-text {
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+        table:not(.sticky-matrix) th,
+        table:not(.sticky-matrix) td { border-bottom: 1px solid #e5e7eb; }
+        th { background: #f9fafb; font-size: 13px; text-transform: uppercase; letter-spacing: .3px; }
+        table.sticky-matrix thead th { background: #f3f4f6; }
+        .status { padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+        .good { background: #dcfce7; color: #166534; }
+        .needs_fix { background: #fee2e2; color: #991b1b; }
+        .unknown { background: #e5e7eb; color: #374151; }
+        .error { color: #fecaca; margin-bottom: 16px; background: rgba(127, 29, 29, 0.35); padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(254, 202, 202, 0.4); }
+        .container a { color: #2563eb; text-decoration: none; }
+        .container a:hover { text-decoration: underline; }
+        .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+        select, button { padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; }
+        .btn-link { display: inline-block; padding: 8px 10px; border-radius: 8px; background: #111827; color: #fff; }
+        .audit-meta { color: #6b7280; font-size: 14px; margin-bottom: 12px; }
+        .badge-sev { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .sev-high { background: #fee2e2; color: #991b1b; }
+        .sev-medium { background: #fef3c7; color: #92400e; }
+        .sev-low { background: #e0e7ff; color: #3730a3; }
+        .mono { font-family: ui-monospace, monospace; font-size: 12px; }
+        /* CHECKLIST song ngữ — giống cấu trúc /tool (cột hẹp, xuống dòng) */
+        .checklist-cell {
+            min-width: 0;
+            max-width: 200px;
+            width: 200px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 1.45;
+        }
+        .checklist-key {
+            font-family: ui-monospace, monospace;
+            font-size: 12px;
+            font-weight: 800;
+            color: #111827;
+            word-break: break-all;
+            line-height: 1.35;
+        }
+        .checklist-vi {
+            margin-top: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            line-height: 1.45;
+        }
+        .audit-issues-wrap {
+            border: 3px solid #6366f1;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 6px 28px rgba(99, 102, 241, 0.14);
+            margin-bottom: 28px;
+            width: 100%;
+            max-width: 100%;
+        }
+        .report-issue-type-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .report-illus {
+            flex-shrink: 0;
+            line-height: 0;
+        }
+        .report-illus svg {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+        .td-danh-gia .badge-sev {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        .td-danh-gia .cell-muted-dg {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .td-sol {
+            font-size: 13px;
+            color: #1f2937;
+            line-height: 1.5;
+            width: 400px;
+            min-width: 400px;
+            max-width: 400px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            box-sizing: border-box;
+        }
+        .td-ref-narrow {
+            max-width: 140px;
+            width: 140px;
+            white-space: normal;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+            line-height: 1.4;
+        }
+        .td-ref-narrow a { word-break: break-all; }
+        table.audit-scan-matrix .audit-th-checklist {
+            min-width: 0;
+            max-width: 200px;
+            width: 200px;
+            white-space: normal;
+            word-break: break-word;
+        }
+        table.audit-scan-matrix .audit-th-solution {
+            width: 400px;
+            min-width: 400px;
+            max-width: 400px;
+            white-space: normal;
+            box-sizing: border-box;
+        }
+        table.audit-scan-matrix .audit-th-ref {
+            min-width: 0;
+            max-width: 140px;
+            width: 140px;
+            white-space: normal;
+            word-break: break-all;
+        }
+        .issue-url { font-size: 12px; word-break: break-all; color: #4b5563; margin-top: 4px; }
+        .cell-pre { white-space: pre-wrap; word-break: break-word; }
+        @media (max-width: 900px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                max-width: none;
+                height: auto;
+                max-height: 42vh;
+                padding-top: 16px;
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+            .main {
+                margin-left: 0;
+                max-width: 100%;
+                padding: 16px;
+            }
+        }
+
+        /* BeeSEO bright-green accent overrides */
+        h1 { color: #00e676 !important; }
+        .sb-item.active {
+            color: #00e676 !important;
+            border-color: rgba(0, 230, 118, 0.85) !important;
+            background: rgba(2, 8, 20, 0.85) !important;
+        }
+        .nav-dd-menu a:hover { background: rgba(0, 230, 118, 0.12) !important; color: #00e676 !important; }
+        .nav-pro-badge {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #111827;
+            vertical-align: middle;
+            letter-spacing: 0.04em;
+        }
+    </style>
+</head>
+<body class="page-report">
+    <div class="layout">
+    <aside class="sidebar" id="projectSidebar" aria-label="Dự án đã quét">
+        <h3>Dự án đã quét</h3>
+        <p class="sb-hint">Mỗi domain chỉ hiển thị <strong>bản quét mới nhất</strong> (tối đa 8). Đăng nhập tại <a href="/tool" style="color:#93c5fd;">/tool</a> để xem đầy đủ, xuất Excel/Google Sheet và xóa dự án.</p>
+        <ul id="sidebarProjectList" class="sb-list"></ul>
+    </aside>
+    <main class="main">
+    <div class="container">
+        <p class="report-top" data-i18n-aria="nav.aria" aria-label="Menu chính"><a href="/" data-i18n="nav.brand">SEO Technical Tool</a><a href="/report" data-i18n="nav.dashboard">Dashboard</a><a href="/tool" data-i18n="nav.technical">Phân Tích Technical</a><a href="/tool/seo-score" data-i18n="nav.seo_score">Chấm điểm SEO</a><a href="/content-ai" data-i18n="nav.content_ai">Content AI</a><a href="/keywords/tools/research" data-i18n="nav.keyword">Từ khóa</a><a href="/schema" data-i18n="nav.schema">Schema</a><a href="/settings" data-i18n="nav.settings">Cài đặt</a><a href="/admin" data-nav-admin hidden class="nav-admin-only" data-i18n="nav.admin">Quản trị viên</a></p>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="get" action="/report" class="toolbar">
+            <label>
+                Group:
+                <select name="group">
+                    <option value="">All</option>
+                    {% for group in (report_full.groups if report_full is defined else report.groups) %}
+                        <option value="{{ group }}" {% if selected_group == group %}selected{% endif %}>{{ group }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Status:
+                <select name="status">
+                    <option value="">All</option>
+                    <option value="needs_fix" {% if selected_status == "needs_fix" %}selected{% endif %}>needs_fix</option>
+                    <option value="good" {% if selected_status == "good" %}selected{% endif %}>good</option>
+                    <option value="unknown" {% if selected_status == "unknown" %}selected{% endif %}>unknown</option>
+                </select>
+            </label>
+            <button type="submit">Apply Filter</button>
+            <a class="btn-link" href="/api/report.csv?group={{ selected_group }}&status={{ selected_status }}">Export CSV</a>
+        </form>
+
+        {% if latest_audit %}
+        <h2>Kết quả quét Technical (tự động)</h2>
+        <p class="audit-meta">
+            Domain: <strong>{{ latest_audit.domain or "—" }}</strong>
+            · Trang quét: <strong>{{ latest_audit.pages_scanned or 0 }}</strong>
+            {% set _ts = latest_audit.technical_summary or {} %}
+            {% if _ts.get('start_url_scheme') %}
+            · URL quét (chuẩn hóa): <span class="mono">{{ _ts.get('start_url_normalized') or latest_audit.source_url or "—" }}</span>
+            · Giao thức: <strong>{{ _ts.get('start_url_scheme') }}</strong>
+            {% endif %}
+            · Thời điểm: <span class="mono">{{ latest_audit.at or "" }}</span>
+            · Nguồn: <span class="mono">{{ latest_audit.source_url or "" }}</span>
+            {% if latest_audit.truncated_issues %}<span> (đã cắt bớt danh sách lỗi khi lưu)</span>{% endif %}
+        </p>
+        <div class="toolbar" style="margin-bottom:12px;">
+            <button type="button" id="btnTopAuditCsv">Xuất Excel (CSV)</button>
+            <button type="button" id="btnTopAuditGsheet">Xuất Google Sheet</button>
+        </div>
+        {% set ts = latest_audit.technical_summary or {} %}
+        <div class="grid" style="margin-bottom:18px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+            <div class="card">
+                <div>Điểm sức khỏe Technical</div>
+                <div class="value">{% if ts.health_score is defined and ts.health_score is not none %}{{ ts.health_score }}<span style="font-size:14px;font-weight:600;color:#64748b;">/100</span>{% else %}—{% endif %}</div>
+                {% if ts.weighted_penalty is defined and ts.weighted_penalty is not none %}
+                <div class="audit-meta" style="margin-top:6px;">Penalty tổng hợp: <strong>{{ ts.weighted_penalty }}</strong></div>
+                {% endif %}
+                {% if ts.issues_by_severity %}
+                <div class="audit-meta" style="margin-top:4px;">Cao {{ ts.issues_by_severity.high or 0 }} · TB {{ ts.issues_by_severity.medium or 0 }} · Thấp {{ ts.issues_by_severity.low or 0 }}</div>
+                {% endif %}
+            </div>
+            <div class="card">
+                <div>Tổng lỗi technical</div>
+                <div class="value">{{ ts.total_technical_issues or 0 }}</div>
+            </div>
+            <div class="card">
+                <div>Liên kết nội bộ lỗi</div>
+                <div class="value">{{ ts.broken_internal_links or 0 }}</div>
+                <div class="audit-meta" style="margin-top:6px;">Trong đó 404: <strong>{{ ts.broken_internal_404 or 0 }}</strong></div>
+            </div>
+            <div class="card">
+                <div>Chuỗi redirect</div>
+                <div class="value">{{ ts.redirect_chains or 0 }}</div>
+            </div>
+            <div class="card">
+                <div>Trang nội bộ</div>
+                <div class="value">{{ ts.internal_pages or 0 }}</div>
+            </div>
+        </div>
+        <div class="audit-issues-wrap table-wrap table-scroll-sticky">
+            <table class="wide sticky-matrix audit-scan-matrix">
+                <colgroup>
+                    <col class="col-audit-checklist" />
+                    <col class="col-audit-severity" />
+                    <col class="col-audit-evidence" />
+                    <col class="col-audit-solution" />
+                    <col class="col-audit-ref" />
+                    <col class="col-audit-status" />
+                    <col class="col-audit-deploy" />
+                    <col class="col-audit-note" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="audit-th-checklist">CHECKLIST</th>
+                        <th>ĐÁNH GIÁ</th>
+                        <th>DẪN CHỨNG CHI TIẾT</th>
+                        <th class="audit-th-solution">GIẢI PHÁP</th>
+                        <th class="audit-th-ref">LINK THAM KHẢO</th>
+                        <th>HIỆN TRẠNG</th>
+                        <th>LINK TRIỂN KHAI</th>
+                        <th>NOTE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for issue in latest_audit_grouped_issues %}
+                    {% set g = issue.checklist_group or 'General' %}
+                    {% set sev_lbl = SEVERITY_LABEL_VI[issue.severity] if issue.severity and issue.severity in SEVERITY_LABEL_VI else (issue.severity or "—") %}
+                    {% set gref = GROUP_REFERENCES[g] if g in GROUP_REFERENCES else GROUP_REFERENCES['General'] %}
+                    {% set gsol = GROUP_SOLUTIONS_VI[g] if g in GROUP_SOLUTIONS_VI else GROUP_SOLUTIONS_VI['General'] %}
+                    {% set fix_primary = (issue.remediation or issue.suggested_fix or '')|trim %}
+                    {% set ck_vi = CHECKLIST_TITLE_VI.get(issue.type, '') %}
+                    <tr>
+                        <td class="checklist-cell">
+                            <div class="report-issue-type-row">
+                                <span class="report-illus" title="{{ issue.type }}">{{ issue_icon_svg(issue.type)|safe }}</span>
+                                <div>
+                                    <div class="checklist-key">{{ issue.type }}</div>
+                                    {% if ck_vi %}
+                                    <div class="checklist-vi">{{ ck_vi }}</div>
+                                    {% else %}
+                                    <div class="checklist-vi" style="color:#9ca3af;font-size:12px;">—</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td-danh-gia">
+                            <span class="badge-sev {% if issue.severity == 'high' %}sev-high{% elif issue.severity == 'medium' %}sev-medium{% else %}sev-low{% endif %}">{{ sev_lbl|upper }}</span>
+                            <br>
+                            <span class="cell-muted-dg">({{ g }})</span>
+                        </td>
+                        <td>
+                            {{ issue.message }}
+                            {% if issue.urls %}
+                                <div class="issue-url">
+                                    {% for u in issue.urls %}
+                                        <div><a href="{{ u }}" target="_blank" rel="noopener">{{ u }}</a></div>
+                                    {% endfor %}
+                                </div>
+                            {% elif issue.url %}
+                                <div class="issue-url"><a href="{{ issue.url }}" target="_blank" rel="noopener">{{ issue.url }}</a></div>
+                            {% endif %}
+                        </td>
+                        <td class="cell-pre td-sol">{% if fix_primary %}{{ fix_primary }}{% else %}{{ gsol }}{% endif %}</td>
+                        <td class="td-ref-narrow"><a href="{{ gref }}" target="_blank" rel="noopener">{{ gref }}</a></td>
+                        <td>Quét tự động — {{ sev_lbl }}</td>
+                        <td>—</td>
+                        <td class="cell-pre" style="white-space:pre-wrap;font-size:12px;">
+                            {%- if issue.page_type %}<div><span class="mono">Loại trang:</span> {{ issue.page_type }}</div>{% endif -%}
+                            {%- if issue.explanation %}<div style="margin-top:4px;">{{ issue.explanation }}</div>{% endif -%}
+                            {%- if issue.confidence is defined and issue.confidence is not none %}<div style="margin-top:4px;" class="mono">Độ tin cậy: {{ issue.confidence }}</div>{% endif -%}
+                            {%- if not issue.page_type and not issue.explanation and (issue.confidence is not defined or issue.confidence is none) %}—{% endif -%}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:28px;">
+            Các mục trên được soi theo checklist <strong>Technical-SEO.txt</strong> (Onpage, Robots, Sitemap, GSC, Images, HTTPS…).
+            Chạy lại quét tại <a href="/tool">/tool</a> sau khi đăng nhập để cập nhật bảng này.
+        </p>
+        {% else %}
+        <p style="color:var(--muted);margin-bottom:24px;">Chưa có lần quét Technical nào được lưu. Đăng nhập tại <a href="/tool">/tool</a> rồi bấm «Kiểm tra Technical».</p>
+        {% endif %}
+
+        {% set rf = report_full if report_full is defined else report %}
+        <div class="grid">
+            <div class="card">
+                <div>Total Items</div>
+                <div class="value">{{ rf.summary.total_items or 0 }}</div>
+                {% if report_full is defined and (selected_group or selected_status) %}
+                <div class="audit-meta" style="margin-top:6px;">Sau lọc: <strong>{{ report.summary.total_items or 0 }}</strong></div>
+                {% endif %}
+            </div>
+            <div class="card">
+                <div>Good</div>
+                <div class="value">{{ rf.summary.good or 0 }}</div>
+                {% if report_full is defined and (selected_group or selected_status) %}
+                <div class="audit-meta" style="margin-top:6px;">Sau lọc: <strong>{{ report.summary.good or 0 }}</strong></div>
+                {% endif %}
+            </div>
+            <div class="card">
+                <div>Needs Fix</div>
+                <div class="value">{{ rf.summary.needs_fix or 0 }}</div>
+                {% if report_full is defined and (selected_group or selected_status) %}
+                <div class="audit-meta" style="margin-top:6px;">Sau lọc: <strong>{{ report.summary.needs_fix or 0 }}</strong></div>
+                {% endif %}
+            </div>
+            <div class="card">
+                <div>Unknown</div>
+                <div class="value">{{ rf.summary.unknown or 0 }}</div>
+                {% if report_full is defined and (selected_group or selected_status) %}
+                <div class="audit-meta" style="margin-top:6px;">Sau lọc: <strong>{{ report.summary.unknown or 0 }}</strong></div>
+                {% endif %}
+            </div>
+        </div>
+        {% if report_full is defined and (selected_group or selected_status) %}
+        <p style="color:var(--muted);font-size:13px;margin:-8px 0 16px;">
+            Bảng <strong>đầy đủ</strong> bên dưới luôn liệt kê toàn bộ mục trong <code>Technical-SEO.txt</code>.
+            Bộ lọc Group/Status chỉ ảnh hưởng số «Sau lọc» và file xuất CSV/Google Sheet.
+        </p>
+        {% endif %}
+
+        <h2>Checklist Technical-SEO.txt (đầy đủ)</h2>
+        <div class="table-wrap table-scroll-sticky">
+            <table class="wide sticky-matrix action-plan-matrix">
+                <colgroup>
+                    <col class="col-ap-c0" />
+                    <col class="col-ap-c1" />
+                    <col class="col-ap-c2" />
+                    <col class="col-ap-c3" />
+                    <col class="col-ap-c4" />
+                    <col class="col-ap-c5" />
+                    <col class="col-ap-c6" />
+                    <col class="col-ap-c7" />
+                    <col class="col-ap-c8" />
+                    <col class="col-ap-c9" />
+                    <col class="col-ap-c10" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Ưu tiên</th>
+                        <th>Nhóm</th>
+                        <th>Điểm</th>
+                        <th class="col-ap-checklist-th">CHECKLIST</th>
+                        <th>ĐÁNH GIÁ</th>
+                        <th>DẪN CHỨNG CHI TIẾT</th>
+                        <th class="col-ap-solution-th">GIẢI PHÁP</th>
+                        <th class="col-ap-ref-th">LINK THAM KHẢO</th>
+                        <th>HIỆN TRẠNG</th>
+                        <th>LINK TRIỂN KHAI</th>
+                        <th>NOTE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in action_plan_rows %}
+                    {% if loop.first or row['Nhóm'] != action_plan_rows[loop.index0 - 1]['Nhóm'] %}
+                    <tr>
+                        <td colspan="11" style="background:#eef2ff;font-weight:700;color:#1e3a8a;">{{ row['Nhóm'] }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td><strong>{{ row['Ưu tiên'] }}</strong></td>
+                        <td>{{ row['Nhóm'] }}</td>
+                        <td>{{ row['priority_score'] or 0 }}</td>
+                        <td class="col-ap-checklist">{{ row['CHECKLIST'] }}</td>
+                        <td>{{ row['ĐÁNH GIÁ'] or "—" }}</td>
+                        <td class="evidence-cell" style="font-size:12px;max-width:560px;vertical-align:top;">{{ row['DẪN CHỨNG HTML'] | safe }}</td>
+                        <td class="col-ap-solution">{{ row['GIẢI PHÁP'] }}</td>
+                        <td class="col-ap-ref"><a href="{{ row['LINK THAM KHẢO'] }}" target="_blank" rel="noopener">{{ row['LINK THAM KHẢO'] }}</a></td>
+                        <td><span class="status {{ row['status_raw'] }}">{{ row['HIỆN TRẠNG'] }}</span></td>
+                        <td>{% if row['LINK TRIỂN KHAI'] %}<a href="{{ row['LINK TRIỂN KHAI'] }}" target="_blank" rel="noopener">{{ row['LINK TRIỂN KHAI'] }}</a>{% else %}—{% endif %}</td>
+                        <td>{{ row['NOTE'] or "—" }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="11" style="padding:20px;color:var(--muted);font-size:14px;">
+                            {% if error %}Không đọc được checklist (xem thông báo lỗi phía trên).{% else %}Không có dòng nào sau khi phân tích file checklist.
+                            Kiểm tra mỗi dòng có đủ cột <strong>CHECKLIST</strong>, <strong>ĐÁNH GIÁ</strong> và (khuyến nghị) <strong>DẪN CHỨNG</strong>, phân tách bằng <strong>tab</strong> hoặc <strong>ít nhất hai khoảng trắng</strong> liên tiếp giữa các cột.
+                            Bản mẫu: <code>data/Technical-SEO.txt</code> — hoặc đặt <code>Technical-SEO.txt</code> ở gốc dự án để thay thế.{% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </main>
+    </div>
+    <script>
+        const token = sessionStorage.getItem("seo_token") || "";
+        const latestAuditId = "{{ (latest_audit.id if latest_audit else '') }}";
+        const sidebarProjectList = document.getElementById("sidebarProjectList");
+
+        function setSidebarMessage(text) {
+            sidebarProjectList.innerHTML = "";
+            const li = document.createElement("li");
+            li.className = "sb-empty";
+            li.textContent = text;
+            sidebarProjectList.appendChild(li);
+        }
+
+        async function downloadAuditExport(auditId, ext) {
+            if (!token || !auditId) return;
+            const r = await fetch("/api/audit/" + encodeURIComponent(auditId) + "/export." + ext, {
+                headers: { Authorization: "Bearer " + token },
+            });
+            if (!r.ok) throw new Error("Không tải được file " + ext.toUpperCase());
+            const blob = await r.blob();
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "technical-audit." + ext;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        async function deleteAuditRun(auditId) {
+            if (!token || !auditId) return;
+            if (!confirm("Xóa dự án/bản quét này?")) return;
+            const r = await fetch("/api/audit/" + encodeURIComponent(auditId), {
+                method: "DELETE",
+                headers: { Authorization: "Bearer " + token },
+            });
+            if (!r.ok) throw new Error("Xóa dự án thất bại.");
+            await loadSidebarProjects();
+        }
+
+        async function loadSidebarProjects() {
+            if (!token) {
+                setSidebarMessage("Đăng nhập ở /tool để xem và xóa dự án cũ.");
+                return;
+            }
+            try {
+                const r = await fetch("/api/audit/mine?limit=8", {
+                    headers: { Authorization: "Bearer " + token },
+                });
+                const d = await r.json().catch(() => ({}));
+                if (!r.ok) throw new Error(d.detail || "Không tải được danh sách dự án.");
+                const items = Array.isArray(d.items) ? d.items : [];
+                sidebarProjectList.innerHTML = "";
+                if (!items.length) {
+                    setSidebarMessage("Chưa có dự án nào được lưu.");
+                    return;
+                }
+                for (const it of items) {
+                    const li = document.createElement("li");
+                    li.className = "sb-item";
+                    li.innerHTML =
+                        '<div class="sb-domain">' + (it.domain || it.source_url || "(unknown)") + "</div>" +
+                        '<div class="sb-meta">' + (it.at || "").replace("T", " ").replace("+00:00", " UTC") +
+                        " · " + (it.pages_scanned ?? "—") + " trang · " + (it.issue_count ?? 0) + " lỗi</div>";
+
+                    const actions = document.createElement("div");
+                    actions.className = "sb-actions";
+                    const bCsv = document.createElement("button");
+                    bCsv.type = "button";
+                    bCsv.className = "sb-excel";
+                    bCsv.textContent = "Excel (CSV)";
+                    bCsv.onclick = () => downloadAuditExport(it.id, "csv").catch((e) => alert(String(e.message || e)));
+                    const bGsheet = document.createElement("button");
+                    bGsheet.type = "button";
+                    bGsheet.className = "sb-excel";
+                    bGsheet.textContent = "Google Sheet";
+                    bGsheet.onclick = () => downloadAuditExport(it.id, "gsheet").catch((e) => alert(String(e.message || e)));
+                    actions.appendChild(bCsv);
+                    actions.appendChild(bGsheet);
+
+                    const bDel = document.createElement("button");
+                    bDel.type = "button";
+                    bDel.className = "sb-del";
+                    bDel.textContent = "Xóa";
+                    bDel.onclick = () => deleteAuditRun(it.id).catch((e) => alert(String(e.message || e)));
+
+                    li.appendChild(actions);
+                    li.appendChild(bDel);
+                    sidebarProjectList.appendChild(li);
+                }
+            } catch (e) {
+                setSidebarMessage("Không tải được danh sách dự án: " + String(e.message || e));
+            }
+        }
+
+        function bindTopAuditExportButtons() {
+            if (!latestAuditId || !token) return;
+            const bCsv = document.getElementById("btnTopAuditCsv");
+            const bGs = document.getElementById("btnTopAuditGsheet");
+            if (bCsv) bCsv.onclick = () => downloadAuditExport(latestAuditId, "csv").catch((e) => alert(String(e.message || e)));
+            if (bGs) bGs.onclick = () => downloadAuditExport(latestAuditId, "gsheet").catch((e) => alert(String(e.message || e)));
+        }
+
+        bindTopAuditExportButtons();
+        loadSidebarProjects();
+    </script>
+<script>
+(() => {
+    try {
+        const path = (window.location && window.location.pathname) ? window.location.pathname.replace(/\/+$/, "") : "";
+        document.querySelectorAll('.nav a, nav[aria-label="Menu chính"] a, .report-top a').forEach((a) => {
+            const href = (a.getAttribute("href") || "").trim();
+            if (!href || href.startsWith("http")) return;
+            const h = href.replace(/\/+$/, "");
+            if (h && h === path) a.classList.add("active");
+        });
+        if (path === "/settings") {
+            document.querySelectorAll('.report-top a[href="/settings"], .nav a[href="/settings"], .main-nav a[href="/settings"]').forEach((b) => b.classList.add("active"));
+        }
+    } catch (_) {}
+})();
+</script>
+{% include "partials/beeseo_i18n.html" %}
+{% include "partials/beeseo_pricing_bundle.html" %}
+</body>
+</html>

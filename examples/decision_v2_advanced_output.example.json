@@ -1,0 +1,56 @@
+{
+  "url": "https://www.example.com/products?utm_source=news",
+  "simulation": {
+    "will_index": false,
+    "primary_url": "https://www.example.com/products",
+    "index_decision_reason": "Strong declared canonical to an indexable target with acceptable similarity — model expects this URL to consolidate away from the index as a standalone document.",
+    "canonical_chosen": "https://www.example.com/products",
+    "canonical_source": "declared",
+    "ignored_signals": [],
+    "ranking_eligibility": "medium"
+  },
+  "canonical_target": {
+    "fetched": true,
+    "target_status": 200,
+    "target_indexable": true,
+    "target_title": "Products | Example",
+    "similarity_score": 0.612,
+    "canonical_chain_valid": true,
+    "target_canonical_href": "https://www.example.com/products",
+    "canonical_points_back_to_source": false,
+    "fetch_error": null
+  },
+  "cloaking_analysis": {
+    "text_similarity_score": 0.8812,
+    "dom_similarity_score": 0.924,
+    "cloaking_risk_level": "low",
+    "title_mismatch": false,
+    "canonical_mismatch": false,
+    "notes": "text_body_similar"
+  },
+  "summary": {
+    "score": 48.5,
+    "total_issues": 5,
+    "critical_count": 2,
+    "total_weighted_impact": 51.5
+  },
+  "issues": [
+    {
+      "rule_id": "page_unlikely_indexed",
+      "issue": "Mô phỏng hành vi Google: URL này khó là bản primary được index (duplicate/consolidation hoặc canonical bị hủy).",
+      "severity": "high",
+      "confidence": 0.74,
+      "category": "indexability",
+      "decision_source": "multi_signal_v2",
+      "adjusted_score_impact": 18.5
+    }
+  ],
+  "resolved_signals": {
+    "final_indexability": true,
+    "canonical_truth": "https://www.example.com/products",
+    "canonical_type": "cross-url",
+    "google_simulation": { "will_index": false },
+    "canonical_target_analysis": { "fetched": true, "similarity_score": 0.612 },
+    "cloaking_advanced": { "cloaking_risk_level": "low" }
+  }
+}

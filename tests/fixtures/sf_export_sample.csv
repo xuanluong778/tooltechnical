@@ -1,0 +1,4 @@
+url,status_code,h1,meta_description,alt_text,indexability
+https://Example.com/broken-page/,404,,Some meta,0,Indexable
+https://example.com/thin-policy,200,,,0,"Noindex, Follow"
+https://example.com/product/one,200,Good H1,,3,Indexable

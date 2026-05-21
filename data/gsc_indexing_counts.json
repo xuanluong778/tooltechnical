@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "synced_at": "2026-04-29",
+    "source": "Google Search Console → Lập chỉ mục → Trang → Lý do trang không được lập chỉ mục",
+    "property_url": "",
+    "note_vi": "Số «Trang» khớp báo cáo GSC (ảnh chụp). Danh sách URL chi tiết không có qua API — trong /tool dán JSON có «urls»: [...] sau khi Export từ GSC."
+  },
+  "bị chặn bằng tệp robots.txt": 97,
+  "Trang có lệnh chuyển hướng": 60,
+  "Không tìm thấy (404)": 6,
+  "Trang thay thế có thẻ chính tắc thích hợp": 6,
+  "Bị chặn do một vấn đề 4xx khác": 1,
+  "Lỗi máy chủ (5xx)": 1,
+  "Bị loại trừ bởi thẻ 'noindex'": 1,
+  "Đã thu thập dữ liệu – hiện chưa được lập chỉ mục": 86,
+  "Đã phát hiện thấy – hiện chưa được lập chỉ mục": 28
+}

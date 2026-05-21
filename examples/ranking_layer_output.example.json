@@ -1,0 +1,62 @@
+{
+  "page_audits": [
+    {
+      "url": "https://www.example.com/",
+      "status": 200,
+      "decision": {
+        "url": "https://www.example.com/",
+        "resolved_signals": { "final_indexability": true },
+        "summary": { "score": 78.0, "total_issues": 2, "critical_count": 0, "total_weighted_impact": 22.0 },
+        "issues": []
+      },
+      "simulation": {
+        "will_index": true,
+        "primary_url": "https://www.example.com/",
+        "ranking_eligibility": "high",
+        "canonical_source": "declared",
+        "ignored_signals": []
+      },
+      "ranking": {
+        "ranking_score": 71.2,
+        "ranking_potential": "high",
+        "limiting_factors": [],
+        "strengths": ["PageRank nội bộ tương đối cao trong đợt crawl."],
+        "why_not_ranking": [],
+        "what_to_improve": [],
+        "graph_metrics": {
+          "pagerank_score": 0.62,
+          "crawl_depth": 0,
+          "is_orphan": false,
+          "in_degree": 4,
+          "out_degree": 12,
+          "is_entry_url": true
+        },
+        "content_metrics": {
+          "word_count": 420,
+          "content_depth": "normal",
+          "heading_structure_score": 0.72,
+          "keyword_density_estimate": {
+            "top_term_frequency": 0.031,
+            "top_term": "example",
+            "concentration": "low"
+          }
+        }
+      }
+    }
+  ],
+  "ranking_priorities": [
+    {
+      "url": "https://www.example.com/deep/article",
+      "priority_score": 54.3,
+      "ranking_score": 38.0,
+      "ranking_potential": "medium",
+      "limiting_factors": ["orphan_page", "deep_crawl_distance"],
+      "reason": "high_upside_fixable"
+    }
+  ],
+  "site_graph_summary": {
+    "node_count": 12,
+    "orphan_count": 1,
+    "entry_urls": ["https://www.example.com/"]
+  }
+}

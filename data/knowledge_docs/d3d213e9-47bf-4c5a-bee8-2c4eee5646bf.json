@@ -1,0 +1,266 @@
+{
+  "documents": [
+    {
+      "id": "da7056d4-009c-41c0-b5a9-a72b2148caea",
+      "filename": "so-do-tri-thuc-itsieuviet.txt",
+      "title": "so-do-tri-thuc-itsieuviet",
+      "content_format": "text",
+      "char_count": 21669,
+      "token_estimate": 5417,
+      "chunks": [
+        {
+          "index": 0,
+          "text": "SƠ ĐỒ TRI THỨC SEO - IT SIÊU VIỆT\nWebsite: https://itsieuviet.com\nMục đích sử dụng: Import vào Knowledge Base / Sơ đồ tri thức cho hệ thống Content AI để gợi ý outline, viết bài SEO, tạo ảnh theo ngữ cảnh và tối ưu nội dung local service.\nNgôn ngữ: Tiếng Việt\nPhiên bản: 1.0",
+          "embedded": false
+        },
+        {
+          "index": 1,
+          "text": "============================================================\n1. BRAND PROFILE - HỒ SƠ THƯƠNG HIỆU\n============================================================\nTên thương hiệu chính: IT Siêu Việt\nTên gọi khác có thể xuất hiện: Tin Học Siêu Việt, Công Ty TNHH Phát Triển Công Nghệ IT Siêu Việt\nWebsite: https://itsieuviet.com\nLĩnh vực chính: Dịch vụ công nghệ thông tin, sửa chữa thiết bị công nghệ, dịch vụ kỹ thuật tận nơi tại TP.HCM\nĐịnh vị thương hiệu: Đơn vị cung cấp dịch vụ sửa máy tính, sửa laptop, máy in, MacBook/iMac, cứu dữ liệu, lắp đặt camera, thiết kế website và đào tạo SEO tại TP.HCM.",
+          "embedded": false
+        },
+        {
+          "index": 2,
+          "text": "/iMac, cứu dữ liệu, lắp đặt camera, thiết kế website và đào tạo SEO tại TP.HCM.\nKhu vực chính: TP.HCM và các quận/huyện lân cận.\nThông điệp thương hiệu: Dịch vụ tại nhà uy tín, chuyên nghiệp, nhanh chóng, có mặt tận nơi, báo giá rõ ràng, có bảo hành.\nTone of voice: Chuyên nghiệp, rõ ràng, đáng tin cậy, gần gũi, tư vấn thực tế, nhấn mạnh tốc độ và sự an tâm.\nCTA chính: Gọi hotline, liên hệ Zalo, đặt lịch kỹ thuật tận nơi, yêu cầu báo giá.",
+          "embedded": false
+        },
+        {
+          "index": 3,
+          "text": "============================================================\n2. CORE SERVICES - DỊCH VỤ CHÍNH\n============================================================\nNhóm dịch vụ: Sửa máy tính tận nơi\n- Sửa máy tính tại nhà TP.HCM\n- Sửa PC, laptop tại nhà\n- Kiểm tra lỗi phần cứng, phần mềm\n- Khắc phục máy tính chạy chậm, treo, đơ\n- Sửa máy tính không lên nguồn\n- Sửa lỗi Windows, lỗi khởi động\n- Sửa lỗi mạng, WiFi, LAN\n- Cài đặt phần mềm, diệt virus\n- Nâng cấp máy tính, thay linh kiện nếu cần",
+          "embedded": false
+        },
+        {
+          "index": 4,
+          "text": "Nhóm dịch vụ: Sửa laptop\n- Sửa laptop tại nhà\n- Vệ sinh laptop\n- Sửa laptop nóng, tự tắt\n- Sửa lỗi pin, sạc, màn hình, bàn phím\n- Nâng cấp RAM, SSD\n- Cài đặt hệ điều hành và phần mềm\n\nNhóm dịch vụ: Cài Windows / phần mềm\n- Cài Windows tại nhà\n- Cài phần mềm văn phòng\n- Cài driver\n- Fix lỗi máy tính chạy chậm\n- Tối ưu hệ thống sau khi cài\n\nNhóm dịch vụ: Sửa máy in\n- Sửa máy in tại nhà/văn phòng\n- Cài đặt máy in\n- Kết nối máy in qua mạng LAN/WiFi\n- Xử lý lỗi in ấn, kẹt giấy, không nhận máy in",
+          "embedded": false
+        },
+        {
+          "index": 5,
+          "text": "Nhóm dịch vụ: MacBook / iMac\n- Sửa chữa, cài đặt MacBook\n- Sửa chữa, cài đặt iMac\n- Bảo trì, tối ưu thiết bị Apple\n\nNhóm dịch vụ: Cứu dữ liệu\n- Cứu dữ liệu ổ cứng\n- Cứu dữ liệu thiết bị lưu trữ\n- Hỗ trợ khôi phục dữ liệu quan trọng\n\nNhóm dịch vụ khác\n- Lắp đặt camera\n- Thiết kế website\n- Đào tạo SEO",
+          "embedded": false
+        },
+        {
+          "index": 6,
+          "text": "============================================================\n3. TARGET AUDIENCE - ĐỐI TƯỢNG KHÁCH HÀNG\n============================================================\nKhách hàng cá nhân:\n- Người dùng máy tính tại nhà\n- Học sinh, sinh viên, nhân viên văn phòng\n- Người cần sửa máy tính nhanh nhưng không tiện mang máy ra tiệm\n- Người cần cài Windows, cài phần mềm, sửa laptop, vệ sinh laptop\n\nKhách hàng doanh nghiệp:\n- Văn phòng, công ty nhỏ và vừa\n- Cửa hàng, shop bán hàng\n- Doanh nghiệp cần hỗ trợ máy tính, máy in, mạng nội bộ\n- Đơn vị cần kỹ thuật đến tận nơi để giảm gián đoạn công việc",
+          "embedded": false
+        },
+        {
+          "index": 7,
+          "text": "Khách hàng local tại TP.HCM:\n- Người tìm dịch vụ theo khu vực/quận\n- Người cần kỹ thuật có mặt nhanh\n- Người ưu tiên đơn vị gần, hỗ trợ tận nơi, có bảo hành",
+          "embedded": false
+        },
+        {
+          "index": 8,
+          "text": "============================================================\n4. SEARCH INTENT - Ý ĐỊNH TÌM KIẾM\n============================================================\nIntent chính: Commercial / Transactional / Local service\nNgười tìm kiếm thường muốn:\n- Tìm đơn vị sửa máy tính tận nơi gần mình\n- Biết dịch vụ có sửa lỗi của họ không\n- Biết thời gian kỹ thuật có mặt\n- Biết giá sửa hoặc yếu tố ảnh hưởng đến chi phí\n- Biết có bảo hành không\n- Biết có hỗ trợ ngoài giờ hoặc tại văn phòng không\n- Tìm hotline/Zalo để liên hệ nhanh",
+          "embedded": false
+        },
+        {
+          "index": 9,
+          "text": "Các intent phụ:\n- Informational: tìm nguyên nhân lỗi máy tính, cách xử lý ban đầu\n- Commercial investigation: so sánh đơn vị sửa máy tính uy tín\n- Local SEO: tìm dịch vụ theo quận/huyện tại TP.HCM",
+          "embedded": false
+        },
+        {
+          "index": 10,
+          "text": "============================================================\n5. PAIN POINTS - NỖI ĐAU KHÁCH HÀNG\n============================================================\n- Máy tính/laptop chạy chậm, treo, đơ, ảnh hưởng công việc\n- Máy không lên nguồn, không vào Windows\n- Máy bị virus, lỗi phần mềm, mất dữ liệu\n- Laptop nóng, quạt kêu lớn, tự tắt\n- Không kết nối được WiFi, mạng LAN, máy in\n- Không có thời gian mang máy ra tiệm\n- Lo sợ bị báo giá không minh bạch\n- Lo bị thay linh kiện kém chất lượng\n- Cần kỹ thuật đến nhanh để không gián đoạn công việc\n- Cần bảo hành sau sửa chữa",
+          "embedded": false
+        },
+        {
+          "index": 11,
+          "text": "============================================================\n6. TRUST FACTORS - YẾU TỐ TẠO NIỀM TIN\n============================================================\n- Dịch vụ tận nơi tại TP.HCM\n- Kỹ thuật viên có kinh nghiệm\n- Có mặt nhanh khi khách cần\n- Kiểm tra và báo lỗi trực tiếp\n- Báo giá trước khi sửa\n- Có chính sách bảo hành hợp lý\n- Hỗ trợ nhiều lỗi phần cứng và phần mềm\n- Phục vụ cá nhân, gia đình, văn phòng, doanh nghiệp\n- Có nhiều dịch vụ liên quan: máy tính, laptop, máy in, MacBook, cứu dữ liệu",
+          "embedded": false
+        },
+        {
+          "index": 12,
+          "text": "============================================================\n7. SERVICE PROCESS - QUY TRÌNH DỊCH VỤ\n============================================================\nBước 1: Tiếp nhận yêu cầu\n- Khách hàng gọi hotline/Zalo hoặc gửi thông tin lỗi.\n- Ghi nhận loại thiết bị, tình trạng lỗi, địa chỉ, thời gian mong muốn.\n\nBước 2: Tư vấn sơ bộ\n- Kỹ thuật viên tư vấn nguyên nhân có thể xảy ra.\n- Ước lượng khả năng xử lý tận nơi.\n- Thông báo thời gian kỹ thuật đến kiểm tra.\n\nBước 3: Kiểm tra tận nơi\n- Kỹ thuật viên đến nhà/văn phòng.\n- Kiểm tra phần cứng, phần mềm, hệ điều hành, mạng, thiết bị liên quan.",
+          "embedded": false
+        },
+        {
+          "index": 13,
+          "text": "Bước 4: Báo lỗi và báo giá\n- Giải thích nguyên nhân lỗi.\n- Đưa phương án sửa chữa.\n- Báo giá trước khi thực hiện.\n\nBước 5: Sửa chữa / cài đặt / tối ưu\n- Tiến hành sửa lỗi nếu khách đồng ý.\n- Cài đặt, thay thế, vệ sinh hoặc tối ưu theo nhu cầu.\n\nBước 6: Kiểm tra lại và bàn giao\n- Test lại thiết bị sau khi sửa.\n- Hướng dẫn khách sử dụng và lưu ý phòng tránh lỗi.\n\nBước 7: Bảo hành / hỗ trợ sau dịch vụ\n- Ghi nhận thông tin bảo hành nếu có.\n- Hỗ trợ khách khi phát sinh vấn đề liên quan.",
+          "embedded": false
+        },
+        {
+          "index": 14,
+          "text": "============================================================\n8. PRICING KNOWLEDGE - KIẾN THỨC VỀ GIÁ\n============================================================\nLưu ý cho AI:\n- Không tự bịa bảng giá cụ thể nếu Knowledge Base chưa có giá chính thức.\n- Có thể viết phần “yếu tố ảnh hưởng đến chi phí” thay vì đưa giá cố định.\n- Nếu cần giá cụ thể, yêu cầu người dùng bổ sung bảng giá.",
+          "embedded": false
+        },
+        {
+          "index": 15,
+          "text": "Các yếu tố ảnh hưởng đến giá:\n- Loại thiết bị: PC, laptop, MacBook, máy in\n- Loại lỗi: phần mềm, phần cứng, dữ liệu, mạng, máy in\n- Mức độ phức tạp của lỗi\n- Có cần thay linh kiện không\n- Khu vực hỗ trợ\n- Thời gian hỗ trợ: giờ hành chính, ngoài giờ, khẩn cấp\n- Dịch vụ kèm theo: cài phần mềm, vệ sinh, nâng cấp, sao lưu dữ liệu\n\nHeading nên dùng:\n- Bảng giá sửa máy tính tận nơi tại TP.HCM\n- Các yếu tố ảnh hưởng đến chi phí sửa máy tính\n- Khi nào phát sinh thêm chi phí linh kiện?\n- Vì sao nên hỏi báo giá trước khi sửa?",
+          "embedded": false
+        },
+        {
+          "index": 16,
+          "text": "============================================================\n9. LOCAL SEO - KHU VỰC PHỤC VỤ\n============================================================\nKhu vực chính: TP.HCM\nCác khu vực/quận có thể dùng trong content local:\n- TP. Thủ Đức\n- Bình Thạnh\n- Quận 1\n- Quận 2\n- Quận 3\n- Quận 5\n- Quận 9\n- Quận 10\n- Gò Vấp\n- Tân Bình\n- Phú Nhuận\n- Hóc Môn\n- Nhà Bè\n- Các quận/huyện lân cận tại TP.HCM\n\nĐịa chỉ/điểm hiện diện công khai từ website:\n- 45 đường số 22, Phường Phước Long B, TP. Thủ Đức\n- 204 Nơ Trang Long, P25, Bình Thạnh\n- 39 đường 168, Quận 9, TP.HCM",
+          "embedded": false
+        },
+        {
+          "index": 17,
+          "text": "Local SEO heading nên dùng:\n- Khu vực hỗ trợ sửa máy tính tận nơi tại TP.HCM\n- Sửa máy tính tận nơi TP. Thủ Đức\n- Sửa máy tính tận nơi Bình Thạnh\n- Sửa máy tính tận nơi Gò Vấp\n- Sửa máy tính tận nơi Tân Bình\n- Sửa laptop tại nhà các quận TP.HCM",
+          "embedded": false
+        },
+        {
+          "index": 18,
+          "text": "============================================================\n10. SEO KEYWORD CLUSTERS - CỤM TỪ KHÓA SEO\n============================================================\nCụm chính: Sửa máy tính tận nơi\n- sửa máy tính tận nơi\n- sửa máy tính tại nhà\n- sửa máy tính tận nơi TP.HCM\n- sửa máy tính tại nhà TP.HCM\n- dịch vụ sửa máy tính tận nơi\n- sửa máy tính gần đây\n- sửa PC tại nhà\n\nCụm sửa laptop:\n- sửa laptop tận nơi\n- sửa laptop tại nhà\n- sửa laptop tại nhà TP.HCM\n- vệ sinh laptop tận nơi\n- laptop chạy chậm\n- laptop nóng tự tắt\n- nâng cấp RAM SSD laptop",
+          "embedded": false
+        },
+        {
+          "index": 19,
+          "text": "Cụm cài Windows/phần mềm:\n- cài Windows tại nhà\n- cài Win laptop\n- cài phần mềm máy tính\n- sửa lỗi Windows\n- máy tính không vào Windows\n- máy tính bị virus\n\nCụm máy in/văn phòng:\n- sửa máy in tận nơi\n- cài đặt máy in\n- sửa lỗi máy in không in được\n- kết nối máy in qua WiFi\n- sửa máy in văn phòng\n\nCụm MacBook/iMac:\n- sửa MacBook tại nhà\n- cài đặt MacBook\n- sửa iMac\n- bảo trì MacBook\n\nCụm cứu dữ liệu:\n- cứu dữ liệu ổ cứng\n- khôi phục dữ liệu\n- cứu dữ liệu TP.HCM\n- cứu dữ liệu giá rẻ",
+          "embedded": false
+        },
+        {
+          "index": 20,
+          "text": "Cụm local:\n- sửa máy tính quận 1\n- sửa máy tính quận 2\n- sửa máy tính Gò Vấp\n- sửa máy tính Bình Thạnh\n- sửa máy tính Tân Bình\n- sửa laptop quận 1\n- sửa laptop Phú Nhuận\n- sửa laptop Hóc Môn\n- sửa laptop Nhà Bè\n\n============================================================\n11. TOPIC GRAPH - SƠ ĐỒ CHỦ ĐỀ\n============================================================\nChủ đề trung tâm: Sửa máy tính tận nơi TP.HCM",
+          "embedded": false
+        },
+        {
+          "index": 21,
+          "text": "Quan hệ chủ đề:\nSửa máy tính tận nơi TP.HCM -> thuộc nhóm -> Dịch vụ kỹ thuật tận nơi\nSửa máy tính tận nơi TP.HCM -> phục vụ -> Cá nhân, gia đình, văn phòng, doanh nghiệp\nSửa máy tính tận nơi TP.HCM -> xử lý -> Lỗi phần cứng\nSửa máy tính tận nơi TP.HCM -> xử lý -> Lỗi phần mềm\nSửa máy tính tận nơi TP.HCM -> xử lý -> Lỗi mạng, WiFi, máy in\nSửa máy tính tận nơi TP.HCM -> có lợi ích -> Tiết kiệm thời gian di chuyển\nSửa máy tính tận nơi TP.HCM -> có lợi ích -> Kỹ thuật đến tận nơi\nSửa máy tính tận nơi TP.HCM -> cần yếu tố tin tưởng -> Báo giá trước, bảo hành, kỹ thuật kinh nghiệm\nSửa máy tính tận",
+          "embedded": false
+        },
+        {
+          "index": 22,
+          "text": "tố tin tưởng -> Báo giá trước, bảo hành, kỹ thuật kinh nghiệm\nSửa máy tính tận nơi TP.HCM -> local entity -> TP.HCM, TP. Thủ Đức, Bình Thạnh, Gò Vấp, Tân Bình\nSửa máy tính tận nơi TP.HCM -> CTA -> Gọi hotline/Zalo đặt lịch",
+          "embedded": false
+        },
+        {
+          "index": 23,
+          "text": "============================================================\n12. OUTLINE PATTERN - MẪU OUTLINE CHUẨN SEO\n============================================================\nDùng cho keyword local service như: sửa máy tính tận nơi TP.HCM, sửa laptop tại nhà, sửa máy in tận nơi.\n\nH1: [Từ khóa chính] nhanh chóng, uy tín tại [khu vực]\n\nMở bài:\n- Nêu nhanh vấn đề khách hàng đang gặp.\n- Nhắc từ khóa chính tự nhiên trong 100 từ đầu.\n- Nêu lợi ích: hỗ trợ tận nơi, tiết kiệm thời gian, kiểm tra trực tiếp, báo giá trước.\n- Có CTA mềm: liên hệ để được tư vấn/đặt lịch.",
+          "embedded": false
+        },
+        {
+          "index": 24,
+          "text": "H2: Dịch vụ [từ khóa chính] phù hợp với ai?\nH3: Khách hàng cá nhân cần sửa máy tại nhà\nH3: Văn phòng, công ty cần hỗ trợ kỹ thuật nhanh\nH3: Người không tiện mang máy ra tiệm\nH3: Khách hàng cần kiểm tra lỗi trước khi sửa\n\nH2: Các lỗi máy tính thường được hỗ trợ tận nơi\nH3: Máy tính chạy chậm, treo, đơ\nH3: Máy tính không lên nguồn, không vào Windows\nH3: Laptop nóng, quạt kêu lớn, tự tắt\nH3: Lỗi WiFi, mạng LAN, máy in\nH3: Cài Windows, cài phần mềm, diệt virus\nH3: Nâng cấp RAM, SSD, vệ sinh laptop",
+          "embedded": false
+        },
+        {
+          "index": 25,
+          "text": "H2: Quy trình sửa máy tính tận nơi\nH3: Tiếp nhận thông tin lỗi và địa chỉ khách hàng\nH3: Tư vấn sơ bộ và hẹn thời gian kỹ thuật đến\nH3: Kiểm tra trực tiếp thiết bị\nH3: Báo lỗi, báo giá trước khi sửa\nH3: Sửa chữa, kiểm tra lại và bàn giao\nH3: Hỗ trợ bảo hành sau sửa chữa\n\nH2: Bảng giá sửa máy tính tận nơi tại [khu vực]\nH3: Các yếu tố ảnh hưởng đến chi phí\nH3: Khi nào cần thay linh kiện?\nH3: Vì sao nên báo giá trước khi sửa?\nH3: Lưu ý về phí kiểm tra, phí di chuyển nếu có",
+          "embedded": false
+        },
+        {
+          "index": 26,
+          "text": "H2: Vì sao nên chọn IT Siêu Việt?\nH3: Kỹ thuật viên có kinh nghiệm\nH3: Hỗ trợ tận nơi tại TP.HCM\nH3: Báo giá rõ ràng trước khi sửa\nH3: Hỗ trợ nhiều lỗi phần cứng và phần mềm\nH3: Có bảo hành sau dịch vụ\n\nH2: Khu vực hỗ trợ sửa máy tính tận nơi tại TP.HCM\nH3: Sửa máy tính tận nơi TP. Thủ Đức\nH3: Sửa máy tính tận nơi Bình Thạnh\nH3: Sửa máy tính tận nơi Gò Vấp\nH3: Sửa máy tính tận nơi Tân Bình\nH3: Hỗ trợ các quận/huyện lân cận",
+          "embedded": false
+        },
+        {
+          "index": 27,
+          "text": "H2: Lưu ý trước khi gọi thợ sửa máy tính tận nơi\nH3: Sao lưu dữ liệu quan trọng nếu có thể\nH3: Mô tả rõ tình trạng lỗi\nH3: Hỏi trước chi phí kiểm tra và sửa chữa\nH3: Chuẩn bị sạc, mật khẩu máy, phần mềm cần cài\n\nH2: Câu hỏi thường gặp\nH3: Sửa máy tính tận nơi bao lâu có mặt?\nH3: Sửa máy tính tận nơi có bảo hành không?\nH3: Có sửa ngoài giờ hành chính không?\nH3: Có cài Windows và phần mềm tận nơi không?\nH3: Có hỗ trợ máy tính văn phòng và máy in không?",
+          "embedded": false
+        },
+        {
+          "index": 28,
+          "text": "H2: Liên hệ sửa máy tính tận nơi tại [khu vực]\nH3: Khi nào nên gọi kỹ thuật ngay?\nH3: Thông tin hotline/Zalo/form đặt lịch\nH3: Cam kết kiểm tra và tư vấn rõ ràng",
+          "embedded": false
+        },
+        {
+          "index": 29,
+          "text": "============================================================\n13. FAQ KNOWLEDGE - CÂU HỎI THƯỜNG GẶP\n============================================================\nFAQ 1: Sửa máy tính tận nơi TP.HCM có nhanh không?\nAnswer: Dịch vụ sửa máy tính tận nơi giúp khách hàng tiết kiệm thời gian di chuyển. Thời gian có mặt phụ thuộc khu vực, lịch kỹ thuật và mức độ khẩn cấp. Với các khu vực gần trạm kỹ thuật, hệ thống có thể sắp xếp hỗ trợ nhanh hơn.",
+          "embedded": false
+        },
+        {
+          "index": 30,
+          "text": "FAQ 2: Sửa máy tính tận nơi có báo giá trước không?\nAnswer: Nên kiểm tra lỗi trước, sau đó báo phương án xử lý và chi phí dự kiến. Khách hàng nên đồng ý báo giá trước khi kỹ thuật tiến hành sửa.\n\nFAQ 3: Có sửa cả lỗi phần cứng và phần mềm không?\nAnswer: Có thể hỗ trợ nhiều nhóm lỗi như máy chạy chậm, lỗi Windows, lỗi mạng, lỗi máy in, máy không lên nguồn, lỗi ổ cứng, RAM, pin, sạc, màn hình hoặc cần nâng cấp thiết bị.\n\nFAQ 4: Có cài Windows và phần mềm tận nơi không?\nAnswer: Có thể hỗ trợ cài Windows, driver, phần mềm văn phòng, phần mềm học tập/làm việc và tối ưu máy tính sau khi cài.",
+          "embedded": false
+        },
+        {
+          "index": 31,
+          "text": "FAQ 5: Có bảo hành sau khi sửa không?\nAnswer: Dịch vụ nên có chính sách bảo hành tùy theo lỗi và hạng mục sửa chữa. Khi viết content, không tự ghi thời gian bảo hành cụ thể nếu chưa có dữ liệu chính thức.\n\nFAQ 6: Có hỗ trợ sửa máy tính văn phòng không?\nAnswer: Có thể hỗ trợ cá nhân, gia đình, văn phòng, công ty nhỏ và các đơn vị cần kỹ thuật đến tận nơi để giảm gián đoạn công việc.\n\nFAQ 7: Có sửa máy in và mạng nội bộ không?\nAnswer: Có thể hỗ trợ các lỗi liên quan máy in, kết nối máy in, WiFi, mạng LAN và thiết bị văn phòng tùy tình trạng thực tế.",
+          "embedded": false
+        },
+        {
+          "index": 32,
+          "text": "FAQ 8: Cần chuẩn bị gì trước khi kỹ thuật đến?\nAnswer: Khách hàng nên mô tả lỗi rõ ràng, chuẩn bị sạc, mật khẩu máy nếu cần, sao lưu dữ liệu quan trọng và hỏi trước chi phí kiểm tra/sửa chữa.",
+          "embedded": false
+        },
+        {
+          "index": 33,
+          "text": "============================================================\n14. CONTENT RULES - QUY TẮC VIẾT CONTENT SEO\n============================================================\n- H1 phải chứa từ khóa chính hoặc biến thể gần nhất.\n- Meta description nên dài 140-160 ký tự, có từ khóa chính và CTA.\n- Mở bài phải nêu đúng vấn đề người tìm kiếm trong 100 từ đầu.\n- Không tạo outline sơ sài chỉ gồm “định nghĩa, lợi ích, tiêu chí”.\n- Với keyword local service, phải có khu vực phục vụ, quy trình, chi phí, bảo hành, CTA.\n- Với keyword dịch vụ, phải có: đối tượng phù hợp, lỗi/vấn đề, hạng mục dịch vụ, quy trình, g",
+          "embedded": false
+        },
+        {
+          "index": 34,
+          "text": "dịch vụ, phải có: đối tượng phù hợp, lỗi/vấn đề, hạng mục dịch vụ, quy trình, giá, lý do chọn, FAQ, CTA.\n- Không tự bịa giá, thời gian bảo hành, cam kết nếu chưa có dữ liệu.\n- Không nhồi nhét từ khóa.\n- Mỗi H2 nên có 2-5 H3 khi phù hợp.\n- Heading cần rõ ý, có khả năng SEO và chuyển đổi.\n- Nên dùng bullet, bảng giá/yếu tố chi phí, checklist khi phù hợp.\n- Nên thêm CTA ở đầu, giữa hoặc cuối bài một cách tự nhiên.",
+          "embedded": false
+        },
+        {
+          "index": 35,
+          "text": "============================================================\n15. IMAGE CONTEXT - TRI THỨC TẠO ẢNH\n============================================================\nPhong cách ảnh đề xuất:\n- Realistic business\n- 3D illustration\n- Modern dashboard\n- Kỹ thuật viên đang sửa máy tính tại nhà/văn phòng\n- Laptop/PC trên bàn làm việc, dụng cụ kỹ thuật, dashboard kiểm tra lỗi\n- Bối cảnh văn phòng hoặc gia đình tại Việt Nam",
+          "embedded": false
+        },
+        {
+          "index": 36,
+          "text": "Ảnh nên tạo theo từng section:\n- Section “lỗi máy tính thường gặp”: ảnh laptop/PC lỗi, màn hình xanh, kỹ thuật kiểm tra thiết bị.\n- Section “quy trình sửa máy tính”: ảnh kỹ thuật viên kiểm tra laptop tại bàn khách hàng.\n- Section “bảng giá/yếu tố chi phí”: ảnh bảng checklist, báo giá minh bạch, kỹ thuật tư vấn khách.\n- Section “khu vực phục vụ”: ảnh bản đồ TP.HCM, kỹ thuật viên di chuyển tận nơi.\n- Section “lý do chọn”: ảnh đội ngũ kỹ thuật viên chuyên nghiệp, khách hàng hài lòng.",
+          "embedded": false
+        },
+        {
+          "index": 37,
+          "text": "ALT text mẫu:\n- Sửa máy tính tận nơi TP.HCM bởi kỹ thuật viên IT Siêu Việt\n- Kỹ thuật viên kiểm tra laptop tại nhà khách hàng\n- Dịch vụ cài Windows và sửa lỗi máy tính tại nhà\n- Quy trình sửa máy tính tận nơi nhanh chóng, rõ ràng\n- Hỗ trợ sửa laptop, máy tính, máy in tại TP.HCM\n\nLưu ý:\n- Không tạo ảnh có chữ nhỏ khó đọc.\n- Không tự chèn logo nếu chưa có logo chính thức.\n- Không dùng ảnh sai ngữ cảnh như kỹ thuật mạng server lớn nếu bài viết nói về sửa laptop tại nhà.",
+          "embedded": false
+        },
+        {
+          "index": 38,
+          "text": "============================================================\n16. INTERNAL LINK SUGGESTIONS - GỢI Ý LIÊN KẾT NỘI BỘ\n============================================================\nAnchor text và URL gợi ý:\n- sửa máy tính tại nhà TP.HCM -> /sua-may-tinh-tai-nha-tp-hcm/\n- sửa máy tính Gò Vấp -> /sua-may-tinh-tai-go-vap/\n- sửa laptop Quận 1 -> /sua-laptop-quan-1/\n- dịch vụ cứu dữ liệu giá rẻ TP.HCM -> cần kiểm tra URL chính xác trên website\n- cài Windows tại nhà -> cần kiểm tra URL chính xác trên website\n- sửa máy in tại nhà -> cần kiểm tra URL chính xác trên website",
+          "embedded": false
+        },
+        {
+          "index": 39,
+          "text": "Quy tắc internal link:\n- Chèn tự nhiên trong nội dung.\n- Không chèn quá nhiều link trong một đoạn.\n- Anchor text nên mô tả đúng trang đích.\n- Ưu tiên link tới dịch vụ liên quan hoặc bài local cùng chủ đề.\n\n============================================================\n17. SCHEMA SUGGESTIONS - GỢI Ý SCHEMA\n============================================================\nLoại schema phù hợp:\n- LocalBusiness\n- ProfessionalService\n- Service\n- FAQPage\n- BreadcrumbList\n- Article hoặc BlogPosting",
+          "embedded": false
+        },
+        {
+          "index": 40,
+          "text": "Dữ liệu cần bổ sung nếu muốn schema đầy đủ:\n- Tên doanh nghiệp chính xác\n- Logo chính thức\n- Số điện thoại chính thức\n- Giờ làm việc\n- Địa chỉ chuẩn hóa\n- Khu vực phục vụ\n- Trang liên hệ\n- Mạng xã hội chính thức\n\nKhông tự bịa:\n- Rating\n- Review count\n- Giá cố định\n- Thời gian bảo hành\n- Giờ mở cửa nếu chưa có dữ liệu chính thức",
+          "embedded": false
+        },
+        {
+          "index": 41,
+          "text": "============================================================\n18. PROMPT INSTRUCTION FOR AI OUTLINE\n============================================================\nKhi tạo outline cho IT Siêu Việt, hãy làm theo nguyên tắc:\n- Xác định keyword_type trước: local_service, service, repair_service, informational, comparison.\n- Nếu keyword có địa danh, ưu tiên local SEO.\n- Không tạo outline quá ngắn.\n- Không dùng heading chung chung nếu không cần.\n- Luôn có phần: lỗi/vấn đề, dịch vụ cụ thể, quy trình, giá/yếu tố chi phí, lý do chọn, khu vực, FAQ, CTA.\n- Nếu thiếu dữ liệu về giá/cam kết, viết theo hướng “",
+          "embedded": false
+        },
+        {
+          "index": 42,
+          "text": "o chọn, khu vực, FAQ, CTA.\n- Nếu thiếu dữ liệu về giá/cam kết, viết theo hướng “yếu tố ảnh hưởng” thay vì bịa thông tin.\n- Dùng brand IT Siêu Việt tự nhiên, không lạm dụng.",
+          "embedded": false
+        },
+        {
+          "index": 43,
+          "text": "============================================================\n19. SAMPLE OUTLINE - MẪU OUTLINE CHO KEYWORD\n============================================================\nKeyword: sửa máy tính tận nơi TP.HCM\n\nH1: Sửa máy tính tận nơi TP.HCM nhanh chóng, uy tín\n\nH2: Dịch vụ sửa máy tính tận nơi TP.HCM phù hợp với ai?\nH3: Cá nhân cần sửa máy tính tại nhà\nH3: Văn phòng, công ty cần hỗ trợ kỹ thuật nhanh\nH3: Khách hàng không tiện mang máy ra tiệm",
+          "embedded": false
+        },
+        {
+          "index": 44,
+          "text": "H2: Các lỗi máy tính thường được hỗ trợ tận nơi\nH3: Máy tính chạy chậm, treo, đơ\nH3: Máy tính không lên nguồn, không vào Windows\nH3: Laptop nóng, quạt kêu lớn, tự tắt\nH3: Lỗi WiFi, mạng LAN, máy in\nH3: Cài Windows, cài phần mềm, diệt virus\n\nH2: Quy trình sửa máy tính tận nơi tại IT Siêu Việt\nH3: Tiếp nhận thông tin lỗi\nH3: Tư vấn sơ bộ và hẹn kỹ thuật đến\nH3: Kiểm tra máy trực tiếp\nH3: Báo lỗi, báo giá trước khi sửa\nH3: Sửa chữa, kiểm tra và bàn giao",
+          "embedded": false
+        },
+        {
+          "index": 45,
+          "text": "H2: Chi phí sửa máy tính tận nơi phụ thuộc vào yếu tố nào?\nH3: Loại lỗi phần mềm hoặc phần cứng\nH3: Có cần thay linh kiện không?\nH3: Khu vực và thời gian hỗ trợ\nH3: Dịch vụ đi kèm như cài phần mềm, vệ sinh, nâng cấp\n\nH2: Vì sao nên chọn IT Siêu Việt khi cần sửa máy tính tận nơi?\nH3: Kỹ thuật viên có kinh nghiệm\nH3: Hỗ trợ tận nơi tại TP.HCM\nH3: Báo giá rõ ràng trước khi sửa\nH3: Hỗ trợ nhiều lỗi máy tính, laptop, máy in\nH3: Có chính sách bảo hành phù hợp",
+          "embedded": false
+        },
+        {
+          "index": 46,
+          "text": "H2: Khu vực hỗ trợ sửa máy tính tận nơi tại TP.HCM\nH3: TP. Thủ Đức, Quận 9, Quận 2\nH3: Bình Thạnh, Phú Nhuận, Gò Vấp\nH3: Quận 1, Quận 3, Quận 5, Quận 10\nH3: Tân Bình và các khu vực lân cận\n\nH2: Lưu ý trước khi gọi kỹ thuật sửa máy tính tận nơi\nH3: Sao lưu dữ liệu quan trọng\nH3: Mô tả rõ tình trạng lỗi\nH3: Hỏi trước chi phí kiểm tra và sửa chữa\nH3: Chuẩn bị thông tin thiết bị, sạc và mật khẩu nếu cần",
+          "embedded": false
+        },
+        {
+          "index": 47,
+          "text": "H2: Câu hỏi thường gặp về sửa máy tính tận nơi TP.HCM\nH3: Bao lâu kỹ thuật có mặt?\nH3: Có sửa ngoài giờ hành chính không?\nH3: Có bảo hành sau khi sửa không?\nH3: Có hỗ trợ máy in và mạng văn phòng không?\nH3: Có cài Windows và phần mềm tận nơi không?\n\nH2: Liên hệ IT Siêu Việt để đặt lịch sửa máy tính tận nơi\nH3: Khi nào nên gọi kỹ thuật ngay?\nH3: Cách đặt lịch nhanh qua hotline/Zalo\nH3: Cam kết tư vấn rõ ràng trước khi sửa",
+          "embedded": false
+        },
+        {
+          "index": 48,
+          "text": "============================================================\n20. DATA QUALITY NOTES - GHI CHÚ CHẤT LƯỢNG DỮ LIỆU\n============================================================\n- Một số dữ liệu như giá chi tiết, thời gian bảo hành cụ thể, giờ làm việc, hotline chính thức cần được chủ website xác nhận trước khi dùng trong content.\n- Không tự thêm số liệu, review, rating, chứng nhận nếu chưa có dữ liệu.\n- Có thể dùng dữ liệu này để gợi ý outline, content brief, FAQ, ảnh minh họa và internal link.\n- Khi import vào Knowledge Base, nên gắn category: Brand Profile, Service Data, Local SEO, FAQ, Content",
+          "embedded": false
+        },
+        {
+          "index": 49,
+          "text": "dge Base, nên gắn category: Brand Profile, Service Data, Local SEO, FAQ, Content Guidelines, Image Context, Outline Pattern.",
+          "embedded": false
+        }
+      ],
+      "created_at": "2026-05-18T15:05:40.119540+00:00",
+      "updated_at": "2026-05-18T15:05:40.119540+00:00"
+    }
+  ]
+}

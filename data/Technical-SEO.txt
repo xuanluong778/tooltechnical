@@ -1,0 +1,54 @@
+CHECKLIST	ĐÁNH GIÁ	DẪN CHỨNG
+Liên kết nội bộ lỗi HTTP (không phải 404)	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: broken_internal_http_error.
+Liên kết nội bộ trả 404	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: broken_internal_link.
+Canonical trỏ URL đích không indexable	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: canonical_points_to_non_indexable.
+Heuristic chênh lệch raw vs rendered	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: cloaking_heuristic.
+Rủi ro cloaking (nâng cao: raw vs rendered)	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: cloaking_risk_advanced.
+Trang crawl trả HTTP khác 200 / không có HTML	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: crawl_page_non_200.
+Google có thể bỏ qua canonical	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: google_may_ignore_canonical.
+HTTP không 200 nhưng tín hiệu index còn mở	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: http_status_non_200.
+Không index được (indexability)	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: indexability_blocked.
+Tín hiệu indexability mâu thuẫn	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: indexability_signal_conflict.
+URL khó được index như bản primary	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: page_unlikely_indexed.
+Chuỗi redirect dài (nhiều bước)	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: redirect_chain.
+Mâu thuẫn meta noindex vs indexability	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: robots_meta_noindex_contradiction.
+Robots / meta chặn index	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: robots_noindex.
+Soft 404 (HTTP 200 nhưng nội dung 'not found')	Chưa rõ	Quét kỹ thuật onsite (crawler nội bộ), không phải export Search Console — Loại quét: soft_404_heuristic.
+Trang bắt đầu dùng HTTP (nên HTTPS)	Chưa rõ	HTTPS TLS certificate — Loại quét: https_not_used.
+Sitemap trả 200 nhưng không có URL	Chưa rõ	sitemap xml loc — Loại quét: sitemap_empty.
+Sitemap XML không đọc được	Chưa rõ	sitemap xml loc — Loại quét: sitemap_unreachable.
+Disallow toàn site (/)	Chưa rõ	robots.txt crawler — Loại quét: robots_disallow_all.
+Disallow quá rộng (query string)	Chưa rõ	robots.txt crawler — Loại quét: robots_disallow_broad_querystring.
+robots.txt thiếu dòng Sitemap:	Chưa rõ	robots.txt crawler — Loại quét: robots_missing_sitemap_line.
+URL Sitemap trong robots không hợp lệ	Chưa rõ	robots.txt crawler — Loại quét: robots_sitemap_invalid_url.
+Sitemap khai báo nhưng không truy cập được	Chưa rõ	robots.txt crawler — Loại quét: robots_sitemap_unreachable.
+Sitemap trong robots sai domain	Chưa rõ	robots.txt crawler — Loại quét: robots_sitemap_wrong_host.
+Không đọc được robots.txt	Chưa rõ	robots.txt crawler — Loại quét: robots_unreachable.
+Chặn wp-content (WordPress — thường chuẩn)	Chưa rõ	robots.txt crawler — Loại quét: robots_wordpress_standard_blocks.
+Ảnh thiếu alt (hoặc alt rỗng không decorative)	Chưa rõ	image alt text — Loại quét: images_missing_alt.
+Canonical sang host khác	Chưa rõ	meta title H1 canonical schema — Loại quét: canonical_cross_host.
+Canonical khác URL nhưng nội dung rất khác đích	Chưa rõ	meta title H1 canonical schema — Loại quét: canonical_low_similarity_mismatch.
+Thiếu canonical (trang giá trị cao)	Chưa rõ	meta title H1 canonical schema — Loại quét: canonical_missing_high_value.
+Canonical không khớp URL hiệu dụng (cùng site)	Chưa rõ	meta title H1 canonical schema — Loại quét: canonical_self_mismatch.
+Trùng title giữa nhiều URL	Chưa rõ	meta title H1 canonical schema — Loại quét: duplicate_title.
+HTTP không phải 200	Chưa rõ	meta title H1 canonical schema — Loại quét: http_status_error.
+Rủi ro SEO phụ thuộc JS (cao)	Chưa rõ	meta title H1 canonical schema — Loại quét: js_seo_risk_high.
+Rủi ro SEO phụ thuộc JS (trung bình)	Chưa rõ	meta title H1 canonical schema — Loại quét: js_seo_risk_medium.
+HTML thô thiếu title/meta/H1 sau render	Chưa rõ	meta title H1 canonical schema — Loại quét: js_shell_missing_critical.
+Thiếu canonical	Chưa rõ	meta title H1 canonical schema — Loại quét: missing_canonical.
+Thiếu favicon	Chưa rõ	meta title H1 canonical schema — Loại quét: missing_favicon.
+Thiếu H1	Chưa rõ	meta title H1 canonical schema — Loại quét: missing_h1.
+Thiếu meta description / og:description	Chưa rõ	meta title H1 canonical schema — Loại quét: missing_meta_description.
+Thiếu thẻ title	Chưa rõ	meta title H1 canonical schema — Loại quét: missing_title.
+Nhiều thẻ H1	Chưa rõ	meta title H1 canonical schema — Loại quét: multiple_h1.
+Phân trang thiếu rel=next	Chưa rõ	meta title H1 canonical schema — Loại quét: pagination_missing_rel_next.
+Nội dung mỏng (ít từ)	Chưa rõ	meta title H1 canonical schema — Loại quét: thin_content.
+Title quá dài (SERP cắt)	Chưa rõ	meta title H1 canonical schema — Loại quét: title_too_long.
+Cấu trúc heading yếu (ít H2)	Chưa rõ	meta title H1 canonical schema — Loại quét: weak_heading_structure.
+Thiếu thuộc tính lang trên <html>	Chưa rõ	hreflang html lang international — Loại quét: missing_html_lang.
+Giới hạn số URL đích kiểm tra liên kết	Chưa rõ	technical audit — Loại quét: link_check_truncated.
+Log server và mã lỗi 4xx/5xx tổng hợp	Chưa rõ	Security — theo dõi log, alert khi spike 5xx.
+Structured data (JSON-LD) hợp lệ Rich Results	Chưa rõ	Onpage — Rich Results Test, không lỗi critical.
+Pagination rel=prev/next hoặc chiến lược thay thế rõ ràng	Chưa rõ	Onpage — tránh orphan page và trùng lặp phân trang.
+DNS / CDN / TTL và độ ổn định origin	Chưa rõ	Security — không NXDOMAIN, không cấu hình CDN chặn bot.
+Backup và rollback khi deploy ảnh hưởng SEO	Chưa rõ	General — quy trình release an toàn.
