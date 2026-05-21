@@ -7,12 +7,15 @@ from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.models.user import User
+from app.models.monthly_usage import MonthlyUsage
 from app.schemas.saas import (
     AdminGrantSubscriptionBody,
     AdminTestRecordUsageBody,
     AdminTestRecordUsageResponse,
     AdminUserSubscriptionStatus,
+    AdminUserUsageResponse,
     EntitlementResult,
+    MonthlyUsageRow,
     PlanListResponse,
     PlanResponse,
     SubscriptionResponse,
@@ -133,6 +136,81 @@ def grant_user_subscription(
     )
 
     return subscription_service.subscription_to_response(db, sub)
+
+
+@router.get("/users/{user_id}/usage", response_model=AdminUserUsageResponse)
+def get_user_usage(
+    user_id: int,
+    month: str | None = Query(default=None, pattern=r"^\d{4}-\d{2}$"),
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin_user),
+) -> AdminUserUsageResponse:
+    _user_or_404(db, user_id)
+    usage_month = month or usage_tracking_service.current_usage_month()
+    sub = subscription_service.get_active_subscription(db, user_id)
+    plan_id = sub.plan_id if sub else None
+    plan_slug: str | None = None
+    if plan_id:
+        plan = plan_service.get_plan_by_id(db, plan_id)
+        plan_slug = plan.slug if plan else None
+
+    rows = (
+        db.query(MonthlyUsage)
+        .filter(
+            MonthlyUsage.user_id == int(user_id),
+            MonthlyUsage.usage_month == usage_month,
+        )
+        .order_by(MonthlyUsage.feature_key.asc())
+        .all()
+    )
+    used_by_feature = {r.feature_key: r for r in rows}
+    items: list[MonthlyUsageRow] = []
+
+    if plan_id:
+        for lim in plan_service.get_limits_for_plan(db, plan_id):
+            row = used_by_feature.get(lim.feature_key)
+            qty = int(row.quantity_used) if row else 0
+            credits = int(row.credits_used) if row else 0
+            remaining = usage_tracking_service.get_quota_remaining(
+                db, user_id, lim.feature_key, plan_id=plan_id
+            )
+            items.append(
+                MonthlyUsageRow(
+                    feature_key=lim.feature_key,
+                    quantity_used=qty,
+                    credits_used=credits,
+                    limit_value=int(lim.limit_value),
+                    quota_remaining=remaining,
+                    period=lim.period,
+                )
+            )
+    else:
+        for row in rows:
+            items.append(
+                MonthlyUsageRow(
+                    feature_key=row.feature_key,
+                    quantity_used=int(row.quantity_used),
+                    credits_used=int(row.credits_used),
+                    limit_value=None,
+                    quota_remaining=None,
+                    period="monthly",
+                )
+            )
+
+    message = None
+    if not sub:
+        message = "User chưa có subscription SaaS đang hiệu lực — chỉ hiển thị usage đã ghi (nếu có)."
+    elif not items:
+        message = "Chưa có usage trong tháng này."
+
+    return AdminUserUsageResponse(
+        user_id=int(user_id),
+        usage_month=usage_month,
+        plan_slug=plan_slug,
+        subscription_id=sub.id if sub else None,
+        items=items,
+        message=message,
+    )
 
 
 @router.get("/users/{user_id}/entitlement-check", response_model=EntitlementResult)

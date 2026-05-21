@@ -228,6 +228,55 @@
         .pill-trial-pending { background: rgba(251, 191, 36, 0.2); color: var(--warn); }
         .pill-trial-expired { background: rgba(248, 113, 113, 0.2); color: var(--danger); }
         .pill-trial-none { background: rgba(148, 163, 184, 0.2); color: var(--muted); }
+        .saas-block {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            background: rgba(2, 8, 20, 0.5);
+        }
+        .saas-block h3 {
+            margin: 0 0 10px;
+            font-size: 0.9rem;
+            color: #f8fafc;
+        }
+        .saas-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px 12px;
+            margin-bottom: 10px;
+            font-size: 0.82rem;
+        }
+        .saas-summary dt { color: var(--muted); margin: 0; }
+        .saas-summary dd { margin: 2px 0 0; font-weight: 600; }
+        .saas-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: flex-end;
+            margin-top: 10px;
+        }
+        .saas-form label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        .saas-form input, .saas-form select { min-width: 120px; }
+        .saas-form input[type="number"] { width: 72px; min-width: 72px; }
+        .saas-form .grow { flex: 1; min-width: 160px; }
+        .saas-ent-result {
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.25);
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+        .saas-ent-result.ok { border: 1px solid rgba(0, 230, 118, 0.35); }
+        .saas-ent-result.no { border: 1px solid rgba(248, 113, 113, 0.35); }
+        .pill-saas { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; }
     </style>
 </head>
 <body>
@@ -243,7 +292,7 @@
                 <h1>Admin — Quản lý User <span class="badge-admin">ADMIN</span></h1>
                 <p id="adminMsg"></p>
                 <p style="font-size:0.8rem;color:var(--muted);margin:4px 0 0;">
-                    Quản lý user, trial và quyền API. Bật「Dùng API Admin」để user dùng khóa hệ thống; tắt thì user phải nhập API key riêng.
+                    Quản lý user, trial, quyền API và gói SaaS (gán thủ công — chưa bật enforcement).
                 </p>
             </div>
             <div>
@@ -365,6 +414,66 @@
                             </label>
                         </div>
                     </section>
+                    <section class="saas-block" id="saasBlock">
+                        <h3>Gói SaaS (Phase 1b — thủ công)</h3>
+                        <dl class="saas-summary" id="saasSummary">
+                            <div><dt>Plan</dt><dd id="saasPlan">—</dd></div>
+                            <div><dt>Subscription</dt><dd id="saasStatus">—</dd></div>
+                            <div><dt>Hết kỳ</dt><dd id="saasPeriodEnd">—</dd></div>
+                            <div><dt>Tháng usage</dt><dd id="saasUsageMonth">—</dd></div>
+                        </dl>
+                        <p id="saasSubMessage" style="font-size:0.8rem;color:var(--muted);margin:0 0 8px;"></p>
+                        <div style="overflow:auto;max-height:160px;margin-bottom:10px;">
+                            <table class="mini-table" id="saasUsageTable">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Đã dùng</th>
+                                        <th>Giới hạn</th>
+                                        <th>Còn lại</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="saasUsageBody">
+                                    <tr><td colspan="4" class="detail-empty">Chọn user để xem usage.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="saas-form" id="saasGrantForm">
+                            <label>
+                                Gói
+                                <select id="saasGrantPlan">
+                                    <option value="free_trial">Free Trial</option>
+                                    <option value="starter">Starter</option>
+                                    <option value="pro">Pro</option>
+                                    <option value="agency">Agency</option>
+                                </select>
+                            </label>
+                            <label>
+                                Tháng
+                                <input type="number" id="saasGrantMonths" min="1" max="36" value="1" />
+                            </label>
+                            <label class="grow">
+                                Ghi chú
+                                <input type="text" id="saasGrantNotes" placeholder="Admin grant…" />
+                            </label>
+                            <button type="button" class="btn btn-primary" id="btnSaasGrant">Gán gói</button>
+                        </div>
+                        <div class="saas-form" style="margin-top:8px;">
+                            <label>
+                                Feature (kiểm tra quyền)
+                                <select id="saasFeatureKey">
+                                    <option value="content_ai_article">content_ai_article</option>
+                                    <option value="technical_audit">technical_audit</option>
+                                    <option value="keyword_research">keyword_research</option>
+                                    <option value="content_ai_bulk_article">content_ai_bulk_article</option>
+                                    <option value="seo_score">seo_score</option>
+                                    <option value="keyword_cluster">keyword_cluster</option>
+                                </select>
+                            </label>
+                            <button type="button" class="btn" id="btnSaasEntitlement">Kiểm tra quyền</button>
+                        </div>
+                        <div id="saasEntResult" class="saas-ent-result" hidden></div>
+                    </section>
                     <div class="tabs" id="dataTabs">
                         <button type="button" class="tab active" data-tab="seo">SEO Projects</button>
                         <button type="button" class="tab" data-tab="content">Content AI</button>
@@ -436,6 +545,161 @@
     const adminMsg = document.getElementById("adminMsg");
     let selectedUserId = null;
     let currentDetail = null;
+
+    const saasApi = (path) => "/api/admin/saas" + path;
+
+    const fmtQuota = (n) => {
+        if (n === null || n === undefined) return "∞";
+        return String(n);
+    };
+
+    const fmtLimit = (n) => {
+        if (n === null || n === undefined) return "—";
+        if (Number(n) === -1) return "∞";
+        return String(n);
+    };
+
+    async function loadSaasPanel(userId) {
+        const planEl = document.getElementById("saasPlan");
+        const statusEl = document.getElementById("saasStatus");
+        const endEl = document.getElementById("saasPeriodEnd");
+        const monthEl = document.getElementById("saasUsageMonth");
+        const msgEl = document.getElementById("saasSubMessage");
+        const usageBody = document.getElementById("saasUsageBody");
+        const entBox = document.getElementById("saasEntResult");
+        entBox.hidden = true;
+
+        if (!userId) {
+            planEl.textContent = "—";
+            statusEl.textContent = "—";
+            endEl.textContent = "—";
+            monthEl.textContent = "—";
+            msgEl.textContent = "";
+            usageBody.innerHTML = '<tr><td colspan="4" class="detail-empty">Chọn user.</td></tr>';
+            return;
+        }
+
+        try {
+            const [subR, usageR] = await Promise.all([
+                fetch(saasApi("/users/" + userId + "/subscription"), fetchOpts({ headers: headers() })),
+                fetch(saasApi("/users/" + userId + "/usage"), fetchOpts({ headers: headers() })),
+            ]);
+            if (!subR.ok) throw new Error("Không tải subscription SaaS.");
+            if (!usageR.ok) throw new Error("Không tải usage SaaS.");
+            const sub = await subR.json();
+            const usage = await usageR.json();
+
+            if (sub.plan_slug) {
+                planEl.innerHTML = `<span class="pill pill-saas">${esc(sub.plan_name || sub.plan_slug)}</span>`;
+                statusEl.textContent = sub.status || "—";
+                endEl.textContent = fmtDate(sub.current_period_end);
+            } else {
+                planEl.innerHTML = '<span class="pill pill-trial-none">Chưa có gói SaaS</span>';
+                statusEl.textContent = "—";
+                endEl.textContent = "—";
+            }
+            msgEl.textContent = sub.message || usage.message || "";
+            monthEl.textContent = usage.usage_month || "—";
+
+            const items = usage.items || [];
+            if (!items.length) {
+                usageBody.innerHTML =
+                    '<tr><td colspan="4" class="detail-empty">Chưa có usage tháng này.</td></tr>';
+            } else {
+                usageBody.innerHTML = "";
+                items.forEach((row) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${esc(row.feature_key)}</td>
+                        <td>${row.quantity_used}</td>
+                        <td>${fmtLimit(row.limit_value)}</td>
+                        <td>${fmtQuota(row.quota_remaining)}</td>`;
+                    usageBody.appendChild(tr);
+                });
+            }
+        } catch (e) {
+            planEl.textContent = "—";
+            statusEl.textContent = "—";
+            endEl.textContent = "—";
+            monthEl.textContent = "—";
+            msgEl.textContent = (e && e.message) || String(e);
+            usageBody.innerHTML =
+                '<tr><td colspan="4" class="detail-empty">Lỗi tải SaaS.</td></tr>';
+        }
+    }
+
+    async function grantSaasSubscription() {
+        if (!selectedUserId) {
+            alert("Chọn user trước.");
+            return;
+        }
+        const plan_slug = document.getElementById("saasGrantPlan").value;
+        const months = parseInt(document.getElementById("saasGrantMonths").value, 10) || 1;
+        const notes = document.getElementById("saasGrantNotes").value.trim() || null;
+        const btn = document.getElementById("btnSaasGrant");
+        btn.disabled = true;
+        try {
+            const r = await fetch(
+                saasApi("/users/" + selectedUserId + "/grant-subscription"),
+                fetchOpts({
+                    method: "POST",
+                    headers: headers(),
+                    body: JSON.stringify({ plan_slug, months, notes }),
+                })
+            );
+            const data = await r.json().catch(() => ({}));
+            if (!r.ok) {
+                const d = data.detail;
+                throw new Error(typeof d === "string" ? d : JSON.stringify(d));
+            }
+            adminMsg.textContent =
+                "Đã gán gói " + (data.plan_name || plan_slug) + " cho user #" + selectedUserId;
+            await loadSaasPanel(selectedUserId);
+            await loadAdminAudit();
+        } catch (e) {
+            alert(e.message || String(e));
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    async function checkSaasEntitlement() {
+        if (!selectedUserId) {
+            alert("Chọn user trước.");
+            return;
+        }
+        const feature_key = document.getElementById("saasFeatureKey").value;
+        const box = document.getElementById("saasEntResult");
+        box.hidden = false;
+        box.className = "saas-ent-result";
+        box.textContent = "Đang kiểm tra…";
+        try {
+            const params = new URLSearchParams({ feature_key, quantity: "1" });
+            const r = await fetch(
+                saasApi("/users/" + selectedUserId + "/entitlement-check?" + params),
+                fetchOpts({ headers: headers() })
+            );
+            const data = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(data.detail || "Lỗi entitlement-check.");
+            box.className = "saas-ent-result " + (data.allowed ? "ok" : "no");
+            box.innerHTML =
+                "<strong>" +
+                (data.allowed ? "Cho phép" : "Từ chối") +
+                "</strong> · <code>" +
+                esc(data.reason_code) +
+                "</code><br>" +
+                esc(data.message) +
+                "<br>quota_remaining: " +
+                esc(fmtQuota(data.quota_remaining)) +
+                (data.plan_slug ? " · plan: " + esc(data.plan_slug) : "");
+        } catch (e) {
+            box.className = "saas-ent-result no";
+            box.textContent = e.message || String(e);
+        }
+    }
+
+    document.getElementById("btnSaasGrant").addEventListener("click", () => grantSaasSubscription());
+    document.getElementById("btnSaasEntitlement").addEventListener("click", () => checkSaasEntitlement());
 
     const statusPill = (st) => {
         const s = String(st || "active").toLowerCase();
@@ -688,6 +952,7 @@
             (u.account_activated ? " · <span class='pill pill-active'>Đã kích hoạt</span>" : " · <span class='pill pill-inactive'>Chưa kích hoạt</span>");
         syncApiToggles(u);
         fillDetailPanels(currentDetail);
+        await loadSaasPanel(id);
         await loadUsers();
     }
 
@@ -756,7 +1021,11 @@
     document.getElementById("btnRefresh").addEventListener("click", async () => {
         await loadUsers();
         await loadAdminAudit();
-        if (selectedUserId) await selectUser(selectedUserId);
+        if (selectedUserId) {
+            await selectUser(selectedUserId);
+        } else {
+            await loadSaasPanel(null);
+        }
     });
     document.getElementById("dataTabs").addEventListener("click", (e) => {
         const btn = e.target.closest(".tab");

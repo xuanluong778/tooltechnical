@@ -129,3 +129,21 @@ class AdminTestRecordUsageResponse(BaseModel):
 class PlanListResponse(BaseModel):
     items: list[PlanResponse]
     total: int
+
+
+class MonthlyUsageRow(BaseModel):
+    feature_key: str
+    quantity_used: int
+    credits_used: int = 0
+    limit_value: int | None = None
+    quota_remaining: int | None = None
+    period: str | None = None
+
+
+class AdminUserUsageResponse(BaseModel):
+    user_id: int
+    usage_month: str
+    plan_slug: str | None = None
+    subscription_id: int | None = None
+    items: list[MonthlyUsageRow] = Field(default_factory=list)
+    message: str | None = None
