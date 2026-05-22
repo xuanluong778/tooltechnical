@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content AI Draft</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root {
             --bg: linear-gradient(135deg, #050b18 0%, #0c1424 50%, #050b18 100%);
@@ -19,41 +19,25 @@
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         :root {
-            --navH: 68px;
+            --navH: 76px;
             --topBarH: 64px;
             --sideW: 250px;
             --fixedGap: 14px;
+            --contentAiWrapPad: 20px;
+            /* Cùng mép với top-fixed-bar (menu trái) — dưới nav-strip cố định (digiseo-nav.css) */
+            --contentAiStickyTop: calc(var(--digiseo-nav-fixed-offset, 76px) + var(--contentAiWrapPad));
         }
-        body {
+        body.page-content-ai {
             margin: 0;
             min-height: 100vh;
             font-family: "Inter", system-ui, sans-serif;
             color: var(--text);
             background: var(--bg);
             overflow-x: hidden;
-            /* dynamic: fixed nav + fixed publish bar */
-            padding-top: calc(var(--navH) + var(--fixedGap));
+            padding-top: var(--digiseo-nav-fixed-offset, 76px) !important;
             padding-left: calc(var(--sideW) + 18px);
         }
         .wrap { max-width: 1160px; margin: 0 auto; padding: 20px 16px 40px; }
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 8px 12px;
-            padding: 10px 16px;
-            margin: 0;
-            justify-content: center;
-            background: rgba(15, 23, 42, 0.55);
-            border-bottom: 1px solid rgba(255,255,255,0.14);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            overflow: visible;
-        }
         .nav > a, .nav > .nav-dd { flex-shrink: 0; white-space: nowrap; }
         .nav a { color: #c7d2fe; text-decoration: none; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,0.06); }
         .nav a:hover { background: rgba(255,255,255,0.12); }
@@ -86,7 +70,7 @@
         .top-fixed-bar {
             position: fixed;
             /* align top with main content boxes (.wrap has 20px top padding) */
-            top: calc(var(--navH) + var(--fixedGap) + 20px);
+            top: var(--contentAiStickyTop);
             left: 3%;
             bottom: 0;
             width: var(--sideW);
@@ -139,19 +123,23 @@
         h1 { margin: 0 0 8px; font-size: 1.6rem; }
         .sub { margin: 0 0 14px; color: var(--muted); font-size: 0.95rem; }
         .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
-        .content-shell { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 14px; align-items: start; margin-top: 6px; }
+        .content-shell { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 14px; align-items: start; margin-top: 0; }
         .sidebar {
             background: var(--card);
             border: 1px solid var(--line);
             border-radius: 14px;
             padding: 14px;
             position: sticky;
-            top: calc(var(--navH) + var(--fixedGap));
-            max-height: calc(100vh - (var(--navH) + var(--fixedGap)) - 18px);
+            top: var(--contentAiStickyTop);
+            max-height: calc(100vh - var(--contentAiStickyTop) - 18px);
             display: flex;
             flex-direction: column;
             gap: 8px;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            z-index: 100;
+            scroll-padding-top: 8px;
+            -webkit-overflow-scrolling: touch;
         }
         .sidebar.sidebar-collapsed {
             display: none;
@@ -162,7 +150,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         #content-ai-projects .sidebar-connected-block .connected-sites-list {
-            max-height: 180px;
+            max-height: none;
+            overflow: visible;
         }
         .content-ai-project-sites-panel {
             margin-bottom: 14px;
@@ -265,9 +254,15 @@
             flex: 1 1 auto;
             min-height: 0;
             display: grid;
-            grid-template-rows: auto auto 1fr auto auto;
+            grid-template-rows: auto auto auto auto auto;
             gap: 6px;
             overflow: hidden;
+        }
+        #btnViewAllProjects {
+            margin: 8px 0 10px;
+        }
+        #btnViewAllSiteArticles {
+            margin-top: 8px;
         }
         .btn-view-all-articles {
             width: 100%;
@@ -310,9 +305,16 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            max-height: min(62vh, 480px);
+            max-height: min(70vh, 560px);
             overflow-y: auto;
-            min-height: 80px;
+            overflow-x: hidden;
+            min-height: 120px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .all-articles-modal-count {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            margin: 0 0 6px;
         }
         .all-articles-item {
             width: 100%;
@@ -328,6 +330,53 @@
         .all-articles-item:hover {
             border-color: rgba(147, 197, 253, 0.65);
             background: rgba(59, 130, 246, 0.18);
+        }
+        .all-articles-item.active {
+            border-color: #93c5fd;
+            background: rgba(59, 130, 246, 0.28);
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35) inset;
+        }
+        .all-publishing-site-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+            text-align: left;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: rgba(15, 23, 42, 0.35);
+            color: #e2e8f0;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .all-publishing-site-item:hover {
+            border-color: rgba(16, 185, 129, 0.45);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .all-publishing-site-item.active {
+            border-color: rgba(16, 185, 129, 0.65);
+            background: rgba(16, 185, 129, 0.16);
+            box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35) inset;
+        }
+        .all-publishing-site-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        .all-publishing-site-item .host {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #f8fafc;
+        }
+        .all-publishing-site-item .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
         }
         .all-articles-item-title {
             font-size: 0.86rem;
@@ -366,6 +415,9 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            overflow: hidden;
+        }
+        .connected-sites-list.connected-sites-list--scroll {
             max-height: 220px;
             overflow-y: auto;
         }
@@ -467,6 +519,9 @@
             display: none;
         }
         #wpProfilesModal.wp-profiles-modal-wrap.is-site-focus #wpProfilesSavedList {
+            display: none;
+        }
+        #wpProfilesModal.wp-profiles-modal-wrap.is-add-new-site #wpProfilesSavedList .wp-profile-card {
             display: none;
         }
         #wpProfilesModal.wp-profiles-modal-wrap.open {
@@ -1731,8 +1786,19 @@
         #projectHint {
             display: none !important;
         }
-        /* Sidebar: 2 bài gần nhất — chỉ tiêu đề. */
-        .project-list { display: grid; grid-template-rows: repeat(2, 1fr); gap: 5px; overflow: hidden; min-height: 0; }
+        /* Sidebar: tối đa 3 dự án — không cuộn trong khung. */
+        .project-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            overflow: hidden;
+            flex: 0 0 auto;
+            min-height: 0;
+        }
+        .project-list .project-item {
+            flex-shrink: 0;
+            min-height: 42px;
+        }
         .project-pager {
             display:flex;
             gap:8px;
@@ -1848,6 +1914,164 @@
             min-height: 46px;
         }
         #btnAutoInsertImages:disabled { opacity: 0.55; cursor: wait; }
+        .visual-studio-panel {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.45);
+        }
+        .visual-studio-panel summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #e2e8f0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .visual-studio-panel summary::-webkit-details-marker { display: none; }
+        .visual-studio-panel summary::before {
+            content: "▸";
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        .visual-studio-panel[open] summary::before { content: "▾"; }
+        .visual-studio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px 10px;
+            margin-top: 10px;
+        }
+        .visual-studio-grid label {
+            display: block;
+            font-size: 0.72rem;
+            color: #94a3b8;
+            margin-bottom: 3px;
+        }
+        .visual-studio-grid select,
+        .visual-studio-grid input[type="text"],
+        .visual-studio-grid input[type="number"] {
+            width: 100%;
+            min-height: 30px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            background: rgba(0,0,0,0.25);
+            color: #f1f5f9;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+        }
+        .visual-studio-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            align-items: center;
+        }
+        .visual-studio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .visual-studio-card {
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+        }
+        .visual-studio-card.selected {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 1px #38bdf8;
+        }
+        .visual-studio-card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+            background: #0f172a;
+        }
+        .visual-studio-card-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 6px;
+        }
+        .visual-studio-card-btns .mini-btn {
+            font-size: 0.68rem;
+            padding: 3px 6px;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .visual-studio-card img.studio-thumb-click {
+            cursor: zoom-in;
+        }
+        .studio-h2-panel {
+            grid-column: 1 / -1;
+            max-height: 140px;
+            overflow-y: auto;
+            padding: 8px 10px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.2);
+        }
+        .studio-h2-panel .studio-h2-toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        .studio-h2-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 4px 0;
+            font-size: 0.78rem;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+        .studio-h2-item input { width: auto; margin-top: 2px; flex-shrink: 0; }
+        .studio-custom-size {
+            display: none;
+            grid-column: 1 / -1;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .studio-custom-size.visible { display: grid; }
+        .studio-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 12000;
+            background: rgba(0, 0, 0, 0.88);
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .studio-lightbox.open { display: flex; }
+        .studio-lightbox img {
+            max-width: min(96vw, 1400px);
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        }
+        .studio-lightbox-close {
+            position: fixed;
+            top: 16px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 12001;
+        }
+        .studio-lightbox-close:hover { background: rgba(255,255,255,0.28); }
         #competitorUrl { width: 550px; max-width: 100%; }
         #btnOutlineReference { min-width: 170px; white-space: nowrap; }
         .outline-tools { display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 8px; margin-top: 8px; align-items: center; }
@@ -1874,7 +2098,15 @@
         .upload-item .u-meta { min-width: 0; }
         .upload-item .u-url { opacity: 0.9; word-break: break-all; }
         .upload-item .u-actions { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-        input.internal-link-cb { width: auto; margin: 0; accent-color: #22c55e; }
+        input.internal-link-cb { width: auto; accent-color: #22c55e; }
+        .internal-suggest-table tbody td.col-cb {
+            vertical-align: top;
+            text-align: center;
+        }
+        .internal-suggest-table tbody td.col-cb input.internal-link-cb {
+            margin: 8px auto 0;
+            display: block;
+        }
         .internal-suggest-head {
             padding: 10px 12px;
             border-radius: 10px;
@@ -1934,11 +2166,246 @@
         }
         .internal-suggest-table tr:last-child td { border-bottom: none; }
         .internal-suggest-table .col-cb { width: 44px; text-align: center; }
+        .internal-suggest-table .col-action { width: 72px; text-align: center; white-space: nowrap; vertical-align: middle; }
+        .internal-suggest-table th.col-action { vertical-align: middle; }
+        .btn-il-bulk-apply {
+            border: 1px solid rgba(34, 197, 94, 0.65);
+            background: rgba(34, 197, 94, 0.2);
+            color: #bbf7d0;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 7px 14px;
+            cursor: pointer;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+        }
+        .btn-il-bulk-apply:hover:not(:disabled) { background: rgba(34, 197, 94, 0.35); }
+        .btn-il-bulk-apply:disabled { opacity: 0.5; cursor: wait; }
+        .il-row-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+        }
+        .il-row-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(148, 163, 184, 0.45);
+            background: rgba(2, 6, 23, 0.35);
+            box-sizing: border-box;
+        }
+        .il-row-circle.il-loading {
+            border-color: rgba(34, 197, 94, 0.35);
+            background: rgba(34, 197, 94, 0.08);
+        }
+        .il-row-circle.il-done {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.28);
+            color: #4ade80;
+            font-weight: 800;
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+        .il-row-circle.il-error {
+            border-color: rgba(248, 113, 113, 0.55);
+            background: rgba(127, 29, 29, 0.25);
+        }
+        .il-row-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-top-color: #4ade80;
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+        .il-row-done-check {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.25);
+            color: #4ade80;
+            font-weight: 800;
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+        .internal-suggest-table tr.il-row-applied td { background: rgba(34, 197, 94, 0.06); }
+        .internal-suggest-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 16px;
+            margin: 0 0 10px 2px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(2, 6, 23, 0.35);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+        .il-llm-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin: 0;
+            padding: 6px 12px 6px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            background: rgba(2, 6, 23, 0.45);
+            color: #cbd5e1;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        }
+        .il-llm-switch.is-on,
+        .il-llm-switch:has(.il-llm-switch-input:checked) {
+            border-color: rgba(34, 197, 94, 0.85);
+            background: rgba(34, 197, 94, 0.22);
+            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4), 0 0 14px rgba(34, 197, 94, 0.28);
+            color: #ecfdf5;
+        }
+        .il-llm-switch.is-on .il-llm-switch-text,
+        .il-llm-switch:has(.il-llm-switch-input:checked) .il-llm-switch-text {
+            color: #bbf7d0;
+            font-weight: 700;
+        }
+        .il-llm-switch-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            margin: 0;
+        }
+        .il-llm-switch-track {
+            position: relative;
+            flex-shrink: 0;
+            width: 44px;
+            height: 24px;
+            border-radius: 999px;
+            background: rgba(51, 65, 85, 0.95);
+            border: 1px solid rgba(100, 116, 139, 0.65);
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .il-llm-switch-track::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .il-llm-switch-input:checked + .il-llm-switch-track {
+            background: #16a34a;
+            border-color: #4ade80;
+        }
+        .il-llm-switch-input:checked + .il-llm-switch-track::after {
+            transform: translateX(20px);
+            background: #ffffff;
+        }
+        .il-llm-switch-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.3;
+            user-select: none;
+        }
+        #thamKhaoAppendModal.modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 13000;
+            background: rgba(0, 0, 0, 0.72);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #thamKhaoAppendModal.modal.open { display: flex; }
+        #thamKhaoAppendModal .modal-card {
+            max-width: 520px;
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            background: #0f172a;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        #thamKhaoAppendModal .modal-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #thamKhaoAppendModal .modal-title { font-weight: 800; font-size: 1rem; color: #ecfdf5; }
+        #thamKhaoAppendModal .modal-close-x {
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        #thamKhaoAppendModal .modal-close-x:hover { background: rgba(248, 113, 113, 0.35); }
+        #thamKhaoAppendModal .modal-body {
+            padding: 14px 16px 16px;
+            max-height: 60vh;
+            overflow-y: auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #thamKhaoAppendModal .tham-khao-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #thamKhaoAppendModal .tham-khao-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: rgba(2, 6, 23, 0.45);
+            cursor: pointer;
+        }
+        #thamKhaoAppendModal .tham-khao-preview {
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            font-size: 0.82rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+        #thamKhaoAppendModal .tham-khao-preview a { color: #7dd3fc; }
+        #thamKhaoAppendModal .modal-foot {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+            padding: 12px 16px 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
         .internal-anchor-cell { font-weight: 700; color: #a7f3d0; max-width: 280px; }
         .internal-link-anchor-input {
             width: 100%;
             box-sizing: border-box;
-            margin-top: 4px;
+            margin-top: 0;
             padding: 8px 10px;
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1947,8 +2414,225 @@
             font-size: 0.8rem;
         }
         .internal-link-anchor-input::placeholder { color: #64748b; }
-        .internal-target-cell { color: #e2e8f0; }
-        .internal-target-url { margin-top: 4px; font-size: 0.7rem; word-break: break-all; opacity: 0.85; }
+        .internal-suggest-table tbody td.internal-target-cell {
+            color: #ffffff;
+        }
+        .internal-suggest-table .internal-target-title {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 0.84rem;
+            line-height: 1.4;
+        }
+        .il-score-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 6px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .il-score-badge.il-score-high { background: rgba(34, 197, 94, 0.25); color: #86efac; }
+        .il-score-badge.il-score-med { background: rgba(250, 204, 21, 0.2); color: #fde047; }
+        .il-score-badge.il-score-low { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
+        .il-page-type {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .internal-link-test-checklist {
+            margin: 10px 0 12px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(2, 6, 23, 0.25);
+            font-size: 0.78rem;
+        }
+        .internal-link-test-checklist summary {
+            cursor: pointer;
+            font-weight: 800;
+            color: #cbd5e1;
+        }
+        .internal-link-test-checklist ol {
+            margin: 8px 0 0 18px;
+            padding: 0;
+            color: #94a3b8;
+            line-height: 1.45;
+        }
+        .internal-link-test-checklist li { margin-bottom: 4px; }
+        .il-verify-warn {
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(127, 29, 29, 0.2);
+            border: 1px solid rgba(248, 113, 113, 0.35);
+            color: #fecaca;
+            font-size: 0.75rem;
+        }
+        .internal-suggest-table .internal-target-url {
+            margin-top: 4px;
+            font-size: 0.7rem;
+            word-break: break-all;
+            color: #7dd3fc;
+            opacity: 1;
+        }
+        .custom-link-panel {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .custom-link-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 8px 0 10px; }
+        .custom-link-apply-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(56, 189, 248, 0.25);
+        }
+        .btn.custom-link-apply-btn {
+            background: linear-gradient(135deg, #059669 0%, #10b981 55%, #34d399 100%);
+            border: 1px solid rgba(74, 222, 128, 0.55);
+            color: #022c22;
+            font-weight: 800;
+            padding: 10px 18px;
+            min-height: 42px;
+        }
+        .btn.custom-link-apply-btn:hover:not(:disabled) {
+            filter: brightness(1.08);
+        }
+        .btn.custom-link-apply-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+        .custom-link-rows { display: grid; gap: 8px; }
+        .custom-link-row {
+            display: grid;
+            grid-template-columns: 28px 1.4fr 1fr 0.9fr 0.75fr 0.55fr 36px;
+            gap: 6px;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(2,6,23,0.35);
+            font-size: 0.74rem;
+        }
+        @media (max-width: 1100px) {
+            .custom-link-row { grid-template-columns: 28px 1fr 1fr; grid-template-rows: auto auto; }
+            .custom-link-row .cl-type, .custom-link-row .cl-priority, .custom-link-row .cl-max { grid-column: 2 / -1; }
+        }
+        .custom-link-row input, .custom-link-row select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(2,6,23,0.5);
+            color: #f1f5f9;
+            font-size: 0.74rem;
+        }
+        .custom-link-library {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255,255,255,0.15);
+        }
+        .custom-link-library-list { display: grid; gap: 6px; margin: 8px 0; max-height: 160px; overflow-y: auto; }
+        .custom-link-lib-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.72rem;
+        }
+        .custom-link-lib-item button { flex-shrink: 0; }
+        .internal-apply-results { margin-top: 10px; }
+        .internal-apply-results table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.72rem;
+        }
+        .internal-apply-results th, .internal-apply-results td {
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: left;
+            vertical-align: top;
+        }
+        .internal-apply-results .st-inserted { color: #4ade80; font-weight: 700; }
+        .internal-apply-results .st-skipped { color: #fbbf24; }
+        .publish-checklist-panel {
+            margin: 10px 0 4px;
+            padding: 10px 12px;
+            border: 1px solid rgba(0, 230, 118, 0.35);
+            border-radius: 10px;
+            background: rgba(0, 230, 118, 0.06);
+        }
+        .publish-checklist-panel .pch {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #86efac;
+            margin-bottom: 8px;
+        }
+        .publish-checklist-panel .pch span {
+            font-weight: 500;
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+        .content-render .digiseo-table-wrap,
+        .content-render table.digiseo-table {
+            margin: 12px 0;
+        }
+        .content-render table th,
+        .content-render table td,
+        #contentRender table th,
+        #contentRender table td {
+            color: #0f172a !important;
+            border: 2px dashed #0f172a !important;
+            font-weight: 500;
+            opacity: 1 !important;
+        }
+        .content-render table thead th,
+        #contentRender table thead th {
+            background: #43a047 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+        .content-render table tbody tr:nth-child(even),
+        #contentRender table tbody tr:nth-child(even) {
+            background: #e8f5e9 !important;
+        }
+        .content-render table tbody tr:hover,
+        #contentRender table tbody tr:hover {
+            background: #a5d6a7 !important;
+        }
+        .publish-checklist-list { list-style: none; margin: 0; padding: 0; }
+        .publish-checklist-list li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            font-size: 0.72rem;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .publish-checklist-list li:last-child { border-bottom: 0; }
+        .pcl-badge {
+            flex-shrink: 0;
+            min-width: 62px;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+        .pcl-badge.ok { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+        .pcl-badge.warn { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+        .pcl-badge.fail { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+        .pcl-badge.manual { background: rgba(147, 197, 253, 0.15); color: #93c5fd; }
+        .pcl-body { flex: 1; color: #e2e8f0; }
+        .pcl-body strong { display: block; color: #f8fafc; margin-bottom: 2px; }
         .mini-btn { font-size: 0.72rem; color: #e2e8f0; border: 1px solid var(--line); border-radius: 7px; padding: 3px 7px; background: rgba(255,255,255,0.06); cursor: pointer; }
         .mini-btn:hover { background: rgba(255,255,255,0.14); }
         .mini-btn.danger { color: #fecaca; border-color: rgba(248, 113, 113, 0.55); background: rgba(248, 113, 113, 0.12); }
@@ -2040,7 +2724,8 @@
         .preview-shell { margin-top: 12px; border: 1px solid var(--line); border-radius: 14px; background: rgba(15,23,42,0.20); overflow: hidden; }
         .preview-head { display:flex; align-items:center; justify-content:space-between; gap:10px; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.14); }
         .preview-title { font-weight: 800; }
-        .preview-tools { display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+        .preview-tools { display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end; position:relative; z-index:4; }
+        .preview-tools .mini-btn { pointer-events: auto; cursor: pointer; position: relative; z-index: 2; }
         .preview-tools select { width:auto; min-width: 170px; height: 38px; padding: 6px 10px; }
         /* Ẩn khỏi UI — listener / logic JS vẫn chạy theo id */
         .content-ai-aux-hidden { display: none !important; }
@@ -2191,7 +2876,7 @@
             .history-row { grid-template-columns: 1fr; }
         }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         h1, .page-head h1 { color: #00e676 !important; }
         .nav a, .nav-dd-btn {
             color: #cbd5e1 !important;
@@ -2220,17 +2905,7 @@
 </head>
 <body class="page-content-ai">
 <div class="wrap">
-    <div class="nav" data-i18n-aria="nav.aria" aria-label="Menu chính">
-        <a href="/" data-i18n="nav.brand">SEO Technical Tool</a>
-        <a href="/report" data-i18n="nav.dashboard">Dashboard</a>
-        <a href="/tool" data-i18n="nav.technical">Phân Tích Technical</a>
-        <a href="/tool/seo-score" data-i18n="nav.seo_score">Chấm điểm SEO</a>
-        <a href="/content-ai" data-i18n="nav.content_ai">Content AI</a>
-        <a href="/keywords/tools/research" data-i18n="nav.keyword">Từ khóa</a>
-        <a href="/schema" data-i18n="nav.schema">Schema</a>
-        <a href="/settings" data-i18n="nav.settings">Cài đặt</a>
-        <a href="/admin" data-nav-admin hidden class="nav-admin-only" data-i18n="nav.admin">Quản trị viên</a>
-    </div>
+    {% include "partials/digiseo_top_nav.html" %}
     <div class="content-shell">
     <div>
         <aside class="top-fixed-bar" id="topFixedBar" aria-label="WordPress publish bar">
@@ -2509,6 +3184,65 @@
                         <button class="btn secondary" type="button" id="btnUploadImage">Tải ảnh lên</button>
                         <button class="btn secondary" type="button" id="btnAutoInsertImages" title="Tìm ảnh theo từ khóa và chèn vào content">🖼 Tự động chèn ảnh</button>
                     </div>
+                    <details class="visual-studio-panel" id="visualStudioPanel">
+                        <summary>Tạo ảnh AI chuyên nghiệp</summary>
+                        <div class="hint" style="margin-top:8px;">Tạo 2–4 ảnh preview (OpenAI). Chọn nhiều H2, tùy chỉnh kích thước px — bấm ảnh để xem lớn.</div>
+                        <div class="visual-studio-grid">
+                            <div>
+                                <label for="studioImageType">Loại ảnh</label>
+                                <select id="studioImageType"></select>
+                            </div>
+                            <div>
+                                <label for="studioStylePreset">Style preset</label>
+                                <select id="studioStylePreset"></select>
+                            </div>
+                            <div>
+                                <label for="studioAspectRatio">Tỷ lệ / kích thước</label>
+                                <select id="studioAspectRatio"></select>
+                            </div>
+                            <div>
+                                <label for="studioImageCount">Số ảnh (2–4)</label>
+                                <input id="studioImageCount" type="number" min="2" max="4" value="3" />
+                            </div>
+                            <div>
+                                <label for="studioBrandTone">Tone thương hiệu</label>
+                                <select id="studioBrandTone"></select>
+                            </div>
+                            <div class="studio-custom-size" id="studioCustomSizeWrap">
+                                <div>
+                                    <label for="studioCustomWidth">Rộng (px)</label>
+                                    <input id="studioCustomWidth" type="number" min="256" max="2048" value="800" />
+                                </div>
+                                <div>
+                                    <label for="studioCustomHeight">Cao (px)</label>
+                                    <input id="studioCustomHeight" type="number" min="256" max="2048" value="400" />
+                                </div>
+                            </div>
+                            <div class="studio-h2-panel" id="studioH2Panel">
+                                <label>Mục H2 (chọn nhiều)</label>
+                                <div class="studio-h2-toolbar">
+                                    <button type="button" class="mini-btn" id="studioH2SelectAll">Chọn tất cả</button>
+                                    <button type="button" class="mini-btn" id="studioH2ClearAll">Bỏ chọn</button>
+                                </div>
+                                <div id="studioH2List" class="hint">Chưa có H2 trong bài — thêm heading H2 trong content.</div>
+                            </div>
+                            <div style="grid-column: 1 / -1;">
+                                <label class="hint" style="display:inline-flex;align-items:center;gap:6px;margin:0;">
+                                    <input type="checkbox" id="studioIncludeText" style="width:auto;" />
+                                    Có chữ trên ảnh (headline / CTA)
+                                </label>
+                            </div>
+                            <div id="studioTextHintWrap" style="grid-column: 1 / -1; display:none;">
+                                <label for="studioTextHint">Gợi ý chữ (tuỳ chọn)</label>
+                                <input id="studioTextHint" type="text" placeholder="VD: 5 bước SEO on-page" />
+                            </div>
+                        </div>
+                        <div class="visual-studio-actions">
+                            <button type="button" class="btn" id="btnStudioGenerate">Tạo ảnh AI</button>
+                            <span class="hint" id="hint-visual-studio" style="margin:0; flex:1;"></span>
+                        </div>
+                        <div class="visual-studio-gallery" id="studioGallery" aria-live="polite"></div>
+                    </details>
                     <div class="hint" id="hint-image"></div>
                     <div id="uploadList" class="upload-list"></div>
                     <div class="history-panel" id="internalLinkPanel" style="margin-top:10px;">
@@ -2516,10 +3250,62 @@
                             <label>Internal link — bài đích &amp; anchor trong content</label>
                         </div>
                         <div class="hint" id="hint-internal-links"></div>
+                        <details class="internal-link-test-checklist" id="internalLinkTestChecklist">
+                            <summary>Checklist test Internal Link trên giao diện</summary>
+                            <ol>
+                                <li>Nhập Target website (https://) + từ khóa chính + có nội dung HTML trong editor.</li>
+                                <li>Bấm «Tìm bài liên quan» — bảng có cột điểm (0–100), loại trang (money/service/pillar/blog).</li>
+                                <li>Anchor mặc định = <strong>suggested_anchor</strong> (ngắn, tự nhiên); không dùng «xem thêm», «tại đây».</li>
+                                <li>Bài đích có điểm ≥ 60 nên ưu tiên; money/service/pillar lên đầu khi cùng điểm.</li>
+                                <li>Tick 2–3 dòng → «Đi link» (LLM tắt): link rải theo từng mục H2, không dồn sát, không trong FAQ.</li>
+                                <li>Thiếu cụm anchor trong bài → popup «Tham khảo thêm» → xác nhận → chèn append.</li>
+                                <li>Bật «Dùng LLM»: nếu LLM lỗi vẫn fallback rule-based (inline/append).</li>
+                                <li>Cùng URL không chèn 2 lần; mỗi đoạn tối đa 1 link; không link về slug/URL bài đang soạn.</li>
+                                <li>Sau chèn: xem hint verify (nếu có cảnh báo) + bảng kết quả + Tải Screaming Frog TSV.</li>
+                                <li>F5 trang — danh sách bài liên quan vẫn khôi phục từ trình duyệt.</li>
+                            </ol>
+                        </details>
+                        <div id="ilVerifyHint" class="il-verify-warn" style="display:none;" aria-live="polite"></div>
                         <div id="internalLinkCandidates" class="upload-list"></div>
+                        <div id="customLinkPanel" class="custom-link-panel">
+                            <div class="field-head">
+                                <label>Custom link theo ý bạn</label>
+                            </div>
+                            <div class="hint">Money page / landing — ưu tiên priority High. Có thể kết hợp với bài WordPress phía trên.</div>
+                            <div class="custom-link-toolbar">
+                                <button type="button" class="mini-btn" id="btnAddCustomLink">+ Thêm custom link</button>
+                                <button type="button" class="mini-btn" id="btnSaveCustomToLibrary">Lưu dòng đã chọn vào thư viện</button>
+                                <label class="il-llm-switch" for="customLinkUseLlm">
+                                    <input type="checkbox" id="customLinkUseLlm" class="il-llm-switch-input" />
+                                    <span class="il-llm-switch-track" aria-hidden="true"></span>
+                                    <span class="il-llm-switch-text">Dùng LLM chỉ khi không chèn được (tiết kiệm token)</span>
+                                </label>
+                            </div>
+                            <div id="customLinkRows" class="custom-link-rows"></div>
+                            <div class="custom-link-apply-row">
+                                <button type="button" class="btn custom-link-apply-btn" id="btnApplyCustomInternalLinks">
+                                    Đi Internal link
+                                </button>
+                                <span class="hint" id="hint-custom-link-apply" style="margin:0; flex:1; min-width:200px;">
+                                    Chèn link bằng rule (inline hoặc thêm 1–2 đoạn ngắn). LLM chỉ khi bật checkbox và rule không đủ.
+                                </span>
+                            </div>
+                            <div class="custom-link-library">
+                                <div class="field-head" style="margin-top:4px;">
+                                    <label>Thư viện Custom Link</label>
+                                </div>
+                                <div class="hint" id="hint-custom-link-library">Thư viện theo từng dự án / Target website — không dùng chung giữa các dự án khác.</div>
+                                <div id="customLinkLibraryList" class="custom-link-library-list"></div>
+                            </div>
+                            <div id="internalLinkApplyResults" class="internal-apply-results" style="display:none;"></div>
+                        </div>
                     </div>
                     <div class="content-render" id="contentRender" aria-label="Content editor" contenteditable="true"></div>
                     <textarea id="content" style="display:none;"></textarea>
+                    <div class="publish-checklist-panel" id="publishChecklistPanel" style="display:none;" aria-live="polite">
+                        <div class="pch">Checklist SEO <span>— hệ thống tự kiểm tra, không hiển thị trong bài đăng</span></div>
+                        <ul class="publish-checklist-list" id="publishChecklistList"></ul>
+                    </div>
                     <div class="hint" id="hint-content"></div>
                     <div class="row" style="margin-top:10px; grid-template-columns: 1fr;">
                         <button type="button" class="btn secondary" id="btnWpUpdateContent">Cập nhật content lên WordPress (theo Post ID)</button>
@@ -2549,6 +3335,7 @@
                     <div class="hint" id="hintConnectedSitesSidebar">Site từ Cài đặt → Xuất bản xuất hiện ở đây. Bấm website để xem bài — nút Xóa để gỡ site khỏi danh sách.</div>
                     <div id="contentAiConnectedSitesListSidebar" class="connected-sites-list" role="list"></div>
                 </div>
+                <button type="button" class="btn-view-all-articles" id="btnViewAllProjects">Xem tất cả dự án</button>
                 <div class="projects-panel-head">
                     <h3>Dự án Content AI</h3>
                     <button type="button" class="projects-panel-plus" id="btnContentAiRecentPlus" title="Dự án mới — mở form" aria-label="Thêm">+</button>
@@ -2559,7 +3346,6 @@
                 </div>
                 <div class="hint" id="projectHint">Chưa có dự án.</div>
                 <div id="projectList" class="project-list"></div>
-                <button type="button" class="btn-view-all-articles" id="btnViewAllArticles">Xem tất cả bài viết</button>
                 <div class="project-pager" id="projectPager" style="display:none;">
                     <div class="pp-left">
                         <button type="button" class="pp-btn" id="btnProjectPrev">Trước</button>
@@ -2570,12 +3356,35 @@
                         <div class="pp-pages" id="projectPageButtons"></div>
                     </div>
                 </div>
+                <button type="button" class="btn-view-all-articles" id="btnViewAllSiteArticles">Xem tất cả bài viết cho tôi</button>
         </div>
     </aside>
 
     </div>
 </div>
 <div id="cropBackdrop" class="modal-backdrop"></div>
+<div id="thamKhaoAppendModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="thamKhaoAppendTitle">
+    <div class="modal-card">
+        <div class="modal-head">
+            <div>
+                <div class="modal-title" id="thamKhaoAppendTitle">Chèn link dạng «Tham khảo thêm»</div>
+                <div class="hint" style="margin-top:6px;">Không tìm thấy cụm anchor trong bài. Chọn link để thêm đoạn ngắn (có thể bỏ qua).</div>
+            </div>
+            <button type="button" class="modal-close-x" id="thamKhaoAppendClose" title="Đóng — không chèn">×</button>
+        </div>
+        <div class="modal-body">
+            <div id="thamKhaoAppendList" class="tham-khao-list"></div>
+        </div>
+        <div class="modal-foot">
+            <button type="button" class="mini-btn" id="thamKhaoAppendCancel">Bỏ qua</button>
+            <button type="button" class="btn" id="thamKhaoAppendConfirm">Chèn đã chọn</button>
+        </div>
+    </div>
+</div>
+<div id="studioLightbox" class="studio-lightbox" aria-hidden="true" role="dialog" aria-label="Xem ảnh lớn">
+    <button type="button" class="studio-lightbox-close" id="studioLightboxClose" title="Đóng" aria-label="Đóng">×</button>
+    <img id="studioLightboxImg" src="" alt="Ảnh preview" />
+</div>
 <div id="cropModal" class="modal" aria-hidden="true">
     <div class="modal-card">
         <div class="modal-head">
@@ -2777,7 +3586,7 @@
             </div>
             <div class="articles-board-filters" id="siteArticlesFilters"></div>
             <div class="articles-board-table-wrap">
-                <table class="articles-board-table">
+                <table class="articles-board-table no-digiseo-table">
                     <thead>
                         <tr>
                             <th style="width:28px;"><input type="checkbox" id="siteArticlesSelectAll" title="Chọn tất cả" /></th>
@@ -2801,13 +3610,14 @@
 <div id="allArticlesModal" class="modal" aria-hidden="true">
     <div class="modal-card">
         <div class="modal-head">
-            <div class="modal-title">Tất cả bài viết đã viết</div>
+            <div class="modal-title" id="allPublishingSitesModalTitle">Tất cả website đăng bài</div>
             <button type="button" class="mini-btn danger" id="btnAllArticlesClose">Đóng</button>
         </div>
         <div class="modal-body">
-            <input type="search" id="allArticlesSearch" placeholder="Tìm tiêu đề, từ khóa…" autocomplete="off" />
+            <input type="search" id="allArticlesSearch" placeholder="Tìm domain website…" autocomplete="off" />
+            <div class="all-articles-modal-count" id="allProjectsModalCount" hidden></div>
             <div id="allArticlesList" class="all-articles-list" role="list"></div>
-            <div class="hint" id="allArticlesEmpty" hidden>Chưa có bài viết nào.</div>
+            <div class="hint" id="allArticlesEmpty" hidden>Chưa có website đăng bài. Thêm site tại Cài đặt → Xuất bản.</div>
         </div>
     </div>
 </div>
@@ -2852,7 +3662,63 @@
 })();
 (() => {
     const byId = (id) => document.getElementById(id);
-    const getAuthToken = () => (sessionStorage.getItem("seo_token") || "").trim();
+    const readCookieToken = () => {
+        const m = document.cookie.match(/(?:^|;\s*)seo_token=([^;]*)/);
+        return m ? decodeURIComponent(m[1].replace(/\+/g, " ")).trim() : "";
+    };
+    const getAuthToken = () => {
+        try {
+            let t = (sessionStorage.getItem("seo_token") || "").trim();
+            if (!t) {
+                t = readCookieToken();
+                if (t) sessionStorage.setItem("seo_token", t);
+            }
+            return t;
+        } catch (_) {
+            return readCookieToken();
+        }
+    };
+    const clearAuthToken = () => {
+        try { sessionStorage.removeItem("seo_token"); } catch (_) {}
+        document.cookie = "seo_token=; path=/; max-age=0; SameSite=Lax";
+    };
+    const parseApiDetail = (data) => {
+        const d = data && data.detail;
+        if (typeof d === "string") return d;
+        if (Array.isArray(d)) return d.map((x) => (x && (x.msg || x.message)) || x).join(", ");
+        if (d && typeof d === "object") {
+            if (d.message) return String(d.message);
+            if (d.code === "trial_expired") return "Gói dùng thử / trial đã hết hạn.";
+            try { return JSON.stringify(d); } catch (_) { return "Lỗi API"; }
+        }
+        return "";
+    };
+    const handleApiAuthFailure = (res, data) => {
+        if (!res || res.status !== 401) return false;
+        clearAuthToken();
+        const detail = parseApiDetail(data) || "Invalid token";
+        const msg =
+            detail.toLowerCase().includes("invalid token") || detail.toLowerCase().includes("đăng nhập")
+                ? "Phiên đăng nhập hết hạn hoặc không hợp lệ — không phải do thiếu tiền. Bấm Đăng nhập ở góc trên (menu user) để đăng nhập lại."
+                : detail + " — hãy đăng nhập lại.";
+        try { setHint("content", msg); } catch (_) {}
+        try { setHint("internal-links", msg); } catch (_) {}
+        if (typeof window.DigiSeoOpenLoginModal === "function") {
+            window.DigiSeoOpenLoginModal();
+        }
+        return true;
+    };
+    const apiFetch = (url, opts = {}) => {
+        const o = { credentials: "same-origin", ...opts };
+        o.headers = authHeaders({ ...(opts.headers || {}) });
+        return fetch(url, o).then(async (res) => {
+            if (res.status === 401) {
+                const data = await res.clone().json().catch(() => ({}));
+                handleApiAuthFailure(res, data);
+            }
+            return res;
+        });
+    };
     const getAuthUserId = () => {
         const t = getAuthToken();
         if (!t) return 0;
@@ -2912,9 +3778,11 @@
     // Ensure fixed bars never overlap content (nav can wrap to 2 lines).
     const syncFixedHeights = () => {
         try {
-            const nav = document.querySelector(".nav");
+            const strip = document.getElementById("digiseoTopNavStrip") || document.querySelector(".nav-strip");
+            const nav = document.querySelector(".nav-strip .nav, .nav-strip nav[aria-label=\"Menu chính\"], .nav");
             const topBar = byId("topFixedBar");
-            const navH = nav ? Math.ceil(nav.getBoundingClientRect().height) : 68;
+            const navEl = strip || nav;
+            const navH = navEl ? Math.ceil(navEl.getBoundingClientRect().height) : 76;
             document.documentElement.style.setProperty("--navH", `${navH}px`);
             if (topBar) {
                 const sideW = Math.ceil(topBar.getBoundingClientRect().width);
@@ -3043,11 +3911,56 @@
     let projectPage = 1;
     /** Chuẩn hóa https://host — lọc danh sách dự án theo target_website đã lưu */
     let _projectsSiteFilterBase = "";
-    const SIDEBAR_RECENT_PROJECT_COUNT = 2;
+    const SIDEBAR_RECENT_PROJECT_COUNT = 3;
     const TARGET_HISTORY_KEY = () => userStorageKey("content_ai_target_website_history_v1");
     const WP_URL_HISTORY_KEY = () => userStorageKey("content_ai_wp_url_history_v1");
     const WP_USER_HISTORY_KEY = () => userStorageKey("content_ai_wp_user_history_v1");
     const FORM_STATE_KEY = () => userStorageKey("content_ai_form_state_v1");
+    let _internalCandidates = [];
+    let _pendingInternalCandidatesRestore = null;
+    const collectInternalCandidateAnchors = () => {
+        const out = {};
+        document.querySelectorAll("input.internal-link-anchor-input[data-idx]").forEach((inp) => {
+            const idx = inp.getAttribute("data-idx");
+            if (idx == null || idx === "") return;
+            const v = String(inp.value || "").trim();
+            if (v) out[idx] = v;
+        });
+        return out;
+    };
+    const INTERNAL_LINK_USE_LLM_KEY = "contentAiInternalLinkUseLlm";
+    const getInternalLinkUseLlm = () => {
+        try {
+            return localStorage.getItem(INTERNAL_LINK_USE_LLM_KEY) === "1";
+        } catch (_) {
+            return false;
+        }
+    };
+    const syncLlmSwitchHighlight = (inputEl) => {
+        const el = inputEl || byId("internalLinkUseLlm") || byId("customLinkUseLlm");
+        if (!el) return;
+        const lbl = el.closest(".il-llm-switch");
+        if (lbl) lbl.classList.toggle("is-on", !!el.checked);
+    };
+    const setInternalLinkUseLlm = (on) => {
+        try {
+            localStorage.setItem(INTERNAL_LINK_USE_LLM_KEY, on ? "1" : "0");
+        } catch (_) {}
+        const el = byId("internalLinkUseLlm");
+        if (el) {
+            el.checked = !!on;
+            syncLlmSwitchHighlight(el);
+        }
+    };
+    const slimInternalCandidatesForStorage = (items) =>
+        (Array.isArray(items) ? items : []).slice(0, 25).map((it) => ({
+            title: String((it && it.title) || ""),
+            link: String((it && it.link) || ""),
+            slug: String((it && it.slug) || ""),
+            anchor_text: String((it && it.anchor_text) || ""),
+            target_primary_keyword: String((it && it.target_primary_keyword) || ""),
+            kw_hint_primary: String((it && it.kw_hint_primary) || ""),
+        }));
     const OUTPUT_FORMAT_KEY = "content_ai_output_format_v1";
     const OUTPUT_ACCORDION_KEY = "content_ai_output_accordion_open_v1";
     const setHint = (field, text) => {
@@ -3123,6 +4036,7 @@
         const outHtml = [];
         let inUl = false;
         let inOl = false;
+        let tableRows = null;
 
         const closeLists = () => {
             if (inUl) {
@@ -3133,6 +4047,26 @@
                 outHtml.push("</ol>");
                 inOl = false;
             }
+        };
+        const isMdTableSep = (cells) =>
+            cells.length > 0 && cells.every((c) => /^:?-{2,}:?$/.test(String(c || "").trim()));
+        const flushTable = () => {
+            if (!tableRows || tableRows.length < 2) {
+                tableRows = null;
+                return;
+            }
+            const header = tableRows[0];
+            const body = tableRows.slice(1).filter((row) => !isMdTableSep(row));
+            outHtml.push('<div class="digiseo-table-wrap"><table class="digiseo-table"><thead><tr>');
+            header.forEach((c) => outHtml.push(`<th>${_escapeHtml(c)}</th>`));
+            outHtml.push("</tr></thead><tbody>");
+            body.forEach((row) => {
+                outHtml.push("<tr>");
+                row.forEach((c) => outHtml.push(`<td>${_escapeHtml(c)}</td>`));
+                outHtml.push("</tr>");
+            });
+            outHtml.push("</tbody></table></div>");
+            tableRows = null;
         };
 
         const pushParagraphs = (text) => {
@@ -3169,9 +4103,24 @@
                 outHtml.push(`<li>${_escapeHtml(mUl[1].trim())}</li>`);
                 continue;
             }
+            if (/\|/.test(line)) {
+                const cells = line
+                    .replace(/^\|/, "")
+                    .replace(/\|$/, "")
+                    .split("|")
+                    .map((c) => c.trim());
+                if (cells.length >= 2) {
+                    closeLists();
+                    if (!tableRows) tableRows = [];
+                    tableRows.push(cells);
+                    continue;
+                }
+            }
+            flushTable();
             closeLists();
             pushParagraphs(line);
         }
+        flushTable();
         closeLists();
 
         // Ensure we have a H1 if user forgot
@@ -3270,10 +4219,95 @@
             });
             const data = await res.json().catch(() => ({}));
             if (res.ok && data && data.content_html) {
-                return decodeHtmlEntitiesDeep(String(data.content_html));
+                const out = decodeHtmlEntitiesDeep(String(data.content_html));
+                schedulePublishChecklist();
+                return out;
             }
         } catch (_) {}
         return src;
+    };
+    let _publishChecklistTimer = null;
+    let _publishChecklistBusy = false;
+    let _publishChecklistApplyingStrip = false;
+    const publishChecklistPanel = byId("publishChecklistPanel");
+    const publishChecklistList = byId("publishChecklistList");
+    const _publishChecklistHtmlNorm = (h) =>
+        String(h || "").replace(/\s+/g, " ").trim();
+    const _pclStatusLabel = { ok: "Đạt", warn: "Cần xem", fail: "Chưa đạt", manual: "Thủ công" };
+    const renderPublishChecklist = (data) => {
+        if (!publishChecklistPanel || !publishChecklistList) return;
+        const items = data && Array.isArray(data.items) ? data.items : [];
+        if (!items.length) {
+            publishChecklistPanel.style.display = "none";
+            return;
+        }
+        publishChecklistList.innerHTML = items
+            .map((it) => {
+                const st = String(it.status || "warn");
+                const badge = _pclStatusLabel[st] || st;
+                const label = String(it.label || "").replace(/</g, "&lt;");
+                const detail = String(it.detail || "").replace(/</g, "&lt;");
+                return (
+                    `<li><span class="pcl-badge ${st}">${badge}</span>` +
+                    `<span class="pcl-body"><strong>${label}</strong>${detail}</span></li>`
+                );
+            })
+            .join("");
+        publishChecklistPanel.style.display = "block";
+    };
+    const refreshPublishChecklist = async () => {
+        if (!publishChecklistPanel || !publishChecklistList) return;
+        if (_publishChecklistBusy || _publishChecklistApplyingStrip) return;
+        const pk = (byId("primaryKeyword") && byId("primaryKeyword").value || "").trim();
+        const title = (byId("title") && byId("title").value || "").trim();
+        const meta = (byId("meta") && byId("meta").value || "").trim();
+        const contentHtml = String(getContentValue() || "");
+        if (!contentHtml.trim() && !title && !meta) {
+            publishChecklistPanel.style.display = "none";
+            return;
+        }
+        _publishChecklistBusy = true;
+        try {
+            const res = await fetch(`/content-ai/publish-checklist?ts=${Date.now()}`, {
+                method: "POST",
+                headers: authJsonHeaders(),
+                body: JSON.stringify({
+                    title,
+                    meta_description: meta,
+                    content_html: contentHtml,
+                    primary_keyword: pk,
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) return;
+            const stripped = data && data.content_html_stripped;
+            const normCur = _publishChecklistHtmlNorm(contentHtml);
+            const normStrip = _publishChecklistHtmlNorm(stripped);
+            const hasChecklistSection = /checklist\s*seo|checklist\s*trước\s*khi\s*publish/i.test(contentHtml);
+            if (
+                hasChecklistSection &&
+                normStrip &&
+                normStrip !== normCur
+            ) {
+                _publishChecklistApplyingStrip = true;
+                try {
+                    setContentValue(stripped);
+                } finally {
+                    window.setTimeout(() => {
+                        _publishChecklistApplyingStrip = false;
+                    }, 900);
+                }
+            }
+            renderPublishChecklist(data);
+        } catch (_) {
+        } finally {
+            _publishChecklistBusy = false;
+        }
+    };
+    const schedulePublishChecklist = () => {
+        if (_publishChecklistApplyingStrip) return;
+        clearTimeout(_publishChecklistTimer);
+        _publishChecklistTimer = setTimeout(() => void refreshPublishChecklist(), 1200);
     };
     const syncPreviewFallback = () => {
         try {
@@ -3315,6 +4349,7 @@
             } catch (_) {}
         }
         syncPreviewFallback();
+        schedulePublishChecklist();
     };
     const refreshEditorModeUi = () => {
         const cr = byId("contentRender");
@@ -3685,9 +4720,7 @@
             return;
         }
         try {
-            const r = await fetch(`/api/settings/publishing-sites?ts=${Date.now()}`, {
-                headers: authHeaders(),
-            });
+            const r = await apiFetch(`/api/settings/publishing-sites?ts=${Date.now()}`);
             const data = await r.json().catch(() => ({}));
             if (!r.ok) {
                 settingsPublishingSitesFlat = [];
@@ -3890,6 +4923,8 @@
     let currentPubPlatform = "wordpress";
     /** Khi Edit site / dự án — chỉ hiển thị & sửa đúng một website (không liệt kê site khác). */
     let _wpProfilesFocusSiteKey = "";
+    /** Mở «Thêm site đăng bài» — form trống, không hiện card site cũ phía trên form; lưu vẫn cộng thêm site. */
+    let _wpProfilesAddNewMode = false;
     const wpProfilesBackdropEl = byId("wpProfilesBackdrop");
     const wpProfilesModalEl = byId("wpProfilesModal");
     const resolveWpPublishCredentials = () => {
@@ -4029,7 +5064,13 @@
     };
     const syncWpProfilesFocusUi = () => {
         const focused = !!_wpProfilesFocusSiteKey;
-        if (wpProfilesModalEl) wpProfilesModalEl.classList.toggle("is-site-focus", focused);
+        if (wpProfilesModalEl) {
+            wpProfilesModalEl.classList.toggle("is-site-focus", focused);
+            wpProfilesModalEl.classList.toggle(
+                "is-add-new-site",
+                !!_wpProfilesAddNewMode && !focused
+            );
+        }
     };
     const resetPubModalFormForSite = (plat, siteUrl) => {
         const p = normalizePlatform(plat);
@@ -4074,6 +5115,7 @@
     const openWpProfilesModalForSite = async (siteUrl, siteMeta) => {
         const key = connectedSiteKey(siteUrl);
         _wpProfilesFocusSiteKey = key || "";
+        _wpProfilesAddNewMode = false;
         const meta = siteMeta || {};
         let plat = "wordpress";
         if (meta.wp) plat = "wordpress";
@@ -4259,6 +5301,17 @@
         if (_wpProfilesFocusSiteKey) {
             profiles = profiles.filter((p) => connectedSiteKey(profileSiteUrl(p)) === _wpProfilesFocusSiteKey);
         }
+        if (_wpProfilesAddNewMode && !_wpProfilesFocusSiteKey) {
+            const em = document.createElement("div");
+            em.className = "hint";
+            em.style.marginTop = "0";
+            const n = profiles.length;
+            em.textContent = n
+                ? `Đang thêm site mới — ${n} site ${PUB_PLATFORM_LABELS[plat] || plat} đã lưu vẫn giữ nguyên. Điền form bên dưới (không hiện lại thông tin site cũ).`
+                : `Điền form bên dưới để thêm site ${PUB_PLATFORM_LABELS[plat] || plat} mới.`;
+            box.appendChild(em);
+            return;
+        }
         if (!profiles.length) {
             const em = document.createElement("div");
             em.className = "hint";
@@ -4374,19 +5427,42 @@
         }
     };
     const openWpProfilesModal = ({ clearCredentials = true, focusPlatform = null } = {}) => {
-        if (clearCredentials) _wpProfilesFocusSiteKey = "";
+        if (clearCredentials) {
+            _wpProfilesFocusSiteKey = "";
+            _wpProfilesAddNewMode = true;
+        }
         setPubModalTitle(_wpProfilesFocusSiteKey ? "Chỉnh sửa site đăng bài" : "Thêm site đăng bài");
-        if (clearCredentials) clearPubModalCredentialFields("wordpress");
-        const urlIn = byId("inpWpProfileUrl");
-        const cur = byId("wpUrl") && String(byId("wpUrl").value || "").trim();
-        if (urlIn && cur && !String(urlIn.value || "").trim()) urlIn.value = cur;
-        const uShop = byId("inpPubShopifyUrl");
-        const uHar = byId("inpPubHaravanUrl");
-        const uWc = byId("inpPubWebcakeUrl");
-        if (cur) {
-            if (uShop && !String(uShop.value || "").trim()) uShop.value = cur;
-            if (uHar && !String(uHar.value || "").trim()) uHar.value = cur;
-            if (uWc && !String(uWc.value || "").trim()) uWc.value = cur;
+        if (clearCredentials) {
+            ["wordpress", "shopify", "haravan", "webcake"].forEach((p) => clearPubModalCredentialFields(p));
+            const nameEl = byId("inpWpProfileName");
+            const urlIn = byId("inpWpProfileUrl");
+            if (nameEl) nameEl.value = "";
+            if (urlIn) urlIn.value = "";
+            const nShop = byId("inpPubShopifyName");
+            const uShop = byId("inpPubShopifyUrl");
+            const nHar = byId("inpPubHaravanName");
+            const uHar = byId("inpPubHaravanUrl");
+            const nWc = byId("inpPubWebcakeName");
+            const uWc = byId("inpPubWebcakeUrl");
+            if (nShop) nShop.value = "";
+            if (uShop) uShop.value = "";
+            if (nHar) nHar.value = "";
+            if (uHar) uHar.value = "";
+            if (nWc) nWc.value = "";
+            if (uWc) uWc.value = "";
+        }
+        if (!_wpProfilesAddNewMode) {
+            const urlIn = byId("inpWpProfileUrl");
+            const cur = byId("wpUrl") && String(byId("wpUrl").value || "").trim();
+            if (urlIn && cur && !String(urlIn.value || "").trim()) urlIn.value = cur;
+            const uShop = byId("inpPubShopifyUrl");
+            const uHar = byId("inpPubHaravanUrl");
+            const uWc = byId("inpPubWebcakeUrl");
+            if (cur) {
+                if (uShop && !String(uShop.value || "").trim()) uShop.value = cur;
+                if (uHar && !String(uHar.value || "").trim()) uHar.value = cur;
+                if (uWc && !String(uWc.value || "").trim()) uWc.value = cur;
+            }
         }
         updatePubPlatformTabCounts();
         syncPubModalSaveLabel();
@@ -4401,6 +5477,7 @@
     };
     const closeWpProfilesModal = () => {
         _wpProfilesFocusSiteKey = "";
+        _wpProfilesAddNewMode = false;
         syncWpProfilesFocusUi();
         if (wpProfilesBackdropEl) wpProfilesBackdropEl.classList.remove("open");
         if (wpProfilesModalEl) {
@@ -4460,7 +5537,9 @@
         showWpProfileFeedback("Đang lưu cấu hình…", "info");
         const list = readSiteProfiles().map((x) => ({ ...x }));
         const keyUrl = url.toLowerCase();
-        const idx = list.findIndex((x) => normalizePlatform(x.platform) === plat && profileSiteUrl(x).toLowerCase() === keyUrl);
+        const idx = list.findIndex(
+            (x) => normalizePlatform(x.platform) === plat && profileSiteUrl(x).toLowerCase() === keyUrl
+        );
         const entry = {
             id: idx >= 0 ? list[idx].id : newSiteProfileId(),
             platform: plat,
@@ -4500,15 +5579,25 @@
         } catch (_) {}
         const okMsg =
             plat === "wordpress"
-                ? "Đã lưu username và Application password (trình duyệt + Cài đặt)."
-                : `Đã lưu site ${PUB_PLATFORM_LABELS[plat] || plat}.`;
+                ? idx >= 0
+                    ? "Đã cập nhật site WordPress (trình duyệt + Cài đặt)."
+                    : "Đã thêm site WordPress mới (trình duyệt + Cài đặt)."
+                : idx >= 0
+                  ? `Đã cập nhật site ${PUB_PLATFORM_LABELS[plat] || plat}.`
+                  : `Đã thêm site ${PUB_PLATFORM_LABELS[plat] || plat} mới.`;
         showWpProfileFeedback(serverSync.ok ? okMsg : `Trình duyệt: OK. Server: ${serverSync.message}`, serverSync.ok ? "ok" : "err");
         if (msg && serverSync.ok) {
             msg.textContent =
                 plat === "wordpress"
-                    ? "Đã lưu và áp dụng kết nối đăng bài WordPress."
-                    : `Đã lưu site ${PUB_PLATFORM_LABELS[plat] || plat}.`;
+                    ? idx >= 0
+                        ? "Đã cập nhật kết nối đăng bài WordPress."
+                        : "Đã thêm site đăng bài WordPress — các site cũ vẫn giữ nguyên."
+                    : idx >= 0
+                      ? `Đã cập nhật site ${PUB_PLATFORM_LABELS[plat] || plat}.`
+                      : `Đã thêm site ${PUB_PLATFORM_LABELS[plat] || plat}.`;
         }
+        _wpProfilesAddNewMode = false;
+        syncWpProfilesFocusUi();
         if (saveBtn) {
             saveBtn.disabled = false;
             saveBtn.textContent = oldSaveLabel;
@@ -4858,6 +5947,37 @@
         if (msg) msg.textContent = `Đã gỡ ${hostLabel} khỏi danh sách kết nối.`;
         return true;
     };
+    const applyConnectedSiteSelection = async (it, opts = {}) => {
+        const o = opts || {};
+        const u = String((it && it.url) || "").trim();
+        if (!u) return;
+        const wpEl = byId("wpUrl");
+        const tgEl = byId("targetWebsite");
+        if (wpEl) wpEl.value = u;
+        if (tgEl) tgEl.value = u;
+        rememberWpUrl(u);
+        rememberTargetWebsite(u);
+        _projectsSiteFilterBase = normalizeTargetBase(u) || normalizeWpUrl(u) || "";
+        projectPage = 1;
+        try {
+            await refreshProjects(false);
+        } catch (_) {}
+        try {
+            renderProjects();
+            renderConnectedSitesPanel();
+            saveFormState();
+        } catch (_) {}
+        if (o.openArticles) {
+            let hostLabel = u;
+            try {
+                hostLabel = new URL(u).host || u;
+            } catch (_) {}
+            await openSiteArticlesModal(_projectsSiteFilterBase, hostLabel, {
+                resetFilter: true,
+                clearSearch: true,
+            });
+        }
+    };
     const connectedSitesRenderTargets = () =>
         [
             { wrap: byId("contentAiConnectedSitesListSidebar"), hint: byId("hintConnectedSitesSidebar") },
@@ -4918,35 +6038,7 @@
             btn.appendChild(body);
             btn.title = it.url;
             btn.addEventListener("click", async () => {
-                const u = it.url;
-                const wpEl = byId("wpUrl");
-                const tgEl = byId("targetWebsite");
-                if (wpEl) wpEl.value = u;
-                if (tgEl) tgEl.value = u;
-                rememberWpUrl(u);
-                rememberTargetWebsite(u);
-                _projectsSiteFilterBase = normalizeTargetBase(u) || normalizeWpUrl(u) || "";
-                projectPage = 1;
-                try {
-                    await refreshProjects(false);
-                } catch (_) {}
-                try {
-                    renderProjects();
-                } catch (_) {}
-                try {
-                    renderConnectedSitesPanel();
-                } catch (_) {}
-                try {
-                    saveFormState();
-                } catch (_) {}
-                let hostLabel = u;
-                try {
-                    hostLabel = new URL(u).host || u;
-                } catch (_) {}
-                openSiteArticlesModal(_projectsSiteFilterBase, hostLabel, {
-                    resetFilter: true,
-                    clearSearch: true,
-                });
+                await applyConnectedSiteSelection(it, { openArticles: true });
             });
             const delSiteBtn = document.createElement("button");
             delSiteBtn.type = "button";
@@ -4981,8 +6073,16 @@
             if (hint) hint.textContent = items.length ? filledHint : emptyHint;
         });
         if (!items.length) return;
-        items.forEach((it) => {
-            targets.forEach(({ wrap }) => appendConnectedSiteItem(wrap, it, activeKeys, filterKey));
+        const SIDEBAR_SITE_LIMIT = 3;
+        targets.forEach(({ wrap }) => {
+            const isSidebar = wrap && wrap.id === "contentAiConnectedSitesListSidebar";
+            if (isSidebar) {
+                wrap.classList.remove("connected-sites-list--scroll");
+            } else {
+                wrap.classList.toggle("connected-sites-list--scroll", items.length > SIDEBAR_SITE_LIMIT);
+            }
+            const slice = isSidebar ? items.slice(0, SIDEBAR_SITE_LIMIT) : items;
+            slice.forEach((it) => appendConnectedSiteItem(wrap, it, activeKeys, filterKey));
         });
     };
     const setDetectedIntentDebug = (intent) => {
@@ -5403,12 +6503,23 @@
         uploadedImages: uploadedImages.slice(),
         activeProjectId,
         singleWpCategoryId: byId("singleWpCategoryId") ? byId("singleWpCategoryId").value : "",
+        internalCandidates: slimInternalCandidatesForStorage(_internalCandidates),
+        internalCandidateAnchors: collectInternalCandidateAnchors(),
     });
-    const saveFormState = () => {
+    let _saveFormStateTimer = null;
+    const flushSaveFormState = () => {
         try {
             localStorage.setItem(FORM_STATE_KEY(), JSON.stringify(collectFormState()));
         } catch (_) {}
     };
+    const scheduleSaveFormState = () => {
+        if (_saveFormStateTimer) window.clearTimeout(_saveFormStateTimer);
+        _saveFormStateTimer = window.setTimeout(() => {
+            _saveFormStateTimer = null;
+            flushSaveFormState();
+        }, 400);
+    };
+    const saveFormState = () => flushSaveFormState();
     const restoreFormState = () => {
         try {
             const raw = localStorage.getItem(FORM_STATE_KEY());
@@ -5447,6 +6558,16 @@
             renderUploadList();
             toggleAiAvailability();
             syncSlugFromPrimary();
+            _pendingInternalCandidatesRestore = null;
+            if (Array.isArray(s.internalCandidates) && s.internalCandidates.length) {
+                _pendingInternalCandidatesRestore = {
+                    items: s.internalCandidates,
+                    anchors:
+                        s.internalCandidateAnchors && typeof s.internalCandidateAnchors === "object"
+                            ? s.internalCandidateAnchors
+                            : {},
+                };
+            }
             return true;
         } catch (_) {
             return false;
@@ -6011,6 +7132,9 @@
             refreshPreview();
         } catch (_) {}
         saveFormState();
+        try {
+            renderCustomLinkLibrary();
+        } catch (_) {}
     };
 
     const initRichEditor = async () => {
@@ -6081,6 +7205,9 @@
                             }
                         } catch (_) {}
                     };
+                    editor.on("change keyup SetContent", () => {
+                        try { schedulePublishChecklist(); } catch (_) {}
+                    });
                     editor.on("init", () => {
                         try {
                             const ta = byId("content");
@@ -6093,6 +7220,7 @@
                         } catch (_) {}
                         try { editor.save(); } catch (_) {}
                         try { refreshPreview(); } catch (_) {}
+                        try { schedulePublishChecklist(); } catch (_) {}
                         if (editorTools) editorTools.style.display = "flex";
                         editorMode = "visual";
                         refreshEditorModeUi();
@@ -6102,15 +7230,18 @@
                     });
                     editor.on("change keyup", () => {
                         try { editor.save(); } catch (_) {}
-                        saveFormState();
+                        scheduleSaveFormState();
                         // update stats from editor changes
                         try { refreshPreview(); } catch (_) {}
                         enforceTinyVisibility();
                     });
                     editor.on("SetContent NodeChange", enforceTinyVisibility);
                 },
+                content_css: "/static/css/digiseo-tables.css?v=3",
                 content_style:
-                    "html{color-scheme:light} body{font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.7;background:#ffffff !important;color:#0f172a !important;opacity:1 !important} p,li,span,div{color:#0f172a !important;opacity:1 !important} h1,h2,h3,h4,h5,h6{color:#0f172a !important;line-height:1.25;font-weight:800;opacity:1 !important} a{color:#2563eb !important}",
+                    "html{color-scheme:light} body{font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.7;background:#ffffff !important;color:#0f172a !important;opacity:1 !important} p,li,span,div{color:#0f172a !important;opacity:1 !important} h1,h2,h3,h4,h5,h6{color:#0f172a !important;line-height:1.25;font-weight:800;opacity:1 !important} a{color:#2563eb !important}"
+                    + " table{border:2px dashed #0f172a !important;border-collapse:collapse} th,td{border:2px dashed #0f172a !important;color:#0f172a !important;font-weight:500;opacity:1 !important}"
+                    + " thead th{background:#43a047 !important;color:#fff !important;font-weight:700}",
             });
         } catch (_) {
             // fallback to textarea
@@ -6599,6 +7730,441 @@
             runAutoInsertImagesClick();
         });
     }
+
+    /* AI Visual Content Studio */
+    const studioGallery = byId("studioGallery");
+    const studioIncludeText = byId("studioIncludeText");
+    const studioTextHintWrap = byId("studioTextHintWrap");
+    let studioPreviews = [];
+    let studioSelectedIndex = 0;
+    let studioCatalogCache = null;
+
+    const extractH2ForStudio = () => {
+        const html = String(getContentValue() || "");
+        const outline = String(byId("outlineContent")?.value || "");
+        const out = [];
+        const re = /<h2\b[^>]*>(.*?)<\/h2>/gi;
+        let m;
+        while ((m = re.exec(html))) {
+            const t = String(m[1] || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+            if (t && !out.includes(t)) out.push(t);
+        }
+        outline.split("\n").forEach((line) => {
+            const mm = /^##\s+(.+?)\s*$/.exec(line.trim());
+            if (mm) {
+                const t = mm[1].trim();
+                if (t && !out.includes(t)) out.push(t);
+            }
+        });
+        return out.slice(0, 12);
+    };
+
+    const getStudioH2CheckedKeys = () => {
+        const list = byId("studioH2List");
+        if (!list) return new Set();
+        const keys = new Set();
+        list.querySelectorAll('input[type="checkbox"][data-h2-index]:checked').forEach((cb) => {
+            keys.add(String(cb.getAttribute("data-h2-index")));
+        });
+        return keys;
+    };
+
+    const refreshStudioH2Select = () => {
+        const list = byId("studioH2List");
+        if (!list) return;
+        const checked = getStudioH2CheckedKeys();
+        const h2s = extractH2ForStudio();
+        if (!h2s.length) {
+            list.innerHTML = '<span class="hint">Chưa có H2 trong bài — thêm heading H2 trong content.</span>';
+            return;
+        }
+        list.innerHTML = "";
+        h2s.forEach((h, i) => {
+            const label = document.createElement("label");
+            label.className = "studio-h2-item";
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.setAttribute("data-h2-index", String(i));
+            cb.setAttribute("data-h2-heading", h);
+            if (checked.has(String(i)) || (!checked.size && i === 0)) cb.checked = true;
+            const span = document.createElement("span");
+            span.textContent = h;
+            label.appendChild(cb);
+            label.appendChild(span);
+            list.appendChild(label);
+        });
+    };
+
+    const getSelectedStudioH2s = () => {
+        const list = byId("studioH2List");
+        if (!list) return [];
+        const out = [];
+        list.querySelectorAll('input[type="checkbox"][data-h2-index]:checked').forEach((cb) => {
+            out.push({
+                index: parseInt(cb.getAttribute("data-h2-index"), 10),
+                heading: cb.getAttribute("data-h2-heading") || "",
+            });
+        });
+        return out.filter((x) => Number.isFinite(x.index) && x.heading);
+    };
+
+    const toggleStudioCustomSize = () => {
+        const ar = byId("studioAspectRatio");
+        const wrap = byId("studioCustomSizeWrap");
+        if (!wrap || !ar) return;
+        wrap.classList.toggle("visible", ar.value === "custom");
+    };
+
+    const fillStudioSelect = (elId, items, valueKey, labelKey) => {
+        const el = byId(elId);
+        if (!el || !Array.isArray(items)) return;
+        el.innerHTML = "";
+        items.forEach((it) => {
+            const opt = document.createElement("option");
+            opt.value = it[valueKey] || it.id || "";
+            opt.textContent = it[labelKey] || it.label_vi || opt.value;
+            el.appendChild(opt);
+        });
+    };
+
+    const loadStudioCatalog = async () => {
+        if (studioCatalogCache) return studioCatalogCache;
+        try {
+            const res = await apiFetch("/content-ai/images/studio-presets?ts=" + Date.now());
+            const data = await res.json().catch(() => ({}));
+            if (res.ok) studioCatalogCache = data;
+        } catch (_) {}
+        return studioCatalogCache || {};
+    };
+
+    const initVisualStudio = async () => {
+        const cat = await loadStudioCatalog();
+        fillStudioSelect("studioImageType", cat.image_types || [], "id", "label_vi");
+        fillStudioSelect("studioStylePreset", cat.style_presets || [], "id", "label_vi");
+        fillStudioSelect("studioAspectRatio", cat.aspect_ratios || [], "id", "label_vi");
+        fillStudioSelect("studioBrandTone", cat.brand_tones || [], "id", "label_vi");
+        toggleStudioCustomSize();
+        refreshStudioH2Select();
+    };
+
+    const openStudioLightbox = (url) => {
+        const box = byId("studioLightbox");
+        const img = byId("studioLightboxImg");
+        if (!box || !img || !url) return;
+        img.src = url;
+        box.classList.add("open");
+        box.setAttribute("aria-hidden", "false");
+    };
+    const closeStudioLightbox = () => {
+        const box = byId("studioLightbox");
+        const img = byId("studioLightboxImg");
+        if (!box) return;
+        box.classList.remove("open");
+        box.setAttribute("aria-hidden", "true");
+        if (img) img.src = "";
+    };
+
+    const setStudioHint = (text) => {
+        const h = byId("hint-visual-studio");
+        if (h) h.textContent = text || "";
+    };
+
+    const buildStudioGeneratePayload = (overrides = {}) => {
+        const draft = buildDraftPayload();
+        const selected = getSelectedStudioH2s();
+        const arEl = byId("studioAspectRatio");
+        const aspectRatio = (arEl && arEl.value) || "16:9";
+        const custom = aspectRatio === "custom";
+        const cw = parseInt(byId("studioCustomWidth")?.value || "800", 10);
+        const ch = parseInt(byId("studioCustomHeight")?.value || "400", 10);
+        const base = {
+            project_id: activeProjectId || null,
+            title: draft.title || "",
+            primary_keyword: draft.primary_keyword || "",
+            secondary_keywords: draft.secondary_keywords || [],
+            content_html: draft.content || "",
+            outline_content: draft.outline_content || "",
+            section_heading: selected.length === 1 ? selected[0].heading : "",
+            h2_index: selected.length === 1 ? selected[0].index : null,
+            h2_headings: selected.map((s) => s.heading),
+            h2_indices: selected.map((s) => s.index),
+            target_audience: "",
+            industry: "",
+            brand_name: draft.target_website || "",
+            brand_tone: (byId("studioBrandTone") && byId("studioBrandTone").value) || "professional",
+            image_type: (byId("studioImageType") && byId("studioImageType").value) || "inline_h2",
+            style_preset: (byId("studioStylePreset") && byId("studioStylePreset").value) || "seo_3d_premium",
+            aspect_ratio: aspectRatio,
+            custom_width: custom ? Math.max(256, Math.min(cw, 2048)) : null,
+            custom_height: custom ? Math.max(256, Math.min(ch, 2048)) : null,
+            count: Math.max(2, Math.min(4, parseInt(byId("studioImageCount")?.value || "3", 10) || 3)),
+            include_text: !!(studioIncludeText && studioIncludeText.checked),
+            text_hint: (byId("studioTextHint") && byId("studioTextHint").value.trim()) || "",
+        };
+        return { ...base, ...overrides };
+    };
+
+    const renderStudioGallery = () => {
+        if (!studioGallery) return;
+        studioGallery.innerHTML = "";
+        if (!studioPreviews.length) return;
+        studioPreviews.forEach((p, idx) => {
+            const card = document.createElement("div");
+            card.className = "visual-studio-card" + (idx === studioSelectedIndex ? " selected" : "");
+            const img = document.createElement("img");
+            img.src = p.url;
+            img.alt = p.alt || "Preview";
+            img.loading = "lazy";
+            img.className = "studio-thumb-click";
+            img.title = "Bấm để xem ảnh lớn";
+            img.addEventListener("click", (ev) => {
+                ev.stopPropagation();
+                openStudioLightbox(p.url);
+            });
+            card.appendChild(img);
+            if (p.section_heading) {
+                const cap = document.createElement("div");
+                cap.className = "hint";
+                cap.style.cssText = "padding:4px 6px;margin:0;font-size:0.68rem;line-height:1.2;";
+                cap.textContent = p.section_heading.length > 42
+                    ? p.section_heading.slice(0, 40) + "…"
+                    : p.section_heading;
+                card.appendChild(cap);
+            }
+            const btns = document.createElement("div");
+            btns.className = "visual-studio-card-btns";
+            const mk = (label, handler) => {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.className = "mini-btn";
+                b.textContent = label;
+                b.addEventListener("click", (ev) => {
+                    ev.preventDefault();
+                    studioSelectedIndex = idx;
+                    renderStudioGallery();
+                    handler(p, idx);
+                });
+                return b;
+            };
+            btns.appendChild(mk("Chọn", () => {}));
+            btns.appendChild(mk("Chèn bài", () => studioInsertSelected(p, "inline")));
+            btns.appendChild(mk("Featured", () => studioInsertSelected(p, "featured")));
+            btns.appendChild(mk("Tạo lại", () => studioRegenerateOne(idx)));
+            btns.appendChild(mk("Crop", () => {
+                if (typeof openCropModal === "function") openCropModal(p.url);
+            }));
+            card.appendChild(btns);
+            card.addEventListener("click", (ev) => {
+                if (ev.target.closest("button")) return;
+                studioSelectedIndex = idx;
+                renderStudioGallery();
+            });
+            studioGallery.appendChild(card);
+        });
+    };
+
+    const studioInsertSelected = async (preview, mode) => {
+        const pk = byId("primaryKeyword").value.trim();
+        if (!pk) {
+            setStudioHint("Cần từ khóa chính.");
+            return;
+        }
+        const payload = buildStudioGeneratePayload();
+        const insertH2 = preview.section_heading || payload.section_heading || "";
+        const insertIdx = preview.h2_index != null ? preview.h2_index : payload.h2_index;
+        setStudioHint(mode === "featured" ? "Đang đặt featured…" : "Đang chèn vào bài…");
+        try {
+            const res = await fetch("/content-ai/images/insert-selected?ts=" + Date.now(), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    url: preview.url,
+                    mode,
+                    project_id: activeProjectId || null,
+                    content_html: payload.content_html,
+                    title: payload.title,
+                    primary_keyword: pk,
+                    section_heading: insertH2,
+                    h2_index: insertIdx,
+                    alt: preview.alt || "",
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const d = data.detail;
+                throw new Error(typeof d === "string" ? d : "Chèn ảnh thất bại");
+            }
+            if (data.content) setContentValue(data.content);
+            if (data.featured_image) {
+                if (!uploadedImages.includes(data.featured_image)) uploadedImages.unshift(data.featured_image);
+                renderUploadList();
+            }
+            if (data.gallery_images && Array.isArray(data.gallery_images)) {
+                data.gallery_images.forEach((u) => {
+                    const s = String(u || "").trim();
+                    if (s && !uploadedImages.includes(s)) uploadedImages.push(s);
+                });
+                renderUploadList();
+            }
+            if (data.project && activeProjectId) applyProjectToForm(data.project);
+            else if (mode === "inline" && preview.url) {
+                try { insertImageIntoEditor(preview.url); } catch (_) {}
+            }
+            try { refreshPreview(); } catch (_) {}
+            saveFormState();
+            setStudioHint(data.ok ? (mode === "featured" ? "Đã đặt ảnh đại diện." : "Đã chèn ảnh vào bài.") : "Xong.");
+            setHint("image", mode === "featured" ? "Featured từ AI Studio." : "Đã chèn ảnh từ AI Studio.");
+        } catch (e) {
+            setStudioHint(String(e.message || e));
+        }
+    };
+
+    const studioRegenerateOne = async (idx) => {
+        setStudioHint("Đang tạo lại…");
+        const btn = byId("btnStudioGenerate");
+        if (btn) btn.disabled = true;
+        try {
+            const prev = studioPreviews[idx] || {};
+            const payload = buildStudioGeneratePayload({
+                count: 1,
+                section_heading: prev.section_heading || "",
+                h2_index: prev.h2_index != null ? prev.h2_index : null,
+                h2_headings: prev.section_heading ? [prev.section_heading] : undefined,
+                h2_indices: prev.h2_index != null ? [prev.h2_index] : undefined,
+            });
+            const res = await fetch("/content-ai/images/generate-professional?ts=" + Date.now(), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const d = data.detail;
+                throw new Error(typeof d === "string" ? d : "Tạo lại thất bại");
+            }
+            const newPrev = (data.previews && data.previews[0]) || null;
+            if (newPrev && studioPreviews[idx]) {
+                studioPreviews[idx] = { ...studioPreviews[idx], ...newPrev };
+                renderStudioGallery();
+                setStudioHint("Đã tạo lại ảnh #" + (idx + 1));
+            }
+        } catch (e) {
+            setStudioHint(String(e.message || e));
+        } finally {
+            if (btn) btn.disabled = false;
+        }
+    };
+
+    const runStudioGenerate = async () => {
+        const pk = byId("primaryKeyword").value.trim();
+        if (!pk) {
+            setStudioHint("Cần từ khóa chính trước khi tạo ảnh AI.");
+            return;
+        }
+        const btn = byId("btnStudioGenerate");
+        if (btn) btn.disabled = true;
+        setStudioHint("Đang tạo ảnh AI (OpenAI)…");
+        studioPreviews = [];
+        renderStudioGallery();
+        try {
+            const payload = buildStudioGeneratePayload();
+            const res = await fetch("/content-ai/images/generate-professional?ts=" + Date.now(), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const d = data.detail;
+                throw new Error(typeof d === "string" ? d : "Tạo ảnh AI thất bại");
+            }
+            studioPreviews = Array.isArray(data.previews) ? data.previews : [];
+            studioSelectedIndex = 0;
+            renderStudioGallery();
+            setStudioHint(data.message || `Đã tạo ${studioPreviews.length} ảnh preview.`);
+            const panel = byId("visualStudioPanel");
+            if (panel) panel.open = true;
+        } catch (e) {
+            const err = String(e.message || e);
+            setStudioHint(err);
+            if (/OPENAI_API_KEY|Model ảnh|Thiếu OPENAI/i.test(err)) {
+                setHint("image", err + " — thêm OPENAI_API_KEY vào env.local hoặc dùng «Tự động chèn ảnh» (web).");
+            }
+        } finally {
+            if (btn) btn.disabled = false;
+        }
+    };
+
+    if (studioIncludeText && studioTextHintWrap) {
+        studioIncludeText.addEventListener("change", () => {
+            studioTextHintWrap.style.display = studioIncludeText.checked ? "block" : "none";
+        });
+    }
+    const studioAspectRatio = byId("studioAspectRatio");
+    if (studioAspectRatio) {
+        studioAspectRatio.addEventListener("change", toggleStudioCustomSize);
+    }
+    const studioH2SelectAll = byId("studioH2SelectAll");
+    const studioH2ClearAll = byId("studioH2ClearAll");
+    if (studioH2SelectAll) {
+        studioH2SelectAll.addEventListener("click", (e) => {
+            e.preventDefault();
+            const list = byId("studioH2List");
+            if (!list) return;
+            list.querySelectorAll('input[type="checkbox"]').forEach((cb) => { cb.checked = true; });
+        });
+    }
+    if (studioH2ClearAll) {
+        studioH2ClearAll.addEventListener("click", (e) => {
+            e.preventDefault();
+            const list = byId("studioH2List");
+            if (!list) return;
+            list.querySelectorAll('input[type="checkbox"]').forEach((cb) => { cb.checked = false; });
+        });
+    }
+    const studioLightboxClose = byId("studioLightboxClose");
+    const studioLightbox = byId("studioLightbox");
+    if (studioLightboxClose) {
+        studioLightboxClose.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeStudioLightbox();
+        });
+    }
+    if (studioLightbox) {
+        studioLightbox.addEventListener("click", (e) => {
+            if (e.target === studioLightbox) closeStudioLightbox();
+        });
+    }
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && studioLightbox && studioLightbox.classList.contains("open")) {
+            closeStudioLightbox();
+        }
+    });
+    const btnStudioGenerate = byId("btnStudioGenerate");
+    if (btnStudioGenerate) {
+        btnStudioGenerate.addEventListener("click", (e) => {
+            e.preventDefault();
+            runStudioGenerate();
+        });
+    }
+    const visualStudioPanel = byId("visualStudioPanel");
+    if (visualStudioPanel) {
+        visualStudioPanel.addEventListener("toggle", () => {
+            if (visualStudioPanel.open) {
+                refreshStudioH2Select();
+                if (!studioCatalogCache) initVisualStudio();
+            }
+        });
+    }
+    initVisualStudio();
+    document.addEventListener("input", (ev) => {
+        if (!ev.target) return;
+        const id = ev.target.id || "";
+        if (id === "contentRender" || id === "outlineContent") {
+            try { refreshStudioH2Select(); } catch (_) {}
+        }
+    });
+
     if (btnSiteArticlesAutoImages) {
         btnSiteArticlesAutoImages.addEventListener("click", (e) => {
             e.preventDefault();
@@ -7370,11 +8936,18 @@
         const t = Date.parse(String((p && (p.updated_at || p.created_at)) || ""));
         return Number.isFinite(t) ? t : 0;
     };
-    const _getSidebarRecentItems = () =>
-        getFilteredProjects()
+    const _getSidebarRecentItems = () => {
+        const sorted = getFilteredProjects()
             .slice()
-            .sort((a, b) => _projectSortTime(b) - _projectSortTime(a))
-            .slice(0, SIDEBAR_RECENT_PROJECT_COUNT);
+            .sort((a, b) => _projectSortTime(b) - _projectSortTime(a));
+        const top = sorted.slice(0, SIDEBAR_RECENT_PROJECT_COUNT);
+        const aid = String(activeProjectId || "").trim();
+        if (!aid) return top;
+        if (top.some((p) => String(p.id) === aid)) return top;
+        const active = sorted.find((p) => String(p.id) === aid);
+        if (!active) return top;
+        return [active, ...top.filter((p) => String(p.id) !== aid)].slice(0, SIDEBAR_RECENT_PROJECT_COUNT);
+    };
     const _renderPager = () => {
         if (projectPager) projectPager.style.display = "none";
     };
@@ -7411,12 +8984,14 @@
         }
         _renderPager();
     };
-    const fetchProjects = async () => {
-        const res = await fetch(`/content-ai/projects?limit=200&ts=${Date.now()}`, {
-            headers: authHeaders(),
-        });
+    const fetchProjects = async (limit = 500) => {
+        const cap = Math.max(1, Math.min(Number(limit) || 500, 500));
+        const res = await apiFetch(`/content-ai/projects?limit=${cap}&ts=${Date.now()}`);
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error((data && data.detail) ? data.detail : "Load projects failed");
+        if (!res.ok) {
+            if (res.status === 401) return [];
+            throw new Error(parseApiDetail(data) || "Load projects failed");
+        }
         return data.items || [];
     };
     const refreshProjects = async (preferLatest = false) => {
@@ -8491,6 +10066,9 @@
         renderUploadList();
         toggleAiAvailability();
         syncSlugFromPrimary();
+        _internalCandidates = [];
+        if (internalLinkCandidates) internalLinkCandidates.innerHTML = "";
+        setHint("internal-links", "");
         try {
             localStorage.removeItem(FORM_STATE_KEY());
         } catch (_) {}
@@ -8539,17 +10117,32 @@
             allArticlesModalEl.setAttribute("aria-hidden", "true");
         }
     };
-    const loadProjectIntoWriteTab = async (projectId) => {
+    const scrollSidebarActiveProject = () => {
+        try {
+            const el = projectList && projectList.querySelector(".project-item.active");
+            if (el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        } catch (_) {}
+    };
+    const selectProjectFromAllModal = async (projectId) => {
         const pid = String(projectId || "").trim();
         if (!pid) return;
         closeAllArticlesModal();
         closeSiteArticlesModal();
         closeArticleDetailModal();
+        activeProjectId = pid;
+        try {
+            renderProjects();
+            renderConnectedSitesPanel();
+        } catch (_) {}
         setContentAiMainView("single");
         if (railNav) {
             railNav.querySelectorAll(".content-ai-nav-item").forEach((n) => n.classList.remove("active"));
         }
         await loadProject(pid);
+        try {
+            renderProjects();
+            scrollSidebarActiveProject();
+        } catch (_) {}
         window.setTimeout(() => {
             if (contentAiSinglePanel) {
                 contentAiSinglePanel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -8558,59 +10151,100 @@
             if (pk) pk.focus({ preventScroll: true });
         }, 320);
     };
-    const renderAllArticlesList = () => {
+    const loadProjectIntoWriteTab = async (projectId) => selectProjectFromAllModal(projectId);
+    const allProjectsModalCountEl = byId("allProjectsModalCount");
+    const updateAllPublishingSitesModalCount = (shown, total) => {
+        if (!allProjectsModalCountEl) return;
+        if (!total) {
+            allProjectsModalCountEl.hidden = true;
+            return;
+        }
+        allProjectsModalCountEl.hidden = false;
+        allProjectsModalCountEl.textContent =
+            shown === total
+                ? `Hiển thị ${total} website`
+                : `Hiển thị ${shown} / ${total} website (đang lọc tìm kiếm)`;
+    };
+    const renderAllPublishingSitesList = () => {
         if (!allArticlesListEl) return;
         const q = String((allArticlesSearchEl && allArticlesSearchEl.value) || "")
             .trim()
             .toLowerCase();
-        let list = [...(allProjects || [])]
-            .slice()
-            .sort((a, b) => _projectSortTime(b) - _projectSortTime(a));
+        let sites = collectConnectedSites();
+        const totalAll = sites.length;
         if (q) {
-            list = list.filter((p) => {
-                const title = String(p.title || "").toLowerCase();
-                const kw = String(p.primary_keyword || "").toLowerCase();
-                return title.includes(q) || kw.includes(q);
+            sites = sites.filter((it) => {
+                let host = String(it.url || "").toLowerCase();
+                try {
+                    host = (new URL(it.url).host || host).toLowerCase();
+                } catch (_) {}
+                return host.includes(q) || String(it.url || "").toLowerCase().includes(q);
             });
         }
+        updateAllPublishingSitesModalCount(sites.length, totalAll);
         allArticlesListEl.innerHTML = "";
-        if (!list.length) {
+        if (!sites.length) {
             if (allArticlesEmptyEl) allArticlesEmptyEl.hidden = false;
             return;
         }
         if (allArticlesEmptyEl) allArticlesEmptyEl.hidden = true;
-        list.forEach((item) => {
+        const filterKey = String(_projectsSiteFilterBase || "").toLowerCase();
+        const wpNorm = normalizeWpUrl(byId("wpUrl") && byId("wpUrl").value.trim());
+        const tgNorm = normalizeTargetBase(byId("targetWebsite") && byId("targetWebsite").value.trim());
+        const activeKeys = new Set([wpNorm, tgNorm, filterKey].filter(Boolean).map((u) => u.toLowerCase()));
+        const platLbl = { shopify: "Shopify", haravan: "Haravan", webcake: "Webcake" };
+        sites.forEach((it) => {
             const btn = document.createElement("button");
             btn.type = "button";
-            btn.className = "all-articles-item";
+            const key = String(it.url).toLowerCase();
+            btn.className = `all-publishing-site-item${activeKeys.has(key) || (filterKey && key === filterKey) ? " active" : ""}`;
             btn.setAttribute("role", "listitem");
-            const titleEl = document.createElement("div");
-            titleEl.className = "all-articles-item-title";
-            const articleTitle = String(item.title || "").trim();
-            const pk = String(item.primary_keyword || "").trim();
-            titleEl.textContent = articleTitle || pk || "(Chưa có tiêu đề)";
-            btn.appendChild(titleEl);
-            const tw = normalizeTargetBase(String(item.target_website || ""));
-            if (tw) {
-                let host = tw;
-                try {
-                    host = new URL(tw).host || host;
-                } catch (_) {}
-                const metaEl = document.createElement("div");
-                metaEl.className = "all-articles-item-meta";
-                metaEl.textContent = host;
-                btn.appendChild(metaEl);
+            const dot = document.createElement("span");
+            dot.className = "dot";
+            const body = document.createElement("div");
+            body.style.flex = "1";
+            const hostEl = document.createElement("div");
+            hostEl.className = "host";
+            try {
+                hostEl.textContent = new URL(it.url).host || it.url;
+            } catch (_) {
+                hostEl.textContent = it.url;
             }
-            btn.addEventListener("click", () => loadProjectIntoWriteTab(item.id));
+            const badges = document.createElement("div");
+            badges.className = "badges";
+            if (it.wp) {
+                const b = document.createElement("span");
+                b.className = "connected-site-badge wp";
+                b.textContent = "WP";
+                badges.appendChild(b);
+            }
+            (it.platforms || []).forEach((pl) => {
+                const b = document.createElement("span");
+                b.className = `connected-site-badge plat plat-${pl}`;
+                b.textContent = platLbl[pl] || pl;
+                badges.appendChild(b);
+            });
+            body.appendChild(hostEl);
+            body.appendChild(badges);
+            btn.appendChild(dot);
+            btn.appendChild(body);
+            btn.title = it.url;
+            btn.addEventListener("click", async () => {
+                closeAllArticlesModal();
+                await applyConnectedSiteSelection(it, { openArticles: false });
+            });
             allArticlesListEl.appendChild(btn);
         });
     };
-    const openAllArticlesModal = async () => {
-        try {
-            await refreshProjects(false);
-        } catch (_) {}
+    const openAllPublishingSitesModal = async () => {
         if (allArticlesSearchEl) allArticlesSearchEl.value = "";
-        renderAllArticlesList();
+        const titleEl = byId("allPublishingSitesModalTitle");
+        if (titleEl) titleEl.textContent = "Tất cả website đăng bài";
+        try {
+            await fetchSettingsPublishingSites();
+            renderConnectedSitesPanel();
+        } catch (_) {}
+        renderAllPublishingSitesList();
         if (allArticlesBackdropEl) allArticlesBackdropEl.classList.add("open");
         if (allArticlesModalEl) {
             allArticlesModalEl.classList.add("open");
@@ -8955,8 +10589,41 @@
     });
     updateBulkKwCount();
 
-    const btnViewAllArticles = byId("btnViewAllArticles");
-    if (btnViewAllArticles) btnViewAllArticles.addEventListener("click", () => openAllArticlesModal());
+    const resolveSiteForAllArticles = () => {
+        const fromFilter = String(_projectsSiteFilterBase || "").trim();
+        if (fromFilter) return fromFilter;
+        const wp = normalizeWpUrl(byId("wpUrl") && byId("wpUrl").value.trim());
+        if (wp) return wp;
+        const tg = normalizeTargetBase(byId("targetWebsite") && byId("targetWebsite").value.trim());
+        if (tg) return tg;
+        const sites = collectConnectedSites();
+        if (sites.length) return sites[0].url;
+        return "";
+    };
+    const openViewAllSiteArticles = async () => {
+        const base = resolveSiteForAllArticles();
+        if (!base) {
+            if (msg) msg.textContent = "Chưa có website — thêm site đăng bài hoặc chọn một site trong danh sách.";
+            return;
+        }
+        let hostLabel = base;
+        try {
+            hostLabel = new URL(base).host || base;
+        } catch (_) {}
+        _projectsSiteFilterBase = normalizeTargetBase(base) || normalizeWpUrl(base) || "";
+        try {
+            renderProjects();
+            renderConnectedSitesPanel();
+        } catch (_) {}
+        await openSiteArticlesModal(_projectsSiteFilterBase, hostLabel, {
+            resetFilter: true,
+            clearSearch: true,
+        });
+    };
+    const btnViewAllSiteArticles = byId("btnViewAllSiteArticles");
+    if (btnViewAllSiteArticles) btnViewAllSiteArticles.addEventListener("click", () => void openViewAllSiteArticles());
+    const btnViewAllProjects = byId("btnViewAllProjects");
+    if (btnViewAllProjects) btnViewAllProjects.addEventListener("click", () => void openAllPublishingSitesModal());
     const btnAllArticlesClose = byId("btnAllArticlesClose");
     if (btnAllArticlesClose) btnAllArticlesClose.addEventListener("click", closeAllArticlesModal);
     if (allArticlesBackdropEl) {
@@ -8967,7 +10634,9 @@
     if (allArticlesSearchEl) {
         allArticlesSearchEl.addEventListener("input", () => {
             try {
-                renderAllArticlesList();
+                if (allArticlesModalEl && allArticlesModalEl.classList.contains("open")) {
+                    renderAllPublishingSitesList();
+                }
             } catch (_) {}
         });
     }
@@ -9140,6 +10809,7 @@
     allProjects = [];
     settingsPublishingSitesFlat = [];
     refreshProjects(!restored);
+    try { schedulePublishChecklist(); } catch (_) {}
     void fetchSettingsPublishingSites().then(() => {
         renderTargetHistory();
         renderWpUrlHistory();
@@ -9155,8 +10825,16 @@
     });
     document.querySelectorAll("input, textarea").forEach((el) => {
         if (el.type === "file") return;
-        el.addEventListener("input", saveFormState);
-        el.addEventListener("change", saveFormState);
+        if (el.id === "content") return;
+        el.addEventListener("input", scheduleSaveFormState);
+        el.addEventListener("change", scheduleSaveFormState);
+    });
+    window.addEventListener("beforeunload", () => {
+        if (_saveFormStateTimer) {
+            window.clearTimeout(_saveFormStateTimer);
+            _saveFormStateTimer = null;
+        }
+        flushSaveFormState();
     });
 
     if (btnUploadImage) btnUploadImage.addEventListener("click", async () => {
@@ -9779,8 +11457,350 @@
             else execEditorCommand("paragraph");
         });
     }
-    let _internalCandidates = [];
     let _lastScreamingFrogTsv = "";
+    const LEGACY_CUSTOM_LINK_LIB_KEY = "digiseo_content_ai_custom_link_library";
+    const getCustomLinkRowsEl = () => document.getElementById("customLinkRows");
+    const customLinkLibraryList = byId("customLinkLibraryList");
+    const internalLinkApplyResults = byId("internalLinkApplyResults");
+    const btnAddCustomLink = byId("btnAddCustomLink");
+    const btnSaveCustomToLibrary = byId("btnSaveCustomToLibrary");
+    const btnApplyCustomInternalLinks = byId("btnApplyCustomInternalLinks");
+    const customLinkUseLlm = byId("customLinkUseLlm");
+    const hintCustomLinkApply = byId("hint-custom-link-apply");
+    if (customLinkUseLlm && !customLinkUseLlm.dataset.llmSwitchBound) {
+        customLinkUseLlm.dataset.llmSwitchBound = "1";
+        syncLlmSwitchHighlight(customLinkUseLlm);
+        customLinkUseLlm.addEventListener("change", () => syncLlmSwitchHighlight(customLinkUseLlm));
+    }
+    let _customLinkRowSeq = 0;
+
+    const customLinkUrlHost = (url) => {
+        try {
+            let h = new URL(String(url || "").includes("://") ? url : `https://${url}`).hostname.toLowerCase();
+            if (h.startsWith("www.")) h = h.slice(4);
+            return h;
+        } catch (_) {
+            return "";
+        }
+    };
+    const customLinkBelongsToSite = (linkUrl, siteBase) => {
+        const lh = customLinkUrlHost(linkUrl);
+        const sh = customLinkUrlHost(siteBase);
+        if (!lh || !sh) return false;
+        return lh === sh || lh.endsWith(`.${sh}`) || sh.endsWith(`.${lh}`);
+    };
+    const getCustomLinkLibraryScope = () => {
+        const pid = String(activeProjectId || "").trim();
+        if (pid) {
+            const p = (allProjects || []).find((x) => String(x.id) === pid);
+            const tw = normalizeTargetBase(String((p && p.target_website) || byId("targetWebsite")?.value || ""));
+            let label = String((p && (p.title || p.primary_keyword)) || "").trim();
+            if (!label && tw) label = connectedSiteHostLabel(tw);
+            if (!label) label = "Dự án hiện tại";
+            return { ok: true, type: "project", storageId: `p_${pid}`, label, siteBase: tw };
+        }
+        const tw = normalizeTargetBase(String(byId("targetWebsite")?.value || "").trim());
+        if (tw) {
+            const sk = connectedSiteKey(tw) || tw;
+            return {
+                ok: true,
+                type: "site",
+                storageId: `s_${sk.replace(/[^a-zA-Z0-9._-]+/g, "_").slice(0, 120)}`,
+                label: connectedSiteHostLabel(tw),
+                siteBase: tw,
+            };
+        }
+        return { ok: false, type: "none", storageId: "", label: "", siteBase: "" };
+    };
+    const customLinkLibraryStorageKey = () => {
+        const scope = getCustomLinkLibraryScope();
+        if (!scope.ok || !scope.storageId) return "";
+        return userStorageKey(`content_ai_custom_link_library_v2_${scope.storageId}`);
+    };
+    const loadLegacyGlobalCustomLinkLibrary = () => {
+        try {
+            const raw = localStorage.getItem(LEGACY_CUSTOM_LINK_LIB_KEY);
+            const arr = raw ? JSON.parse(raw) : [];
+            return Array.isArray(arr) ? arr : [];
+        } catch (_) {
+            return [];
+        }
+    };
+    const tryMigrateLegacyCustomLinkLibrary = (scope) => {
+        if (!scope.ok || !scope.siteBase) return;
+        const key = customLinkLibraryStorageKey();
+        if (!key) return;
+        try {
+            if (localStorage.getItem(key)) return;
+        } catch (_) {
+            return;
+        }
+        const legacy = loadLegacyGlobalCustomLinkLibrary();
+        if (!legacy.length) return;
+        const migrated = legacy.filter((it) => customLinkBelongsToSite(it && it.target_url, scope.siteBase));
+        if (!migrated.length) return;
+        try {
+            localStorage.setItem(key, JSON.stringify(migrated.slice(0, 80)));
+        } catch (_) { /* ignore */ }
+    };
+    const loadCustomLinkLibrary = () => {
+        const scope = getCustomLinkLibraryScope();
+        if (!scope.ok) return [];
+        tryMigrateLegacyCustomLinkLibrary(scope);
+        const key = customLinkLibraryStorageKey();
+        if (!key) return [];
+        try {
+            const raw = localStorage.getItem(key);
+            const arr = raw ? JSON.parse(raw) : [];
+            if (!Array.isArray(arr)) return [];
+            if (!scope.siteBase) return arr;
+            return arr.filter((it) => customLinkBelongsToSite(it && it.target_url, scope.siteBase));
+        } catch (_) {
+            return [];
+        }
+    };
+    const saveCustomLinkLibrary = (items) => {
+        const scope = getCustomLinkLibraryScope();
+        if (!scope.ok) return false;
+        const key = customLinkLibraryStorageKey();
+        if (!key) return false;
+        let clean = (items || []).map((x) => ({ ...x }));
+        if (scope.siteBase) {
+            clean = clean.filter((it) => customLinkBelongsToSite(it.target_url, scope.siteBase));
+        }
+        try {
+            localStorage.setItem(key, JSON.stringify(clean.slice(0, 80)));
+            return true;
+        } catch (_) {
+            return false;
+        }
+    };
+    const renderCustomLinkLibrary = () => {
+        if (!customLinkLibraryList) return;
+        const scope = getCustomLinkLibraryScope();
+        const hintLib = byId("hint-custom-link-library");
+        if (hintLib) {
+            hintLib.textContent = scope.ok
+                ? `Thư viện riêng cho ${scope.type === "project" ? "dự án" : "site"} «${scope.label}» — không hiện link của dự án/site khác.`
+                : "Mở một dự án hoặc nhập Target website để lưu / xem thư viện custom link.";
+        }
+        if (btnSaveCustomToLibrary) {
+            btnSaveCustomToLibrary.disabled = !scope.ok;
+            btnSaveCustomToLibrary.title = scope.ok
+                ? `Lưu vào thư viện của ${scope.label}`
+                : "Cần dự án hoặc Target website";
+        }
+        const lib = loadCustomLinkLibrary();
+        customLinkLibraryList.innerHTML = "";
+        if (!scope.ok) {
+            customLinkLibraryList.innerHTML =
+                "<div class=\"hint\">Chưa gắn dự án hoặc Target website. Mở dự án (ví dụ backlinkbrand) rồi mới lưu link money page cho đúng bài.</div>";
+            return;
+        }
+        if (!lib.length) {
+            customLinkLibraryList.innerHTML =
+                "<div class=\"hint\">Thêm custom link rồi bấm «Lưu dòng đã chọn vào thư viện».</div>";
+            return;
+        }
+        lib.forEach((it, idx) => {
+            const row = document.createElement("div");
+            row.className = "custom-link-lib-item";
+            const meta = document.createElement("div");
+            meta.style.minWidth = "0";
+            const t = document.createElement("div");
+            t.textContent = String(it.anchor_text || "").trim() || "(anchor)";
+            t.style.fontWeight = "700";
+            const u = document.createElement("div");
+            u.className = "hint";
+            u.textContent = String(it.target_url || "").trim();
+            u.style.wordBreak = "break-all";
+            meta.appendChild(t);
+            meta.appendChild(u);
+            const actions = document.createElement("div");
+            actions.style.display = "flex";
+            actions.style.gap = "4px";
+            const btnUse = document.createElement("button");
+            btnUse.type = "button";
+            btnUse.className = "mini-btn";
+            btnUse.textContent = "Dùng";
+            btnUse.addEventListener("click", () => addCustomLinkRow(it));
+            const btnDel = document.createElement("button");
+            btnDel.type = "button";
+            btnDel.className = "mini-btn danger";
+            btnDel.textContent = "Xóa";
+            btnDel.addEventListener("click", () => {
+                const next = loadCustomLinkLibrary().filter((_, i) => i !== idx);
+                saveCustomLinkLibrary(next);
+                renderCustomLinkLibrary();
+            });
+            actions.appendChild(btnUse);
+            actions.appendChild(btnDel);
+            row.appendChild(meta);
+            row.appendChild(actions);
+            customLinkLibraryList.appendChild(row);
+        });
+    };
+    const normalizeCustomUrl = (raw) => {
+        let s = String(raw || "").trim();
+        if (!s) return "";
+        if (!/^https?:\/\//i.test(s)) s = `https://${s.replace(/^\/+/, "")}`;
+        return s;
+    };
+    const addCustomLinkRow = (seed) => {
+        const customLinkRows = getCustomLinkRowsEl();
+        if (!customLinkRows) return;
+        const id = ++_customLinkRowSeq;
+        const s = seed && typeof seed === "object" ? seed : {};
+        const row = document.createElement("div");
+        row.className = "custom-link-row";
+        row.setAttribute("data-custom-id", String(id));
+        row.innerHTML = `
+            <input type="checkbox" class="custom-link-cb" data-custom-id="${id}" checked title="Chọn" />
+            <input type="text" class="cl-url" inputmode="url" autocomplete="url" placeholder="https://..." value="${String(s.target_url || "").replace(/"/g, "&quot;")}" />
+            <input type="text" class="cl-anchor" placeholder="Anchor text" value="${String(s.anchor_text || "").replace(/"/g, "&quot;")}" />
+            <select class="cl-type">
+                <option value="money_page">money_page</option>
+                <option value="blog">blog</option>
+                <option value="category">category</option>
+                <option value="service">service</option>
+                <option value="course">course</option>
+                <option value="manual">manual</option>
+            </select>
+            <select class="cl-priority">
+                <option value="high">high</option>
+                <option value="medium">medium</option>
+                <option value="low">low</option>
+            </select>
+            <input type="number" class="cl-max" min="1" max="3" value="${Number(s.max_insert) > 0 ? Number(s.max_insert) : 1}" title="max_insert" />
+            <button type="button" class="mini-btn danger cl-del" title="Xóa dòng">×</button>
+        `;
+        const typeSel = row.querySelector(".cl-type");
+        const priSel = row.querySelector(".cl-priority");
+        if (typeSel && s.link_type) typeSel.value = String(s.link_type);
+        if (priSel && s.priority) priSel.value = String(s.priority);
+        row.querySelector(".cl-del")?.addEventListener("click", () => row.remove());
+        customLinkRows.appendChild(row);
+    };
+    const collectCheckedCustomLinks = () => {
+        const root = document.getElementById("customLinkPanel") || getCustomLinkRowsEl();
+        if (!root) return [];
+        const out = [];
+        root.querySelectorAll(".custom-link-row").forEach((row) => {
+            const cbs = row.querySelectorAll("input.custom-link-cb[type='checkbox'], input.custom-link-cb");
+            const hasCheckbox = cbs.length > 0;
+            const isChecked = !hasCheckbox || Array.from(cbs).some((c) => c.checked);
+            if (!isChecked) return;
+            const url = normalizeCustomUrl(row.querySelector(".cl-url")?.value);
+            const anchor = String(row.querySelector(".cl-anchor")?.value || "").trim();
+            if (!url && !anchor) return;
+            out.push({
+                target_url: url,
+                anchor_text: anchor,
+                link_type: String(row.querySelector(".cl-type")?.value || "manual"),
+                priority: String(row.querySelector(".cl-priority")?.value || "medium"),
+                max_insert: Math.max(1, Math.min(3, Number(row.querySelector(".cl-max")?.value) || 1)),
+            });
+        });
+        return out;
+    };
+    const getValidCustomLinksForApply = () =>
+        collectCheckedCustomLinks().filter((x) => x.target_url && x.anchor_text);
+    const renderInternalApplyResults = (rows) => {
+        if (!internalLinkApplyResults) return;
+        const arr = Array.isArray(rows) ? rows : [];
+        if (!arr.length) {
+            internalLinkApplyResults.style.display = "none";
+            internalLinkApplyResults.innerHTML = "";
+            return;
+        }
+        internalLinkApplyResults.style.display = "block";
+        const tbl = document.createElement("table");
+        const thead = document.createElement("thead");
+        thead.innerHTML = "<tr><th>Anchor</th><th>URL</th><th>Nguồn</th><th>Trạng thái</th><th>Ghi chú</th></tr>";
+        tbl.appendChild(thead);
+        const tbody = document.createElement("tbody");
+        arr.forEach((r) => {
+            const tr = document.createElement("tr");
+            const st = String(r.status || "");
+            const stCls = st === "inserted" ? "st-inserted" : "st-skipped";
+            tr.innerHTML = `
+                <td>${escapeHtml(String(r.anchor_text || ""))}</td>
+                <td style="word-break:break-all;">${escapeHtml(String(r.target_url || ""))}</td>
+                <td>${escapeHtml(String(r.source || ""))}</td>
+                <td class="${stCls}">${escapeHtml(st)}</td>
+                <td>${escapeHtml(String(r.reason || ""))}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+        tbl.appendChild(tbody);
+        internalLinkApplyResults.innerHTML = "";
+        const cap = document.createElement("div");
+        cap.className = "internal-suggest-sub";
+        cap.textContent = "KẾT QUẢ CHÈN LINK";
+        internalLinkApplyResults.appendChild(cap);
+        internalLinkApplyResults.appendChild(tbl);
+    };
+    const escapeHtml = (s) => String(s || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    if (btnAddCustomLink) btnAddCustomLink.addEventListener("click", () => addCustomLinkRow({ link_type: "money_page", priority: "high" }));
+    if (btnSaveCustomToLibrary) {
+        btnSaveCustomToLibrary.addEventListener("click", () => {
+            const scope = getCustomLinkLibraryScope();
+            if (!scope.ok) {
+                setHint(
+                    "content",
+                    "Mở dự án hoặc nhập Target website trước khi lưu thư viện custom link."
+                );
+                return;
+            }
+            const picked = getValidCustomLinksForApply();
+            if (!picked.length) {
+                setHint("content", "Chọn ít nhất một custom link hợp lệ (URL + anchor) để lưu thư viện.");
+                return;
+            }
+            const mismatched = scope.siteBase
+                ? picked.filter((p) => !customLinkBelongsToSite(p.target_url, scope.siteBase))
+                : [];
+            if (mismatched.length) {
+                setHint(
+                    "content",
+                    `Có ${mismatched.length} link không thuộc site «${scope.label}» — chỉ lưu link cùng domain Target website.`
+                );
+                return;
+            }
+            const lib = loadCustomLinkLibrary();
+            picked.forEach((p) => {
+                const dup = lib.some(
+                    (x) => String(x.target_url).trim() === p.target_url && String(x.anchor_text).trim() === p.anchor_text
+                );
+                if (!dup) lib.unshift({ ...p, saved_at: Date.now(), scope_label: scope.label });
+            });
+            if (!saveCustomLinkLibrary(lib)) {
+                setHint("content", "Không ghi được thư viện (localStorage).");
+                return;
+            }
+            renderCustomLinkLibrary();
+            setHint("content", `Đã lưu ${picked.length} link vào thư viện «${scope.label}».`);
+        });
+    }
+    renderCustomLinkLibrary();
+    const targetWebsiteForCustomLib = byId("targetWebsite");
+    if (targetWebsiteForCustomLib) {
+        let _customLibRefreshTimer = null;
+        const scheduleCustomLibRefresh = () => {
+            if (_customLibRefreshTimer) clearTimeout(_customLibRefreshTimer);
+            _customLibRefreshTimer = setTimeout(() => {
+                try {
+                    renderCustomLinkLibrary();
+                } catch (_) {}
+            }, 300);
+        };
+        targetWebsiteForCustomLib.addEventListener("input", scheduleCustomLibRefresh);
+        targetWebsiteForCustomLib.addEventListener("change", scheduleCustomLibRefresh);
+    }
     const _currentUrlGuess = () => {
         const site = String(byId("targetWebsite").value || "").trim().replace(/\/+$/, "");
         const slug = String(byId("slug").value || "").trim().replace(/^\/+/, "");
@@ -9794,7 +11814,7 @@
         const hintIl = byId("hint-internal-links");
         if (hintIl) {
             hintIl.textContent = arr.length
-                ? "Anchor = từ khóa chính bài đích (tag / focus SEO / tiêu đề), không dùng slug. Chỉ hiện bài liên quan — ưu tiên bài có từ khóa trong content."
+                ? "Tick chọn dòng → bấm «Đi link» ở cột phải để chèn lần lượt (loading tròn → ✓ khi xong)."
                 : "Bấm «Tìm bài liên quan» khi đã có target website.";
         }
         if (!arr.length) {
@@ -9842,20 +11862,70 @@
         sub.textContent = `GỢI Ý MỚI (${arr.length})`;
         wrap.appendChild(sub);
 
+        const ilToolbar = document.createElement("div");
+        ilToolbar.className = "internal-suggest-toolbar";
+        const llmLbl = document.createElement("label");
+        llmLbl.className = "il-llm-switch";
+        if (getInternalLinkUseLlm()) llmLbl.classList.add("is-on");
+        const llmInp = document.createElement("input");
+        llmInp.type = "checkbox";
+        llmInp.id = "internalLinkUseLlm";
+        llmInp.className = "il-llm-switch-input";
+        llmInp.checked = getInternalLinkUseLlm();
+        const llmTrack = document.createElement("span");
+        llmTrack.className = "il-llm-switch-track";
+        llmTrack.setAttribute("aria-hidden", "true");
+        const llmTxt = document.createElement("span");
+        llmTxt.className = "il-llm-switch-text";
+        llmTxt.textContent = "Dùng LLM (viết đoạn ngắn + chèn anchor)";
+        llmLbl.appendChild(llmInp);
+        llmLbl.appendChild(llmTrack);
+        llmLbl.appendChild(llmTxt);
+        llmInp.addEventListener("change", () => {
+            setInternalLinkUseLlm(llmInp.checked);
+            llmLbl.classList.toggle("is-on", llmInp.checked);
+            ilHint.textContent = getInternalLinkUseLlm()
+                ? "Ưu tiên: anchor trong bài → LLM. Không tự chèn «Tham khảo thêm»."
+                : "Ưu tiên: anchor trong bài (lần đầu). Thiếu anchor → popup «Tham khảo thêm».";
+        });
+        ilToolbar.appendChild(llmLbl);
+        const ilHint = document.createElement("span");
+        ilHint.className = "hint";
+        ilHint.style.margin = "0";
+        ilHint.textContent = getInternalLinkUseLlm()
+            ? "Ưu tiên: anchor trong bài → LLM. Không tự chèn «Tham khảo thêm»."
+            : "Ưu tiên: anchor trong bài (lần đầu). Thiếu anchor → popup «Tham khảo thêm».";
+        ilToolbar.appendChild(ilHint);
+        wrap.appendChild(ilToolbar);
+
         const tbl = document.createElement("table");
-        tbl.className = "internal-suggest-table";
+        tbl.className = "internal-suggest-table no-digiseo-table";
         const thead = document.createElement("thead");
         const trh = document.createElement("tr");
         const th0 = document.createElement("th");
         th0.className = "col-cb";
         th0.textContent = "";
         const th1 = document.createElement("th");
-        th1.textContent = "ANCHOR TEXT";
+        th1.textContent = "ANCHOR / ĐIỂM";
         const th2 = document.createElement("th");
         th2.textContent = "BÀI VIẾT ĐÍCH";
+        const th3 = document.createElement("th");
+        th3.className = "col-action";
+        const bulkApplyBtn = document.createElement("button");
+        bulkApplyBtn.type = "button";
+        bulkApplyBtn.className = "btn-il-bulk-apply";
+        bulkApplyBtn.textContent = "Đi link";
+        bulkApplyBtn.title = "Chèn internal link lần lượt cho các dòng đã tick chọn";
+        bulkApplyBtn.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            runInternalLinksBulkFromTable(bulkApplyBtn);
+        });
+        th3.appendChild(bulkApplyBtn);
         trh.appendChild(th0);
         trh.appendChild(th1);
         trh.appendChild(th2);
+        trh.appendChild(th3);
         thead.appendChild(trh);
         tbl.appendChild(thead);
         const tbody = document.createElement("tbody");
@@ -9882,25 +11952,70 @@
             inp.setAttribute("data-idx", String(idx));
             inp.setAttribute("placeholder", "Từ khóa chính bài đích (có dấu)");
             const anchorDefault =
-                String(it.target_primary_keyword || it.kw_hint_primary || it.anchor_text || "").trim() ||
+                String(it.suggested_anchor || it.anchor_text || it.target_primary_keyword || it.kw_hint_primary || "").trim() ||
                 String(it.title || "")
                     .trim()
                     .split("|")[0]
                     .trim();
             inp.value = anchorDefault.slice(0, 120);
+            const scoreWrap = document.createElement("div");
+            scoreWrap.style.marginTop = "6px";
+            const rel = Number(it.relevance_score);
+            if (Number.isFinite(rel)) {
+                const badge = document.createElement("span");
+                badge.className = "il-score-badge " + (rel >= 80 ? "il-score-high" : rel >= 60 ? "il-score-med" : "il-score-low");
+                badge.textContent = `${rel}/100`;
+                badge.title = "Điểm liên quan (relevance_score)";
+                scoreWrap.appendChild(badge);
+            }
+            if (it.anchor_in_body) {
+                const ab = document.createElement("span");
+                ab.className = "hint";
+                ab.style.fontSize = "0.65rem";
+                ab.textContent = "có trong bài";
+                scoreWrap.appendChild(ab);
+            }
             td1.appendChild(inp);
+            if (scoreWrap.childNodes.length) td1.appendChild(scoreWrap);
             const td2 = document.createElement("td");
             td2.className = "internal-target-cell";
             const tdiv = document.createElement("div");
+            tdiv.className = "internal-target-title";
             tdiv.textContent = displayTitle;
             td2.appendChild(tdiv);
+            const pt = String(it.page_type || "").trim();
+            if (pt) {
+                const ptl = document.createElement("div");
+                ptl.className = "il-page-type";
+                const ptLabels = {
+                    money_page: "Money page",
+                    service: "Dịch vụ",
+                    pillar: "Pillar",
+                    course: "Khóa học",
+                    blog: "Blog",
+                    category: "Danh mục",
+                };
+                ptl.textContent = (ptLabels[pt] || pt) + (it.priority ? ` · ${it.priority}` : "");
+                td2.appendChild(ptl);
+            }
             const udiv = document.createElement("div");
             udiv.className = "hint internal-target-url";
             udiv.textContent = String(it.link || "");
             td2.appendChild(udiv);
+            const td3 = document.createElement("td");
+            td3.className = "col-action";
+            const statusWrap = document.createElement("div");
+            statusWrap.className = "il-row-status";
+            const circle = document.createElement("span");
+            circle.className = "il-row-circle";
+            circle.setAttribute("data-idx", String(idx));
+            circle.setAttribute("aria-label", "Trạng thái chèn link");
+            statusWrap.appendChild(circle);
+            td3.appendChild(statusWrap);
             tr.appendChild(td0);
             tr.appendChild(td1);
             tr.appendChild(td2);
+            tr.appendChild(td3);
             tbody.appendChild(tr);
         });
         tbl.appendChild(tbody);
@@ -9908,17 +12023,23 @@
         internalLinkCandidates.appendChild(wrap);
     };
     if (btnFindInternalLinks) {
-        btnFindInternalLinks.addEventListener("click", async () => {
-            const site = String(byId("targetWebsite").value || "").trim();
+        btnFindInternalLinks.addEventListener("click", async (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            const siteRaw = String(byId("targetWebsite").value || "").trim();
+            const site = normalizeTargetBase(siteRaw) || siteRaw;
             if (!site) {
-                setHint("content", "Thiếu target website để tìm bài liên quan.");
+                const msg = "Thiếu Target website — nhập https://domain.com ở form phía trên hoặc chọn site đã kết nối.";
+                setHint("content", msg);
+                setHint("internal-links", msg);
                 return;
             }
             const oldText = btnFindInternalLinks.textContent;
             btnFindInternalLinks.textContent = "Đang tìm...";
             btnFindInternalLinks.disabled = true;
+            setHint("internal-links", "Đang tìm bài trên WordPress + SERP…");
             try {
-                const res = await fetch(`/content-ai/wp-internal-links/candidates?ts=${Date.now()}`, {
+                const res = await apiFetch(`/content-ai/wp-internal-links/candidates?ts=${Date.now()}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -9932,80 +12053,584 @@
                     }),
                 });
                 const data = await res.json().catch(() => ({}));
-                if (!res.ok) throw new Error((data && data.detail) ? data.detail : "Không tìm được bài liên quan.");
+                if (!res.ok) {
+                    throw new Error(parseApiDetail(data) || "Không tìm được bài liên quan.");
+                }
                 _internalCandidates = Array.isArray(data.items) ? data.items : [];
                 renderInternalCandidates(_internalCandidates);
-                setHint("content", `Tìm thấy ${_internalCandidates.length} bài — anchor = từ khóa chính bài đích (sửa từng ô nếu cần).`);
+                saveFormState();
+                const panel = byId("internalLinkPanel");
+                if (panel) {
+                    try { panel.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (_) {}
+                }
+                if (_internalCandidates.length) {
+                    const msg = `Tìm thấy ${_internalCandidates.length} bài — anchor = từ khóa chính bài đích (sửa từng ô nếu cần).`;
+                    setHint("content", msg);
+                    setHint("internal-links", msg);
+                } else {
+                    const apiHint = String(data.hint || "").trim();
+                    const msg = apiHint || (
+                        `Không có bài phù hợp (đã quét ${Number(data.wp_posts_fetched) || 0} URL). `
+                        + "Thử nhập từ khóa chính, thêm H2 trong content, hoặc kiểm tra WP REST API công khai."
+                    );
+                    setHint("content", msg);
+                    setHint("internal-links", msg);
+                }
             } catch (e) {
-                setHint("content", String((e && e.message) || e));
+                const errMsg = String((e && e.message) || e);
+                setHint("content", errMsg);
+                setHint("internal-links", errMsg);
             } finally {
                 btnFindInternalLinks.textContent = oldText;
                 btnFindInternalLinks.disabled = false;
             }
         });
     }
-    if (btnApplyInternalLinks) {
-        btnApplyInternalLinks.addEventListener("click", async () => {
-            const cur = getContentValue().trim();
-            if (!cur) {
-                setHint("content", "Chưa có content để đi internal link.");
-                return;
+    const restoreInternalCandidatesFromPending = () => {
+        try {
+            const pending = _pendingInternalCandidatesRestore;
+            if (!pending || !Array.isArray(pending.items) || !pending.items.length) return;
+            _pendingInternalCandidatesRestore = null;
+            _internalCandidates = pending.items;
+            renderInternalCandidates(_internalCandidates);
+            const anchors = pending.anchors && typeof pending.anchors === "object" ? pending.anchors : {};
+            Object.keys(anchors).forEach((idx) => {
+                const inp = document.querySelector(`input.internal-link-anchor-input[data-idx="${idx}"]`);
+                if (inp) inp.value = String(anchors[idx] ?? "");
+            });
+            setHint(
+                "internal-links",
+                `Đã khôi phục ${_internalCandidates.length} bài liên quan (lưu trên trình duyệt). Tick → «Đi link» để chèn.`
+            );
+        } catch (e) {
+            _pendingInternalCandidatesRestore = null;
+            console.error("[content-ai] restore internal candidates failed", e);
+        }
+    };
+    window.setTimeout(() => restoreInternalCandidatesFromPending(), 0);
+    if (internalLinkCandidates && !internalLinkCandidates.dataset.persistBound) {
+        internalLinkCandidates.dataset.persistBound = "1";
+        internalLinkCandidates.addEventListener("input", (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains("internal-link-anchor-input")) {
+                scheduleSaveFormState();
             }
-            const site = String(byId("targetWebsite").value || "").trim();
-            if (!site) {
-                setHint("content", "Thiếu target website.");
-                return;
+        });
+        internalLinkCandidates.addEventListener("change", (e) => {
+            if (e.target && e.target.classList && e.target.classList.contains("internal-link-cb")) {
+                scheduleSaveFormState();
             }
-            const checked = Array.from(document.querySelectorAll(".internal-link-cb:checked"))
-                .map((el) => Number(el.getAttribute("data-idx")))
-                .filter((n) => Number.isFinite(n) && _internalCandidates[n])
-                .map((n) => {
-                    const inp = document.querySelector(`input.internal-link-anchor-input[data-idx="${n}"]`);
-                    const anchor = inp ? String(inp.value || "").trim() : "";
-                    return {
-                        title: _internalCandidates[n].title,
-                        link: _internalCandidates[n].link,
-                        anchor_text: anchor,
-                    };
-                });
-            if (!checked.length) {
-                setHint("content", "Bạn chưa chọn bài viết nào để đi internal link.");
-                return;
-            }
-            const oldText = btnApplyInternalLinks.textContent;
-            btnApplyInternalLinks.textContent = "Đang đi link...";
-            btnApplyInternalLinks.disabled = true;
-            try {
-                const res = await fetch(`/content-ai/wp-internal-links/apply?ts=${Date.now()}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        content_html: cur,
-                        target_website: site,
-                        selected_posts: checked,
-                        current_url: _currentUrlGuess(),
-                        article_primary_keyword: byId("primaryKeyword").value.trim(),
-                        article_secondary_keywords: byId("secondaryKeywords").value.trim(),
-                        use_llm_rewrite: true,
-                    }),
-                });
-                const data = await res.json().catch(() => ({}));
-                if (!res.ok) throw new Error((data && data.detail) ? data.detail : "Đi internal link thất bại.");
-                const outHtml = String(data.content_html || "").trim();
-                if (!outHtml) throw new Error("Không nhận được nội dung sau khi đi link.");
+        });
+    }
+    const collectWpInternalChecked = () =>
+        Array.from(document.querySelectorAll(".internal-link-cb:checked"))
+            .map((el) => Number(el.getAttribute("data-idx")))
+            .filter((n) => Number.isFinite(n) && _internalCandidates[n])
+            .map((n) => {
+                const inp = document.querySelector(`input.internal-link-anchor-input[data-idx="${n}"]`);
+                const anchor = inp ? String(inp.value || "").trim() : "";
+                return {
+                    title: _internalCandidates[n].title,
+                    link: _internalCandidates[n].link,
+                    anchor_text: anchor,
+                };
+            });
+
+    const getInternalRowPost = (idx) => {
+        const n = Number(idx);
+        if (!Number.isFinite(n) || !_internalCandidates[n]) return null;
+        const inp = document.querySelector(`input.internal-link-anchor-input[data-idx="${n}"]`);
+        const anchor = inp ? String(inp.value || "").trim() : "";
+        const it = _internalCandidates[n];
+        const title = String(it.title || "").trim();
+        const link = String(it.link || "").trim();
+        if (!link) return null;
+        return {
+            title: title || anchor,
+            link,
+            anchor_text: anchor || title,
+        };
+    };
+
+    const getInternalRowCircle = (idx) => {
+        const tr = document.querySelector(`tr[data-idx="${idx}"]`);
+        if (!tr) return null;
+        return tr.querySelector(".il-row-circle");
+    };
+
+    const setInternalRowCircleState = (idx, state) => {
+        const tr = document.querySelector(`tr[data-idx="${idx}"]`);
+        const circle = getInternalRowCircle(idx);
+        if (!tr || !circle) return;
+        circle.classList.remove("il-loading", "il-done", "il-error");
+        circle.innerHTML = "";
+        if (state === "loading") {
+            circle.classList.add("il-loading");
+            const sp = document.createElement("span");
+            sp.className = "il-row-spinner";
+            sp.setAttribute("aria-label", "Đang chèn link");
+            circle.appendChild(sp);
+            return;
+        }
+        if (state === "done") {
+            tr.classList.add("il-row-applied");
+            circle.classList.add("il-done");
+            circle.textContent = "✓";
+            circle.title = "Đã chèn internal link";
+            const cb = tr.querySelector(".internal-link-cb");
+            if (cb) cb.disabled = true;
+            return;
+        }
+        if (state === "error") {
+            circle.classList.add("il-error");
+            circle.title = "Không chèn được — thử lại";
+            return;
+        }
+        circle.title = "Chờ chèn link";
+    };
+
+    const getSelectedInternalRowIndices = () =>
+        Array.from(document.querySelectorAll(".internal-link-cb:checked"))
+            .map((el) => Number(el.getAttribute("data-idx")))
+            .filter((n) => Number.isFinite(n) && _internalCandidates[n]);
+
+    let _thamKhaoModalResolver = null;
+    const closeThamKhaoAppendModal = () => {
+        const modal = byId("thamKhaoAppendModal");
+        if (modal) {
+            modal.classList.remove("open");
+            modal.setAttribute("aria-hidden", "true");
+        }
+        if (_thamKhaoModalResolver) {
+            _thamKhaoModalResolver(null);
+            _thamKhaoModalResolver = null;
+        }
+    };
+    const showThamKhaoAppendModal = (offers) => {
+        const list = Array.isArray(offers) ? offers : [];
+        if (!list.length) return Promise.resolve(null);
+        const modal = byId("thamKhaoAppendModal");
+        const box = byId("thamKhaoAppendList");
+        if (!modal || !box) return Promise.resolve(null);
+        box.innerHTML = "";
+        list.forEach((o, i) => {
+            const row = document.createElement("label");
+            row.className = "tham-khao-item";
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.checked = true;
+            cb.setAttribute("data-url", String(o.target_url || ""));
+            cb.setAttribute("data-idx", String(o.row_idx != null ? o.row_idx : i));
+            const prev = document.createElement("div");
+            prev.className = "tham-khao-preview";
+            const anchor = String(o.anchor_text || "").trim();
+            const url = String(o.target_url || "").trim();
+            prev.innerHTML = `Tham khảo thêm: <a href="${url.replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${anchor.replace(/</g, "&lt;")}</a>.`;
+            row.appendChild(cb);
+            row.appendChild(prev);
+            box.appendChild(row);
+        });
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        return new Promise((resolve) => {
+            _thamKhaoModalResolver = resolve;
+        });
+    };
+    const bindThamKhaoModalOnce = () => {
+        const closeBtn = byId("thamKhaoAppendClose");
+        const cancelBtn = byId("thamKhaoAppendCancel");
+        const confirmBtn = byId("thamKhaoAppendConfirm");
+        const modal = byId("thamKhaoAppendModal");
+        if (closeBtn && !closeBtn.dataset.bound) {
+            closeBtn.dataset.bound = "1";
+            closeBtn.addEventListener("click", (e) => { e.preventDefault(); closeThamKhaoAppendModal(); });
+        }
+        if (cancelBtn && !cancelBtn.dataset.bound) {
+            cancelBtn.dataset.bound = "1";
+            cancelBtn.addEventListener("click", (e) => { e.preventDefault(); closeThamKhaoAppendModal(); });
+        }
+        if (modal && !modal.dataset.bound) {
+            modal.dataset.bound = "1";
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) closeThamKhaoAppendModal();
+            });
+        }
+        if (confirmBtn && !confirmBtn.dataset.bound) {
+            confirmBtn.dataset.bound = "1";
+            confirmBtn.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const box = byId("thamKhaoAppendList");
+                const selected = [];
+                if (box) {
+                    box.querySelectorAll('input[type="checkbox"]:checked').forEach((cb) => {
+                        selected.push({
+                            target_url: cb.getAttribute("data-url") || "",
+                            row_idx: parseInt(cb.getAttribute("data-idx"), 10),
+                        });
+                    });
+                }
+                const modalEl = byId("thamKhaoAppendModal");
+                if (modalEl) {
+                    modalEl.classList.remove("open");
+                    modalEl.setAttribute("aria-hidden", "true");
+                }
+                if (_thamKhaoModalResolver) {
+                    _thamKhaoModalResolver(selected);
+                    _thamKhaoModalResolver = null;
+                }
+            });
+        }
+    };
+    bindThamKhaoModalOnce();
+
+    const showIlVerification = (verification) => {
+        const box = byId("ilVerifyHint");
+        if (!box) return;
+        const v = verification && typeof verification === "object" ? verification : null;
+        if (!v || v.ok) {
+            box.style.display = "none";
+            box.textContent = "";
+            return;
+        }
+        const issues = Array.isArray(v.issues) ? v.issues : [];
+        box.style.display = "block";
+        box.textContent = issues.length
+            ? `Verify sau chèn: ${issues.join(" · ")}`
+            : "Verify: có cảnh báo — kiểm tra lại HTML.";
+    };
+
+    const applyInternalLinksApi = async (selectedPosts, extra = {}) => {
+        const site = resolveTargetWebsite([]);
+        const res = await apiFetch(`/content-ai/wp-internal-links/apply?ts=${Date.now()}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                content_html: getContentValue().trim(),
+                target_website: site,
+                selected_posts: selectedPosts,
+                custom_links: [],
+                current_url: _currentUrlGuess(),
+                article_primary_keyword: byId("primaryKeyword")?.value?.trim() || "",
+                article_secondary_keywords: byId("secondaryKeywords")?.value?.trim() || "",
+                use_llm_rewrite: !!getInternalLinkUseLlm(),
+                apply_mode: extra.apply_mode || "full",
+                append_lead: "Tham khảo thêm:",
+                confirmed_append_urls: extra.confirmed_append_urls || null,
+            }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+            throw new Error(parseApiDetail(data) || "Đi internal link thất bại.");
+        }
+        return data;
+    };
+
+    const applyConfirmedThamKhao = async (confirmedRows) => {
+        const posts = (confirmedRows || []).map((r) => {
+            const idx = Number(r.row_idx);
+            if (Number.isFinite(idx)) return getInternalRowPost(idx);
+            const url = String(r.target_url || "");
+            const found = _internalCandidates.findIndex((c) => String(c.link || "") === url);
+            if (found >= 0) return getInternalRowPost(found);
+            return null;
+        }).filter(Boolean);
+        if (!posts.length) return { ok: false };
+        const data = await applyInternalLinksApi(posts, {
+            apply_mode: "append_only",
+            confirmed_append_urls: posts.map((p) => p.link),
+        });
+        const outHtml = String(data.content_html || "").trim();
+        if (outHtml) {
+            setContentValue(outHtml);
+            refreshPreview();
+            saveFormState();
+        }
+        return { ok: true, data };
+    };
+
+    const applyInternalLinkForRow = async (idx) => {
+        const tr = document.querySelector(`tr[data-idx="${idx}"]`);
+        if (tr && tr.classList.contains("il-row-applied")) {
+            return { ok: true, skipped: true };
+        }
+        const cur = getContentValue().trim();
+        if (!cur) {
+            return { ok: false, message: "Chưa có content để đi internal link." };
+        }
+        const post = getInternalRowPost(idx);
+        if (!post || !post.link) {
+            return { ok: false, message: "Thiếu URL bài đích hoặc anchor — kiểm tra lại dòng này." };
+        }
+        if (!post.anchor_text) {
+            return { ok: false, message: "Nhập anchor text trước khi đi link." };
+        }
+        const site = resolveTargetWebsite([]);
+        if (!site) {
+            return { ok: false, message: "Nhập Target website để đi internal link." };
+        }
+        setInternalRowCircleState(idx, "loading");
+        try {
+            const data = await applyInternalLinksApi([post]);
+            const outHtml = String(data.content_html || "").trim();
+            if (outHtml) {
                 setContentValue(outHtml);
                 refreshPreview();
                 saveFormState();
-                _lastScreamingFrogTsv = String(data.screaming_frog_tsv || "");
-                if (btnDownloadScreamingFrog) btnDownloadScreamingFrog.disabled = !_lastScreamingFrogTsv;
-                const via = data.used_llm_rewrite ? "LLM (viết lại + chèn)" : "rule-based";
-                setHint("content", `Đã chèn ${Number(data.inserted_links || 0)} internal link (${via}).`);
-            } catch (e) {
-                setHint("content", String((e && e.message) || e));
-            } finally {
-                btnApplyInternalLinks.textContent = oldText;
-                btnApplyInternalLinks.disabled = false;
             }
+            _lastScreamingFrogTsv = String(data.screaming_frog_tsv || _lastScreamingFrogTsv || "");
+            if (btnDownloadScreamingFrog) btnDownloadScreamingFrog.disabled = !_lastScreamingFrogTsv;
+            const ins = Number(data.inserted_links || 0);
+            const results = Array.isArray(data.link_results) ? data.link_results : [];
+            const rowRes = results[0];
+            const pending = (data.pending_append_offers || []).map((p) => ({
+                ...p,
+                row_idx: idx,
+            }));
+            if (ins > 0 || (rowRes && rowRes.status === "inserted")) {
+                setInternalRowCircleState(idx, "done");
+                showIlVerification(data.verification);
+                return { ok: true, anchor: post.anchor_text, pending: [] };
+            }
+            if (pending.length || (rowRes && rowRes.status === "needs_confirm")) {
+                setInternalRowCircleState(idx, "idle");
+                return { ok: false, needsConfirm: true, pending, message: rowRes?.reason || "" };
+            }
+            setInternalRowCircleState(idx, "error");
+            const reason = rowRes && rowRes.reason
+                ? String(rowRes.reason)
+                : "Không chèn được (đã có link hoặc không tìm được vị trí).";
+            return { ok: false, message: reason, pending: [] };
+        } catch (e) {
+            setInternalRowCircleState(idx, "error");
+            return { ok: false, message: String((e && e.message) || e), pending: [] };
+        }
+    };
+
+    const runInternalLinksBulkFromTable = async (triggerBtn) => {
+        const indices = getSelectedInternalRowIndices().filter((idx) => {
+            const tr = document.querySelector(`tr[data-idx="${idx}"]`);
+            return tr && !tr.classList.contains("il-row-applied");
+        });
+        if (!indices.length) {
+            setHint("content", "Tick chọn ít nhất một dòng chưa chèn link.");
+            setHint("internal-links", "Tick chọn bài cần đi link.");
+            return;
+        }
+        const btn = triggerBtn || document.querySelector(".btn-il-bulk-apply");
+        const oldLabel = btn ? btn.textContent : "";
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = "Đang chèn…";
+        }
+        setHint("internal-links", `Đang chèn ${indices.length} internal link lần lượt…`);
+        let okCount = 0;
+        let failCount = 0;
+        const allPending = [];
+        for (let i = 0; i < indices.length; i += 1) {
+            const idx = indices[i];
+            setHint(
+                "internal-links",
+                `Đang chèn link (${i + 1}/${indices.length})…`,
+            );
+            const result = await applyInternalLinkForRow(idx);
+            if (result && result.skipped) {
+                okCount += 1;
+            } else if (result && result.ok) {
+                okCount += 1;
+            } else if (result && result.needsConfirm && result.pending && result.pending.length) {
+                allPending.push(...result.pending);
+            } else {
+                failCount += 1;
+                if (result && result.message) {
+                    setHint("content", result.message);
+                }
+            }
+        }
+        if (allPending.length && !getInternalLinkUseLlm()) {
+            const dedup = [];
+            const seenUrl = new Set();
+            allPending.forEach((p) => {
+                const u = String(p.target_url || "");
+                if (!u || seenUrl.has(u)) return;
+                seenUrl.add(u);
+                dedup.push(p);
+            });
+            setHint("internal-links", "Một số link cần xác nhận dạng «Tham khảo thêm»…");
+            const confirmed = await showThamKhaoAppendModal(dedup);
+            if (confirmed && confirmed.length) {
+                for (const c of confirmed) {
+                    const ridx = Number(c.row_idx);
+                    if (Number.isFinite(ridx)) setInternalRowCircleState(ridx, "loading");
+                }
+                try {
+                    const appendData = await applyConfirmedThamKhao(confirmed);
+                    if (appendData.ok) {
+                        confirmed.forEach((c) => {
+                            const ridx = Number(c.row_idx);
+                            if (Number.isFinite(ridx)) setInternalRowCircleState(ridx, "done");
+                        });
+                        okCount += confirmed.length;
+                    }
+                } catch (err) {
+                    setHint("content", String(err.message || err));
+                    failCount += confirmed.length;
+                }
+            } else {
+                failCount += dedup.length;
+            }
+        }
+        const summary =
+            failCount > 0
+                ? `Xong: ${okCount} link đã chèn, ${failCount} dòng lỗi/bỏ qua.`
+                : `Đã chèn ${okCount} internal link vào bài.`;
+        setHint("content", summary);
+        setHint("internal-links", summary);
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = oldLabel || "Đi link";
+        }
+    };
+
+    const resolveTargetWebsite = (customLinks) => {
+        let site = normalizeTargetBase(String(byId("targetWebsite")?.value || "").trim())
+            || String(byId("targetWebsite")?.value || "").trim();
+        if (site) return site;
+        const first = (customLinks || []).find((x) => x.target_url);
+        if (!first) return "";
+        try {
+            return new URL(String(first.target_url)).origin;
+        } catch (_) {
+            return "";
+        }
+    };
+
+    const runApplyInternalLinks = async ({ fromCustomPanel = false, triggerBtn = null } = {}) => {
+        const cur = getContentValue().trim();
+        if (!cur) {
+            setHint("content", "Chưa có content để đi internal link.");
+            if (fromCustomPanel && hintCustomLinkApply) {
+                hintCustomLinkApply.textContent = "Chưa có nội dung bài trong editor.";
+            }
+            return;
+        }
+        const allCustomRows = collectCheckedCustomLinks();
+        const customLinks = getValidCustomLinksForApply();
+        const customInvalid = allCustomRows.filter(
+            (x) => (x.target_url && !x.anchor_text) || (!x.target_url && x.anchor_text)
+        );
+        if (customInvalid.length) {
+            const msg = "Custom link: mỗi dòng đã tick cần đủ URL và anchor (hoặc bỏ tick dòng thiếu).";
+            setHint("content", msg);
+            if (fromCustomPanel && hintCustomLinkApply) hintCustomLinkApply.textContent = msg;
+            return;
+        }
+        const checked = collectWpInternalChecked();
+        if (fromCustomPanel && !customLinks.length) {
+            const msg =
+                "Chưa có custom link hợp lệ: tick chọn dòng, nhập URL (https://...) và anchor text, rồi bấm lại «Đi Internal link».";
+            setHint("content", msg);
+            if (hintCustomLinkApply) hintCustomLinkApply.textContent = msg;
+            return;
+        }
+        if (!checked.length && !customLinks.length) {
+            const msg = fromCustomPanel
+                ? "Thêm custom link (URL + anchor) hoặc chọn bài ở bảng WordPress phía trên."
+                : "Chọn bài WordPress và/hoặc custom link (URL + anchor) để đi internal link.";
+            setHint("content", msg);
+            if (fromCustomPanel && hintCustomLinkApply) hintCustomLinkApply.textContent = msg;
+            return;
+        }
+        const site = resolveTargetWebsite(customLinks);
+        if (!site) {
+            const msg = "Nhập Target website hoặc URL đầy đủ (https://...) trong custom link.";
+            setHint("content", msg);
+            if (fromCustomPanel && hintCustomLinkApply) hintCustomLinkApply.textContent = msg;
+            return;
+        }
+        const useLlm = customLinkUseLlm ? !!customLinkUseLlm.checked : false;
+        const buttons = [triggerBtn, btnApplyInternalLinks, btnApplyCustomInternalLinks].filter(Boolean);
+        const oldLabels = buttons.map((b) => b.textContent);
+        buttons.forEach((b) => {
+            b.disabled = true;
+            if (b === btnApplyCustomInternalLinks) b.textContent = "Đang viết lại & chèn link...";
+            else if (b === btnApplyInternalLinks) b.textContent = "Đang đi link...";
+        });
+        if (previewLoading) {
+            previewLoading.classList.add("show");
+            if (previewLoadingText) {
+                previewLoadingText.textContent = fromCustomPanel
+                    ? "Đang chèn custom internal link (rule-based, tối thiểu thay đổi)..."
+                    : "Đang chèn internal link (giữ nguyên bài, thêm đoạn ngắn nếu cần)...";
+            }
+            if (previewLoadingFill) previewLoadingFill.style.width = "35%";
+            if (previewLoadingPct) previewLoadingPct.textContent = "35%";
+        }
+        if (hintCustomLinkApply && fromCustomPanel) {
+            hintCustomLinkApply.textContent = `Đang chèn ${customLinks.length} custom link — LLM có thể mất 30–90 giây...`;
+        }
+        try {
+            const res = await fetch(`/content-ai/wp-internal-links/apply?ts=${Date.now()}`, {
+                method: "POST",
+                headers: authJsonHeaders(),
+                credentials: "same-origin",
+                body: JSON.stringify({
+                    content_html: cur,
+                    target_website: site,
+                    selected_posts: checked,
+                    custom_links: customLinks,
+                    current_url: _currentUrlGuess(),
+                    article_primary_keyword: byId("primaryKeyword")?.value?.trim() || "",
+                    article_secondary_keywords: byId("secondaryKeywords")?.value?.trim() || "",
+                    use_llm_rewrite: useLlm,
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error((data && data.detail) ? data.detail : "Đi internal link thất bại.");
+            const outHtml = String(data.content_html || "").trim();
+            if (!outHtml) throw new Error("Không nhận được nội dung sau khi đi link.");
+            setContentValue(outHtml);
+            refreshPreview();
+            saveFormState();
+            _lastScreamingFrogTsv = String(data.screaming_frog_tsv || "");
+            if (btnDownloadScreamingFrog) btnDownloadScreamingFrog.disabled = !_lastScreamingFrogTsv;
+            renderInternalApplyResults(data.link_results);
+            showIlVerification(data.verification);
+            const via = data.used_llm_rewrite ? "rule + LLM tối thiểu" : "rule-based (không rewrite cả bài)";
+            const ins = Number(data.inserted_links || 0);
+            const skipped = (Array.isArray(data.link_results) ? data.link_results : []).filter((r) => r.status === "skipped").length;
+            let msgHint = fromCustomPanel
+                ? `Custom link: đã chèn ${ins} link — ${via}.`
+                : `Đã chèn ${ins} internal link — ${via}.`;
+            if (customLinks.length) msgHint += ` ${customLinks.length} custom.`;
+            if (skipped) msgHint += ` ${skipped} bỏ qua — xem bảng bên dưới.`;
+            setHint("content", msgHint);
+            if (hintCustomLinkApply) {
+                hintCustomLinkApply.textContent = skipped
+                    ? `Xong: ${ins} chèn, ${skipped} bỏ qua.`
+                    : `Xong: đã chèn ${ins} custom internal link vào bài.`;
+            }
+            if (previewLoadingFill) previewLoadingFill.style.width = "100%";
+            if (previewLoadingPct) previewLoadingPct.textContent = "100%";
+        } catch (e) {
+            const errMsg = String((e && e.message) || e);
+            setHint("content", errMsg);
+            if (hintCustomLinkApply) hintCustomLinkApply.textContent = errMsg.slice(0, 120);
+        } finally {
+            buttons.forEach((b, i) => {
+                b.disabled = false;
+                if (oldLabels[i]) b.textContent = oldLabels[i];
+            });
+            if (previewLoading) previewLoading.classList.remove("show");
+        }
+    };
+
+    if (btnApplyInternalLinks) {
+        btnApplyInternalLinks.addEventListener("click", () => runApplyInternalLinks({ triggerBtn: btnApplyInternalLinks }));
+    }
+    if (btnApplyCustomInternalLinks) {
+        btnApplyCustomInternalLinks.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+            runApplyInternalLinks({ fromCustomPanel: true, triggerBtn: btnApplyCustomInternalLinks });
         });
     }
     if (btnDownloadScreamingFrog) {
@@ -10033,6 +12658,10 @@
         if (el.id === "output") return;
         el.addEventListener("input", schedulePreview);
         el.addEventListener("change", schedulePreview);
+        if (el.id === "title" || el.id === "meta" || el.id === "primaryKeyword" || el.id === "content") {
+            el.addEventListener("input", schedulePublishChecklist);
+            el.addEventListener("change", schedulePublishChecklist);
+        }
     });
     const contentTa = byId("content");
     if (contentTa) {
@@ -10103,7 +12732,8 @@
             const ta = byId("content");
             if (ta) ta.value = String(contentEditable.innerHTML || "");
             schedulePreview();
-            saveFormState();
+            schedulePublishChecklist();
+            scheduleSaveFormState();
         });
         contentEditable.addEventListener("keyup", () => {
             schedulePreview();
@@ -10122,21 +12752,40 @@
     refreshEditorModeUi();
 
     btnResetForm.addEventListener("click", async () => {
+        const view = String(_contentAiMainView || "single");
+        if (view === "projects") {
+            if (msg) {
+                msg.textContent =
+                    "Chuyển sang tab «Viết 1 bài» hoặc «Viết bài theo từ khóa» rồi bấm Làm mới để xóa nhập liệu tab đó.";
+            }
+            return;
+        }
+        const isBulk = view === "bulk";
+        const tabLabel = isBulk ? "Viết bài theo từ khóa" : "Viết 1 bài";
         const ok = window.confirm(
-            "Bạn có chắc muốn làm mới? Toàn bộ ô nhập ở tab «Viết 1 bài» và danh sách từ khóa / form ở tab «Viết bài theo từ khóa» (kể cả bản nháp lưu trên trình duyệt) sẽ bị xóa. Dự án đã lưu trên server không bị xóa."
+            isBulk
+                ? "Bạn có chắc muốn làm mới tab «Viết bài theo từ khóa»? Danh sách từ khóa và form bulk (kể cả bản nháp trên trình duyệt) sẽ bị xóa. Tab «Viết 1 bài» và dự án trên server không đổi."
+                : "Bạn có chắc muốn làm mới tab «Viết 1 bài»? Toàn bộ ô nhập và bản nháp trên trình duyệt của tab này sẽ bị xóa. Tab «Viết bài theo từ khóa» và dự án trên server không đổi."
         );
         if (!ok) return;
-        resetBulkWriteForm();
-        resetContentAiSingleForm();
-        if (msg) {
-            msg.textContent =
-                "Đã làm mới: đã xóa nhập liệu «Viết 1 bài» và «Viết bài theo từ khóa». Dự án trên server giữ nguyên.";
+        if (isBulk) {
+            resetBulkWriteForm();
+            if (msg) {
+                msg.textContent =
+                    "Đã làm mới tab «Viết bài theo từ khóa». Tab «Viết 1 bài» và dự án trên server giữ nguyên.";
+            }
+        } else {
+            resetContentAiSingleForm();
+            if (msg) {
+                msg.textContent =
+                    "Đã làm mới tab «Viết 1 bài». Tab «Viết bài theo từ khóa» và dự án trên server giữ nguyên.";
+            }
+            await refreshProjects(true);
         }
-        await refreshProjects(true);
     });
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

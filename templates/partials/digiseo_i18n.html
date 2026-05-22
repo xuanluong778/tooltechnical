@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="/static/css/digiseo-nav.css?v=7">
+<script src="/static/js/digiseo-i18n.js"></script>
+<script src="/static/js/digiseo-nav-auth.js?v=2" defer></script>
+{% include "partials/digiseo_chatbot.html" %}
+<script src="/static/js/digiseo-chatbot.js?v=4" defer></script>
+<script>
+(function () {
+    function boot() {
+        if (window.DigiSeoI18n) window.DigiSeoI18n.init();
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+    } else {
+        boot();
+    }
+    window.addEventListener("digiseo:system-prefs", function (e) {
+        if (e.detail && e.detail.language && window.DigiSeoI18n) {
+            window.DigiSeoI18n.apply(e.detail.language);
+        }
+    });
+})();
+</script>

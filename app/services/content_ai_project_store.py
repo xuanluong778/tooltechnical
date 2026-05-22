@@ -33,6 +33,38 @@ def _write_projects(projects: list[dict[str, Any]]) -> None:
 from app.services.user_scope import belongs_to_user as _belongs_to_user
 
 
+def _legacy_owner_missing(entry: dict[str, Any]) -> bool:
+    if "user_id" not in entry:
+        return True
+    raw = entry.get("user_id")
+    if raw is None:
+        return True
+    try:
+        return int(raw) <= 0
+    except (TypeError, ValueError):
+        return not str(raw).strip()
+
+
+def _migrate_legacy_project_owners(projects: list[dict[str, Any]], user_id: int) -> bool:
+    """Gán user_id cho dự án cũ (trước khi có phân quyền) — tránh mất dữ liệu trên UI."""
+    changed = False
+    uid = int(user_id)
+    for p in projects:
+        if not isinstance(p, dict):
+            continue
+        if _legacy_owner_missing(p):
+            p["user_id"] = uid
+            changed = True
+    return changed
+
+
+def _read_projects_scoped(user_id: int) -> list[dict[str, Any]]:
+    projects = _read_projects()
+    if _migrate_legacy_project_owners(projects, user_id):
+        _write_projects(projects)
+    return projects
+
+
 def _projects_for_user(projects: list[dict[str, Any]], user_id: int) -> list[dict[str, Any]]:
     return [p for p in projects if _belongs_to_user(p, user_id)]
 
@@ -139,7 +171,7 @@ def find_project_by_site_keyword(
     pk = _normalize_keyword(primary_keyword)
     if not site or not pk:
         return None
-    for p in _projects_for_user(_read_projects(), user_id):
+    for p in _projects_for_user(_read_projects_scoped(user_id), user_id):
         if _normalize_target_site(str(p.get("target_website") or "")) != site:
             continue
         if _normalize_keyword(str(p.get("primary_keyword") or "")) != pk:
@@ -158,7 +190,7 @@ def upsert_bulk_setup_projects(
     site = str(target_website or "").strip()
     if not site or not items:
         return []
-    projects = _read_projects()
+    projects = _read_projects_scoped(user_id)
     results: list[dict[str, str]] = []
     changed = False
 
@@ -325,7 +357,7 @@ def save_or_update_written_bulk_project(
         )
 
     pid = str(existing.get("id") or "")
-    projects = _read_projects()
+    projects = _read_projects_scoped(user_id)
     for i, p in enumerate(projects):
         if str(p.get("id") or "") != pid:
             continue
@@ -426,20 +458,28 @@ def _project_list_row(p: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _project_sort_ts(p: dict[str, Any]) -> float:
+    raw = str(p.get("created_at") or "")
+    if not raw:
+        return 0.0
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00")).timestamp()
+    except ValueError:
+        return 0.0
+
+
 def list_content_ai_projects(*, user_id: int, limit: int = 30) -> list[dict[str, Any]]:
-    out: list[dict[str, Any]] = []
-    for p in _projects_for_user(_read_projects(), user_id):
-        out.append(_project_list_row(p))
-        if len(out) >= limit:
-            break
-    return out
+    owned = _projects_for_user(_read_projects_scoped(user_id), user_id)
+    owned.sort(key=_project_sort_ts, reverse=True)
+    cap = max(1, min(int(limit or 30), 500))
+    return [_project_list_row(p) for p in owned[:cap]]
 
 
 def get_content_ai_project(project_id: str, *, user_id: int) -> dict[str, Any] | None:
     pid = str(project_id or "").strip()
     if not pid:
         return None
-    for p in _read_projects():
+    for p in _read_projects_scoped(user_id):
         if str(p.get("id") or "") == pid and _belongs_to_user(p, user_id):
             return p
     return None
@@ -475,7 +515,7 @@ def update_content_ai_project_fields(
         "competitor_url",
         "target_word_count",
     }
-    projects = _read_projects()
+    projects = _read_projects_scoped(user_id)
     found: dict[str, Any] | None = None
     for i, p in enumerate(projects):
         if str(p.get("id") or "") != pid:
@@ -507,7 +547,7 @@ def delete_content_ai_project(project_id: str, *, user_id: int) -> bool:
     pid = str(project_id or "").strip()
     if not pid:
         return False
-    projects = _read_projects()
+    projects = _read_projects_scoped(user_id)
     filtered = [
         p
         for p in projects

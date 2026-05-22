@@ -2,7 +2,7 @@
 
 ## Tên dự án
 
-**SEO Technical Tool** (thương hiệu UI: **BeeSEO**)
+**SEO Technical Tool** (thương hiệu UI: **DigiSEO**)
 
 ## Kiến trúc
 

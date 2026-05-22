@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from sqlalchemy.orm import Session
 
 from app.models.monthly_usage import MonthlyUsage
@@ -11,6 +13,16 @@ from app.services import plan_service, subscription_service, usage_tracking_serv
 from app.services.rbac import is_admin, normalize_role
 from app.services.user_api_access import api_access_enabled_for
 from app.services.user_trial_service import trial_status_snapshot
+
+
+def _parse_plan_metadata(raw: str | None) -> dict:
+    if not raw:
+        return {}
+    try:
+        data = json.loads(raw)
+        return data if isinstance(data, dict) else {}
+    except (json.JSONDecodeError, TypeError):
+        return {}
 
 
 def _trial_status_label(snap: dict) -> str:
@@ -39,6 +51,8 @@ def build_saas_me_response(db: Session, user: User) -> SaasMeResponse:
     period_end = None
     message: str | None = "Chưa có gói SaaS"
     quotas: list[SaasQuotaItem] = []
+    byok_note: str | None = None
+    trial_days: int | None = None
 
     if sub is not None:
         plan = plan_service.get_plan_by_id(db, sub.plan_id)
@@ -46,6 +60,13 @@ def build_saas_me_response(db: Session, user: User) -> SaasMeResponse:
             plan_slug = plan.slug
             plan_name = plan.name
             message = None
+            meta = _parse_plan_metadata(getattr(plan, "metadata_json", None))
+            trial_days = int(meta.get("trial_days") or 0) or None
+            note = str(meta.get("note") or "").strip()
+            if note:
+                byok_note = note
+            elif plan_slug == "free_trial_5d":
+                byok_note = "Yêu cầu API key cá nhân"
         subscription_status = sub.status
         period_start = sub.current_period_start
         period_end = sub.current_period_end
@@ -85,6 +106,11 @@ def build_saas_me_response(db: Session, user: User) -> SaasMeResponse:
                 )
             )
 
+    if byok_note is None and trial_status in ("active", "pending"):
+        byok_note = "Yêu cầu API key cá nhân (BYOK — thêm key trong Cài đặt)"
+    if trial_days is None and trial_status in ("active", "pending"):
+        trial_days = 5
+
     return SaasMeResponse(
         user_id=int(user.id),
         plan_slug=plan_slug,
@@ -98,4 +124,6 @@ def build_saas_me_response(db: Session, user: User) -> SaasMeResponse:
         trial_message=trial_message,
         api_access_enabled=api_access_enabled_for(user) or is_admin(user),
         message=message,
+        byok_note=byok_note,
+        trial_days=trial_days,
     )

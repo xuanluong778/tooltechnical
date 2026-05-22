@@ -56,9 +56,13 @@ _IMAGE_STYLE_ALIASES: dict[str, str] = {
     "realistic_business": "realistic_business",
     "realistic business": "realistic_business",
     "business": "realistic_business",
-    "3d": "3d_illustration",
-    "3d_illustration": "3d_illustration",
-    "3d illustration": "3d_illustration",
+    "3d": "premium_3d_seo",
+    "3d_illustration": "premium_3d_seo",
+    "3d illustration": "premium_3d_seo",
+    "premium_3d": "premium_3d_seo",
+    "premium_3d_seo": "premium_3d_seo",
+    "premium 3d": "premium_3d_seo",
+    "premium 3d seo": "premium_3d_seo",
     "flat": "flat_vector",
     "flat_vector": "flat_vector",
     "flat vector": "flat_vector",
@@ -80,6 +84,10 @@ _STYLE_RENDERING: dict[str, str] = {
     "3d_illustration": (
         "High-quality 3D illustration, soft global illumination, modern SaaS marketing look, "
         "polished materials, not childish or game-like."
+    ),
+    "premium_3d_seo": (
+        "High-end 3D render, clean composition, soft lighting, professional SaaS look, "
+        "modern Vietnamese business aesthetic, sharp details, no clutter."
     ),
     "flat_vector": (
         "Clean flat vector illustration, simple shapes, limited palette, editorial blog style, "
@@ -107,7 +115,7 @@ def _env_local() -> dict[str, str]:
 def get_default_content_ai_image_style() -> str:
     """Style mặc định từ CONTENT_AI_IMAGE_STYLE trong env.local."""
     raw = (os.getenv("CONTENT_AI_IMAGE_STYLE") or _env_local().get("CONTENT_AI_IMAGE_STYLE") or "").strip()
-    return normalize_image_style(raw) if raw else "realistic_business"
+    return normalize_image_style(raw) if raw else "premium_3d_seo"
 
 
 def normalize_image_style(image_style: str) -> str:
@@ -118,6 +126,111 @@ def normalize_image_style(image_style: str) -> str:
         if key in _IMAGE_STYLE_ALIASES:
             return _IMAGE_STYLE_ALIASES[key]
     return "realistic_business"
+
+
+def _premium_3d_visual_concept(
+    *,
+    main_keyword: str,
+    article_title: str,
+    section_heading: str,
+    section_summary: str,
+    topic: str,
+) -> str:
+    """Mô tả cảnh 3D theo chủ đề bài — bám layout workspace SEO premium."""
+    heading = section_heading or article_title or main_keyword or "SEO overview"
+    kw = main_keyword or article_title or "SEO"
+    summary = _clean_label(section_summary, max_len=220)
+
+    if topic == "technical_seo":
+        base = (
+            "A modern digital marketing workspace focused on technical SEO: analytics dashboard "
+            "with crawl health charts, Core Web Vitals graphs, sitemap and schema markup panels, "
+            "site speed metrics on a large monitor, and a subtle AI assistant interface "
+            f"helping analyze the topic \"{heading}\" (article theme: {kw})."
+        )
+    elif topic == "content_seo":
+        base = (
+            "A modern digital marketing workspace for content SEO: search ranking charts, "
+            "keyword research panels, editorial content planning board, blog outline on screen, "
+            "SEO content calendar, and an AI writing assistant interface "
+            f"supporting the section \"{heading}\" (article theme: {kw})."
+        )
+    else:
+        base = (
+            "A modern digital marketing workspace with SEO analytics dashboard, search ranking "
+            "charts, content planning board, and AI assistant interface, clearly illustrating "
+            f"\"{heading}\" (article theme: {kw})."
+        )
+    if summary and summary.lower() not in base.lower():
+        base += f" Section context: {summary}."
+    return base
+
+
+def build_premium_3d_seo_illustration_prompt(
+    *,
+    main_keyword: str = "",
+    article_title: str = "",
+    section_heading: str = "",
+    section_summary: str = "",
+    brand_name: str = "",
+    industry: str = "",
+    target_audience: str = "",
+    include_brand_logo: bool = False,
+) -> str:
+    """
+    Prompt chuẩn ảnh hero/inline SEO blog — premium 3D illustration (16:9, tiếng Việt).
+    """
+    kw = _clean_label(main_keyword, max_len=90) or "SEO"
+    title = _clean_label(article_title, max_len=120) or kw
+    heading = _clean_label(section_heading, max_len=120) or title
+    summary = _clean_label(section_summary, max_len=400)
+    audience = _clean_label(target_audience, max_len=90) or (
+        "business owners and marketers in Vietnam"
+    )
+    topic = detect_article_topic(
+        main_keyword=kw,
+        title=title or heading,
+        article_text=summary,
+    )
+    visual = _premium_3d_visual_concept(
+        main_keyword=kw,
+        article_title=title,
+        section_heading=heading,
+        section_summary=summary,
+        topic=topic,
+    )
+    brand_bit = ""
+    if brand_name and not include_brand_logo:
+        brand_bit = (
+            f'\nBrand note: article for "{_clean_label(brand_name, max_len=60)}" — '
+            "do not render logos, wordmarks, or readable brand text."
+        )
+    elif brand_name and include_brand_logo:
+        brand_bit = f'\nBrand: "{_clean_label(brand_name, max_len=60)}" (only if a real logo asset exists).'
+
+    industry_bit = ""
+    ind = _clean_label(industry, max_len=80)
+    if ind:
+        industry_bit = f"\nIndustry context: {ind}."
+
+    return (
+        "Create a premium 3D illustration for a Vietnamese SEO blog article.\n\n"
+        f"Topic: {title}\n"
+        f"Main keyword: {kw}\n"
+        f"Section: {heading}\n"
+        f"Audience: {audience}.\n\n"
+        "Visual concept:\n"
+        f"{visual}\n\n"
+        "Style:\n"
+        "High-end 3D render, clean composition, soft lighting, professional SaaS look, "
+        "modern Vietnamese business aesthetic, sharp details, no clutter.\n\n"
+        "Brand feeling:\n"
+        "Trustworthy, expert, practical, premium.\n\n"
+        "Image requirements:\n"
+        "16:9 ratio, blog hero image, no watermark, no random text, no distorted hands, "
+        "no duplicated objects, no readable UI text or paragraphs on screens."
+        f"{brand_bit}{industry_bit}"
+    ).strip()
 
 
 def _infer_industry(
@@ -205,6 +318,18 @@ def build_seo_image_generation_prompt(
     audience = _clean_label(target_audience, max_len=90)
     lang = _clean_label(language, max_len=10).lower() or "vi"
     style_key = normalize_image_style(image_style) if image_style else get_default_content_ai_image_style()
+
+    if style_key in ("premium_3d_seo", "3d_illustration"):
+        return build_premium_3d_seo_illustration_prompt(
+            main_keyword=main_keyword,
+            article_title=article_title,
+            section_heading=section_heading,
+            section_summary=section_summary,
+            brand_name=brand_name,
+            industry=industry,
+            target_audience=target_audience,
+            include_brand_logo=include_brand_logo,
+        )[:3900]
 
     topic = detect_article_topic(
         main_keyword=kw,
@@ -568,6 +693,7 @@ def choose_image_placement(
 extractImageContextsFromArticle = extract_image_contexts_from_article
 buildImagePromptForSection = build_image_prompt_for_section
 buildSEOImageGenerationPrompt = build_seo_image_generation_prompt
+buildPremium3dSeoIllustrationPrompt = build_premium_3d_seo_illustration_prompt
 suggestImageAltText = suggest_image_alt_text
 suggestImageCaption = suggest_image_caption
 chooseImagePlacement = choose_image_placement

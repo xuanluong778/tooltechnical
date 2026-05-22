@@ -1,4 +1,4 @@
-"""BeeSEO floating chatbot — FAQ, Knowledge Base, page context, LLM."""
+"""DigiSEO floating chatbot — FAQ, Knowledge Base, page context, LLM."""
 
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ _FAQ: list[dict[str, str]] = [
         "id": "pricing",
         "q": "Giá phần mềm bao nhiêu?",
         "a": (
-            "BeeSEO có **Basic, Pro, Agency, Unlimited** (6 tháng / 1 năm / 2 năm / Vĩnh viễn).\n"
+            "DigiSEO có **Basic, Pro, Agency, Unlimited** (6 tháng / 1 năm / 2 năm / Vĩnh viễn).\n"
             "Ví dụ **Pro 6 tháng: 2.490.000đ** (GSC, 100 bài AI/tháng).\n"
             "Xem **Upgrade plan** hoặc Cài đặt → **View pricing**."
         ),
@@ -111,13 +111,13 @@ _PAGE_FOCUS: dict[str, str] = {
     ),
     "settings": (
         "Trang Cài đặt: ưu tiên khóa API, nhà cung cấp AI, Knowledge Base, "
-        "bảng giá gói BeeSEO (Upgrade plan / View pricing), trial, credit, tài khoản."
+        "bảng giá gói DigiSEO (Upgrade plan / View pricing), trial, credit, tài khoản."
     ),
     "dashboard": "Trang Dashboard: ưu tiên đọc báo cáo audit, lọc checklist, xuất CSV.",
     "keywords": "Trang Từ khóa: ưu tiên nghiên cứu từ khóa, gom nhóm cluster.",
     "schema": "Trang Schema: ưu tiên JSON-LD, schema generator.",
     "default": (
-        "Hỗ trợ chung Technical SEO + Content SEO trong BeeSEO; "
+        "Hỗ trợ chung Technical SEO + Content SEO trong DigiSEO; "
         "có thể trả lời giá gói theo Knowledge Base Giá & Gói."
     ),
 }
@@ -255,15 +255,15 @@ def _user_context_block(user: Any | None) -> str:
 def _build_system_prompt(*, page_key: str, kb_blob: str, user_blob: str) -> str:
     focus = _PAGE_FOCUS.get(page_key, _PAGE_FOCUS["default"])
     faq_lines = "\n".join(f"- {x['q']}" for x in _FAQ)
-    return f"""Bạn là trợ lý BeeSEO — hỗ trợ Technical SEO và Content SEO.
+    return f"""Bạn là trợ lý DigiSEO — hỗ trợ Technical SEO và Content SEO.
 
 QUY TẮC BẮT BUỘC:
 - Trả lời tiếng Việt, ngắn gọn, thân thiện.
-- Được phép nêu **giá gói BeeSEO** theo KNOWLEDGE BASE «Giá & Gói» / bảng giá chính thức trong ngữ cảnh.
+- Được phép nêu **giá gói DigiSEO** theo KNOWLEDGE BASE «Giá & Gói» / bảng giá chính thức trong ngữ cảnh.
 - KHÔNG bịa giá ngoài KB; không nêi số credit / trạng thái của user khác; API key/token không được hiển thị.
 - Số credit của chính user đang chat (nếu có trong ngữ cảnh) có thể nhắc khi họ hỏi tài khoản.
 - KHÔNG hiển thị hoặc đoán API key; nếu user hỏi key → hướng dẫn vào Cài đặt.
-- Nếu KNOWLEDGE BASE có bảng giá / gói BeeSEO → trả lời giá cụ thể, KHÔNG dùng câu «chưa có dữ liệu».
+- Nếu KNOWLEDGE BASE có bảng giá / gói DigiSEO → trả lời giá cụ thể, KHÔNG dùng câu «chưa có dữ liệu».
 - Chỉ khi thật sự không có thông tin trong KB/FAQ → trả: «{NO_DATA_MSG}»
 - Không khẳng định kết quả audit cụ thể nếu user chưa chạy quét trên /tool.
 
@@ -370,7 +370,7 @@ def process_message(
         cfg = load_llm_config_admin()
         if not cfg:
             reply = pricing_reply or faq_hit or (
-                "Xin chào! Tôi là trợ lý BeeSEO.\n\n"
+                "Xin chào! Tôi là trợ lý DigiSEO.\n\n"
                 + (faq_hit or "")
                 + "\n\nChatbot dùng **khóa API admin** (OPENAI_API_KEY / ANTHROPIC_API_KEY trong env.local). "
                 "Admin cần cấu hình env.local rồi khởi động lại server."

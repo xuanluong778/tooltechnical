@@ -1,4 +1,4 @@
-"""7-day trial activated once per user when a valid API key is saved."""
+"""5-day trial activated once per user when a valid API key is saved."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from app.models.user_trial import TrialKeyClaim, UserTrial
 from app.services.api_key_fingerprint import api_key_fingerprint
 from app.services.rbac import is_admin
 
-TRIAL_DAYS = 7
+TRIAL_DAYS = 5
 
 
 def _utc_now() -> datetime:
@@ -23,55 +23,65 @@ def get_trial_row(db: Session, user_id: int) -> UserTrial | None:
     return db.query(UserTrial).filter(UserTrial.user_id == int(user_id)).first()
 
 
+def _trial_payload(**kwargs: Any) -> dict[str, Any]:
+    base = {"trial_days": TRIAL_DAYS}
+    base.update(kwargs)
+    return base
+
+
 def trial_status_snapshot(db: Session, user_id: int, *, role: str = "user") -> dict[str, Any]:
     if is_admin(type("U", (), {"role": role})()):
-        now = _utc_now()
-        return {
-            "has_trial": True,
-            "is_active": True,
-            "is_admin_bypass": True,
-            "is_api_grant_bypass": False,
-            "started_at": None,
-            "ends_at": None,
-            "days_remaining": TRIAL_DAYS,
-            "never_used": False,
-            "message": "Tài khoản admin — không giới hạn trial.",
-        }
+        return _trial_payload(
+            has_trial=True,
+            is_active=True,
+            is_admin_bypass=True,
+            is_api_grant_bypass=False,
+            started_at=None,
+            ends_at=None,
+            days_remaining=TRIAL_DAYS,
+            never_used=False,
+            message="Tài khoản admin — không giới hạn trial.",
+        )
 
     user = db.query(User).filter(User.id == int(user_id)).first()
     if user and bool(getattr(user, "api_access_enabled", False)):
         use_pool = bool(getattr(user, "use_admin_api_pool", False))
-        msg = "Admin đã cấp quyền API — dùng được Content AI / LLM không cần trial 7 ngày."
+        msg = (
+            f"Admin đã cấp quyền API — dùng được Content AI / LLM không cần trial {TRIAL_DAYS} ngày."
+        )
         if use_pool:
             msg += " Đang dùng khóa hệ thống (API Admin bật)."
         else:
             msg += " User nhập khóa riêng tại Cài đặt → Khóa API (nếu cần)."
-        return {
-            "has_trial": False,
-            "is_active": True,
-            "is_admin_bypass": False,
-            "is_api_grant_bypass": True,
-            "started_at": None,
-            "ends_at": None,
-            "days_remaining": 0,
-            "never_used": False,
-            "message": msg,
-        }
+        return _trial_payload(
+            has_trial=False,
+            is_active=True,
+            is_admin_bypass=False,
+            is_api_grant_bypass=True,
+            started_at=None,
+            ends_at=None,
+            days_remaining=0,
+            never_used=False,
+            message=msg,
+        )
 
     row = get_trial_row(db, user_id)
     now = _utc_now()
     if not row:
-        return {
-            "has_trial": False,
-            "is_active": False,
-            "is_admin_bypass": False,
-            "is_api_grant_bypass": False,
-            "started_at": None,
-            "ends_at": None,
-            "days_remaining": 0,
-            "never_used": True,
-            "message": "Chưa kích hoạt dùng thử. Thêm API key hợp lệ trong mục Khóa API, hoặc admin bật「Cho phép dùng API」.",
-        }
+        return _trial_payload(
+            has_trial=False,
+            is_active=False,
+            is_admin_bypass=False,
+            is_api_grant_bypass=False,
+            started_at=None,
+            ends_at=None,
+            days_remaining=0,
+            never_used=True,
+            message=(
+                f"Chưa kích hoạt dùng thử {TRIAL_DAYS} ngày. Thêm API key hợp lệ trong mục Khóa API, "
+                "hoặc admin bật「Cho phép dùng API」."
+            ),
+        )
 
     ends = row.ends_at
     if ends.tzinfo is None:
@@ -84,21 +94,21 @@ def trial_status_snapshot(db: Session, user_id: int, *, role: str = "user") -> d
     if active and (ends - now).total_seconds() > remaining * 86400:
         remaining = remaining + 1
 
-    return {
-        "has_trial": True,
-        "is_active": active,
-        "is_admin_bypass": False,
-        "is_api_grant_bypass": False,
-        "started_at": started.isoformat(),
-        "ends_at": ends.isoformat(),
-        "days_remaining": remaining if active else 0,
-        "never_used": False,
-        "message": (
-            f"Dùng thử còn {remaining} ngày."
+    return _trial_payload(
+        has_trial=True,
+        is_active=active,
+        is_admin_bypass=False,
+        is_api_grant_bypass=False,
+        started_at=started.isoformat(),
+        ends_at=ends.isoformat(),
+        days_remaining=remaining if active else 0,
+        never_used=False,
+        message=(
+            f"Dùng thử {TRIAL_DAYS} ngày — còn {remaining} ngày."
             if active
-            else "Dùng thử đã hết hạn — chỉ xem dữ liệu cũ, không tạo mới."
+            else f"Dùng thử {TRIAL_DAYS} ngày đã hết hạn — chỉ xem dữ liệu cũ, không tạo mới."
         ),
-    }
+    )
 
 
 def user_can_mutate_with_trial(db: Session, user_id: int, *, role: str = "user") -> bool:
@@ -113,7 +123,7 @@ def try_activate_trial(
     plain_api_key: str,
 ) -> dict[str, Any]:
     """
-    Kích hoạt trial 7 ngày nếu:
+    Kích hoạt trial (TRIAL_DAYS) nếu:
     - User chưa từng có bản ghi trial
     - Fingerprint chưa được user khác dùng để kích hoạt trial
   Không reset trial khi gọi lại với key mới.

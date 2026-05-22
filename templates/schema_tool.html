@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schema Generator</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root { --text: #eef2ff; --muted: #cbd5e1; --line: rgba(255,255,255,.22); --card: rgba(255,255,255,.12); }
         * { box-sizing: border-box; }
@@ -14,7 +14,7 @@
             background: linear-gradient(135deg, #050b18 0%, #0c1424 50%, #050b18 100%);
         }
         .wrap { max-width: 1200px; margin: 0 auto; padding: 16px 18px 48px; }
-        /* Top nav: static/css/beeseo-nav.css */
+        /* Top nav: static/css/digiseo-nav.css */
         .nav-dd-menu {
             display: none; position: absolute; left: 0; top: calc(100% + 14px); min-width: 240px; flex-direction: column;
             gap: 4px; padding: 8px; border-radius: 12px; border: 1px solid var(--line);
@@ -262,7 +262,7 @@
         .flex { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
         .card input[type="checkbox"] { width: auto; }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         h1 { color: #00e676 !important; }
         .nav-dd-menu a:hover { background: rgba(0, 230, 118, 0.12) !important; color: #00e676 !important; }
         .nav-pro-badge {
@@ -282,7 +282,7 @@
 <body data-user-dock="upgrade-only">
 <div class="wrap">
         {% set nav_active = 'schema' %}
-    {% include "partials/beeseo_nav.html" %}
+    {% include "partials/digiseo_nav.html" %}
     <h1>Schema Generator</h1>
     <p class="sub">Điền form để tạo JSON-LD hoàn chỉnh (dán vào <code>&lt;head&gt;</code>), hoặc chuyển sang tab <strong>Từ URL / HTML</strong> để hệ thống suy luận nhiều loại schema từ nội dung trang.</p>
 
@@ -1659,7 +1659,7 @@
     } catch (_) {}
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

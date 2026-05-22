@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chấm điểm SEO URL</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root {
             --bg: linear-gradient(135deg, #050b18 0%, #0c1424 50%, #050b18 100%);
@@ -122,21 +122,36 @@
         .hist-actions button:hover {
             filter: brightness(1.12);
         }
+        .score-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .score-actions .primary {
+            margin-top: 0;
+        }
         .btn-reset {
             flex-shrink: 0;
-            margin-top: 8px;
-            width: 100%;
-            padding: 10px 12px;
+            margin: 0;
+            padding: 12px 18px;
             border-radius: 10px;
             border: 1px solid var(--line);
             background: rgba(30, 41, 59, 0.75);
             color: #cbd5e1;
             font-weight: 600;
-            font-size: 0.82rem;
+            font-size: 0.88rem;
             cursor: pointer;
+            font-family: inherit;
         }
-        .btn-reset:hover {
+        .btn-reset:hover:not(:disabled) {
             background: rgba(51, 65, 85, 0.9);
+            color: #f1f5f9;
+        }
+        .btn-reset:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
         }
         .seo-main {
             margin-left: var(--seo-sidebar-w);
@@ -162,7 +177,7 @@
                 margin-left: 0;
             }
         }
-        /* Top nav: static/css/beeseo-nav.css */
+        /* Top nav: static/css/digiseo-nav.css */
         .nav-dd {
             position: relative;
             display: inline-flex;
@@ -221,7 +236,6 @@
             color: var(--text);
         }
         button.primary {
-            margin-top: 14px;
             padding: 12px 22px;
             border: none;
             border-radius: 10px;
@@ -304,7 +318,7 @@
         }
         .seo-table tr:nth-child(even) td { background: rgba(255, 255, 255, 0.03); }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         h1 { color: #00e676 !important; }
         .nav-pro-badge {
             display: inline-block;
@@ -324,12 +338,11 @@
 <aside class="seo-sidebar" id="seoSidebar" aria-label="Lịch sử chấm điểm SEO">
     <div class="seo-sidebar-head">URL đã chấm</div>
     <div class="seo-sidebar-list" id="historyList"></div>
-    <button type="button" class="btn-reset" id="btnReset" title="Chỉ xóa nội dung ô nhập và kết quả hiển thị — không xóa lịch sử sidebar">Làm mới</button>
 </aside>
 <main class="seo-main">
 <div class="page-wrap">
     {% set nav_active = 'seo_score' %}
-    {% include "partials/beeseo_nav.html" %}
+    {% include "partials/digiseo_nav.html" %}
     <h1>Chấm điểm SEO (1 URL)</h1>
     <p class="sub">Đăng nhập tại <a href="/tool" style="color:#c7d2fe;">/tool</a> để gọi API. Kết quả tập trung trong bảng checklist (15 nhóm + kỹ thuật).</p>
 
@@ -351,7 +364,10 @@
             </div>
         </div>
 
-        <button type="button" class="primary" id="btn">Chấm điểm</button>
+        <div class="score-actions">
+            <button type="button" class="primary" id="btn">Chấm điểm</button>
+            <button type="button" class="btn-reset" id="btnReset" title="Xóa ô nhập và kết quả hiển thị — không xóa lịch sử sidebar">Làm lại</button>
+        </div>
         <div id="msg"></div>
     </div>
 
@@ -998,7 +1014,7 @@
     } catch (_) {}
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

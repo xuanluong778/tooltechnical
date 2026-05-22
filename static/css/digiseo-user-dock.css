@@ -1,0 +1,276 @@
+/* DigiSEO user dock — popover + pill + upgrade (system-wide) */
+
+.digiseo-user-dock-wrap,
+.global-user-dock-wrap {
+    position: fixed;
+    left: 12px;
+    bottom: 12px;
+    z-index: 200;
+    width: min(200px, calc(100vw - 24px));
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    pointer-events: auto;
+    box-sizing: border-box;
+}
+body.page-content-ai .digiseo-user-dock-wrap,
+body.page-content-ai .global-user-dock-wrap {
+    z-index: 1001;
+}
+.digiseo-user-dock-wrap[hidden],
+.global-user-dock-wrap[hidden] {
+    display: none !important;
+}
+
+.digiseo-user-dock-wrap.is-sidebar,
+.sidebar-user-dock {
+    flex-shrink: 0;
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    width: calc(var(--tool-sidebar-w, 260px) - 28px);
+    max-width: calc(var(--tool-sidebar-w, 260px) - 28px);
+    padding: 0;
+    margin-top: 0;
+    z-index: 200;
+    pointer-events: auto !important;
+}
+.digiseo-user-dock-wrap.is-sidebar *,
+.sidebar-user-dock * {
+    pointer-events: auto;
+}
+
+.digiseo-user-dock-wrap.is-upgrade-only,
+.global-user-dock-wrap.is-upgrade-only {
+    width: auto;
+    max-width: 158px;
+}
+.digiseo-user-dock-wrap.is-upgrade-only .digiseo-upgrade-strip,
+.global-user-dock-wrap.is-upgrade-only .digiseo-upgrade-strip {
+    width: auto;
+    max-width: 100%;
+    margin-top: 0;
+}
+
+.user-dock-top {
+    display: none;
+}
+.user-dock-top-chev {
+    font-size: 0.65rem;
+    color: rgba(148, 163, 184, 0.85);
+    line-height: 1;
+    user-select: none;
+}
+
+.user-menu-popover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% - 2px);
+    margin-bottom: 4px;
+    padding: 6px;
+    background: #1a1b26;
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.user-menu-popover[hidden] {
+    display: none !important;
+}
+.user-menu-popover::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: 22px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid #1a1b26;
+    filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.2));
+}
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 11px;
+    margin: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #f8fafc;
+    font-size: 0.88rem;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.user-menu-item:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.07);
+}
+.user-menu-item:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.user-menu-item svg {
+    flex-shrink: 0;
+    opacity: 0.92;
+}
+.user-menu-chev {
+    margin-left: auto;
+    opacity: 0.55;
+    font-size: 0.75rem;
+}
+
+.user-pill {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+}
+.user-pill-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 9px 8px 9px 10px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+}
+.user-pill-main:focus-visible {
+    outline: 2px solid #00e676;
+    outline-offset: -2px;
+}
+.digiseo-user-dock-wrap:not(.is-sidebar) .user-pill-main {
+    gap: 7px;
+    padding: 6px 6px 6px 8px;
+}
+.digiseo-user-dock-wrap:not(.is-sidebar) .user-pill {
+    border-radius: 9px;
+}
+.digiseo-user-dock-wrap:not(.is-sidebar) .user-avatar {
+    width: 26px;
+    height: 26px;
+    font-size: 0.78rem;
+}
+.digiseo-user-dock-wrap:not(.is-sidebar) .user-name {
+    font-size: 0.74rem;
+    line-height: 1.15;
+}
+.digiseo-user-dock-wrap:not(.is-sidebar) .user-pill-dismiss {
+    width: 22px;
+    height: 22px;
+    font-size: 0.95rem;
+    border-radius: 6px;
+}
+.user-avatar {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.user-avatar.is-guest {
+    background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.user-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: #64748b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.user-pill-dismiss {
+    flex-shrink: 0;
+    width: 32px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-left: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 0;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+}
+.user-pill-dismiss:hover {
+    color: #64748b;
+    background: rgba(148, 163, 184, 0.15);
+}
+
+.digiseo-upgrade-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 6px;
+    padding: 8px 10px;
+    border-radius: 9px;
+    border: 1px solid #00e676;
+    background: #1a1b26;
+    color: #00e676;
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+.digiseo-upgrade-strip:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 230, 118, 0.18);
+}
+
+.account-mini-modal {
+    z-index: 260;
+}
+.account-mini-panel h2 {
+    text-align: left;
+}
+.account-mini-meta {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin-top: 0.35rem;
+}
+
+.sb-dock-flash,
+.home-dock-flash {
+    animation: digiseo-dock-flash 0.6s ease 2;
+}
+@keyframes digiseo-dock-flash {
+    0%,
+    100% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.35);
+    }
+}

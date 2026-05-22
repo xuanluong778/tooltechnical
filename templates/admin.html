@@ -442,8 +442,8 @@
                             <label>
                                 Gói
                                 <select id="saasGrantPlan">
-                                    <option value="free_trial">Free Trial</option>
-                                    <option value="starter">Starter</option>
+                                    <option value="free_trial_5d">Dùng tool 5 ngày miễn phí (BYOK)</option>
+                                    <option value="starter">Basic</option>
                                     <option value="pro">Pro</option>
                                     <option value="agency">Agency</option>
                                 </select>
@@ -942,7 +942,7 @@
         const apiGranted = !!(trial.is_api_grant_bypass || String(u.trial_status || "").toLowerCase() === "api_granted");
         const uTrial = u.trial_message || trial.message || "—";
         const remainLabel = apiGranted
-            ? "<span class='pill pill-api-on'>Theo quyền API (không trial 7 ngày)</span>"
+            ? "<span class='pill pill-api-on'>Theo quyền API (không trial 5 ngày)</span>"
             : (u.trial_is_active ? esc(String(u.trial_days_remaining)) + " ngày" : "—");
         document.getElementById("dTrial").innerHTML =
             "<strong>Trial:</strong> " + esc(uTrial) +

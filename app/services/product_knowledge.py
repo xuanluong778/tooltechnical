@@ -1,5 +1,5 @@
 """
-Tri thức sản phẩm BeeSEO — giá gói, trial, thanh toán (global KB).
+Tri thức sản phẩm DigiSEO — giá gói, trial, thanh toán (global KB).
 """
 
 from __future__ import annotations
@@ -11,11 +11,11 @@ from typing import Any
 
 from app.services.ai_knowledge_docs import search_kb
 
-GLOBAL_PRODUCT_KB_ID = (os.getenv("PRODUCT_GLOBAL_KB_ID") or "beeseo-product-global-001").strip()
+GLOBAL_PRODUCT_KB_ID = (os.getenv("PRODUCT_GLOBAL_KB_ID") or "digiseo-product-global-001").strip()
 
-_PRICING_PATH = Path(os.getenv("PRODUCT_PRICING_KNOWLEDGE_PATH") or "data/beeseo-pricing-knowledge.txt")
+_PRICING_PATH = Path(os.getenv("PRODUCT_PRICING_KNOWLEDGE_PATH") or "data/digiseo-pricing-knowledge.txt")
 
-# Đồng bộ với static/js/beeseo_pricing.js
+# Đồng bộ với static/js/digiseo_pricing.js
 _BASE_VND_6M: dict[str, int] = {
     "basic": 1_500_000,
     "pro": 2_490_000,
@@ -69,7 +69,7 @@ _PRICING_QUERY_TOKENS = (
     "đăng ký",
     "phần mềm",
     "phan mem",
-    "beeseo",
+    "DigiSEO",
     "nâng cấp gói",
 )
 
@@ -92,7 +92,7 @@ def _fmt_vnd(n: int) -> str:
 def pricing_summary_compact() -> str:
     """Tóm tắt giá 6 tháng + lifetime — luôn inject khi hỏi giá (chatbot)."""
     lines = [
-        "BeeSEO — Bảng giá tham chiếu (VND, PayOS):",
+        "DigiSEO — Bảng giá tham chiếu (VND, PayOS):",
         "Mở modal: Upgrade plan / View pricing.",
     ]
     for pid, label in (
@@ -134,7 +134,7 @@ def build_product_kb_context(query: str, *, limit: int = 6, force_summary: bool 
         parts.append(pricing_summary_compact())
     hits = search_product_knowledge(query, limit=limit)
     if hits:
-        lines = ["Chi tiết Knowledge Base — Giá & Gói BeeSEO:"]
+        lines = ["Chi tiết Knowledge Base — Giá & Gói DigiSEO:"]
         for h in hits:
             title = h.get("document_title") or "doc"
             snip = str(h.get("snippet") or "")[:520]
@@ -162,7 +162,7 @@ def match_pricing_faq(message: str) -> str | None:
             "Vĩnh viễn **12.500.000đ**. 50 bài/tháng, 3 project — không có GSC."
         )
     if any(x in q for x in ("bảng giá", "bang gia", "các gói", "cac goi", "những gói")):
-        return pricing_summary_compact() + "\n\nMở **BeeSEO Pricing** trên app để chọn thời hạn PayOS/PayPal."
+        return pricing_summary_compact() + "\n\nMở **DigiSEO Pricing** trên app để chọn thời hạn PayOS/PayPal."
     if any(x in q for x in ("trial", "dùng thử", "dung thu", "miễn phí")):
         return (
             "**Dùng thử 7 ngày**: thêm API key hợp lệ tại **Cài đặt → Khóa API** (một lần/user). "
@@ -170,14 +170,14 @@ def match_pricing_faq(message: str) -> str | None:
         )
     if any(x in q for x in ("thanh toán", "mua", "payos", "paypal")):
         return (
-            "Chọn gói trên modal **BeeSEO Pricing** (PayOS VND / PayPal USD). "
+            "Chọn gói trên modal **DigiSEO Pricing** (PayOS VND / PayPal USD). "
             "Cổng thanh toán tự động đang tích hợp; nếu chưa thanh toán được, liên hệ **admin** kích hoạt gói thủ công."
         )
     return None
 
 
 def resolve_pricing_reply(message: str) -> str | None:
-    """Trả lời giá BeeSEO — ưu tiên FAQ cụ thể, sau đó bảng tóm tắt chính thức."""
+    """Trả lời giá DigiSEO — ưu tiên FAQ cụ thể, sau đó bảng tóm tắt chính thức."""
     if not is_pricing_query(message):
         return None
     specific = match_pricing_faq(message)

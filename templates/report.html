@@ -28,8 +28,8 @@
 {%- endif -%}
 {%- endmacro %}
 <head>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technical SEO Report</title>
@@ -70,7 +70,7 @@
             width: 288px;
             max-width: 38vw;
             flex: 0 0 288px;
-            padding: 106px 12px 16px 14px;
+            padding: calc(var(--digiseo-nav-fixed-offset, 76px) + 16px) 12px 16px 14px;
             background: rgba(15, 23, 42, 0.88);
             border-right: none;
             backdrop-filter: blur(12px);
@@ -147,24 +147,12 @@
             width: 100%;
             min-width: 0;
         }
-        /* Top nav: static/css/beeseo-nav.css — không viền dọc giữa các tab */
-        body.page-report .report-top > a {
-            border: none !important;
-            box-shadow: none !important;
-        }
-        body.page-report .report-top > a:hover,
-        body.page-report .report-top > a.active {
-            border: none !important;
-        }
-        body.page-report .report-top > a.active {
-            box-shadow: inset 0 0 0 1px rgba(0, 230, 118, 0.55), 0 0 14px rgba(0, 230, 118, 0.22) !important;
-        }
-        /* Nút chính: vào tool phân tích */
-        .report-top a[href="/tool"] {
+        /* Nút chính: vào tool phân tích (chỉ khi chưa active) */
+        .report-top a[href="/tool"]:not(.active) {
             background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c3aed 100%);
             border-color: rgba(165, 180, 252, 0.55);
         }
-        .report-top a[href="/tool"]:hover {
+        .report-top a[href="/tool"]:not(.active):hover {
             color: #fff;
             background: linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #6d28d9 100%);
             border-color: rgba(199, 210, 254, 0.75);
@@ -185,7 +173,7 @@
             height: 14px;
             z-index: 199;
         }
-        /* .nav-dd-btn sizing: beeseo-nav.css */
+        /* .nav-dd-btn sizing: digiseo-nav.css */
         .report-top .nav-dd-menu {
             display: none; position: absolute; left: 0; top: calc(100% + 14px);
             min-width: 240px; flex-direction: column; gap: 4px; padding: 8px;
@@ -543,7 +531,7 @@
             }
         }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         h1 { color: #00e676 !important; }
         .sb-item.active {
             color: #00e676 !important;
@@ -574,7 +562,7 @@
     </aside>
     <main class="main">
     <div class="container">
-        <p class="report-top" data-i18n-aria="nav.aria" aria-label="Menu chính"><a href="/" data-i18n="nav.brand">SEO Technical Tool</a><a href="/report" data-i18n="nav.dashboard">Dashboard</a><a href="/tool" data-i18n="nav.technical">Phân Tích Technical</a><a href="/tool/seo-score" data-i18n="nav.seo_score">Chấm điểm SEO</a><a href="/content-ai" data-i18n="nav.content_ai">Content AI</a><a href="/keywords/tools/research" data-i18n="nav.keyword">Từ khóa</a><a href="/schema" data-i18n="nav.schema">Schema</a><a href="/settings" data-i18n="nav.settings">Cài đặt</a><a href="/admin" data-nav-admin hidden class="nav-admin-only" data-i18n="nav.admin">Quản trị viên</a></p>
+        {% include "partials/digiseo_top_nav.html" %}
 
         {% if error %}
             <div class="error">{{ error }}</div>
@@ -945,23 +933,7 @@
         bindTopAuditExportButtons();
         loadSidebarProjects();
     </script>
-<script>
-(() => {
-    try {
-        const path = (window.location && window.location.pathname) ? window.location.pathname.replace(/\/+$/, "") : "";
-        document.querySelectorAll('.nav a, nav[aria-label="Menu chính"] a, .report-top a').forEach((a) => {
-            const href = (a.getAttribute("href") || "").trim();
-            if (!href || href.startsWith("http")) return;
-            const h = href.replace(/\/+$/, "");
-            if (h && h === path) a.classList.add("active");
-        });
-        if (path === "/settings") {
-            document.querySelectorAll('.report-top a[href="/settings"], .nav a[href="/settings"], .main-nav a[href="/settings"]').forEach((b) => b.classList.add("active"));
-        }
-    } catch (_) {}
-})();
-</script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

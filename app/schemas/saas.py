@@ -169,3 +169,5 @@ class SaasMeResponse(BaseModel):
     trial_message: str | None = None
     api_access_enabled: bool = False
     message: str | None = None
+    byok_note: str | None = None
+    trial_days: int | None = None

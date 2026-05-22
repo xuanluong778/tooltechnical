@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/static/css/digiseo_pricing.css?v=8" />
+<link rel="stylesheet" href="/static/css/digiseo-user-dock.css?v=3" />
+
+{% if not skip_global_user_dock|default(false) %}
+{% include "partials/digiseo_user_dock.html" %}
+{% endif %}
+{% include "partials/digiseo_account_mini.html" %}
+
+<div id="digiseoPricingBackdrop" class="digiseo-pricing-backdrop" role="dialog" aria-modal="true" aria-labelledby="digiseoPricingTitle">
+    <div class="digiseo-pricing-modal" id="digiseoPricingModal">
+        <div class="digiseo-pricing-head">
+            <div>
+                <h2 id="digiseoPricingTitle">DigiSEO Pricing</h2>
+                <p>Choose the plan that fits your needs</p>
+            </div>
+            <button type="button" class="digiseo-pricing-close" id="digiseoPricingClose" aria-label="Đóng">×</button>
+        </div>
+        <div class="digiseo-pricing-toolbar">
+            <div class="digiseo-toggle-group" role="group" aria-label="Duration">
+                <button type="button" class="digiseo-toggle-btn digiseo-dur-btn is-active" data-dur="m6">6 months</button>
+                <button type="button" class="digiseo-toggle-btn digiseo-dur-btn" data-dur="y1">1 year</button>
+                <button type="button" class="digiseo-toggle-btn digiseo-dur-btn" data-dur="y2">2 years</button>
+                <button type="button" class="digiseo-toggle-btn digiseo-dur-btn" data-dur="life">Lifetime</button>
+            </div>
+            <div class="digiseo-toggle-group" role="group" aria-label="Payment">
+                <button type="button" class="digiseo-toggle-btn digiseo-pay-btn is-active" data-pay="payos">PayOS (VND)</button>
+                <button type="button" class="digiseo-toggle-btn digiseo-pay-btn" data-pay="paypal">PayPal (USD)</button>
+            </div>
+            <div class="digiseo-coupon-wrap">
+                <label for="digiseoCouponInput">Discount code (Coupon)</label>
+                <input type="text" id="digiseoCouponInput" placeholder="Enter coupon code..." autocomplete="off" />
+            </div>
+        </div>
+        <div class="digiseo-pricing-scroll">
+            <div class="digiseo-pricing-grid" id="digiseoPricingGrid"></div>
+        </div>
+        <div class="digiseo-pricing-foot">
+            Giá hiển thị mang tính tham khảo theo gói DigiSEO. Thanh toán trực tuyến (PayOS / PayPal) sẽ được tích hợp trong bản cập nhật tiếp theo.
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/digiseo-user-dock.js?v=3" defer></script>
+<script src="/static/js/digiseo_pricing.js?v=8" defer></script>

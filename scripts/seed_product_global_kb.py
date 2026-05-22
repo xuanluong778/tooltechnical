@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Import giá BeeSEO vào KB global (sơ đồ tri thức sản phẩm)."""
+"""Import giá DigiSEO vào KB global (sơ đồ tri thức sản phẩm)."""
 
 from __future__ import annotations
 
@@ -13,9 +13,9 @@ if str(_ROOT) not in sys.path:
 from app.services.ai_knowledge_docs import _write_store, get_kb_stats, import_text
 from app.services.product_knowledge import GLOBAL_PRODUCT_KB_ID
 
-CHECKLIST = Path("data/beeseo-pricing-knowledge.txt")
+CHECKLIST = Path("data/digiseo-pricing-knowledge.txt")
 HEADER = (
-    "# SƠ ĐỒ TRI THỨC — GIÁ PHẦN MỀM BEESEO (GLOBAL)\n\n"
+    "# SƠ ĐỒ TRI THỨC — GIÁ PHẦN MỀM DigiSEO (GLOBAL)\n\n"
     "Dùng chung cho chatbot và AI — chỉ nêu giá theo tài liệu này.\n\n"
 )
 
@@ -27,7 +27,7 @@ def main() -> None:
     _write_store(GLOBAL_PRODUCT_KB_ID, {"documents": []})
     import_text(
         GLOBAL_PRODUCT_KB_ID,
-        "Sơ đồ tri thức — Giá phần mềm BeeSEO",
+        "Sơ đồ tri thức — Giá phần mềm DigiSEO",
         HEADER + text,
         embed=False,
     )

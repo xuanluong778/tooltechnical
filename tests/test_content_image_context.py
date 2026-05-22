@@ -3,6 +3,7 @@
 from app.services.content_image_context import (
     build_image_prompt_for_section,
     build_image_search_query_for_section,
+    build_premium_3d_seo_illustration_prompt,
     build_seo_image_generation_prompt,
     choose_image_placement,
     detect_article_topic,
@@ -70,8 +71,36 @@ def test_build_seo_image_generation_prompt_technical_seo():
 
 
 def test_normalize_image_styles():
-    assert normalize_image_style("3D illustration") == "3d_illustration"
+    assert normalize_image_style("3D illustration") == "premium_3d_seo"
+    assert normalize_image_style("premium 3d seo") == "premium_3d_seo"
     assert normalize_image_style("modern dashboard") == "modern_dashboard"
+
+
+def test_build_premium_3d_seo_illustration_prompt():
+    prompt = build_premium_3d_seo_illustration_prompt(
+        main_keyword="sửa máy tính tận nơi",
+        article_title="Sửa máy tính tận nơi TP.HCM",
+        section_heading="Dịch vụ sửa máy tính uy tín",
+        section_summary="SEO content strategy",
+        target_audience="business owners in Vietnam",
+    )
+    assert "premium 3D illustration" in prompt
+    assert "Topic: Sửa máy tính tận nơi TP.HCM" in prompt
+    assert "Main keyword: sửa máy tính tận nơi" in prompt
+    assert "Section: Dịch vụ sửa máy tính uy tín" in prompt
+    assert "16:9 ratio" in prompt
+    assert "no watermark" in prompt
+    assert "digital marketing workspace" in prompt.lower()
+
+
+def test_build_seo_prompt_defaults_to_premium_3d():
+    prompt = build_seo_image_generation_prompt(
+        main_keyword="content seo",
+        article_title="Viết bài chuẩn SEO",
+        section_heading="Outline bài viết",
+    )
+    assert "premium 3D illustration" in prompt
+    assert "Topic: Viết bài chuẩn SEO" in prompt
 
 
 def test_alt_text_natural_keyword():

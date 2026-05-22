@@ -8,10 +8,10 @@ Hỗ trợ người dùng qua chat nổi góc phải mọi trang (sau khi includ
 
 | Loại | Path |
 |------|------|
-| HTML | `templates/partials/beeseo_chatbot.html` |
-| CSS | `static/css/beeseo-chatbot.css` |
-| JS | `static/js/beeseo-chatbot.js` |
-| Include | `templates/partials/beeseo_i18n.html` |
+| HTML | `templates/partials/digiseo_chatbot.html` |
+| CSS | `static/css/digiseo-chatbot.css` |
+| JS | `static/js/digiseo-chatbot.js` |
+| Include | `templates/partials/digiseo_i18n.html` |
 | Router | `app/routers/chatbot.py` |
 | Service | `app/services/chatbot_service.py` |
 
@@ -26,7 +26,7 @@ Hỗ trợ người dùng qua chat nổi góc phải mọi trang (sau khi includ
 
 - Nút avatar góc phải
 - Panel: tin nhắn, quick questions, input textarea
-- Avatar: `/static/img/beeseo-chatbot-avatar.png`
+- Avatar: `/static/img/digiseo-chatbot-avatar.png`
 
 ## Trạng thái
 

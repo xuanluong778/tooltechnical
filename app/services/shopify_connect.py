@@ -115,7 +115,7 @@ def fetch_client_credentials_token(
             headers={
                 "Accept": "application/json",
                 "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "BeeSEO-Tool/1.0",
+                "User-Agent": "digiseo-Tool/1.0",
             },
             timeout=timeout,
         )
@@ -206,7 +206,7 @@ def _admin_request(
     headers = {
         "X-Shopify-Access-Token": access_token,
         "Accept": "application/json",
-        "User-Agent": "BeeSEO-Tool/1.0",
+        "User-Agent": "digiseo-Tool/1.0",
     }
     return requests.request(method, url, headers=headers, timeout=timeout)
 

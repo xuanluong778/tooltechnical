@@ -1,0 +1,411 @@
+/**
+ * Top nav — fixed layout (no shift when changing page/tab or active state).
+ * Loaded after page CSS (digiseo_i18n.html) + in theme head as fallback.
+ */
+html body [data-nav-admin][hidden],
+html body .nav-admin-only[hidden] {
+    display: none !important;
+}
+
+html body a.nav-admin-only:not([hidden]) {
+    border-color: rgba(0, 230, 118, 0.45) !important;
+    color: #86efac !important;
+}
+
+:root {
+    --digiseo-nav-pill-h: 40px;
+    --digiseo-nav-pill-px: 12px;
+    --digiseo-nav-pill-gap: 8px;
+    --digiseo-nav-font: 0.8125rem;
+    --digiseo-nav-row-h: 56px;
+    --digiseo-nav-strip-pad-top: 12px;
+    --digiseo-nav-strip-pad-bottom: 8px;
+    --digiseo-nav-fixed-h: calc(
+        var(--digiseo-nav-row-h) + var(--digiseo-nav-strip-pad-top) + var(--digiseo-nav-strip-pad-bottom)
+    );
+    --digiseo-nav-fixed-offset: var(--digiseo-nav-fixed-h);
+    --digiseo-nav-pill-border: rgba(255, 255, 255, 0.2);
+    --digiseo-nav-pill-bg: rgba(15, 23, 42, 0.92);
+    --digiseo-nav-pill-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+    --digiseo-nav-pill-shadow-active: 0 2px 8px rgba(15, 23, 42, 0.14);
+}
+
+/* —— Menu cố định trên cùng viewport (toàn hệ thống) —— */
+html body:has(#digiseoTopNavStrip),
+html body:has(.nav-strip),
+html body:has(.pricing-page-nav),
+html body:has(p.report-top[aria-label="Menu chính"]) {
+    padding-top: var(--digiseo-nav-fixed-offset) !important;
+}
+
+html body:has(.site-header) {
+    padding-top: 64px !important;
+}
+
+html body .nav-strip,
+html body #digiseoTopNavStrip,
+html body .pricing-page-nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 500 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: var(--digiseo-nav-strip-pad-top) 18px var(--digiseo-nav-strip-pad-bottom) !important;
+    min-height: var(--digiseo-nav-fixed-h) !important;
+    height: var(--digiseo-nav-fixed-h) !important;
+    max-height: var(--digiseo-nav-fixed-h) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    background: rgba(5, 11, 24, 0.97) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+html body .pricing-page-nav .inner.nav {
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    width: max-content !important;
+    margin: 0 auto !important;
+    min-height: var(--digiseo-nav-row-h) !important;
+    height: var(--digiseo-nav-row-h) !important;
+}
+
+html body p.report-top[aria-label="Menu chính"] {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 500 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    background: rgba(5, 11, 24, 0.97) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+html body .site-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 500 !important;
+    margin: 0 !important;
+}
+
+html body.page-tool .tool-scroll-top {
+    padding-top: 0 !important;
+}
+
+/* —— Nav shell: same size on every page (fixed ở block trên) —— */
+html body .nav-strip,
+html body #digiseoTopNavStrip {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Một hàng cố định — không nhảy chiều cao khi đổi tab/trang */
+html body .nav-strip .nav,
+html body .nav-strip nav[aria-label="Menu chính"],
+html body .pricing-page-nav .inner.nav,
+html body p.report-top[aria-label="Menu chính"] {
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    width: max-content !important;
+    max-width: none !important;
+    min-width: min(100%, max-content) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 0 !important;
+    min-height: var(--digiseo-nav-row-h) !important;
+    height: var(--digiseo-nav-row-h) !important;
+    max-height: var(--digiseo-nav-row-h) !important;
+}
+
+html body .nav-strip :is(.nav > a, nav[aria-label="Menu chính"] > a),
+html body.page-tool .nav-strip :is(.nav > a, nav[aria-label="Menu chính"] > a) {
+    font-size: 0.76rem !important;
+    padding: 0 10px !important;
+    flex-shrink: 0 !important;
+}
+
+html body :is(
+    .nav,
+    .main-nav,
+    .report-top,
+    p.report-top,
+    nav[aria-label="Menu chính"]
+) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: var(--digiseo-nav-pill-gap) !important;
+    min-height: var(--digiseo-nav-row-h) !important;
+    height: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    contain: layout style;
+}
+
+html body :is(.nav, .main-nav, .report-top, p.report-top, nav[aria-label="Menu chính"])::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Tailwind nav rows (keyword research, etc.) */
+html body nav[aria-label="Menu chính"].flex {
+    flex-wrap: wrap !important;
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+html body p.report-top {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+html body :is(.nav > a, .nav > .nav-dd, .main-nav > a, .main-nav > .nav-dd, .report-top > a, .report-top > .nav-dd) {
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+}
+
+html body :is(.nav > .nav-dd, .main-nav > .nav-dd, .report-top > .nav-dd) {
+    align-self: center !important;
+    height: var(--digiseo-nav-pill-h) !important;
+    min-height: var(--digiseo-nav-pill-h) !important;
+    max-height: var(--digiseo-nav-pill-h) !important;
+}
+
+/* —— Pills: identical box model in default / hover / active / focus —— */
+html body :is(
+    .nav > a,
+    .nav > a:link,
+    .nav > a:visited,
+    .nav a:not(.nav-dd-menu a),
+    .nav > .nav-dd > .nav-dd-btn,
+    .main-nav > a,
+    .main-nav > a:link,
+    .main-nav > a:visited,
+    .main-nav > .nav-dd > .nav-dd-btn,
+    .report-top > a,
+    .report-top > a:link,
+    .report-top > a:visited,
+    .report-top > .nav-dd > .nav-dd-btn,
+    .report-top .nav-dd-btn,
+    nav[aria-label="Menu chính"] > a
+) {
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+    height: var(--digiseo-nav-pill-h) !important;
+    min-height: var(--digiseo-nav-pill-h) !important;
+    max-height: var(--digiseo-nav-pill-h) !important;
+    padding: 0 var(--digiseo-nav-pill-px) !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    font-size: var(--digiseo-nav-font) !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0.02em !important;
+    text-decoration: none !important;
+    border-radius: 10px !important;
+    border: 1px solid transparent !important;
+    background: var(--digiseo-nav-pill-bg) !important;
+    color: #e2e8f0 !important;
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    transition: color 0.12s ease, background-color 0.12s ease, border-color 0.12s ease !important;
+    outline: none !important;
+}
+
+html body :is(
+    .nav > a:hover,
+    .nav > a:active,
+    .nav > .nav-dd > .nav-dd-btn:hover,
+    .main-nav > a:hover,
+    .main-nav > .nav-dd > .nav-dd-btn:hover,
+    .report-top > a:hover,
+    .report-top .nav-dd-btn:hover,
+    nav[aria-label="Menu chính"] > a:hover
+) {
+    transform: none !important;
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+    color: #f8fafc !important;
+    background: rgba(30, 41, 59, 0.95) !important;
+}
+
+/* Tab đang mở — inset ring (không đổi border box → không nhảy kích thước) */
+html body :is(
+    .nav a.active,
+    .nav > a.active,
+    .main-nav a.active,
+    .main-nav > a.active,
+    .report-top a.active,
+    .report-top > a.active,
+    p.report-top > a.active,
+    nav[aria-label="Menu chính"] > a.active,
+    nav.flex a.active,
+    .pricing-page-nav .inner > a.active
+) {
+    color: #00e676 !important;
+    background: var(--digiseo-nav-pill-bg) !important;
+    border: 1px solid transparent !important;
+    box-shadow:
+        inset 0 0 0 1px #00e676,
+        0 0 12px rgba(0, 230, 118, 0.22) !important;
+    outline: none !important;
+    font-weight: 600 !important;
+}
+
+html body :is(
+    .nav > a.active[href="/report"],
+    .main-nav > a.active[href="/report"],
+    .report-top > a.active[href="/report"],
+    p.report-top > a.active[href="/report"]
+) {
+    color: #00e676 !important;
+    background: var(--digiseo-nav-pill-bg) !important;
+    border: 1px solid transparent !important;
+    box-shadow:
+        inset 0 0 0 1px #00e676,
+        0 0 12px rgba(0, 230, 118, 0.22) !important;
+}
+
+html body :is(
+    .nav > a.active[href="/tool"],
+    .main-nav > a.active[href="/tool"],
+    .report-top > a.active[href="/tool"],
+    p.report-top > a.active[href="/tool"]
+) {
+    background: var(--digiseo-nav-pill-bg) !important;
+    color: #00e676 !important;
+    border: 1px solid transparent !important;
+    box-shadow:
+        inset 0 0 0 1px #00e676,
+        0 0 12px rgba(0, 230, 118, 0.22) !important;
+}
+
+html body :is(.nav > a:focus-visible, .main-nav > a:focus-visible, .report-top > a:focus-visible) {
+    outline: 2px solid #93c5fd !important;
+    outline-offset: -2px !important;
+}
+
+/* Dashboard highlight — keep gradient but same dimensions */
+html body :is(
+    .main-nav > a[href="/report"],
+    .report-top > a[href="/report"],
+    .nav > a[href="/report"]
+) {
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+}
+
+html body :is(
+    .main-nav > a[href="/report"]:hover,
+    .report-top > a[href="/report"]:hover,
+    .nav > a[href="/report"]:hover
+) {
+    transform: none !important;
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+}
+
+/* Light theme: beat digiseo-theme.css color-only rules — keep fixed pill metrics */
+:is(html[data-theme="light"], html[data-theme="system"][data-theme-resolved="light"]) body :is(
+    .nav > a,
+    .nav a:not(.nav-dd-menu a),
+    .nav > .nav-dd > .nav-dd-btn,
+    .main-nav > a,
+    .main-nav > .nav-dd > .nav-dd-btn,
+    .report-top > a,
+    .report-top .nav-dd-btn,
+    nav[aria-label="Menu chính"] > a,
+    nav.flex a.inline-flex
+) {
+    font-size: var(--digiseo-nav-font) !important;
+    text-transform: none !important;
+    letter-spacing: 0.02em !important;
+    height: var(--digiseo-nav-pill-h) !important;
+    min-height: var(--digiseo-nav-pill-h) !important;
+    max-height: var(--digiseo-nav-pill-h) !important;
+    padding: 0 var(--digiseo-nav-pill-px) !important;
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+}
+
+:is(html[data-theme="light"], html[data-theme="system"][data-theme-resolved="light"]) body :is(.nav a:hover, .nav > a:hover, .main-nav > a:hover, .report-top > a:hover, nav.flex a.inline-flex:hover) {
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+    transform: none !important;
+}
+
+:is(html[data-theme="light"], html[data-theme="system"][data-theme-resolved="light"]) body :is(.nav a.active, .nav > a.active, .main-nav a.active, .report-top a.active, nav.flex a.active) {
+    color: #00e676 !important;
+    border: 1px solid transparent !important;
+    background: var(--digiseo-nav-pill-bg) !important;
+    box-shadow:
+        inset 0 0 0 1px #00e676,
+        0 0 12px rgba(0, 230, 118, 0.18) !important;
+    font-weight: 600 !important;
+}
+
+/* Ghi đè Tailwind / inline trên trang keyword (nếu còn class cũ) */
+html body nav[aria-label="Menu chính"] > a.inline-flex,
+html body nav[aria-label="Menu chính"].flex > a {
+    height: var(--digiseo-nav-pill-h) !important;
+    min-height: var(--digiseo-nav-pill-h) !important;
+    max-height: var(--digiseo-nav-pill-h) !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+    border: 1px solid transparent !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    box-shadow: var(--digiseo-nav-pill-shadow) !important;
+}
+
+html body .site-header .header-inner .main-nav {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+}
+
+@media (max-width: 1100px) {
+    html body .main-nav {
+        padding: 0 !important;
+        min-height: var(--digiseo-nav-row-h) !important;
+        height: var(--digiseo-nav-row-h) !important;
+        max-height: var(--digiseo-nav-row-h) !important;
+        justify-content: center !important;
+    }
+}
+
+/* Admin nav — must beat pill display rules above */
+html body :is(.nav, .main-nav, .report-top, nav[aria-label="Menu chính"]) > a.nav-admin-only[data-nav-admin][hidden],
+html body nav[aria-label="Menu chính"] > a.nav-admin-only[data-nav-admin][hidden] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}

@@ -1,7 +1,7 @@
 """
 Tri thức Technical SEO dùng chung (global) — Sơ đồ tri thức cho mọi website.
 
-Nguồn: Knowledge Base ``beeseo-technical-global-001`` + file ``data/checklist-technical-seo-so-do-tri-thuc.txt``.
+Nguồn: Knowledge Base ``digiseo-technical-global-001`` + file ``data/checklist-technical-seo-so-do-tri-thuc.txt``.
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from app.services.ai_knowledge_docs import search_kb
 from app.services.ai_knowledge_store import get_base, list_bases
 
 GLOBAL_TECHNICAL_KB_ID = (
-    os.getenv("TECHNICAL_GLOBAL_KB_ID") or "beeseo-technical-global-001"
+    os.getenv("TECHNICAL_GLOBAL_KB_ID") or "digiseo-technical-global-001"
 ).strip()
 
 _CHECKLIST_PATH = (
@@ -196,7 +196,7 @@ def build_technical_kb_context(query: str, *, limit: int = 6) -> str:
     hits = search_technical_knowledge(query, limit=limit)
     if not hits:
         return ""
-    lines = ["BeeSEO — Sơ đồ tri thức (dùng chung mọi website):"]
+    lines = ["DigiSEO — Sơ đồ tri thức (dùng chung mọi website):"]
     for h in hits:
         title = h.get("document_title") or "doc"
         snip = str(h.get("snippet") or "")[:500]

@@ -23,7 +23,11 @@ import requests
 from bs4 import BeautifulSoup, NavigableString
 from dotenv import dotenv_values
 
+from app.db import get_db
 from app.models.user import User
+from sqlalchemy.orm import Session
+
+from app.services.saas_pricing_service import get_pricing_plans
 from app.seo_pipeline.constants import CHECKLIST_TITLE_VI
 from app.services.auth import get_current_user
 from app.services.rbac import require_write_user
@@ -45,6 +49,11 @@ from app.services.content_ai_content_images import (
 )
 from app.services.content_ai_google_thumbnail import fetch_and_attach_google_thumbnail
 from app.services.content_ai_thumbnail import generate_and_attach_project_thumbnail
+from app.services.content_ai_image_studio import (
+    generate_professional_previews,
+    insert_selected_image,
+    studio_catalog,
+)
 from app.services.google_cse_images import import_remote_image_url
 from app.services.web_image_search import image_search_status, search_web_images
 from app.services.content_draft_builder import build_draft_payload, detect_search_intent, suggest_content_ai_field
@@ -55,6 +64,11 @@ from app.services.llm_content_writer import (
     optimize_seo_content_html,
     rewrite_html_insert_internal_links,
     suggest_internal_link_row_keywords,
+)
+from app.services.wp_internal_link_apply import apply_merged_internal_links
+from app.services.wp_internal_link_scoring import (
+    compute_relevance_score,
+    suggest_natural_anchor,
 )
 from app.routers.settings_api import (
     HaravanConnectionBody,
@@ -124,6 +138,16 @@ def settings_page(request: Request) -> HTMLResponse:
     resp = templates.TemplateResponse(request=request, name="settings.html", context={})
     resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
     return resp
+
+
+@router.get("/pricing", response_class=HTMLResponse)
+def pricing_page(request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
+    """Bảng giá SaaS — đọc từ DB, chưa thanh toán trực tuyến."""
+    return templates.TemplateResponse(
+        request=request,
+        name="pricing.html",
+        context={"plans": get_pricing_plans(db)},
+    )
 
 
 @router.get("/content-ai", response_class=HTMLResponse)
@@ -272,7 +296,7 @@ def content_ai_projects(
     current_user: User = Depends(get_current_user),
 ) -> JSONResponse:
     return JSONResponse(
-        content={"items": list_content_ai_projects(user_id=current_user.id, limit=max(1, min(limit, 200)))}
+        content={"items": list_content_ai_projects(user_id=current_user.id, limit=max(1, min(limit, 500)))}
     )
 
 
@@ -677,6 +701,119 @@ def content_ai_project_generate_thumbnail_ai(
     return JSONResponse(content=out)
 
 
+class ContentAiStudioGenerateRequest(BaseModel):
+    project_id: str | None = None
+    title: str = ""
+    primary_keyword: str = ""
+    secondary_keywords: list[str] | None = None
+    content_html: str = ""
+    outline_content: str = ""
+    section_heading: str = ""
+    h2_index: int | None = None
+    h2_headings: list[str] | None = None
+    h2_indices: list[int] | None = None
+    target_audience: str = ""
+    industry: str = ""
+    brand_name: str = ""
+    brand_tone: str = "professional"
+    image_type: str = "inline_h2"
+    style_preset: str = "seo_3d_premium"
+    aspect_ratio: str = "16:9"
+    custom_width: int | None = None
+    custom_height: int | None = None
+    count: int = 3
+    include_text: bool = False
+    text_hint: str = ""
+
+
+@router.get("/content-ai/images/studio-presets")
+def content_ai_images_studio_presets(
+    current_user: User = Depends(require_active_trial),
+) -> JSONResponse:
+    return JSONResponse(content=studio_catalog())
+
+
+@router.post("/content-ai/images/generate-professional")
+def content_ai_images_generate_professional(
+    payload: ContentAiStudioGenerateRequest,
+    current_user: User = Depends(require_active_trial),
+) -> JSONResponse:
+    """AI Visual Content Studio — tạo 2–4 preview, không chèn vào bài."""
+    try:
+        out = generate_professional_previews(
+            user_id=current_user.id,
+            title=payload.title,
+            primary_keyword=payload.primary_keyword,
+            secondary_keywords=payload.secondary_keywords,
+            content_html=payload.content_html,
+            outline_content=payload.outline_content,
+            section_heading=payload.section_heading,
+            h2_index=payload.h2_index,
+            h2_headings=payload.h2_headings,
+            h2_indices=payload.h2_indices,
+            target_audience=payload.target_audience,
+            industry=payload.industry,
+            brand_name=payload.brand_name,
+            brand_tone=payload.brand_tone,
+            image_type=payload.image_type,
+            style_preset=payload.style_preset,
+            aspect_ratio=payload.aspect_ratio,
+            custom_width=payload.custom_width,
+            custom_height=payload.custom_height,
+            count=max(2, min(int(payload.count or 3), 4)),
+            include_text=bool(payload.include_text),
+            text_hint=payload.text_hint,
+            project_id=payload.project_id,
+        )
+    except ValueError as exc:
+        msg = str(exc)
+        code = 503 if "OPENAI_API_KEY" in msg or "Model ảnh" in msg else 400
+        raise HTTPException(status_code=code, detail=msg) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Tạo ảnh AI thất bại: {exc}") from exc
+    return JSONResponse(content=out)
+
+
+class ContentAiStudioInsertRequest(BaseModel):
+    url: str
+    mode: str = "inline"
+    project_id: str | None = None
+    content_html: str = ""
+    title: str = ""
+    primary_keyword: str = ""
+    section_heading: str = ""
+    h2_index: int | None = None
+    alt: str = ""
+    caption: str = ""
+
+
+@router.post("/content-ai/images/insert-selected")
+def content_ai_images_insert_selected(
+    payload: ContentAiStudioInsertRequest,
+    current_user: User = Depends(require_active_trial),
+) -> JSONResponse:
+    """Chèn ảnh đã chọn từ studio vào content hoặc featured."""
+    try:
+        out = insert_selected_image(
+            user_id=current_user.id,
+            url=payload.url,
+            mode=payload.mode,
+            project_id=payload.project_id,
+            content_html=payload.content_html,
+            title=payload.title,
+            primary_keyword=payload.primary_keyword,
+            section_heading=payload.section_heading,
+            h2_index=payload.h2_index,
+            alt=payload.alt,
+            caption=payload.caption,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Chèn ảnh thất bại: {exc}") from exc
+    return JSONResponse(content=out)
+
+
 class ContentAiGenerateThumbnailsBatchRequest(BaseModel):
     project_ids: list[str] | None = None
     only_missing: bool = True
@@ -856,6 +993,30 @@ class ContentPostprocessRequest(BaseModel):
     content_html: str
 
 
+class PublishChecklistRequest(BaseModel):
+    title: str = ""
+    meta_description: str = ""
+    content_html: str = ""
+    primary_keyword: str = ""
+
+
+@router.post("/content-ai/publish-checklist")
+def content_ai_publish_checklist(
+    payload: PublishChecklistRequest,
+    current_user: User = Depends(require_active_trial),
+) -> JSONResponse:
+    """Checklist SEO trước publish — chỉ trả JSON cho UI, không ghi vào bài."""
+    from app.services.content_ai_publish_checklist import evaluate_publish_checklist
+
+    data = evaluate_publish_checklist(
+        title=payload.title,
+        meta_description=payload.meta_description,
+        content_html=payload.content_html,
+        primary_keyword=payload.primary_keyword,
+    )
+    return JSONResponse(content=data)
+
+
 @router.post("/content-ai/postprocess-content")
 def content_ai_postprocess_content(
     payload: ContentPostprocessRequest,
@@ -863,11 +1024,15 @@ def content_ai_postprocess_content(
 ) -> JSONResponse:
     """Post-process article HTML (auto blockquotes by word count)."""
     from app.services.content_blockquote_postprocess import postprocess_content_blockquotes, postprocess_stats
+    from app.services.content_ai_publish_checklist import strip_publish_checklist_from_html
+    from app.services.content_table_format import enhance_tables_in_html
 
     raw = str(payload.content_html or "").strip()
     if not raw:
         raise HTTPException(status_code=400, detail="Thiếu content_html.")
     out = postprocess_content_blockquotes(raw)
+    out = strip_publish_checklist_from_html(out)
+    out = enhance_tables_in_html(out)
     stats = postprocess_stats(out)
     return JSONResponse(content={"content_html": out, "stats": stats})
 
@@ -901,7 +1066,10 @@ def content_ai_optimize_html(
     current_user: User = Depends(require_active_trial),
 ) -> JSONResponse:
     try:
+        from app.services.content_ai_publish_checklist import strip_publish_checklist_from_html
+
         out = optimize_seo_content_html(content_html=payload.content_html)
+        out = strip_publish_checklist_from_html(out)
     except Exception as exc:
         raise HTTPException(status_code=502, detail=str(exc)[:900]) from exc
     return JSONResponse(content={"content_html": out})
@@ -926,14 +1094,26 @@ class InternalLinkCandidateRequest(BaseModel):
     limit: int | None = 15
 
 
+class InternalLinkCustomItem(BaseModel):
+    target_url: str
+    anchor_text: str
+    link_type: str | None = "manual"  # money_page | blog | category | service | course | manual
+    priority: str | None = "medium"  # high | medium | low
+    max_insert: int | None = 1
+
+
 class InternalLinkApplyRequest(BaseModel):
     content_html: str
     target_website: str
-    selected_posts: list[dict]
+    selected_posts: list[dict] = []
+    custom_links: list[dict] | None = None
     current_url: str | None = None
     article_primary_keyword: str | None = None
     article_secondary_keywords: str | None = None
-    use_llm_rewrite: bool | None = True  # True = ưu tiên LLM viết lại HTML + chèn anchor
+    use_llm_rewrite: bool | None = False  # True = LLM viết đoạn ngắn + chèn anchor (không dùng popup Tham khảo thêm)
+    apply_mode: str | None = "full"  # full | append_only
+    append_lead: str | None = "Tham khảo thêm:"
+    confirmed_append_urls: list[str] | None = None
 
 
 class InternalLinkRowHintRequest(BaseModel):
@@ -1095,6 +1275,143 @@ def _merge_wp_related_posts(
             seen.add(link)
             merged.append(p)
     return merged
+
+
+def _serp_sitemap_wp_posts_fallback(base: str, topic: str, *, limit: int = 15) -> list[dict]:
+    """Fallback khi WP REST ít kết quả — SERP site: + sitemap (giống pipeline draft)."""
+    from app.services.content_draft_builder import _fetch_related_internal_posts_for_injection
+
+    rows = _fetch_related_internal_posts_for_injection(
+        target_website=base,
+        topic=str(topic or "").strip() or base,
+        max_posts=max(3, min(int(limit or 15), 25)),
+    )
+    out: list[dict] = []
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        link = str(r.get("url") or r.get("link") or "").strip()
+        title = str(r.get("title") or "").strip()
+        if not link:
+            continue
+        slug = ""
+        try:
+            slug = (urlparse(link).path or "").strip("/").split("/")[-1]
+        except Exception:
+            pass
+        out.append(
+            {
+                "link": link,
+                "title": title or slug.replace("-", " "),
+                "slug": slug,
+                "category_names": [],
+                "tag_names": [],
+            }
+        )
+    return out
+
+
+def _merge_posts_by_link(posts: list[dict], extra: list[dict]) -> list[dict]:
+    seen = {str(p.get("link") or "").strip() for p in posts if str(p.get("link") or "").strip()}
+    merged = list(posts)
+    for p in extra:
+        if not isinstance(p, dict):
+            continue
+        link = str(p.get("link") or "").strip()
+        if not link or link in seen:
+            continue
+        seen.add(link)
+        merged.append(p)
+    return merged
+
+
+def _scored_item_from_wp_post(
+    p: dict,
+    *,
+    topic_seed: str,
+    topic: set[str],
+    plain_snip: str,
+    content_html: str,
+    article_primary_keyword: str = "",
+    article_secondary_keywords: str = "",
+    relaxed: bool = False,
+) -> dict[str, Any] | None:
+    if not isinstance(p, dict):
+        return None
+    link = str(p.get("link") or "").strip()
+    if not link:
+        return None
+    cand_text = " ".join(
+        [
+            str(p.get("title") or ""),
+            " ".join(p.get("category_names") or []),
+            " ".join(p.get("tag_names") or []),
+            str(p.get("slug") or ""),
+        ]
+    )
+    if not relaxed and not _same_service_topic(topic_seed, cand_text):
+        return None
+    score = _score_related_post(p, topic, source_text=topic_seed)
+    content_kw_score = _content_keyword_match_score(plain_snip, p) if plain_snip else 0
+    score += content_kw_score
+    art_pk = str(article_primary_keyword or "").strip()
+    art_sec = str(article_secondary_keywords or "").strip()
+    rel = compute_relevance_score(
+        post={**p, "focus_keyword": _focus_keyword_from_wp_item(p)},
+        article_primary_keyword=art_pk,
+        article_secondary_keywords=art_sec,
+        article_search_intent=detect_search_intent(art_pk or topic_seed[:120]),
+        content_plain=plain_snip,
+        topic_tokens=topic,
+    )
+    relevance_score = int(rel.get("relevance_score") or 0)
+    if not relaxed:
+        if score <= 0 and relevance_score < 45:
+            return None
+        if plain_snip and content_kw_score <= 0 and score < 5 and relevance_score < 55:
+            return None
+    title = _clean_post_title(str(p.get("title") or ""))
+    if not title:
+        title = str(p.get("slug") or "").replace("-", " ").strip()
+    if not title:
+        link_raw = str(p.get("link") or "").strip()
+        try:
+            up = urlparse(link_raw)
+            title = (up.path or "/").strip("/").replace("-", " ").strip()
+        except Exception:
+            title = link_raw
+    if not title:
+        title = "(Không có tiêu đề)"
+    target_pk = _target_post_primary_keyword(p)
+    suggested = suggest_natural_anchor(
+        post={**p, "title": title, "focus_keyword": _focus_keyword_from_wp_item(p)},
+        content_html=content_html,
+        focus_keyword=target_pk,
+    )
+    anchor = suggested or target_pk or _default_anchor_text_for_post(p, content_html=content_html)
+    hints = _heuristic_keyword_hints_for_post(p)
+    page_type = str(rel.get("page_type") or "blog")
+    priority = str(rel.get("priority") or "medium")
+    return {
+        "title": title,
+        "link": p.get("link") or "",
+        "slug": p.get("slug") or "",
+        "category_names": p.get("category_names") or [],
+        "tag_names": p.get("tag_names") or [],
+        "target_primary_keyword": target_pk,
+        "score": score,
+        "content_keyword_score": content_kw_score,
+        "relevance_score": relevance_score,
+        "page_type": page_type,
+        "priority": priority,
+        "anchor_in_body": bool(rel.get("anchor_in_body")),
+        "suggested_anchor": suggested or anchor,
+        "anchor_text": anchor,
+        "kw_hint_primary": hints["primary"] or target_pk,
+        "kw_hint_secondary": hints["secondary"],
+        "article_search_intent": rel.get("article_search_intent") or "",
+        "target_search_intent": rel.get("target_search_intent") or "",
+    }
 
 
 def _extract_phrase_seeds_from_content(plain: str, *, max_phrases: int = 6) -> list[str]:
@@ -1831,6 +2148,10 @@ def _inject_internal_links_contextual(content_html: str, posts: list[dict], *, m
             if tag.find("a"):
                 continue
             h2 = tag.find_previous("h2")
+            if h2 is not None:
+                h2_txt = h2.get_text(" ", strip=True)
+                if re.search(r"faq|câu\s*hỏi|hỏi\s*đáp", h2_txt, re.I):
+                    continue
             section_key = str(id(h2)) if h2 else "intro"
             if section_key in used_sections:
                 continue
@@ -2141,6 +2462,16 @@ def content_ai_internal_link_candidates(
 
     seeds = _internal_link_search_seeds(kw, sec_kw, content_html, max_seeds=6)
     posts = _merge_wp_related_posts(base, seeds, per_seed=18, cap=56)
+    plain_snip = BeautifulSoup(content_html, "html.parser").get_text(" ", strip=True)[:2400] if content_html else ""
+    topic_query = kw or (sec_kw.split(",")[0].strip() if sec_kw else "") or plain_snip[:120]
+    if len(posts) < hard_limit:
+        fb = _serp_sitemap_wp_posts_fallback(base, topic_query, limit=hard_limit * 2)
+        posts = _merge_posts_by_link(posts, fb)
+    if len(posts) < 3:
+        posts = _merge_posts_by_link(
+            posts,
+            _fetch_related_posts_wp(base, "", limit=20),
+        )
 
     cur_url = _norm_url_for_compare(str(payload.current_url or ""))
     cur_slug = str(payload.current_slug or "").strip().strip("/").lower()
@@ -2150,72 +2481,64 @@ def content_ai_internal_link_candidates(
             if (not cur_url or _norm_url_for_compare(str(p.get("link") or "")) != cur_url)
             and (not cur_slug or str(p.get("slug") or "").strip().strip("/").lower() != cur_slug)
         ]
-    plain_snip = BeautifulSoup(content_html, "html.parser").get_text(" ", strip=True)[:2400] if content_html else ""
     topic_seed = f"{kw} {sec_kw} {payload.current_slug or ''} {plain_snip}"
     topic = _topic_tokens(topic_seed)
-    scored = []
+    scored: list[dict[str, Any]] = []
     for p in posts:
-        if not isinstance(p, dict):
-            continue
-        cand_text = " ".join(
-            [
-                str(p.get("title") or ""),
-                " ".join(p.get("category_names") or []),
-                " ".join(p.get("tag_names") or []),
-                str(p.get("slug") or ""),
-            ]
+        item = _scored_item_from_wp_post(
+            p,
+            topic_seed=topic_seed,
+            topic=topic,
+            plain_snip=plain_snip,
+            content_html=content_html,
+            article_primary_keyword=kw,
+            article_secondary_keywords=sec_kw,
+            relaxed=False,
         )
-        if not _same_service_topic(topic_seed, cand_text):
-            continue
-        score = _score_related_post(p, topic, source_text=topic_seed)
-        content_kw_score = _content_keyword_match_score(plain_snip, p) if plain_snip else 0
-        score += content_kw_score
-        if score <= 0:
-            continue
-        if plain_snip and content_kw_score <= 0 and score < 8:
-            continue
-        title = _clean_post_title(str(p.get("title") or ""))
-        if not title:
-            title = str(p.get("slug") or "").replace("-", " ").strip()
-        if not title:
-            link_raw = str(p.get("link") or "").strip()
-            try:
-                up = urlparse(link_raw)
-                title = (up.path or "/").strip("/").replace("-", " ").strip()
-            except Exception:
-                title = link_raw
-        if not title:
-            title = "(Không có tiêu đề)"
-        target_pk = _target_post_primary_keyword(p)
-        anchor = target_pk or _default_anchor_text_for_post(p, content_html=content_html)
-        hints = _heuristic_keyword_hints_for_post(p)
-        scored.append(
-            {
-                "title": title,
-                "link": p.get("link") or "",
-                "slug": p.get("slug") or "",
-                "category_names": p.get("category_names") or [],
-                "tag_names": p.get("tag_names") or [],
-                "target_primary_keyword": target_pk,
-                "score": score,
-                "content_keyword_score": content_kw_score,
-                "anchor_text": anchor,
-                "kw_hint_primary": hints["primary"] or target_pk,
-                "kw_hint_secondary": hints["secondary"],
-            }
-        )
-    scored.sort(
-        key=lambda x: (
+        if item:
+            scored.append(item)
+    if not scored and posts:
+        for p in posts[: hard_limit * 2]:
+            item = _scored_item_from_wp_post(
+                p,
+                topic_seed=topic_seed,
+                topic=topic,
+                plain_snip=plain_snip,
+                content_html=content_html,
+                article_primary_keyword=kw,
+                article_secondary_keywords=sec_kw,
+                relaxed=True,
+            )
+            if item:
+                scored.append(item)
+    _page_type_rank = {"money_page": 0, "service": 1, "course": 2, "pillar": 3, "blog": 4, "category": 5, "other": 6}
+
+    def _sort_key(x: dict) -> tuple:
+        pt = str(x.get("page_type") or "blog")
+        return (
+            -int(x.get("relevance_score") or 0),
+            _page_type_rank.get(pt, 9),
             -int(x.get("content_keyword_score") or 0),
-            0 if str(x.get("anchor_text") or "").strip() else 1,
+            0 if str(x.get("suggested_anchor") or x.get("anchor_text") or "").strip() else 1,
             -int(x.get("score") or 0),
-        ),
-    )
+        )
+
+    scored.sort(key=_sort_key)
+    items = scored[:hard_limit]
+    hint = ""
+    if not items:
+        hint = (
+            "Không tìm thấy bài liên quan trên WordPress/SERP. "
+            "Kiểm tra Target website (https://...), REST API /wp-json/wp/v2/posts, "
+            "và thử nhập từ khóa chính hoặc thêm nội dung bài."
+        )
     return JSONResponse(
         content={
-            "items": scored[:hard_limit],
+            "items": items,
             "primary_keyword": kw,
             "search_seeds": seeds,
+            "wp_posts_fetched": len(posts),
+            "hint": hint,
         },
     )
 
@@ -2229,86 +2552,74 @@ def content_ai_internal_link_apply(
     if not content_html:
         raise HTTPException(status_code=400, detail="Thiếu content_html.")
     selected = payload.selected_posts or []
+    custom_raw = payload.custom_links or []
     chosen: list[dict] = []
     for it in selected:
         if not isinstance(it, dict):
             continue
-        link = str(it.get("link") or "").strip()
+        link = str(it.get("link") or it.get("target_url") or "").strip()
         title = str(it.get("title") or "").strip()
         anchor = str(it.get("anchor_text") or "").strip()
-        if link and title:
-            chosen.append({"link": link, "title": title, "anchor_text": anchor})
-    if not chosen:
-        raise HTTPException(status_code=400, detail="Chưa chọn bài viết để đi internal link.")
+        if link and (title or anchor):
+            chosen.append({"link": link, "title": title or anchor, "anchor_text": anchor})
+    custom_list: list[dict] = []
+    for it in custom_raw:
+        if not isinstance(it, dict):
+            continue
+        url = str(it.get("target_url") or it.get("link") or "").strip()
+        anchor = str(it.get("anchor_text") or "").strip()
+        if url or anchor:
+            custom_list.append(dict(it))
+    checked_custom = [c for c in custom_list if str(c.get("target_url") or "").strip() and str(c.get("anchor_text") or "").strip()]
+    if not chosen and not checked_custom:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Chưa có link để chèn: tick chọn custom link (URL + anchor) "
+                "hoặc chọn bài WordPress ở bảng «Tìm bài liên quan»."
+            ),
+        )
 
     use_llm = True if payload.use_llm_rewrite is None else bool(payload.use_llm_rewrite)
     pk_a = str(payload.article_primary_keyword or "").strip()
     sec_a = str(payload.article_secondary_keywords or "").strip()
+    llm_available = False
+    try:
+        llm_available = bool(load_llm_config())
+    except Exception:
+        llm_available = False
 
-    out_html = ""
-    updates: list[dict] = []
-    llm_ok = False
-    if use_llm:
-        cfg = None
-        try:
-            cfg = load_llm_config()
-        except Exception:
-            cfg = None
-        if cfg:
-            try:
-                link_jobs: list[dict[str, str]] = []
-                for it in chosen:
-                    a = str(it.get("anchor_text") or "").strip()
-                    if not a:
-                        a = str(it.get("title") or "").strip()[:120]
-                    link_jobs.append({"url": it["link"], "title": it["title"], "anchor_text": a})
-                out_html = rewrite_html_insert_internal_links(
-                    content_html=content_html,
-                    link_jobs=link_jobs,
-                    article_primary_keyword=pk_a,
-                    article_secondary_keywords=sec_a,
-                )
-                if out_html.strip() and "<a " in out_html.lower():
-                    if _verify_llm_internal_links_html(out_html, link_jobs):
-                        llm_ok = True
-                        updates = [
-                            {
-                                "target_url": j["url"],
-                                "anchor_text": j["anchor_text"],
-                                "target_title": j["title"],
-                                "group": "related",
-                            }
-                            for j in link_jobs
-                        ]
-                    else:
-                        out_html = ""
-            except Exception:
-                out_html = ""
-
-    if not llm_ok:
-        out_html, updates = _inject_selected_internal_links(
-            content_html=content_html,
-            selected_posts=chosen,
-            target_website=str(payload.target_website or ""),
-            max_links_per_section=1,
-        )
-    if not updates:
-        raise HTTPException(
-            status_code=422,
-            detail="Không chèn được internal link. Thử nhập anchor ngắn khớp chủ đề, tắt LLM (nếu lỗi API), hoặc chọn bài liên quan hơn.",
-        )
-    source_url = str(payload.current_url or "").strip()
-    lines = ["Source\tDestination\tAnchor Text"]
-    for u in updates:
-        lines.append(f"{source_url}\t{u.get('target_url','')}\t{u.get('anchor_text','')}")
-    tsv = "\n".join(lines)
+    merged = apply_merged_internal_links(
+        content_html=content_html,
+        custom_links=checked_custom,
+        selected_posts=chosen,
+        current_url=str(payload.current_url or ""),
+        article_primary_keyword=pk_a,
+        article_secondary_keywords=sec_a,
+        use_llm_rewrite=use_llm,
+        llm_available=llm_available,
+        legacy_inject_fn=_inject_selected_internal_links,
+        target_website=str(payload.target_website or ""),
+        apply_mode=str(payload.apply_mode or "full"),
+        append_lead=str(payload.append_lead or "Tham khảo thêm:"),
+        confirmed_append_urls=payload.confirmed_append_urls,
+    )
+    updates = merged.get("updates") or []
+    pending = merged.get("pending_append_offers") or []
+    if not updates and not pending:
+        detail = str(merged.get("error") or "Không chèn được internal link.")
+        raise HTTPException(status_code=422, detail=detail)
     return JSONResponse(
         content={
-            "content_html": out_html,
-            "inserted_links": len(updates),
+            "content_html": merged.get("content_html") or content_html,
+            "inserted_links": int(merged.get("inserted_links") or 0),
             "updates": updates,
-            "screaming_frog_tsv": tsv,
-            "used_llm_rewrite": llm_ok,
+            "link_results": merged.get("link_results") or [],
+            "screaming_frog_tsv": merged.get("screaming_frog_tsv") or "",
+            "used_llm_rewrite": bool(merged.get("used_llm_rewrite")),
+            "insert_mode": str(merged.get("insert_mode") or "minimal"),
+            "pending_append_offers": pending,
+            "verification": merged.get("verification") or {"ok": True, "issues": []},
         }
     )
 
@@ -3438,9 +3749,9 @@ def content_ai_wordpress_sync_posts(
     if count is None:
         return JSONResponse({"ok": False, "count": None, "message": msg})
     plugin_note = (
-        " BeeSEO SEO Helper đã cài."
+        " DigiSEO SEO Helper đã cài."
         if check["plugin_installed"]
-        else " BeeSEO SEO Helper chưa cài — nên cài plugin để tối ưu SEO khi đăng bài."
+        else " DigiSEO SEO Helper chưa cài — nên cài plugin để tối ưu SEO khi đăng bài."
     )
     return JSONResponse({"ok": True, "count": count, "message": msg + plugin_note})
 

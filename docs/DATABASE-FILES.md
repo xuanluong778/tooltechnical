@@ -1,4 +1,4 @@
-# File database BeeSEO (local)
+# File database DigiSEO (local)
 
 Thư mục gốc dự án: `c:\laragon\www\tooltechnical\`
 

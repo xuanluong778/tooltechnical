@@ -4,21 +4,21 @@
 
 | File | Vai trò |
 |------|---------|
-| `static/css/beeseo-theme.css` | Theme sáng/tối |
-| `static/css/beeseo-nav.css` | Top nav, dropdown |
-| `static/js/beeseo-theme-boot.js` | Áp theme từ settings |
-| `static/js/beeseo-i18n.js` | i18n vi/en |
-| `static/js/beeseo-admin-nav.js` | Ẩn/hiện link Admin |
-| `static/js/beeseo-nav-auth.js` | Login state, modal |
+| `static/css/digiseo-theme.css` | Theme sáng/tối |
+| `static/css/digiseo-nav.css` | Top nav, dropdown |
+| `static/js/digiseo-theme-boot.js` | Áp theme từ settings |
+| `static/js/digiseo-i18n.js` | i18n vi/en |
+| `static/js/digiseo-admin-nav.js` | Ẩn/hiện link Admin |
+| `static/js/digiseo-nav-auth.js` | Login state, modal |
 
 ## Partials Jinja
 
 | Partial | Dùng cho |
 |---------|----------|
-| `beeseo_theme_head.html` | CSS/JS head |
-| `beeseo_auth_modal.html` | Modal login/register |
-| `beeseo_i18n.html` | i18n + chatbot |
-| `beeseo_chatbot.html` | Widget chat |
+| `digiseo_theme_head.html` | CSS/JS head |
+| `digiseo_auth_modal.html` | Modal login/register |
+| `digiseo_i18n.html` | i18n + chatbot |
+| `digiseo_chatbot.html` | Widget chat |
 
 ## Workers & queue
 

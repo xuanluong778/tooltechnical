@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SEO Technical Tool</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root {
             --bg: #050b18;
@@ -34,8 +34,7 @@
 
         /* —— Header —— */
         .site-header {
-            position: sticky;
-            top: 0;
+            /* position: fixed — static/css/digiseo-nav.css */
             z-index: 100;
             background: #050B18;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -75,7 +74,7 @@
             font-weight: 800;
             letter-spacing: -0.02em;
         }
-        /* .main-nav layout/sizing: static/css/beeseo-nav.css */
+        /* .main-nav layout/sizing: static/css/digiseo-nav.css */
         .main-nav {
             flex: 1 1 auto;
             min-width: 0;
@@ -535,177 +534,6 @@
         .pw-rules li.ok::before { content: "✓"; color: #15803d; }
         label.pw-label { display: block; font-weight: 600; color: #475569; margin-top: 4px; font-size: 0.85rem; }
 
-        /* Dock tài khoản — góc trái dưới (chỉ thẻ trắng, không khung tối) */
-        .home-user-dock-wrap {
-            position: fixed;
-            left: 12px;
-            bottom: 12px;
-            z-index: 190;
-            width: min(200px, calc(100vw - 24px));
-        }
-        .home-user-dock {
-            position: relative;
-            padding: 0;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            backdrop-filter: none;
-        }
-        .home-ud-popover {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: calc(100% - 4px);
-            margin-bottom: 4px;
-            padding: 6px;
-            background: #1a1b26;
-            border-radius: 10px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .home-ud-popover[hidden] {
-            display: none !important;
-        }
-        .home-ud-popover::after {
-            content: "";
-            position: absolute;
-            bottom: -7px;
-            left: 22px;
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-top: 7px solid #1a1b26;
-        }
-        .home-ud-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 10px 11px;
-            margin: 0;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #f8fafc;
-            font-size: 0.88rem;
-            font-family: inherit;
-            text-align: left;
-            cursor: pointer;
-        }
-        .home-ud-menu-item:hover {
-            background: rgba(255, 255, 255, 0.07);
-        }
-        .home-ud-menu-item svg {
-            flex-shrink: 0;
-            opacity: 0.92;
-        }
-        .home-ud-chev {
-            margin-left: auto;
-            opacity: 0.55;
-            font-size: 0.75rem;
-        }
-        .home-ud-top {
-            display: none;
-        }
-        .home-ud-top-chev {
-            font-size: 0.65rem;
-            color: rgba(148, 163, 184, 0.9);
-            user-select: none;
-        }
-        .home-ud-pill {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            width: 100%;
-            margin: 0;
-            padding: 6px 8px;
-            border-radius: 9px;
-            background: #ffffff;
-            border: 1px solid var(--line);
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            text-align: left;
-            font-family: inherit;
-        }
-        .home-ud-pill:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
-        .home-ud-avatar {
-            flex-shrink: 0;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
-            color: #fff;
-            font-size: 0.78rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-        .home-ud-avatar.is-guest {
-            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        .home-ud-name {
-            flex: 1;
-            min-width: 0;
-            font-size: 0.74rem;
-            line-height: 1.15;
-            font-weight: 500;
-            color: #475569;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .home-ud-dismiss {
-            flex-shrink: 0;
-            width: 22px;
-            height: 22px;
-            margin: 0;
-            padding: 0;
-            border: none;
-            border-radius: 6px;
-            background: transparent;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .home-ud-dismiss:hover {
-            color: #64748b;
-            background: rgba(148, 163, 184, 0.15);
-        }
-        .account-mini-modal-home {
-            z-index: 260;
-        }
-        .account-mini-panel-home h2 {
-            text-align: left;
-            margin-top: 0;
-        }
-        .account-mini-panel-home p {
-            margin: 0 0 8px;
-            color: #475569;
-            font-size: 0.88rem;
-            word-break: break-all;
-            text-align: left;
-        }
-        .account-mini-meta-home {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-        @keyframes homeDockFlash {
-            0%, 100% { box-shadow: inset 0 0 0 0 transparent; }
-            40% { box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.4); }
-        }
-        .features-wrap.home-dock-flash {
-            animation: homeDockFlash 0.9s ease 2;
-        }
         .package-panel-home .package-list-home {
             max-height: min(52vh, 440px);
             overflow: auto;
@@ -738,7 +566,7 @@
             line-height: 1.45;
         }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         .brand { color: #00e676 !important; }
         .brand:hover { color: #1aeb84 !important; }
         .brand-mark { background: linear-gradient(135deg, #00e676 0%, #00c264 100%) !important; color: #04140a !important; }
@@ -746,7 +574,7 @@
         .nav-dd-menu a:hover { background: rgba(0, 230, 118, 0.12) !important; color: #00e676 !important; }
     </style>
 </head>
-<body data-user-dock="sidebar">
+<body>
     <header class="site-header">
         <div class="header-inner">
             <a class="brand" href="/">
@@ -754,7 +582,7 @@
                 <span>SEO Technical Tool</span>
             </a>
             <nav class="main-nav nav" data-i18n-aria="nav.aria" aria-label="Menu chính">
-                {% include "partials/beeseo_main_nav.html" %}
+                {% include "partials/digiseo_main_nav.html" %}
             </nav>
             <div class="header-actions">
                 <span class="lang-flag" title="Tiếng Việt">🇻🇳</span>
@@ -865,47 +693,6 @@
             <div style="height:8px;"></div>
             <button type="button" id="btnGoogleLogin" class="btn-outline">Đăng nhập với Google</button>
             <button type="button" id="btnCloseModal" class="modal-close">Đóng</button>
-        </div>
-    </div>
-
-    <div class="auth-modal account-mini-modal-home" id="accountMiniModalHome" hidden>
-        <div class="auth-panel account-mini-panel-home">
-            <h2>Tài khoản</h2>
-            <p id="accountMiniEmailHome"></p>
-            <p id="accountMiniCreatedHome" class="account-mini-meta-home"></p>
-            <button type="button" id="accountMiniCloseHome" class="modal-close">Đóng</button>
-        </div>
-    </div>
-
-    <div class="home-user-dock-wrap" id="homeUserDockWrap" aria-label="Menu tài khoản">
-        <div class="home-user-dock" id="homeUserDock">
-            <div class="home-ud-popover" id="homeUserMenuPopover" hidden role="menu">
-                <button type="button" class="home-ud-menu-item" id="homeUserMenuAccount" role="menuitem">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    Tài khoản
-                </button>
-                <button type="button" class="home-ud-menu-item" id="homeUserMenuHistory" role="menuitem">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    Lịch sử
-                    <span class="home-ud-chev" aria-hidden="true">›</span>
-                </button>
-                <button type="button" class="home-ud-menu-item" id="homeUserMenuPackage" role="menuitem">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    Gói dịch vụ
-                </button>
-                <button type="button" class="home-ud-menu-item" id="homeUserMenuSession" role="menuitem">
-                    <svg id="homeUserSessionIconIn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    <svg id="homeUserSessionIconOut" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                    <span id="homeUserSessionLabel">Đăng nhập</span>
-                </button>
-            </div>
-            <div class="home-ud-top" aria-hidden="true"><span class="home-ud-top-chev">▼</span></div>
-            <div class="home-ud-pill" id="homeUserPill" role="button" tabindex="0" aria-haspopup="menu" aria-expanded="false" aria-controls="homeUserMenuPopover">
-                <span class="home-ud-avatar is-guest" id="homeUserAvatar">?</span>
-                <span class="home-ud-name" id="homeUserLabel">Chưa đăng nhập</span>
-                <button type="button" class="home-ud-dismiss" id="homeUserPillDismiss" aria-label="Đóng menu tài khoản">×</button>
-            </div>
-            <button type="button" class="beeseo-upgrade-strip" data-beeseo-pricing-open>Upgrade plan</button>
         </div>
     </div>
 
@@ -1106,104 +893,6 @@
         btnTogglePw.setAttribute("aria-label", isPw ? "Ẩn mật khẩu" : "Hiện mật khẩu");
     });
 
-    const homeUserDockWrap = document.getElementById("homeUserDockWrap");
-    const homeUserMenuPopover = document.getElementById("homeUserMenuPopover");
-    const homeUserPill = document.getElementById("homeUserPill");
-    const homeUserLabel = document.getElementById("homeUserLabel");
-    const homeUserAvatar = document.getElementById("homeUserAvatar");
-    const homeUserPillDismiss = document.getElementById("homeUserPillDismiss");
-    const homeUserMenuAccount = document.getElementById("homeUserMenuAccount");
-    const homeUserMenuHistory = document.getElementById("homeUserMenuHistory");
-    const homeUserMenuPackage = document.getElementById("homeUserMenuPackage");
-    const homeUserMenuSession = document.getElementById("homeUserMenuSession");
-    const homeUserSessionLabel = document.getElementById("homeUserSessionLabel");
-    const homeUserSessionIconIn = document.getElementById("homeUserSessionIconIn");
-    const homeUserSessionIconOut = document.getElementById("homeUserSessionIconOut");
-    const accountMiniModalHome = document.getElementById("accountMiniModalHome");
-    const accountMiniEmailHome = document.getElementById("accountMiniEmailHome");
-    const accountMiniCreatedHome = document.getElementById("accountMiniCreatedHome");
-    const accountMiniCloseHome = document.getElementById("accountMiniCloseHome");
-    const homeUserDockTop = document.querySelector("#homeUserDock .home-ud-top");
-    const featuresWrapEl = document.querySelector(".features-wrap");
-
-    let lastMeHome = null;
-
-    function closeHomeUserMenu() {
-        if (!homeUserMenuPopover || homeUserMenuPopover.hidden) return;
-        homeUserMenuPopover.hidden = true;
-        if (homeUserPill) homeUserPill.setAttribute("aria-expanded", "false");
-    }
-
-    function openHomeUserMenu() {
-        if (!homeUserMenuPopover) return;
-        homeUserMenuPopover.hidden = false;
-        if (homeUserPill) homeUserPill.setAttribute("aria-expanded", "true");
-    }
-
-    function toggleHomeUserMenu() {
-        if (!homeUserMenuPopover) return;
-        if (homeUserMenuPopover.hidden) openHomeUserMenu();
-        else closeHomeUserMenu();
-    }
-
-    function setHomeDockSessionRow(loggedIn) {
-        if (!homeUserSessionLabel) return;
-        homeUserSessionLabel.textContent = loggedIn ? "Đăng xuất" : "Đăng nhập";
-        if (homeUserSessionIconIn) homeUserSessionIconIn.hidden = !!loggedIn;
-        if (homeUserSessionIconOut) homeUserSessionIconOut.hidden = !loggedIn;
-    }
-
-    function friendlyEmailLabelHome(email) {
-        if (!email || typeof email !== "string") return "Tài khoản";
-        var s = email.trim();
-        if (s.length <= 30) return s;
-        return s.slice(0, 28) + "…";
-    }
-
-    function avatarLetterHome(email) {
-        var local = (email || "").split("@")[0] || "";
-        var ch = local.trim().charAt(0);
-        return ch ? ch.toUpperCase() : "?";
-    }
-
-    function formatCreatedViHome(iso) {
-        if (!iso) return "";
-        try {
-            var d = new Date(iso);
-            if (Number.isNaN(d.getTime())) return "";
-            return "Ngày tạo tài khoản: " + d.toLocaleString("vi-VN", { dateStyle: "medium", timeStyle: "short" });
-        } catch (e) {
-            return "";
-        }
-    }
-
-    async function refreshHomeUserDock() {
-        if (!homeUserLabel || !homeUserAvatar) return;
-        if (!token) {
-            lastMeHome = null;
-            homeUserLabel.textContent = "Chưa đăng nhập";
-            homeUserAvatar.textContent = "?";
-            homeUserAvatar.classList.add("is-guest");
-            setHomeDockSessionRow(false);
-            closeHomeUserMenu();
-            return;
-        }
-        setHomeDockSessionRow(true);
-        homeUserAvatar.classList.remove("is-guest");
-        try {
-            var r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
-            var d = await r.json().catch(function () { return {}; });
-            if (!r.ok) throw new Error("me");
-            lastMeHome = d;
-            homeUserLabel.textContent = friendlyEmailLabelHome(d.email || "");
-            homeUserAvatar.textContent = avatarLetterHome(d.email);
-        } catch (e) {
-            lastMeHome = null;
-            homeUserLabel.textContent = "Tài khoản";
-            homeUserAvatar.textContent = "U";
-        }
-    }
-
     function applyAuthState() {
         const loggedIn = !!token;
         btnOpenLogin.hidden = loggedIn;
@@ -1212,7 +901,8 @@
         btnGoogleLogin.disabled = loggedIn;
         authModal.hidden = true;
         setAuthMsg("", "");
-        refreshHomeUserDock();
+        if (typeof window.refreshDigiSeoUserDock === "function") window.refreshDigiSeoUserDock();
+        window.dispatchEvent(new CustomEvent("digiseo-auth-change", { detail: { loggedIn: loggedIn } }));
     }
 
     async function doLogin() {
@@ -1275,114 +965,13 @@
     });
     btnLogout.addEventListener("click", function () {
         token = "";
-        if (typeof window.beeSEOLogout === "function") window.beeSEOLogout();
+        if (typeof window.DigiSeoLogout === "function") window.DigiSeoLogout();
         else {
             sessionStorage.removeItem("seo_token");
             document.cookie = "seo_token=; path=/; max-age=0; SameSite=Lax";
         }
         applyAuthState();
     });
-
-    if (homeUserPill && homeUserMenuPopover) {
-        homeUserPill.addEventListener("click", function (e) {
-            if (e.target.closest("#homeUserPillDismiss")) return;
-            toggleHomeUserMenu();
-        });
-        homeUserPill.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleHomeUserMenu();
-            }
-        });
-    }
-    if (homeUserPillDismiss) {
-        homeUserPillDismiss.addEventListener("click", function (e) {
-            e.stopPropagation();
-            closeHomeUserMenu();
-        });
-    }
-    if (homeUserDockTop) {
-        homeUserDockTop.addEventListener("click", function () {
-            toggleHomeUserMenu();
-        });
-    }
-    document.addEventListener("mousedown", function (e) {
-        if (!homeUserDockWrap || !homeUserMenuPopover || homeUserMenuPopover.hidden) return;
-        if (!homeUserDockWrap.contains(e.target)) closeHomeUserMenu();
-    });
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeHomeUserMenu();
-    });
-
-    if (homeUserMenuAccount) {
-        homeUserMenuAccount.addEventListener("click", async function () {
-            closeHomeUserMenu();
-            if (!token) {
-                btnOpenLogin.click();
-                return;
-            }
-            var d = lastMeHome;
-            if (!d || !d.email) {
-                try {
-                    var r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
-                    var parsed = await r.json().catch(function () { return null; });
-                    if (r.ok && parsed) {
-                        d = parsed;
-                        lastMeHome = parsed;
-                    }
-                } catch (e) {
-                    d = null;
-                }
-            }
-            if (accountMiniEmailHome) accountMiniEmailHome.textContent = d && d.email ? String(d.email) : "—";
-            if (accountMiniCreatedHome) {
-                accountMiniCreatedHome.textContent = d && d.created_at ? formatCreatedViHome(d.created_at) : "";
-            }
-            if (accountMiniModalHome) accountMiniModalHome.hidden = false;
-        });
-    }
-    if (homeUserMenuHistory) {
-        homeUserMenuHistory.addEventListener("click", function () {
-            closeHomeUserMenu();
-            if (featuresWrapEl) {
-                featuresWrapEl.scrollIntoView({ behavior: "smooth", block: "start" });
-                featuresWrapEl.classList.remove("home-dock-flash");
-                void featuresWrapEl.offsetWidth;
-                featuresWrapEl.classList.add("home-dock-flash");
-                window.setTimeout(function () {
-                    featuresWrapEl.classList.remove("home-dock-flash");
-                }, 2000);
-            }
-        });
-    }
-    async function openPackageModalHome() {
-        closeHomeUserMenu();
-        setAuthMsg("", "");
-        if (window.openBeeSEOPricingModal) window.openBeeSEOPricingModal();
-    }
-
-    if (homeUserMenuPackage) {
-        homeUserMenuPackage.addEventListener("click", function () {
-            openPackageModalHome();
-        });
-    }
-    if (homeUserMenuSession) {
-        homeUserMenuSession.addEventListener("click", function () {
-            closeHomeUserMenu();
-            if (token) btnLogout.click();
-            else btnOpenLogin.click();
-        });
-    }
-    if (accountMiniCloseHome) {
-        accountMiniCloseHome.addEventListener("click", function () {
-            if (accountMiniModalHome) accountMiniModalHome.hidden = true;
-        });
-    }
-    if (accountMiniModalHome) {
-        accountMiniModalHome.addEventListener("click", function (e) {
-            if (e.target === accountMiniModalHome) accountMiniModalHome.hidden = true;
-        });
-    }
 
     applyAuthState();
 })();
@@ -1403,7 +992,7 @@
     } catch (_) {}
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

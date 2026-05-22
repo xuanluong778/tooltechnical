@@ -1,0 +1,82 @@
+/* Top-right login / logout — pages with main nav strip (not home / tool sidebar) */
+.digiseo-nav-auth-bar {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 250;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    pointer-events: auto;
+    max-width: min(280px, calc(100vw - 24px));
+}
+
+.digiseo-nav-auth-bar[hidden] {
+    display: none !important;
+}
+
+.digiseo-nav-auth-btn {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(15, 23, 42, 0.92);
+    color: #e2e8f0;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+    white-space: nowrap;
+}
+
+.digiseo-nav-auth-btn:hover {
+    color: #f8fafc;
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.digiseo-nav-auth-btn.is-login {
+    border-color: rgba(0, 230, 118, 0.55);
+    color: #00e676;
+    background: rgba(0, 230, 118, 0.12);
+}
+
+.digiseo-nav-auth-btn.is-login:hover {
+    background: rgba(0, 230, 118, 0.2);
+    color: #86efac;
+}
+
+.digiseo-nav-auth-btn.is-logout:hover {
+    color: #fca5a5;
+    border-color: rgba(248, 113, 113, 0.45);
+}
+
+.digiseo-nav-auth-email {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+:is(html[data-theme="light"], html[data-theme="system"][data-theme-resolved="light"]) .digiseo-nav-auth-btn {
+    background: #fff;
+    color: #0f172a;
+    border-color: rgba(15, 23, 42, 0.15);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+:is(html[data-theme="light"], html[data-theme="system"][data-theme-resolved="light"]) .digiseo-nav-auth-btn.is-login {
+    color: #059669;
+    border-color: rgba(5, 150, 105, 0.45);
+    background: rgba(16, 185, 129, 0.1);
+}

@@ -9,7 +9,7 @@ Bạn hãy triển khai Phase 1 SaaS nền móng, chỉ tạo schema/model, chư
 Đọc tài liệu:
 
 ```txt
-docs/beeseo_saas/26-phase1-schema-design.md
+docs/digiseo_saas/26-phase1-schema-design.md
 ```
 
 Nếu file chưa tồn tại, hãy tạo file này và lưu nội dung thiết kế Phase 1 SaaS schema vào đó.

@@ -517,8 +517,12 @@ def extract_clean_html_fragment(raw: str) -> str:
 def _finalize_content_html(s: str) -> str:
     out = extract_clean_html_fragment(_strip_markdown_code_fence(s))
     from app.services.content_blockquote_postprocess import postprocess_content_blockquotes
+    from app.services.content_ai_publish_checklist import strip_publish_checklist_from_html
+    from app.services.content_table_format import enhance_tables_in_html
 
-    return postprocess_content_blockquotes(out)
+    out = postprocess_content_blockquotes(out)
+    out = strip_publish_checklist_from_html(out)
+    return enhance_tables_in_html(out)
 
 
 def _service_mode(pk: str) -> str:

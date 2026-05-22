@@ -527,7 +527,7 @@ def _check_wp_site(site: dict) -> dict:
             if isinstance(data, list):
                 for item in data:
                     name = str((item or {}).get("plugin") or (item or {}).get("name") or "").lower()
-                    if "beeseo" in name or "gen-seo" in name or "gen_seo" in name:
+                    if "DigiSEO" in name or "gen-seo" in name or "gen_seo" in name:
                         plugin_installed = True
                         break
     except Exception:
@@ -706,9 +706,9 @@ def settings_publishing_wordpress_sync_preview(
     if count is None:
         return JSONResponse({"ok": False, "count": None, "message": msg})
     plugin_note = (
-        " BeeSEO SEO Helper đã cài."
+        " DigiSEO SEO Helper đã cài."
         if check["plugin_installed"]
-        else " BeeSEO SEO Helper chưa cài — nên cài plugin để tối ưu SEO khi đăng bài."
+        else " DigiSEO SEO Helper chưa cài — nên cài plugin để tối ưu SEO khi đăng bài."
     )
     return JSONResponse({"ok": True, "count": count, "message": msg + plugin_note})
 

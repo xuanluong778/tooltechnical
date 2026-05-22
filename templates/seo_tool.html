@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kiểm Tra Technical SEO</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root {
             --text: #eef2ff;
@@ -46,16 +46,15 @@
             position: fixed;
             top: 0;
             right: 0;
+            bottom: 0;
             width: var(--tool-sidebar-right-w);
-            min-height: 100vh;
             height: 100vh;
             max-height: 100vh;
             padding: 56px 12px 16px 14px;
-            background: rgba(15, 23, 42, 0.92);
+            background: transparent;
             border-left: none;
-            backdrop-filter: blur(12px);
-            overflow-x: hidden;
-            overflow-y: hidden;
+            backdrop-filter: none;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             z-index: 24;
@@ -69,6 +68,13 @@
             overflow-y: auto;
             padding-bottom: 8px;
             overscroll-behavior: contain;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .sidebar-right-main::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
         }
         .tech-projects-tab-region--right {
             margin-top: 0;
@@ -79,177 +85,36 @@
             position: fixed;
             top: 0;
             left: 0;
+            bottom: 0;
             width: var(--tool-sidebar-w);
-            min-height: 100vh;
             height: 100vh;
             max-height: 100vh;
-            padding: 48px 12px 0 14px;
-            background: rgba(15, 23, 42, 0.88);
+            padding: 48px 12px 14px 14px;
+            background: transparent;
             border-right: none;
-            backdrop-filter: blur(12px);
-            overflow-x: hidden;
-            overflow-y: hidden;
+            backdrop-filter: none;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             z-index: 25;
             box-sizing: border-box;
             overscroll-behavior: contain;
+            pointer-events: none;
+        }
+        .sidebar > * {
+            pointer-events: auto;
         }
         .sidebar-main {
             flex: 1 1 auto;
             min-height: 0;
-            overflow-x: hidden;
-            overflow-y: auto;
-            padding-bottom: 12px;
-            overscroll-behavior: contain;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .sidebar-main::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            height: 0;
-        }
-        .sidebar-user-dock {
-            flex-shrink: 0;
-            position: relative;
-            padding: 0 0 14px;
-            margin-top: auto;
-            z-index: 30;
-        }
-        .user-dock-top {
-            display: none;
-        }
-        .user-dock-top-chev {
-            font-size: 0.65rem;
-            color: rgba(148, 163, 184, 0.85);
-            line-height: 1;
-            user-select: none;
-        }
-        .user-menu-popover {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: calc(100% - 2px);
-            margin-bottom: 4px;
-            padding: 6px;
-            background: #1a1b26;
-            border-radius: 10px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .user-menu-popover[hidden] {
-            display: none !important;
-        }
-        .user-menu-popover::after {
-            content: "";
-            position: absolute;
-            bottom: -7px;
-            left: 22px;
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-top: 7px solid #1a1b26;
-            filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.2));
-        }
-        .user-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 10px 11px;
-            margin: 0;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #f8fafc;
-            font-size: 0.88rem;
-            font-family: inherit;
-            text-align: left;
-            cursor: pointer;
-        }
-        .user-menu-item:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.07);
-        }
-        .user-menu-item:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
-        .user-menu-item svg {
-            flex-shrink: 0;
-            opacity: 0.92;
-        }
-        .user-menu-chev {
-            margin-left: auto;
-            opacity: 0.55;
-            font-size: 0.75rem;
-        }
-        .user-pill {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 9px 10px;
-            border-radius: 10px;
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.95);
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
-            cursor: pointer;
-            text-align: left;
-            font-family: inherit;
-        }
-        .user-pill:focus-visible {
-            outline: 2px solid var(--accent-2);
-            outline-offset: 2px;
-        }
-        .user-avatar {
-            flex-shrink: 0;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
-            color: #fff;
-            font-size: 0.95rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-        .user-avatar.is-guest {
-            background: linear-gradient(135deg, #475569 0%, #64748b 100%);
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .user-name {
-            flex: 1;
-            min-width: 0;
-            font-size: 0.86rem;
-            font-weight: 500;
-            color: #64748b;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            padding-bottom: 0;
+            overscroll-behavior: contain;
+            /* Không chặn click dock cố định phía dưới (pill Đăng nhập) */
+            pointer-events: none;
         }
-        .user-pill-dismiss {
-            flex-shrink: 0;
-            width: 28px;
-            height: 28px;
-            margin: 0;
-            padding: 0;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #94a3b8;
-            font-size: 1.15rem;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .user-pill-dismiss:hover {
-            color: #64748b;
-            background: rgba(148, 163, 184, 0.15);
+        .sidebar-main .tech-sidebar-nav {
+            pointer-events: auto;
         }
         .account-mini-modal {
             z-index: 120;
@@ -510,15 +375,7 @@
             max-width: 220px;
             line-height: 1.35;
         }
-        /* Menu full chiều ngang vùng main — tránh nhét trong .container 840px (gây scrollbar) */
-        .nav-strip {
-            width: 100%;
-            margin: 0 0 16px;
-            overflow: visible;
-        }
-        .nav-strip .nav {
-            margin-bottom: 0;
-        }
+        /* Top nav: position fixed + cỡ cố định — static/css/digiseo-nav.css */
         /* Google GSC/GA: trong card URL, dưới CSV/Google Sheet */
         .google-inline-toolbar {
             margin-top: 14px;
@@ -595,6 +452,9 @@
         .tool-table-panel.is-visible {
             display: flex !important;
             flex-direction: column;
+        }
+        .tool-table-panel.is-visible[hidden] {
+            display: flex !important;
         }
         .tool-table-panel .container--wide {
             max-width: none;
@@ -1333,33 +1193,52 @@
             color: var(--muted);
             line-height: 1.4;
         }
-        /* —— Technical analysis sidebar nav (light card) —— */
+        /* —— Technical analysis sidebar nav (light card, gọn chiều cao) —— */
         .tech-sidebar-nav {
+            position: fixed;
+            top: calc(var(--digiseo-nav-fixed-offset, 76px) + 8px);
+            left: 14px;
+            width: calc(var(--tool-sidebar-w) - 28px);
+            max-width: calc(var(--tool-sidebar-w) - 28px);
+            height: 450px;
+            max-height: 450px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 14px;
+            border-radius: 12px;
             box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-            margin-top: 50px;
-            margin-bottom: 14px;
-            overflow: hidden;
+            margin: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            z-index: 26;
+            box-sizing: border-box;
+        }
+        .tech-sidebar-nav::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            background: transparent !important;
         }
         .tech-nav-head {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            padding: 9px 12px 9px 10px;
+            padding: 8px 10px 8px 8px;
             border: 0;
-            border-left: 4px solid #1d4ed8;
+            border-left: 3px solid #1d4ed8;
             background: #eff6ff;
             font-family: inherit;
-            font-size: 0.88rem;
+            font-size: 0.8rem;
             font-weight: 700;
+            line-height: 1.2;
             color: #1e293b;
             text-align: left;
             cursor: pointer;
         }
-        .tech-nav-head .tech-nav-ico { font-size: 1.1rem; line-height: 1; }
+        .tech-nav-head .tech-nav-ico { font-size: 0.95rem; line-height: 1; }
         .tech-nav-head.is-active {
             background: #dbeafe;
         }
@@ -1371,16 +1250,24 @@
         .tech-nav-list {
             list-style: none;
             margin: 0;
-            padding: 4px 0 6px;
+            padding: 6px 0 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .tech-nav-list > li {
+            margin: 0;
+            padding: 0;
         }
         li.tech-nav-pillar-label {
             list-style: none;
-            margin: 0;
-            padding: 8px 12px 3px;
-            font-size: 0.68rem;
+            margin: 0 0 2px;
+            padding: 6px 10px 4px;
+            font-size: 0.62rem;
             font-weight: 800;
+            line-height: 1.2;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             color: #94a3b8;
         }
         .tech-nav-row {
@@ -1388,12 +1275,14 @@
             align-items: center;
             gap: 8px;
             width: 100%;
-            padding: 6px 10px 6px 12px;
+            min-height: 0;
+            padding: 4px 8px 4px 10px;
             border: 0;
             background: transparent;
             font-family: inherit;
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 600;
+            line-height: 1.35;
             color: #334155;
             text-align: left;
             cursor: pointer;
@@ -1408,9 +1297,9 @@
         }
         .tech-nav-row .tech-nav-ico {
             flex-shrink: 0;
-            width: 22px;
+            width: 18px;
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.88rem;
             line-height: 1;
         }
         .tech-nav-row .tech-nav-label {
@@ -1422,11 +1311,12 @@
         }
         .tech-nav-badge {
             flex-shrink: 0;
-            font-size: 0.68rem;
+            font-size: 0.6rem;
             font-weight: 800;
-            padding: 2px 7px;
+            padding: 1px 5px;
             border-radius: 999px;
             letter-spacing: 0.02em;
+            line-height: 1.2;
         }
         .tech-nav-badge.neutral {
             background: #f1f5f9;
@@ -1512,7 +1402,7 @@
         }
         .sb-empty { font-size: 0.8rem; color: var(--muted); padding: 8px 4px; line-height: 1.5; }
         .container { max-width: 840px; margin: 0 auto; }
-        /* Top nav layout/sizing: static/css/beeseo-nav.css */
+        /* Top nav layout/sizing: static/css/digiseo-nav.css */
         .nav a[href="/report"] {
             background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c3aed 100%);
             border-color: rgba(165, 180, 252, 0.55);
@@ -1589,6 +1479,12 @@
             width: auto;
             z-index: 50;
         }
+        .auth-box[hidden] {
+            display: none !important;
+        }
+        body.page-tool.is-logged-in .auth-box {
+            display: none !important;
+        }
         body.page-tool .auth-box {
             right: calc(var(--tool-sidebar-right-w) + 14px);
         }
@@ -1617,7 +1513,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 30;
+            z-index: 220;
             padding: 20px;
         }
         .auth-modal[hidden] { display: none; }
@@ -1762,7 +1658,7 @@
             color: #e2e8f0;
         }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         h1 { color: #00e676 !important; }
         .sb-item.active {
             color: #00e676 !important;
@@ -1774,8 +1670,8 @@
 </head>
 <body class="page-tool" data-user-dock="sidebar">
     <div class="auth-box" id="authBoxTop">
-        <button type="button" id="btnOpenLogin" class="top-btn">Đăng nhập</button>
-        <button type="button" id="btnLogout" style="margin-top:8px;background:rgba(255,255,255,0.16);border:1px solid var(--line);" hidden>Đăng xuất</button>
+        <button type="button" id="btnOpenLogin" class="top-btn" data-i18n="auth.login">Đăng nhập</button>
+        <button type="button" id="btnLogout" class="top-btn" hidden tabindex="-1" aria-hidden="true">Đăng xuất</button>
         <div id="authMsg" class="auth-status"></div>
     </div>
     <div class="auth-modal" id="authModal" hidden>
@@ -1820,15 +1716,6 @@
             <div style="height:8px;"></div>
             <button type="button" id="btnGoogleLogin" class="btn-outline">Đăng nhập với Google</button>
             <button type="button" id="btnCloseModal" class="modal-close">Đóng</button>
-        </div>
-    </div>
-
-    <div class="auth-modal account-mini-modal" id="accountMiniModal" hidden>
-        <div class="auth-panel account-mini-panel">
-            <h2 style="margin-top:0;">Tài khoản</h2>
-            <p id="accountMiniEmail"></p>
-            <p id="accountMiniCreated" class="account-mini-meta"></p>
-            <button type="button" id="accountMiniClose" class="modal-close">Đóng</button>
         </div>
     </div>
 
@@ -1943,44 +1830,13 @@
                 </ul>
             </nav>
         </div>
-        <div class="sidebar-user-dock" id="sidebarUserDock">
-            <div class="user-menu-popover" id="userMenuPopover" hidden role="menu">
-                <button type="button" class="user-menu-item" id="userMenuAccount" role="menuitem">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    Tài khoản
-                </button>
-                <button type="button" class="user-menu-item" id="userMenuHistory" role="menuitem">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    Lịch sử
-                    <span class="user-menu-chev" aria-hidden="true">›</span>
-                </button>
-                <button type="button" class="user-menu-item" id="userMenuPackage" role="menuitem">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    Gói dịch vụ
-                </button>
-                <button type="button" class="user-menu-item" id="userMenuSession" role="menuitem">
-                    <svg id="userMenuSessionIconIn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    <svg id="userMenuSessionIconOut" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                    <span id="userMenuSessionLabel">Đăng nhập</span>
-                </button>
-            </div>
-            <div class="user-dock-top" aria-hidden="true"><span class="user-dock-top-chev">▼</span></div>
-            <div class="user-pill" id="userPill" role="button" tabindex="0" aria-haspopup="menu" aria-expanded="false" aria-controls="userMenuPopover">
-                <span class="user-avatar is-guest" id="sidebarUserAvatar">?</span>
-                <span class="user-name" id="sidebarUserLabel">Chưa đăng nhập</span>
-                <button type="button" class="user-pill-dismiss" id="userPillDismiss" aria-label="Đóng menu tài khoản">×</button>
-            </div>
-            <button type="button" class="beeseo-upgrade-strip" data-beeseo-pricing-open>Upgrade plan</button>
-        </div>
     </aside>
+    {% set dock_wrap_id = 'sidebarUserDock' %}
+    {% set dock_wrap_class = 'sidebar-user-dock digiseo-user-dock-wrap is-sidebar' %}
+    {% include "partials/digiseo_user_dock.html" %}
     <main class="tool-main">
         <div class="tool-scroll-top">
-            <div class="nav-strip">
-                <div class="nav" data-i18n-aria="nav.aria" aria-label="Menu chính">
-                    <a href="/" data-i18n="nav.brand">SEO Technical Tool</a>
-                    {% include "partials/beeseo_main_nav.html" %}
-                </div>
-            </div>
+            {% include "partials/digiseo_top_nav.html" %}
             <div class="container">
                 <h1>Kiểm Tra Technical SEO</h1>
                 <p class="sub">Chỉ tài khoản đã đăng nhập mới được nhập URL và kiểm tra technical.</p>
@@ -2278,6 +2134,33 @@
             } catch (_e) {
                 wrap.scrollIntoView();
             }
+        }
+
+        function revealToolResultsPanel() {
+            const ttp = document.getElementById("toolTablePanel");
+            if (ttp) {
+                ttp.hidden = false;
+                ttp.classList.add("is-visible");
+            }
+            if (issuesCard) issuesCard.hidden = false;
+        }
+
+        /** Hiển thị bảng lỗi + crawl extras sau quét hoặc khi mở audit từ sidebar */
+        function applyTechnicalScanPayload(d) {
+            if (!d || typeof d !== "object") return;
+            const issues = Array.isArray(d.issues)
+                ? d.issues.filter((it) => it && !it.suppressed)
+                : [];
+            renderCrawlExtras(d);
+            renderTechnicalHealthSummary(d.technical_summary || {});
+            issuesTableFilterBucket = null;
+            renderIssuesTable(issues);
+            revealToolResultsPanel();
+            setTechNavActive("overview");
+            try {
+                const target = document.getElementById("issuesCard") || document.getElementById("toolTablePanel");
+                if (target) scrollToTechPanel(target);
+            } catch (_e) {}
         }
 
         /** Đồng bộ với app/services/report_builder.py — map group → gợi ý / tài liệu */
@@ -3514,105 +3397,12 @@
         const projectSidebar = document.getElementById("projectSidebar");
         const sidebarProjectList = document.getElementById("sidebarProjectList");
         const sidebarMainEl = document.querySelector(".sidebar-main");
-        const userMenuPopover = document.getElementById("userMenuPopover");
-        const userPill = document.getElementById("userPill");
-        const sidebarUserLabel = document.getElementById("sidebarUserLabel");
-        const sidebarUserAvatar = document.getElementById("sidebarUserAvatar");
-        const userPillDismiss = document.getElementById("userPillDismiss");
-        const userMenuAccount = document.getElementById("userMenuAccount");
-        const userMenuHistory = document.getElementById("userMenuHistory");
-        const userMenuPackage = document.getElementById("userMenuPackage");
-        const userMenuSession = document.getElementById("userMenuSession");
-        const userMenuSessionLabel = document.getElementById("userMenuSessionLabel");
-        const userMenuSessionIconIn = document.getElementById("userMenuSessionIconIn");
-        const userMenuSessionIconOut = document.getElementById("userMenuSessionIconOut");
-        const accountMiniModal = document.getElementById("accountMiniModal");
-        const accountMiniEmail = document.getElementById("accountMiniEmail");
-        const accountMiniCreated = document.getElementById("accountMiniCreated");
-        const accountMiniClose = document.getElementById("accountMiniClose");
-        const userDockTop = document.querySelector("#sidebarUserDock .user-dock-top");
-
         let lastMe = null;
         let currentAuditId = null;
         const AUDIT_LS_KEY = "technical_current_audit_id";
 
-        function closeUserMenuPopover() {
-            if (!userMenuPopover || userMenuPopover.hidden) return;
-            userMenuPopover.hidden = true;
-            if (userPill) userPill.setAttribute("aria-expanded", "false");
-        }
-
-        function openUserMenuPopover() {
-            if (!userMenuPopover) return;
-            userMenuPopover.hidden = false;
-            if (userPill) userPill.setAttribute("aria-expanded", "true");
-        }
-
-        function toggleUserMenuPopover() {
-            if (!userMenuPopover) return;
-            if (userMenuPopover.hidden) openUserMenuPopover();
-            else closeUserMenuPopover();
-        }
-
-        function setUserDockSessionRow(loggedIn) {
-            if (!userMenuSessionLabel) return;
-            userMenuSessionLabel.textContent = loggedIn ? "Đăng xuất" : "Đăng nhập";
-            if (userMenuSessionIconIn) userMenuSessionIconIn.hidden = !!loggedIn;
-            if (userMenuSessionIconOut) userMenuSessionIconOut.hidden = !loggedIn;
-        }
-
-        function friendlyEmailLabel(email) {
-            if (!email || typeof email !== "string") return "Tài khoản";
-            const s = email.trim();
-            if (s.length <= 30) return s;
-            return s.slice(0, 28) + "…";
-        }
-
-        function avatarLetter(email) {
-            const local = (email || "").split("@")[0] || "";
-            const ch = local.trim().charAt(0);
-            return ch ? ch.toUpperCase() : "?";
-        }
-
-        function formatCreatedVi(iso) {
-            if (!iso) return "";
-            try {
-                const d = new Date(iso);
-                if (Number.isNaN(d.getTime())) return "";
-                return (
-                    "Ngày tạo tài khoản: " +
-                    d.toLocaleString("vi-VN", { dateStyle: "medium", timeStyle: "short" })
-                );
-            } catch {
-                return "";
-            }
-        }
-
-        async function refreshSidebarUser() {
-            if (!sidebarUserLabel || !sidebarUserAvatar) return;
-            if (!token) {
-                lastMe = null;
-                sidebarUserLabel.textContent = "Chưa đăng nhập";
-                sidebarUserAvatar.textContent = "?";
-                sidebarUserAvatar.classList.add("is-guest");
-                setUserDockSessionRow(false);
-                closeUserMenuPopover();
-                return;
-            }
-            setUserDockSessionRow(true);
-            sidebarUserAvatar.classList.remove("is-guest");
-            try {
-                const r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
-                const d = await r.json().catch(() => ({}));
-                if (!r.ok) throw new Error("me");
-                lastMe = d;
-                sidebarUserLabel.textContent = friendlyEmailLabel(d.email || "");
-                sidebarUserAvatar.textContent = avatarLetter(d.email);
-            } catch {
-                lastMe = null;
-                sidebarUserLabel.textContent = "Tài khoản";
-                sidebarUserAvatar.textContent = "U";
-            }
+        function refreshSidebarUser() {
+            if (typeof window.refreshDigiSeoUserDock === "function") window.refreshDigiSeoUserDock();
         }
 
         function sidebarPlaceholderLoggedOut() {
@@ -3662,17 +3452,7 @@
                 if (d.start_url) urlInput.value = String(d.start_url);
                 else if (d.domain) urlInput.value = "https://" + String(d.domain);
 
-                const s = d.technical_summary || {};
-
-                renderCrawlExtras(d);
-                const issues = Array.isArray(d.issues) ? d.issues : [];
-                renderTechnicalHealthSummary(s);
-                renderIssuesTable(issues);
-                issuesCard.hidden = false;
-                const ttp = document.getElementById("toolTablePanel");
-                if (ttp) ttp.classList.add("is-visible");
-                issuesTableFilterBucket = null;
-                setTechNavActive("overview");
+                applyTechnicalScanPayload(d);
                 setMsg("Đã tải dự án từ sidebar.", "ok");
 
                 // Enable exports for this run
@@ -3901,18 +3681,35 @@
             }
         }
 
+        function dispatchAuthChange() {
+            try {
+                window.dispatchEvent(
+                    new CustomEvent("digiseo-auth-change", { detail: { loggedIn: !!token } }),
+                );
+            } catch (_) {}
+            if (typeof window.refreshDigiSeoNavAuth === "function") window.refreshDigiSeoNavAuth();
+            if (typeof window.refreshDigiSeoUserDock === "function") window.refreshDigiSeoUserDock();
+        }
+
         function applyAuthState() {
             const loggedIn = !!token;
+            document.body.classList.toggle("is-logged-in", loggedIn);
             btn.disabled = !loggedIn;
             btnExportCsv.disabled = !loggedIn;
             btnExportGsheet.disabled = !loggedIn;
             urlInput.disabled = !loggedIn;
-            btnOpenLogin.disabled = loggedIn;
-            btnGoogleLogin.disabled = loggedIn;
+            if (btnGoogleLogin) btnGoogleLogin.disabled = loggedIn;
             authModal.hidden = true;
-            btnLogout.hidden = true;
+            if (btnOpenLogin) {
+                btnOpenLogin.hidden = loggedIn;
+                btnOpenLogin.disabled = false;
+            }
+            if (btnLogout) {
+                btnLogout.hidden = true;
+            }
             if (authBoxTop) authBoxTop.hidden = loggedIn;
-            setAuthMsg("", "");
+            setAuthMsg(loggedIn ? "" : "");
+            dispatchAuthChange();
             if (loggedIn) {
                 loadSidebarProjects();
             } else {
@@ -3987,9 +3784,12 @@
                 if (!r.ok) throw new Error(apiDetail(d));
 
                 showTechnicalCompleteBanner(d);
-                setMsg("Đã quét xong. Xem điểm tổng hợp bên dưới — có thể tải Excel hoặc mở chi tiết từ sidebar phải.", "ok");
+                applyTechnicalScanPayload(d);
+                setMsg(
+                    "Đã quét xong. Xem điểm tổng hợp và danh sách lỗi bên dưới — lọc theo chuyên mục trái hoặc tải Excel.",
+                    "ok",
+                );
                 loadSidebarProjects();
-                setTechNavActive("overview");
                 scanOk = true;
             } catch (e) {
                 clearTimeout(abortTimer);
@@ -4048,30 +3848,46 @@
             }
         }
 
-        btnOpenLogin.addEventListener("click", () => {
+        function openLoginModal() {
+            if (!authModal) return;
             setModalAuthMsg("");
-            authPassword.value = "";
-            updatePwRuleEls();
+            if (authPassword) authPassword.value = "";
+            if (typeof updatePwRuleEls === "function") updatePwRuleEls();
             authModal.hidden = false;
             if (typeof setAuthTab === "function") setAuthTab("login");
-        });
+            try {
+                if (authEmail) authEmail.focus();
+            } catch (_) {}
+        }
+        window.DigiSeoOpenLoginModal = openLoginModal;
+        window.DigiSeoSetAuthTab = setAuthTab;
 
-        btnGoogleLogin.addEventListener("click", () => {
-            setModalAuthMsg("Chưa cấu hình OAuth Google trong backend.", "error");
-        });
+        if (btnOpenLogin) {
+            btnOpenLogin.addEventListener("click", openLoginModal);
+        }
 
-        btnSubmitAuth.addEventListener("click", async () => {
-            await doLogin();
-        });
+        if (btnGoogleLogin) {
+            btnGoogleLogin.addEventListener("click", () => {
+                setModalAuthMsg("Chưa cấu hình OAuth Google trong backend.", "error");
+            });
+        }
 
-        btnCloseModal.addEventListener("click", () => {
-            authModal.hidden = true;
-            setModalAuthMsg("");
-        });
+        if (btnSubmitAuth) {
+            btnSubmitAuth.addEventListener("click", async () => {
+                await doLogin();
+            });
+        }
 
-        btnLogout.addEventListener("click", () => {
+        if (btnCloseModal && authModal) {
+            btnCloseModal.addEventListener("click", () => {
+                authModal.hidden = true;
+                setModalAuthMsg("");
+            });
+        }
+
+        if (btnLogout) btnLogout.addEventListener("click", () => {
             token = "";
-            if (typeof window.beeSEOLogout === "function") window.beeSEOLogout();
+            if (typeof window.DigiSeoLogout === "function") window.DigiSeoLogout();
             else {
                 sessionStorage.removeItem("seo_token");
                 document.cookie = "seo_token=; path=/; max-age=0; SameSite=Lax";
@@ -4079,103 +3895,7 @@
             applyAuthState();
         });
 
-        if (userPill && userMenuPopover) {
-            userPill.addEventListener("click", (e) => {
-                if (e.target.closest("#userPillDismiss")) return;
-                toggleUserMenuPopover();
-            });
-            userPill.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    toggleUserMenuPopover();
-                }
-            });
-        }
-        if (userPillDismiss) {
-            userPillDismiss.addEventListener("click", (e) => {
-                e.stopPropagation();
-                closeUserMenuPopover();
-            });
-        }
-        if (userDockTop) {
-            userDockTop.addEventListener("click", () => toggleUserMenuPopover());
-        }
-        document.addEventListener("mousedown", (e) => {
-            const dock = document.getElementById("sidebarUserDock");
-            if (!dock || !userMenuPopover || userMenuPopover.hidden) return;
-            if (!dock.contains(e.target)) closeUserMenuPopover();
-        });
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeUserMenuPopover();
-        });
-
-        if (userMenuAccount) {
-            userMenuAccount.addEventListener("click", async () => {
-                closeUserMenuPopover();
-                if (!token) {
-                    btnOpenLogin.click();
-                    return;
-                }
-                let d = lastMe;
-                if (!d || !d.email) {
-                    try {
-                        const r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
-                        const parsed = await r.json().catch(() => null);
-                        if (r.ok && parsed) {
-                            d = parsed;
-                            lastMe = parsed;
-                        }
-                    } catch {
-                        d = null;
-                    }
-                }
-                if (accountMiniEmail) accountMiniEmail.textContent = d && d.email ? String(d.email) : "—";
-                if (accountMiniCreated)
-                    accountMiniCreated.textContent = d && d.created_at ? formatCreatedVi(d.created_at) : "";
-                if (accountMiniModal) accountMiniModal.hidden = false;
-            });
-        }
-        if (userMenuHistory) {
-            userMenuHistory.addEventListener("click", () => {
-                closeUserMenuPopover();
-                if (sidebarMainEl) {
-                    sidebarMainEl.scrollTo({ top: 0, behavior: "smooth" });
-                    sidebarMainEl.classList.remove("sb-dock-flash");
-                    void sidebarMainEl.offsetWidth;
-                    sidebarMainEl.classList.add("sb-dock-flash");
-                    window.setTimeout(() => sidebarMainEl.classList.remove("sb-dock-flash"), 2000);
-                }
-            });
-        }
-        function openPackageModalTool() {
-            closeUserMenuPopover();
-            if (window.openBeeSEOPricingModal) window.openBeeSEOPricingModal();
-        }
-
-        if (userMenuPackage) {
-            userMenuPackage.addEventListener("click", () => {
-                openPackageModalTool();
-            });
-        }
-        if (userMenuSession) {
-            userMenuSession.addEventListener("click", () => {
-                closeUserMenuPopover();
-                if (token) btnLogout.click();
-                else btnOpenLogin.click();
-            });
-        }
-        if (accountMiniClose) {
-            accountMiniClose.addEventListener("click", () => {
-                if (accountMiniModal) accountMiniModal.hidden = true;
-            });
-        }
-        if (accountMiniModal) {
-            accountMiniModal.addEventListener("click", (e) => {
-                if (e.target === accountMiniModal) accountMiniModal.hidden = true;
-            });
-        }
-
-        btnExportCsv.addEventListener("click", () => {
+        if (btnExportCsv) btnExportCsv.addEventListener("click", () => {
             if (!token) {
                 setMsg("Cần đăng nhập trước khi xuất dữ liệu.", "error");
                 return;
@@ -4188,7 +3908,7 @@
             window.open("/api/report.csv", "_blank");
         });
 
-        btnExportGsheet.addEventListener("click", () => {
+        if (btnExportGsheet) btnExportGsheet.addEventListener("click", () => {
             if (!token) {
                 setMsg("Cần đăng nhập trước khi xuất dữ liệu.", "error");
                 return;
@@ -4226,7 +3946,7 @@
             });
         }
 
-        btnGoogleApisConnect.addEventListener("click", async () => {
+        if (btnGoogleApisConnect) btnGoogleApisConnect.addEventListener("click", async () => {
             if (!token) return;
             try {
                 const r = await fetch("/integrations/google/start", {
@@ -4241,7 +3961,7 @@
             }
         });
 
-        btnGoogleApisDisconnect.addEventListener("click", async () => {
+        if (btnGoogleApisDisconnect) btnGoogleApisDisconnect.addEventListener("click", async () => {
             if (!token) return;
             try {
                 const r = await fetch("/integrations/google/disconnect", {
@@ -4305,23 +4025,8 @@
             }
         })();
     </script>
-<script>
-(() => {
-    try {
-        const path = (window.location && window.location.pathname) ? window.location.pathname.replace(/\/+$/, "") : "";
-        document.querySelectorAll('.nav a, nav[aria-label="Menu chính"] a').forEach((a) => {
-            const href = (a.getAttribute("href") || "").trim();
-            if (!href || href.startsWith("http")) return;
-            const h = href.replace(/\/+$/, "");
-            if (h && h === path) a.classList.add("active");
-        });
-        if (path === "/settings") {
-            document.querySelectorAll('a[href="/settings"]').forEach((b) => b.classList.add("active"));
-        }
-    } catch (_) {}
-})();
-</script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% set skip_global_user_dock = true %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

@@ -7,7 +7,7 @@ API: `/admin/api/*`, alias `/api/admin/*`
 
 ## Ai được xem?
 
-Chỉ user có `role === "admin"` (nav ẩn qua `static/js/beeseo-admin-nav.js` + `data-nav-admin`).
+Chỉ user có `role === "admin"` (nav ẩn qua `static/js/digiseo-admin-nav.js` + `data-nav-admin`).
 
 > Không dùng `/auth/login/flags` `is_admin` cho nav — chỉ `/auth/me` role.
 

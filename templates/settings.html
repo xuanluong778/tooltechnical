@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cài đặt — SEO Technical Tool</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root {
             --bg: #050b18;
@@ -25,12 +25,12 @@
         a { color: #93c5fd; text-decoration: none; }
         a:hover { text-decoration: underline; }
 
-        /* Top nav layout/sizing: static/css/beeseo-nav.css */
+        /* Top nav layout/sizing: static/css/digiseo-nav.css */
         .nav-dd { position: relative; display: inline-flex; flex-direction: column; align-self: center; z-index: 20; }
         .nav-dd::before {
             content: ""; position: absolute; left: 0; width: max(100%, 220px); top: 100%; height: 14px; z-index: 19;
         }
-        /* .nav-dd-btn sizing: beeseo-nav.css */
+        /* .nav-dd-btn sizing: digiseo-nav.css */
         .nav-dd:hover .nav-dd-btn, .nav-dd:focus-within .nav-dd-btn {
             color: #f1f5f9;
             background: rgba(255, 255, 255, 0.12);
@@ -2408,19 +2408,7 @@
     </style>
 </head>
 <body data-user-dock="hidden">
-    <div class="nav-strip">
-        <nav class="nav" data-i18n-aria="nav.aria" aria-label="Menu chính">
-            <a href="/" data-i18n="nav.brand">SEO Technical Tool</a>
-            <a href="/report" data-i18n="nav.dashboard">Dashboard</a>
-            <a href="/tool" data-i18n="nav.technical">Phân Tích Technical</a>
-            <a href="/tool/seo-score" data-i18n="nav.seo_score">Chấm điểm SEO</a>
-            <a href="/content-ai" data-i18n="nav.content_ai">Content AI</a>
-            <a href="/keywords/tools/research" data-i18n="nav.keyword">Từ khóa</a>
-            <a href="/schema" data-i18n="nav.schema">Schema</a>
-            <a href="/settings" class="active" aria-current="page" data-i18n="nav.settings">Cài đặt</a>
-            <a href="/admin" data-nav-admin hidden class="nav-admin-only" data-i18n="nav.admin">Quản trị viên</a>
-        </nav>
-    </div>
+    {% include "partials/digiseo_top_nav.html" %}
 
     <div class="settings-wrap">
         <aside class="settings-sb" data-i18n-aria="settings.sb.aria" aria-label="Mục cài đặt">
@@ -2481,7 +2469,7 @@
 
                         <div class="acc-saas" id="accSaasBlock">
                             <div class="acc-plan-head" style="margin-top:4px;">
-                                <h3 class="acc-plan-title">Gói <span class="plan-strong">BeeSEO SaaS</span></h3>
+                                <h3 class="acc-plan-title">Gói <span class="plan-strong">DigiSEO SaaS</span></h3>
                                 <span class="acc-plan-badge" id="accSaasPlanBadge">—</span>
                             </div>
                             <p class="acc-saas-msg" id="accSaasMessage" hidden></p>
@@ -2523,7 +2511,7 @@
                                 <span class="title">Upgrade plan</span>
                                 <span class="desc">Mở thêm credit, gọi nhiều API hơn và mở thiết bị bổ sung.</span>
                             </div>
-                            <a class="acc-btn-outline" href="#" data-beeseo-pricing-open id="accViewPricingTop">View pricing</a>
+                            <a class="acc-btn-outline" href="/pricing" id="accViewPricingTop">View pricing</a>
                         </div>
 
                         <div class="acc-verify-row">
@@ -2531,7 +2519,7 @@
                                 <button type="button" class="acc-btn-outline" id="accVerify">Verify license</button>
                                 <span class="acc-license-state" id="accLicenseState">License valid</span>
                             </div>
-                            <a class="acc-btn-outline" href="#" data-beeseo-pricing-open id="accViewPricingBottom">View pricing</a>
+                            <a class="acc-btn-outline" href="/pricing" id="accViewPricingBottom">View pricing</a>
                         </div>
                     </div>
                 </div>
@@ -2543,7 +2531,7 @@
             <section id="affiliate">
                 <div class="aff-head">
                     <h2>Register as Affiliate</h2>
-                    <p class="lead">Trở thành affiliate để nhận hoa hồng khi giới thiệu khách hàng mua gói BeeSEO. Bạn sẽ nhận được mã coupon riêng để chia sẻ.</p>
+                    <p class="lead">Trở thành affiliate để nhận hoa hồng khi giới thiệu khách hàng mua gói DigiSEO. Bạn sẽ nhận được mã coupon riêng để chia sẻ.</p>
                 </div>
 
                 <div class="aff-card">
@@ -2648,7 +2636,7 @@
                 </div>
 
                 <div class="apik-trial-card" id="apikTrialCard" style="margin-bottom:16px;padding:14px 16px;border-radius:12px;border:1px solid rgba(34,197,94,.35);background:rgba(22,101,52,.15);">
-                    <div style="font-weight:700;color:#86efac;margin-bottom:6px;">Dùng thử 7 ngày</div>
+                    <div id="apikTrialTitle" style="font-weight:700;color:#86efac;margin-bottom:6px;">Dùng thử 5 ngày</div>
                     <p id="apikTrialMessage" style="margin:0 0 8px;font-size:0.9rem;color:var(--muted);">Đang tải…</p>
                     <ul style="margin:0;padding-left:1.1rem;font-size:0.85rem;color:#cbd5e1;line-height:1.6;">
                         <li>Bắt đầu: <span id="apikTrialStart">—</span></li>
@@ -2684,7 +2672,7 @@
                     </div>
                 </div>
                 <p class="card-hint" style="margin-top: 16px;">
-                    Khóa API được mã hóa trong cơ sở dữ liệu (<code style="color:#86efac;">user_api_keys</code>). Dùng thử 7 ngày kích hoạt khi thêm khóa hợp lệ lần đầu. Swagger: <a href="/docs">/docs</a>.
+                    Khóa API được mã hóa trong cơ sở dữ liệu (<code style="color:#86efac;">user_api_keys</code>). Dùng thử 5 ngày kích hoạt khi thêm khóa hợp lệ lần đầu (BYOK). Swagger: <a href="/docs">/docs</a>.
                 </p>
             </section>
 
@@ -2872,7 +2860,7 @@
             <section id="publishing">
                 <div class="pub-head">
                     <h2>Publishing platforms</h2>
-                    <p class="lead">Quản lý kết nối tới các nền tảng để BeeSEO có thể đăng bài tự động sau khi viết.</p>
+                    <p class="lead">Quản lý kết nối tới các nền tảng để DigiSEO có thể đăng bài tự động sau khi viết.</p>
                 </div>
 
                 <div class="pub-tabs" role="tablist" id="pubTabs">
@@ -2932,14 +2920,14 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3 2 21h20L12 3Z" stroke="#facc15" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 10v5" stroke="#facc15" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="18" r="1" fill="#facc15"/></svg>
                     </div>
                     <div class="pub-plugin-warn-body">
-                        <div class="pub-plugin-warn-title">BeeSEO SEO Helper Plugin Not Installed</div>
+                        <div class="pub-plugin-warn-title">DigiSEO SEO Helper Plugin Not Installed</div>
                         <div class="pub-plugin-warn-text" id="pubPluginWarnText">
-                            Một số site WordPress chưa cài plugin <strong>BeeSEO SEO Helper</strong> — plugin sẽ tự tối ưu SEO (OpenGraph, Schema, RankMath/Yoast sync) cho bài đăng từ BeeSEO.
+                            Một số site WordPress chưa cài plugin <strong>DigiSEO SEO Helper</strong> — plugin sẽ tự tối ưu SEO (OpenGraph, Schema, RankMath/Yoast sync) cho bài đăng từ DigiSEO.
                         </div>
                         <div class="pub-plugin-warn-steps">
                             <div><strong>Cài đặt:</strong></div>
                             <ol>
-                                <li>Tải file plugin <code>beeseo-seo-helper.zip</code>.</li>
+                                <li>Tải file plugin <code>digiseo-seo-helper.zip</code>.</li>
                                 <li>Vào <strong>WordPress Admin → Plugins → Add New → Upload Plugin</strong>.</li>
                                 <li>Chọn file zip rồi bấm <strong>Install Now → Activate</strong>.</li>
                             </ol>
@@ -2974,7 +2962,7 @@
                                     <li>Under <strong>Scopes</strong>, enable <code>web.read_contents</code> and <code>web.write_contents</code>.</li>
                                     <li>Copy the <strong>Private Token</strong> from the app detail page.</li>
                                 </ol>
-                                <div class="tip-note">Private Token is long-lived. BeeSEO uses it to call Haravan REST APIs (e.g. blogs).</div>
+                                <div class="tip-note">Private Token is long-lived. DigiSEO uses it to call Haravan REST APIs (e.g. blogs).</div>
                             </div>
                         </div>
 
@@ -2988,14 +2976,14 @@
                                     <ol>
                                         <li>Go to <a href="https://dev.shopify.com" target="_blank" rel="noopener" style="color:#93c5fd">dev.shopify.com</a> and sign in.</li>
                                         <li>Go to <strong>Apps → Create app</strong>.</li>
-                                        <li>Select the store and name the app (e.g. &quot;BeeSEO Publisher&quot;).</li>
+                                        <li>Select the store and name the app (e.g. &quot;DigiSEO Publisher&quot;).</li>
                                         <li>In <strong>Configuration</strong>, set <strong>Admin API access scopes</strong>:
                                             <code>read_content</code>, <code>write_content</code>,
                                             <code>read_files</code>, <code>write_files</code>.</li>
                                         <li>In <strong>Client credentials</strong>, copy <strong>Client ID</strong> and <strong>Client secret</strong>.</li>
                                         <li>Click <strong>Deploy</strong> to install the app.</li>
                                     </ol>
-                                    <div class="tip-note">BeeSEO will automatically obtain an Access Token from Client ID and Client Secret when needed (token valid for 24 hours, auto-refreshed).</div>
+                                    <div class="tip-note">DigiSEO will automatically obtain an Access Token from Client ID and Client Secret when needed (token valid for 24 hours, auto-refreshed).</div>
                                 </div>
                             </div>
                         </div>
@@ -3058,7 +3046,7 @@
                                 <input type="password" id="pubWebcakeAccessToken" placeholder="Access Token from Webcake" autocomplete="off" />
                                 <button type="button" class="pub-pass-toggle" id="pubToggleWebcakeAccess" title="Show / hide">👁</button>
                             </div>
-                            <p class="pub-pass-hint pub-webcake-field-hint" id="pubWebcakeAccessHint">Expires after 1 hour. BeeSEO will renew it automatically with the Refresh Token.</p>
+                            <p class="pub-pass-hint pub-webcake-field-hint" id="pubWebcakeAccessHint">Expires after 1 hour. DigiSEO will renew it automatically with the Refresh Token.</p>
                             <label id="pubLabelWebcakeRefresh">Refresh Token <span class="req" id="pubWebcakeRefreshReq">*</span></label>
                             <div class="pub-pass-wrap">
                                 <input type="password" id="pubWebcakeRefreshToken" placeholder="Refresh Token from Webcake" autocomplete="off" />
@@ -3335,7 +3323,7 @@
                     <div class="sys-row-toggle">
                         <div>
                             <h3 style="margin-bottom:6px" data-i18n="system.startup_title">Start with the operating system</h3>
-                            <p class="sys-sub" style="margin:0" data-i18n="system.startup_desc">Launch BeeSEO automatically when the computer starts</p>
+                            <p class="sys-sub" style="margin:0" data-i18n="system.startup_desc">Launch DigiSEO automatically when the computer starts</p>
                             <p class="sys-sub" style="margin:8px 0 0;font-size:0.76rem" data-i18n="system.startup_note">Saved for your account. Desktop app builds can read this preference later.</p>
                         </div>
                         <button type="button" class="sys-toggle" id="sysLaunchToggle" aria-pressed="false" aria-label="Launch on startup"></button>
@@ -3379,14 +3367,33 @@
     </div>
 <script>
 (() => {
+    window.__settingsReadSeoToken = function () {
+        try {
+            let t = (sessionStorage.getItem("seo_token") || "").trim();
+            if (!t) {
+                const m = document.cookie.match(/(?:^|;\s*)seo_token=([^;]*)/);
+                t = m ? decodeURIComponent(m[1].replace(/\+/g, " ")).trim() : "";
+                if (t) sessionStorage.setItem("seo_token", t);
+            }
+            return t;
+        } catch (_) {
+            const m = document.cookie.match(/(?:^|;\s*)seo_token=([^;]*)/);
+            return m ? decodeURIComponent(m[1].replace(/\+/g, " ")).trim() : "";
+        }
+    };
     window.__settingsAuthHeaders = function (extra) {
         const h = { ...(extra || {}) };
-        const t = (sessionStorage.getItem("seo_token") || "").trim();
+        const t = window.__settingsReadSeoToken();
         if (t) h.Authorization = "Bearer " + t;
         return h;
     };
     window.__settingsAuthJson = function () {
         return window.__settingsAuthHeaders({ "Content-Type": "application/json" });
+    };
+    window.__settingsFetch = function (url, opts) {
+        const o = { credentials: "same-origin", ...(opts || {}) };
+        o.headers = window.__settingsAuthHeaders(o.headers || {});
+        return fetch(url, o);
     };
     try {
         const path = (window.location && window.location.pathname) ? window.location.pathname.replace(/\/+$/, "") : "";
@@ -3519,7 +3526,7 @@
         revealBtn.addEventListener("click", async () => {
             if (!revealed && !fullKey) {
                 try {
-                    const r = await fetch(`/api/settings/api-keys/${item.id}`, {
+                    const r = await __settingsFetch(`/api/settings/api-keys/${item.id}`, {
                         headers: window.__settingsAuthHeaders(),
                     });
                     if (!r.ok) throw new Error("Không tải được khóa");
@@ -3537,7 +3544,7 @@
         const toggleInput = tr.querySelector(".apik-toggle-input");
         toggleInput.addEventListener("change", async () => {
             try {
-                const r = await fetch(`/api/settings/api-keys/${item.id}`, {
+                const r = await __settingsFetch(`/api/settings/api-keys/${item.id}`, {
                     method: "PATCH",
                     headers: window.__settingsAuthJson(),
                     body: JSON.stringify({ enabled: toggleInput.checked }),
@@ -3554,7 +3561,7 @@
 
         tr.querySelector(".btn-test").addEventListener("click", async () => {
             try {
-                const r = await fetch(`/api/settings/api-keys/${item.id}/test`, {
+                const r = await __settingsFetch(`/api/settings/api-keys/${item.id}/test`, {
                     method: "POST",
                     headers: window.__settingsAuthHeaders(),
                 });
@@ -3570,7 +3577,7 @@
         tr.querySelector(".btn-del").addEventListener("click", async () => {
             if (!confirm(`Xóa khóa "${item.name}"?`)) return;
             try {
-                const r = await fetch(`/api/settings/api-keys/${item.id}`, {
+                const r = await __settingsFetch(`/api/settings/api-keys/${item.id}`, {
                     method: "DELETE",
                     headers: window.__settingsAuthHeaders(),
                 });
@@ -3588,6 +3595,8 @@
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     })[c]);
 
+    const DEFAULT_TRIAL_DAYS = 5;
+
     const renderTrial = (trial) => {
         const t = trial || {};
         const msgEl = $("apikTrialMessage");
@@ -3595,7 +3604,10 @@
         const endEl = $("apikTrialEnd");
         const daysEl = $("apikTrialDaysLeft");
         const card = $("apikTrialCard");
+        const titleEl = $("apikTrialTitle");
         if (!msgEl) return;
+        const trialDays = Number(t.trial_days) > 0 ? Number(t.trial_days) : DEFAULT_TRIAL_DAYS;
+        if (titleEl) titleEl.textContent = "Dùng thử " + trialDays + " ngày";
         msgEl.textContent = t.message || "";
         if (t.started_at) {
             try { startEl.textContent = new Date(t.started_at).toLocaleString("vi-VN"); } catch (_) { startEl.textContent = t.started_at; }
@@ -3616,7 +3628,7 @@
 
     const refresh = async () => {
         try {
-            const r = await fetch("/api/settings/api-keys", { headers: window.__settingsAuthHeaders() });
+            const r = await __settingsFetch("/api/settings/api-keys", { headers: window.__settingsAuthHeaders() });
             if (!r.ok) throw new Error("Không tải được danh sách");
             const data = await r.json();
             tbody.innerHTML = "";
@@ -3686,7 +3698,7 @@
         }
         errEl.textContent = "";
         try {
-            const r = await fetch("/api/settings/api-keys/verify", {
+            const r = await __settingsFetch("/api/settings/api-keys/verify", {
                 method: "POST",
                 headers: window.__settingsAuthJson(),
                 body: JSON.stringify({ provider: providerInput.value, api_key: v }),
@@ -3721,7 +3733,7 @@
         try {
             const url = editingId ? `/api/settings/api-keys/${editingId}` : "/api/settings/api-keys";
             const method = editingId ? "PATCH" : "POST";
-            const r = await fetch(url, {
+            const r = await __settingsFetch(url, {
                 method,
                 headers: window.__settingsAuthJson(),
                 body: JSON.stringify(payload),
@@ -3734,7 +3746,7 @@
             }
             if (data.trial) renderTrial(data.trial);
             if (data.trial_activation && data.trial_activation.activated) {
-                alert(data.trial_activation.message || "Đã kích hoạt dùng thử 7 ngày.");
+                alert(data.trial_activation.message || "Đã kích hoạt dùng thử 5 ngày.");
             }
             closeModal();
             await refresh();
@@ -3772,7 +3784,7 @@
     const btnVerify = $("accVerify");
 
     const TOKEN_KEY = "seo_token";
-    const token = sessionStorage.getItem(TOKEN_KEY) || "";
+    const token = window.__settingsReadSeoToken ? window.__settingsReadSeoToken() : (sessionStorage.getItem(TOKEN_KEY) || "");
 
     const showAnon = () => {
         wrapSigned.hidden = true;
@@ -3860,6 +3872,8 @@
         elMonth.textContent = data.usage_month || "—";
 
         const trialBits = [];
+        if (data.byok_note) trialBits.push(data.byok_note);
+        if (data.trial_days) trialBits.push("Dùng thử " + data.trial_days + " ngày");
         if (data.trial_status) trialBits.push("Trial: " + data.trial_status);
         if (data.trial_message) trialBits.push(data.trial_message);
         trialBits.push("API access: " + (data.api_access_enabled ? "bật" : "tắt"));
@@ -3951,7 +3965,11 @@
             return;
         }
         try {
-            const r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
+            const liveToken = window.__settingsReadSeoToken ? window.__settingsReadSeoToken() : token;
+            const r = await fetch("/auth/me", {
+                credentials: "same-origin",
+                headers: { Authorization: "Bearer " + liveToken },
+            });
             if (!r.ok) {
                 showAnon();
                 return;
@@ -3966,8 +3984,8 @@
     };
 
     btnLogout.addEventListener("click", () => {
-        if (typeof window.beeSEOLogout === "function") {
-            window.beeSEOLogout();
+        if (typeof window.DigiSeoLogout === "function") {
+            window.DigiSeoLogout();
         } else {
             sessionStorage.removeItem(TOKEN_KEY);
             document.cookie = "seo_token=; path=/; max-age=0; SameSite=Lax";
@@ -3981,7 +3999,11 @@
             return;
         }
         try {
-            const r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
+            const liveToken = window.__settingsReadSeoToken ? window.__settingsReadSeoToken() : token;
+            const r = await fetch("/auth/me", {
+                credentials: "same-origin",
+                headers: { Authorization: "Bearer " + liveToken },
+            });
             if (r.ok) {
                 elLicenseState.textContent = "License valid";
                 elLicenseState.classList.remove("invalid");
@@ -4124,7 +4146,7 @@
     const load = async () => {
         showErr("");
         try {
-            const r = await fetch("/api/settings/ai-provider", { headers: window.__settingsAuthHeaders() });
+            const r = await __settingsFetch("/api/settings/ai-provider", { headers: window.__settingsAuthHeaders() });
             if (!r.ok) {
                 showErr("Không tải được cấu hình nhà cung cấp (" + r.status + ").");
                 return;
@@ -4139,7 +4161,7 @@
     chk.addEventListener("change", async () => {
         chk.disabled = true;
         try {
-            const r = await fetch("/api/settings/ai-provider", {
+            const r = await __settingsFetch("/api/settings/ai-provider", {
                 method: "PATCH",
                 headers: window.__settingsAuthJson(),
                 body: JSON.stringify({ pipeline_multi_model: chk.checked }),
@@ -4225,13 +4247,16 @@
     };
 
     const fetchAikbUserRole = async () => {
-        const token = (sessionStorage.getItem("seo_token") || "").trim();
+        const token = window.__settingsReadSeoToken ? window.__settingsReadSeoToken() : "";
         if (!token) {
             aikbUserRole = "user";
             return;
         }
         try {
-            const r = await fetch("/auth/me", { headers: { Authorization: "Bearer " + token } });
+            const r = await fetch("/auth/me", {
+                credentials: "same-origin",
+                headers: { Authorization: "Bearer " + token },
+            });
             if (r.ok) {
                 const u = await r.json();
                 aikbUserRole = String(u.role || "user").toLowerCase();
@@ -4412,7 +4437,7 @@
             }
             if (!confirm('Xóa knowledge base "' + (item.name || "") + '" và toàn bộ tài liệu?')) return;
             try {
-                const r = await fetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(item.id), {
+                const r = await __settingsFetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(item.id), {
                     method: "DELETE",
                     headers: window.__settingsAuthHeaders(),
                 });
@@ -4429,8 +4454,15 @@
         showLoadErr("");
         await fetchAikbUserRole();
         try {
-            const r = await fetch("/api/settings/ai-knowledge-bases", { headers: window.__settingsAuthHeaders() });
-            if (!r.ok) throw new Error("Không tải được danh sách (" + r.status + ")");
+            const r = await __settingsFetch("/api/settings/ai-knowledge-bases");
+            if (!r.ok) {
+                if (r.status === 401) {
+                    throw new Error(
+                        "Phiên đăng nhập hết hạn hoặc chưa đăng nhập. Mở mục Tài khoản → Đăng nhập, hoặc đăng nhập tại trang chủ rồi quay lại."
+                    );
+                }
+                throw new Error("Không tải được danh sách (" + r.status + ")");
+            }
             const data = await r.json();
             const items = data.items || [];
             kbItemsCache = items;
@@ -4505,7 +4537,7 @@
             const url = editingId
                 ? "/api/settings/ai-knowledge-bases/" + encodeURIComponent(editingId)
                 : "/api/settings/ai-knowledge-bases";
-            const r = await fetch(url, {
+            const r = await __settingsFetch(url, {
                 method: editingId ? "PATCH" : "POST",
                 headers: window.__settingsAuthJson(),
                 body: JSON.stringify(payload),
@@ -4561,12 +4593,11 @@
     const fetchKbDocument = async (kbId, docId) => {
         const id = encodeURIComponent(docId);
         const base = "/api/settings/ai-knowledge-bases/" + encodeURIComponent(kbId) + "/documents";
-        const authHdr = window.__settingsAuthHeaders();
-        let r = await fetch(base + "/" + id, { headers: authHdr });
+        let r = await __settingsFetch(base + "/" + id);
         let data = await r.json().catch(() => ({}));
         if (r.ok && data.document) return data.document;
         if (r.status === 404) {
-            r = await fetch(base + "?doc_id=" + id, { headers: authHdr });
+            r = await __settingsFetch(base + "?doc_id=" + id);
             data = await r.json().catch(() => ({}));
             if (r.ok && data.document) return data.document;
         }
@@ -4623,9 +4654,8 @@
         docsModal.hidden = false;
         docsModal.classList.add("is-open");
         try {
-            const r = await fetch(
-                "/api/settings/ai-knowledge-bases/" + encodeURIComponent(item.id) + "/documents",
-                { headers: window.__settingsAuthHeaders() }
+            const r = await __settingsFetch(
+                "/api/settings/ai-knowledge-bases/" + encodeURIComponent(item.id) + "/documents"
             );
             const data = await r.json().catch(() => ({}));
             if (!r.ok) {
@@ -4767,7 +4797,7 @@
             if (importPane === "paste") {
                 const body = { title: (pasteTitle && pasteTitle.value.trim()) || "", text: (pasteText && pasteText.value) || "" };
                 if (!body.text.trim()) throw new Error("Cần dán nội dung.");
-                r = await fetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(importKbId) + "/import-text", {
+                r = await __settingsFetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(importKbId) + "/import-text", {
                     method: "POST",
                     headers: window.__settingsAuthJson(),
                     body: JSON.stringify(body),
@@ -4778,7 +4808,7 @@
                 if (!f) throw new Error(importPane === "csv" ? "Chọn file CSV để import." : "Chọn file để import.");
                 const fd = new FormData();
                 fd.append("file", f);
-                r = await fetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(importKbId) + "/import", {
+                r = await __settingsFetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(importKbId) + "/import", {
                     method: "POST",
                     headers: window.__settingsAuthHeaders(),
                     body: fd,
@@ -4800,7 +4830,7 @@
     const reindexKb = async (item) => {
         if (!confirm('Reindex toàn bộ tài liệu trong "' + (item.name || "") + '"?')) return;
         try {
-            const r = await fetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(item.id) + "/reindex", {
+            const r = await __settingsFetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(item.id) + "/reindex", {
                 method: "POST",
                 headers: window.__settingsAuthHeaders(),
             });
@@ -4847,7 +4877,7 @@
         if (!kbId || !q) { if (searchErr) searchErr.textContent = "Chọn KB và nhập truy vấn."; return; }
         if (searchErr) searchErr.textContent = "";
         try {
-            const r = await fetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(kbId) + "/search", {
+            const r = await __settingsFetch("/api/settings/ai-knowledge-bases/" + encodeURIComponent(kbId) + "/search", {
                 method: "POST",
                 headers: window.__settingsAuthJson(),
                 body: JSON.stringify({ query: q, limit: 8 }),
@@ -4885,17 +4915,15 @@
     });
     showOnboardingView();
     if ((window.location.hash || "").split("?")[0] === "#ai-knowledge-base") refresh();
+    window.addEventListener("digiseo-auth-change", () => {
+        if ((window.location.hash || "").split("?")[0] === "#ai-knowledge-base") refresh();
+    });
 })();
 
 /* ====================== Publishing tab ====================== */
 (() => {
-    const pubAuthToken = () => (sessionStorage.getItem("seo_token") || "").trim();
-    const pubAuthHeaders = (extra) => {
-        const h = { ...(extra || {}) };
-        const t = pubAuthToken();
-        if (t) h.Authorization = "Bearer " + t;
-        return h;
-    };
+    const pubAuthToken = () => (window.__settingsReadSeoToken ? window.__settingsReadSeoToken() : "");
+    const pubAuthHeaders = (extra) => window.__settingsAuthHeaders(extra);
     const pubAuthJsonHeaders = () => pubAuthHeaders({ "Content-Type": "application/json" });
     const tabsRoot = document.getElementById("pubTabs");
     const sitesList = document.getElementById("pubSitesList");
@@ -4975,7 +5003,7 @@
     let cache = { items: {}, counts: {} };
     let editingId = null;
     let modalPlatform = "wordpress";
-    const PUB_INPUT_HIST_KEY = "beeseo_pub_input_history_v1";
+    const PUB_INPUT_HIST_KEY = "digiseo_pub_input_history_v1";
 
     const setMsg = (text, kind) => {
         msgEl.textContent = text || "";
@@ -5466,7 +5494,7 @@
             if (missing.length > 0) {
                 warnBox.hidden = false;
                 const names = missing.map((m) => '"' + (m.name || m.url) + '"').join(", ");
-                warnText.innerHTML = "Site " + escapeHtml(names) + " chưa cài plugin <strong>BeeSEO SEO Helper</strong>. Plugin sẽ tự tối ưu SEO (OpenGraph, Schema, RankMath/Yoast sync) cho bài đăng từ BeeSEO.";
+                warnText.innerHTML = "Site " + escapeHtml(names) + " chưa cài plugin <strong>DigiSEO SEO Helper</strong>. Plugin sẽ tự tối ưu SEO (OpenGraph, Schema, RankMath/Yoast sync) cho bài đăng từ DigiSEO.";
             } else {
                 warnBox.hidden = true;
             }
@@ -5477,7 +5505,7 @@
 
     const fetchSites = async () => {
         try {
-            const r = await fetch("/api/settings/publishing-sites", { headers: pubAuthHeaders() });
+            const r = await __settingsFetch("/api/settings/publishing-sites", { headers: pubAuthHeaders() });
             if (!r.ok) {
                 setMsg("Không tải được danh sách site (" + r.status + ").", "err");
                 return;
@@ -5608,7 +5636,7 @@
                         showFormFeedback("Enter Access Token and Refresh Token to check.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/webcake/test-connection", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/webcake/test-connection", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5633,7 +5661,7 @@
                         showFormFeedback("Enter Client ID and Client Secret to test.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/shopify/test-connection", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/shopify/test-connection", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5658,7 +5686,7 @@
                         showFormFeedback("Enter Private Token to test.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/haravan/test-connection", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/haravan/test-connection", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5683,7 +5711,7 @@
                         showFormFeedback("Nhập đủ URL, username và Application Password để kiểm tra.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/wordpress/test-connection", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/wordpress/test-connection", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(b),
@@ -5749,7 +5777,7 @@
                         showFormFeedback("Enter Access Token and Refresh Token to sync.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/webcake/sync-categories", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/webcake/sync-categories", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5772,7 +5800,7 @@
                         showFormFeedback("Enter Client ID and Client Secret to sync.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/shopify/sync-blogs", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/shopify/sync-blogs", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5795,7 +5823,7 @@
                         showFormFeedback("Enter Private Token to sync.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/haravan/sync-blogs", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/haravan/sync-blogs", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5818,7 +5846,7 @@
                         showFormFeedback("Nhập đủ URL, username và Application Password để đồng bộ.", "err");
                         return;
                     }
-                    const r = await fetch("/api/settings/publishing-sites/wordpress/sync-posts", {
+                    const r = await __settingsFetch("/api/settings/publishing-sites/wordpress/sync-posts", {
                         method: "POST",
                         headers: pubAuthJsonHeaders(),
                         body: JSON.stringify(b),
@@ -5933,13 +5961,13 @@
                 if (pf === "wordpress") patch.username = body.username;
                 if (pf === "shopify" && body.username) patch.username = body.username;
                 if (body.app_password) patch.app_password = body.app_password;
-                r = await fetch("/api/settings/publishing-sites/" + encodeURIComponent(editingId), {
+                r = await __settingsFetch("/api/settings/publishing-sites/" + encodeURIComponent(editingId), {
                     method: "PATCH",
                     headers: pubAuthJsonHeaders(),
                     body: JSON.stringify(patch),
                 });
             } else {
-                r = await fetch("/api/settings/publishing-sites", {
+                r = await __settingsFetch("/api/settings/publishing-sites", {
                     method: "POST",
                     headers: pubAuthJsonHeaders(),
                     body: JSON.stringify(body),
@@ -5986,7 +6014,7 @@
                             : "Đang kiểm tra kết nối WordPress…";
                 setMsg(waitMsg, "");
             }
-            const r = await fetch("/api/settings/publishing-sites/" + encodeURIComponent(id) + "/verify", {
+            const r = await __settingsFetch("/api/settings/publishing-sites/" + encodeURIComponent(id) + "/verify", {
                 method: "POST",
                 headers: pubAuthHeaders(),
             });
@@ -6030,7 +6058,7 @@
         if (act === "delete") {
             if (!confirm("Xóa site này khỏi danh sách?")) return;
             try {
-                const r = await fetch("/api/settings/publishing-sites/" + encodeURIComponent(id), {
+                const r = await __settingsFetch("/api/settings/publishing-sites/" + encodeURIComponent(id), {
                     method: "DELETE",
                     headers: pubAuthHeaders(),
                 });
@@ -6061,7 +6089,7 @@
 
 /* ====================== System settings ====================== */
 (() => {
-    const SYS_LS = "beeseo_system_prefs_v1";
+    const SYS_LS = "digiseo_system_prefs_v1";
 
     const themeGrid = document.getElementById("sysThemeGrid");
     const langGrid = document.getElementById("sysLangGrid");
@@ -6085,11 +6113,11 @@
     const t = (key) => {
         const L = prefs.language === "vi" ? "vi" : "en";
         const full = key.startsWith("system.") || key.startsWith("nav.") ? key : "system." + key;
-        return window.BeeSeoI18n ? window.BeeSeoI18n.t(L, full) : key;
+        return window.DigiSeoI18n ? window.DigiSeoI18n.t(L, full) : key;
     };
 
     const applyPageI18n = () => {
-        if (window.BeeSeoI18n) window.BeeSeoI18n.apply(prefs.language === "vi" ? "vi" : "en");
+        if (window.DigiSeoI18n) window.DigiSeoI18n.apply(prefs.language === "vi" ? "vi" : "en");
     };
 
     const setMsg = (text, kind) => {
@@ -6121,7 +6149,7 @@
         if (retriesEl) retriesEl.value = String(prefs.max_retries);
         if (stuckEl) stuckEl.value = String(prefs.stuck_timeout_minutes);
         applyPageI18n();
-        if (window.__beeseoApplySystemPrefs) window.__beeseoApplySystemPrefs(prefs);
+        if (window.__digiseoApplySystemPrefs) window.__digiseoApplySystemPrefs(prefs);
     };
 
     const scheduleSave = () => {
@@ -6144,9 +6172,9 @@
         try {
             localStorage.setItem(SYS_LS, JSON.stringify(prefs));
         } catch (_) {}
-        if (window.__beeseoApplySystemPrefs) window.__beeseoApplySystemPrefs(prefs);
+        if (window.__digiseoApplySystemPrefs) window.__digiseoApplySystemPrefs(prefs);
         try {
-            const r = await fetch("/api/settings/system", {
+            const r = await __settingsFetch("/api/settings/system", {
                 method: "PATCH",
                 headers: window.__settingsAuthJson(),
                 body: JSON.stringify(body),
@@ -6174,7 +6202,7 @@
             if (raw) prefs = { ...prefs, ...JSON.parse(raw) };
         } catch (_) {}
         try {
-            const r = await fetch("/api/settings/system", { headers: window.__settingsAuthHeaders() });
+            const r = await __settingsFetch("/api/settings/system", { headers: window.__settingsAuthHeaders() });
             if (r.ok) {
                 const data = await r.json();
                 if (data.settings) prefs = { ...prefs, ...data.settings };
@@ -6217,7 +6245,7 @@
     if ((window.location.hash || "").split("?")[0] === "#system") loadPrefs();
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

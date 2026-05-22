@@ -164,7 +164,7 @@ def build_content_html_instructions(
         "12) Gợi ý internal link: 2–4 chỗ dùng <!-- internal: anchor | slug-hint --> hoặc <a href=\"#internal-slug\"> nếu RELATED_ARTICLES có.\n"
         "13) 1 external link uy tín (<a href rel=\"noopener\">) — Wikipedia, Google Search Central, .gov/.edu khi phù hợp.\n"
         "14) Mỗi <h2> có <figure><img alt=\"...\" src=\"\" /><figcaption>...</figcaption></figure> — alt SEO, có keyword/biến thể tự nhiên.\n"
-        "15) Section cuối: <h2>Checklist SEO</h2> + <ul> 6–10 mục kiểm tra trước khi publish.\n"
+        "15) KHÔNG thêm section «Checklist SEO» hay danh sách kiểm tra vào cuối bài — checklist do hệ thống chạy riêng, không hiển thị cho người đọc.\n"
         "\n"
         "=== CHẤT LƯỢNG ===\n"
         "- Không keyword stuffing; không câu sáo rỗng AI.\n"

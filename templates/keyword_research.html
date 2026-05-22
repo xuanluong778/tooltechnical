@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keyword Research — Tooltechnical</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --line: rgba(255,255,255,.22); }
@@ -35,8 +35,7 @@
         th.sortable { cursor: pointer; user-select: none; }
         th.sortable:hover { background: #f1f5f9; }
 
-        /* BeeSEO bright-green accent overrides */
-        nav[aria-label="Menu chính"] > a.active
+        /* DigiSEO bright-green accent overrides */
         .nav-dd-menu a.active {
             color: #00e676 !important;
             border-color: rgba(0, 230, 118, 0.85) !important;
@@ -60,18 +59,9 @@
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-[#050b18] via-[#0c1424] to-[#050b18] text-slate-800">
-<div class="max-w-7xl mx-auto px-4 py-6 pb-16">
-    <nav class="flex flex-wrap items-stretch justify-center gap-2 mb-6 text-sm overflow-x-hidden max-w-full" data-i18n-aria="nav.aria" aria-label="Menu chính">
-        <a href="/" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.brand">SEO Technical Tool</a>
-        <a href="/report" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.dashboard">Dashboard</a>
-        <a href="/tool" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.technical">Phân Tích Technical</a>
-        <a href="/tool/seo-score" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.seo_score">Chấm điểm SEO</a>
-        <a href="/content-ai" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.content_ai">Content AI</a>
-        <a href="/keywords/tools/research" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-emerald-400/80 text-emerald-300 bg-emerald-950/40" data-i18n="nav.keyword">Từ khóa</a>
-        <a href="/schema" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.schema">Schema</a>
-        <a href="/settings" class="inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-white/25 text-white hover:bg-white/10" data-i18n="nav.settings">Cài đặt</a>
-        <a href="/admin" data-nav-admin hidden class="nav-admin-only inline-flex items-center justify-center px-3.5 py-2 rounded-xl border border-emerald-400/50 text-emerald-300" data-i18n="nav.admin">Quản trị viên</a>
-    </nav>
+{% include "partials/digiseo_top_nav.html" %}
+<div class="kw-page-root max-w-7xl mx-auto pt-4 pb-16">
+    <div class="kw-page-shell">
     <div id="creditBanner" class="hidden mb-4 rounded-xl border border-slate-200 bg-white/90 px-4 py-3 text-sm text-slate-800 shadow-sm"></div>
 
     <div class="kw-white-panel bg-white rounded-2xl shadow-2xl border border-slate-200/80 overflow-hidden">
@@ -373,6 +363,7 @@
             <p id="clusterMsg" class="text-sm text-red-600 mt-2 min-h-[1.25em]"></p>
             <div id="clusterOut" class="mt-6 space-y-4"></div>
         </div>
+    </div>
     </div>
 </div>
 <script>
@@ -1364,7 +1355,7 @@
     } catch (_) {}
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

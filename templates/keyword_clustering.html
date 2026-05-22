@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keyword Clustering</title>
-    <script src="/static/js/beeseo-i18n.js"></script>
-    {% include "partials/beeseo_theme_head.html" %}
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
     <style>
         :root { --text: #eef2ff; --muted: #cbd5e1; --line: rgba(255,255,255,.22); --card: rgba(255,255,255,.12); }
         * { box-sizing: border-box; }
@@ -51,7 +51,7 @@
 
         .tool-main { margin-left: var(--tool-sidebar-w); min-width: 0; }
         .wrap { max-width: 960px; margin: 0 auto; padding: 16px 18px 48px; }
-        /* Top nav: static/css/beeseo-nav.css */
+        /* Top nav: static/css/digiseo-nav.css */
         .nav-dd-menu { display: none; position: absolute; left: 0; top: calc(100% + 14px); min-width: 240px; flex-direction: column; gap: 4px; padding: 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(15,23,42,.96); box-shadow: 0 12px 32px rgba(0,0,0,.35); z-index: 50; }
         .nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu { display: flex; }
         .nav-dd-menu a { display: block; padding: 10px 12px; border-radius: 8px; border: none; }
@@ -83,7 +83,7 @@
         .chart-card { background: rgba(15,23,42,.35); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; }
         .chart-wrap { width: 100%; overflow-x: auto; }
 
-        /* BeeSEO bright-green accent overrides */
+        /* DigiSEO bright-green accent overrides */
         h1 { color: #00e676 !important; }
         .nav-dd-menu a:hover { background: rgba(0, 230, 118, 0.12) !important; color: #00e676 !important; }
         .nav-pro-badge {
@@ -110,17 +110,7 @@
 </aside>
 <main class="tool-main">
 <div class="wrap">
-    <nav class="nav" data-i18n-aria="nav.aria" aria-label="Menu chính">
-        <a href="/" data-i18n="nav.brand">SEO Technical Tool</a>
-        <a href="/report" data-i18n="nav.dashboard">Dashboard</a>
-        <a href="/tool" data-i18n="nav.technical">Phân Tích Technical</a>
-        <a href="/tool/seo-score" data-i18n="nav.seo_score">Chấm điểm SEO</a>
-        <a href="/content-ai" data-i18n="nav.content_ai">Content AI</a>
-        <a href="/keywords/tools/research" data-i18n="nav.keyword">Từ khóa</a>
-        <a href="/schema" data-i18n="nav.schema">Schema</a>
-        <a href="/settings" data-i18n="nav.settings">Cài đặt</a>
-        <a href="/admin" data-nav-admin hidden class="nav-admin-only" data-i18n="nav.admin">Quản trị viên</a>
-    </nav>
+    {% include "partials/digiseo_top_nav.html" %}
     <div id="creditBanner" style="display:none;margin-bottom:14px;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;"></div>
 
     <h1>Keyword Clustering</h1>
@@ -893,7 +883,7 @@
     } catch (_) {}
 })();
 </script>
-{% include "partials/beeseo_i18n.html" %}
-{% include "partials/beeseo_pricing_bundle.html" %}
+{% include "partials/digiseo_i18n.html" %}
+{% include "partials/digiseo_pricing_bundle.html" %}
 </body>
 </html>

@@ -1,4 +1,4 @@
-# BeeSEO / SEO Technical Tool — Tài liệu theo dự án nhỏ
+# DigiSEO / SEO Technical Tool — Tài liệu theo dự án nhỏ
 
 Tài liệu chia theo **module** (mỗi tab / tính năng lớn = một file). Cập nhật: 2026-05-20.
 

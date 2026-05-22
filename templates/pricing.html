@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiSEO Pricing — Bảng giá</title>
+    <script src="/static/js/digiseo-i18n.js"></script>
+    {% include "partials/digiseo_theme_head.html" %}
+    <link rel="stylesheet" href="/static/css/digiseo_pricing.css?v=7" />
+    <style>
+        body.digiseo-pricing-page-body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(900px 500px at 12% 0%, rgba(0, 230, 118, 0.07), transparent 55%),
+                radial-gradient(700px 400px at 88% 8%, rgba(99, 102, 241, 0.05), transparent 50%),
+                #050b18;
+            color: #e2e8f0;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+        .pricing-page-nav {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(5, 11, 24, 0.92);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+        .pricing-page-nav .inner {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 12px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            align-items: center;
+        }
+        .pricing-page-nav .brand {
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            margin-right: auto;
+        }
+        .pricing-page-nav .brand:hover { color: #00e676; text-decoration: none; }
+        .pricing-page-nav a { color: #93c5fd; text-decoration: none; font-size: 0.88rem; }
+        .pricing-page-nav a:hover { color: #00e676; }
+        #pricingCurrentBanner {
+            display: none;
+            max-width: 1180px;
+            margin: 16px auto 0;
+            padding: 10px 18px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #00e676;
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.35);
+            border-radius: 10px;
+        }
+        #pricingCurrentBanner.visible { display: block; }
+    </style>
+</head>
+<body class="digiseo-pricing-page-body" data-user-dock="hidden" id="digiseoPricingPage">
+    <header class="pricing-page-nav">
+        <div class="inner nav" aria-label="Menu chính">
+            <a href="/" class="brand">SEO Technical Tool</a>
+            {% include "partials/digiseo_main_nav.html" %}
+        </div>
+    </header>
+
+    <div id="pricingCurrentBanner" role="status"></div>
+
+    <div class="digiseo-pricing-page-wrap">
+        <div class="digiseo-pricing-page-shell">
+            <div class="digiseo-pricing-head">
+                <div>
+                    <h1 id="digiseoPricingTitle">DigiSEO Pricing</h1>
+                    <p>Choose the plan that fits your needs</p>
+                </div>
+            </div>
+            <div class="digiseo-pricing-toolbar">
+                <div class="digiseo-toggle-group" role="group" aria-label="Duration">
+                    <button type="button" class="digiseo-toggle-btn digiseo-dur-btn is-active" data-dur="m6">6 months</button>
+                    <button type="button" class="digiseo-toggle-btn digiseo-dur-btn" data-dur="y1">1 year</button>
+                    <button type="button" class="digiseo-toggle-btn digiseo-dur-btn" data-dur="y2">2 years</button>
+                    <button type="button" class="digiseo-toggle-btn digiseo-dur-btn" data-dur="life">Lifetime</button>
+                </div>
+                <div class="digiseo-toggle-group" role="group" aria-label="Payment">
+                    <button type="button" class="digiseo-toggle-btn digiseo-pay-btn is-active" data-pay="payos">PayOS (VND)</button>
+                    <button type="button" class="digiseo-toggle-btn digiseo-pay-btn" data-pay="paypal">PayPal (USD)</button>
+                </div>
+                <div class="digiseo-coupon-wrap">
+                    <label for="digiseoCouponInput">Discount code (Coupon)</label>
+                    <input type="text" id="digiseoCouponInput" placeholder="Enter coupon code..." autocomplete="off" />
+                </div>
+            </div>
+            <div class="digiseo-pricing-scroll digiseo-pricing-scroll--page">
+                <div class="digiseo-pricing-grid" id="digiseoPricingGrid"></div>
+            </div>
+            <div class="digiseo-pricing-foot">
+                Giá theo catalog SaaS trong hệ thống. Thanh toán PayOS / PayPal sẽ tích hợp sau —
+                hiện tại chọn <strong>Mua ngay</strong> hoặc liên hệ admin để kích hoạt gói thủ công.
+                <span style="display:block;margin-top:6px;">
+                    <a href="/settings#account" style="color:#00e676;">Xem gói &amp; quota của bạn</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/json" id="digiseoSaasPlansJson">{{ plans | tojson }}</script>
+    <script src="/static/js/digiseo_pricing.js?v=7"></script>
+</body>
+</html>

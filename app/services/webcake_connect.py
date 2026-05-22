@@ -74,7 +74,7 @@ def refresh_access_token(refresh_token: str, *, timeout: float = 25) -> dict[str
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 "X-Storecake-Refresh-Token": rt,
-                "User-Agent": "BeeSEO-Tool/1.0",
+                "User-Agent": "digiseo-Tool/1.0",
             },
             timeout=timeout,
         )
@@ -156,7 +156,7 @@ def _api_request(
     headers = {
         "X-Storecake-Access-Token": str(access_token or "").strip(),
         "Accept": "application/json",
-        "User-Agent": "BeeSEO-Tool/1.0",
+        "User-Agent": "digiseo-Tool/1.0",
     }
     return requests.request(method, url, headers=headers, params=params or {}, timeout=timeout)
 

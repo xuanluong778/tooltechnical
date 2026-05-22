@@ -5,8 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent / "env.local")
 
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.responses import HTMLResponse
+from sqlalchemy.orm import Session
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -14,7 +15,7 @@ from app.api.auth import router as auth_router
 from app.api.projects import router as projects_router
 from sqlalchemy import inspect, text
 
-from app.db import Base, engine
+from app.db import Base, engine, get_db
 from app.models import seo  # noqa: F401
 from app.models.crawl_job import DistributedCrawlJob, DistributedCrawlResult  # noqa: F401
 from app.models.keyword_intel import (  # noqa: F401
@@ -41,6 +42,7 @@ from app.models.payment_transaction import PaymentTransaction  # noqa: F401
 from app.models import knowledge as knowledge_models  # noqa: F401
 from app.routers.analyze import router as analyze_router
 from app.routers.internal_links import router as internal_links_router
+from app.routers.pages import pricing_page as saas_pricing_page
 from app.routers.pages import router as pages_router
 from app.routers.report import router as report_router
 from app.routers.settings_api import router as settings_api_router
@@ -233,6 +235,12 @@ _ensure_user_api_access_columns()
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request) -> HTMLResponse:
     return _templates.TemplateResponse(request=request, name="home.html", context={})
+
+
+@app.get("/pricing", response_class=HTMLResponse, tags=["pages"])
+def pricing_page_route(request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
+    """Bảng giá SaaS (đăng ký tại app để luôn có route sau khi deploy/restart)."""
+    return saas_pricing_page(request, db)
 
 
 @app.get("/health")

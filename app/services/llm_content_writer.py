@@ -740,7 +740,12 @@ def generate_seo_article_json(
     html_body = _sanitize_mixed_style_phrases(_strip_bracket_placeholders(_s(obj.get("content_html"))))
     from app.services.content_blockquote_postprocess import postprocess_content_blockquotes
 
-    html_body = postprocess_content_blockquotes(html_body)
+    from app.services.content_ai_publish_checklist import strip_publish_checklist_from_html
+    from app.services.content_table_format import enhance_tables_in_html
+
+    html_body = enhance_tables_in_html(
+        strip_publish_checklist_from_html(postprocess_content_blockquotes(html_body))
+    )
     return {
         "title": _s(obj.get("title")),
         "meta_description": _s(obj.get("meta_description")),
@@ -867,9 +872,11 @@ def rewrite_html_insert_internal_links(
     link_jobs: list[dict[str, str]],
     article_primary_keyword: str = "",
     article_secondary_keywords: str = "",
+    minimal: bool = False,
 ) -> str:
     """
-    Viết lại HTML bài đang soạn, chèn internal link đúng anchor và ngữ cảnh.
+    Chèn internal link vào HTML bài đang soạn.
+    minimal=True: giữ nguyên bài, chỉ thêm đoạn/câu ngắn (tiết kiệm token, không viết lại cả bài).
     link_jobs: [{"url", "title", "anchor_text"}] — anchor_text bắt buộc (đã chọn/điền).
     """
     cfg = load_llm_config()
@@ -892,35 +899,61 @@ def rewrite_html_insert_internal_links(
         return content_html
 
     jobs_json = json.dumps(jobs, ensure_ascii=False)
-    system = (
-        "Bạn là biên tập viên HTML tiếng Việt. Nhiệm vụ: chỉnh sửa bài để chèn internal link tự nhiên, đúng ngữ cảnh.\n"
-        "Ràng buộc:\n"
-        "- Trả về DUY NHẤT HTML hợp lệ (không markdown, không code fence, không giải thích ngoài HTML).\n"
-        "- Giữ nguyên ý chính và cấu trúc heading (H1/H2/H3) tương đương bản gốc; được phép thêm/cắt ngắn câu để neo link hợp lý.\n"
-        "- Với MỖI mục trong LINKS_JSON: chèn đúng 1 thẻ <a href=\"URL\">ANCHOR_TEXT</a> dùng ĐÚNG URL và ĐÚNG anchor_text đã cho (không đổi wording anchor trừ khi sửa lỗi chính tả nhẹ).\n"
-        "- Text hiển thị trong thẻ <a>...</a> phải trùng anchor_text (Unicode có dấu đầy đủ như đã cho); không rút gọn, không thay từ đồng nghĩa.\n"
-        "- Nếu anchor_text chưa xuất hiện trong bài: thêm một câu ngắn trong đoạn liên quan chủ đề rồi gắn link vào anchor đó.\n"
-        "- Không nhồi keyword; không dùng anchor chung chung kiểu 'click here', 'tại đây'.\n"
-        "- Không xóa ảnh/media có sẵn; không đổi URL ảnh.\n"
-    )
-    user = (
-        f"Từ khóa chính bài hiện tại: {_clean_ws(article_primary_keyword)}\n"
-        f"Từ khóa phụ: {_clean_ws(article_secondary_keywords)}\n\n"
-        "LINKS_JSON (bắt buộc dùng đủ các link):\n"
-        f"{jobs_json}\n\n"
-        "HTML_GỐC:\n"
-        f"{html}\n\n"
-        "Trả về HTML đã chèn link."
-    ).strip()
+    if minimal:
+        system = (
+            "Bạn là biên tập HTML tiếng Việt. Bài viết ĐÃ CHUẨN — chỉ chèn internal link, KHÔNG viết lại bài.\n"
+            "Ràng buộc bắt buộc:\n"
+            "- Trả về DUY NHẤT HTML hợp lệ (không markdown, không giải thích).\n"
+            "- GIỮ NGUYÊN 100% mọi đoạn/câu/heading/ảnh đã có — không paraphrase, không xóa, không đổi thứ tự section.\n"
+            "- Với MỖI link trong LINKS_JSON: chèn đúng 1 thẻ <a href=\"URL\">ANCHOR_TEXT</a> (đúng URL và anchor_text).\n"
+            "- Nếu anchor_text đã có trong một câu: chỉ bọc cụm đó bằng <a>, không sửa câu khác.\n"
+            "- Nếu anchor chưa có: thêm TỐI ĐA một thẻ <p> mới (1–2 câu ngắn) ngay sau đoạn/section liên quan, rồi gắn link.\n"
+            "- Không chèn link trong H1/H2/H3; không sửa đoạn đã có <a>.\n"
+            "- Không nhồi keyword; không dùng 'tại đây', 'click here'.\n"
+        )
+        user = (
+            f"Từ khóa chính: {_clean_ws(article_primary_keyword)}\n"
+            f"Từ khóa phụ: {_clean_ws(article_secondary_keywords)}\n\n"
+            "LINKS_JSON:\n"
+            f"{jobs_json}\n\n"
+            "HTML_GỐC (chỉ được bổ sung tối thiểu, không rewrite toàn bài):\n"
+            f"{html}\n\n"
+            "Trả về HTML sau khi chèn link."
+        ).strip()
+        max_tok = 4500
+        timeout = 90
+    else:
+        system = (
+            "Bạn là biên tập viên HTML tiếng Việt. Nhiệm vụ: chỉnh sửa bài để chèn internal link tự nhiên, đúng ngữ cảnh.\n"
+            "Ràng buộc:\n"
+            "- Trả về DUY NHẤT HTML hợp lệ (không markdown, không code fence, không giải thích ngoài HTML).\n"
+            "- Giữ nguyên ý chính và cấu trúc heading (H1/H2/H3) tương đương bản gốc; được phép thêm/cắt ngắn câu để neo link hợp lý.\n"
+            "- Với MỖI mục trong LINKS_JSON: chèn đúng 1 thẻ <a href=\"URL\">ANCHOR_TEXT</a> dùng ĐÚNG URL và ĐÚNG anchor_text đã cho (không đổi wording anchor trừ khi sửa lỗi chính tả nhẹ).\n"
+            "- Text hiển thị trong thẻ <a>...</a> phải trùng anchor_text (Unicode có dấu đầy đủ như đã cho); không rút gọn, không thay từ đồng nghĩa.\n"
+            "- Nếu anchor_text chưa xuất hiện trong bài: thêm một câu ngắn trong đoạn liên quan chủ đề rồi gắn link vào anchor đó.\n"
+            "- Không nhồi keyword; không dùng anchor chung chung kiểu 'click here', 'tại đây'.\n"
+            "- Không xóa ảnh/media có sẵn; không đổi URL ảnh.\n"
+        )
+        user = (
+            f"Từ khóa chính bài hiện tại: {_clean_ws(article_primary_keyword)}\n"
+            f"Từ khóa phụ: {_clean_ws(article_secondary_keywords)}\n\n"
+            "LINKS_JSON (bắt buộc dùng đủ các link):\n"
+            f"{jobs_json}\n\n"
+            "HTML_GỐC:\n"
+            f"{html}\n\n"
+            "Trả về HTML đã chèn link."
+        ).strip()
+        max_tok = 12000
+        timeout = 120
     if cfg.provider == "openai":
         out = _openai_chat_completion(
             cfg=cfg,
             messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-            max_tokens=12000,
-            timeout_sec=120,
+            max_tokens=max_tok,
+            timeout_sec=timeout,
         )
     else:
-        out = _anthropic_messages(cfg=cfg, system=system, user=user, max_tokens=12000, timeout_sec=120)
+        out = _anthropic_messages(cfg=cfg, system=system, user=user, max_tokens=max_tok, timeout_sec=timeout)
     cleaned = str(out or "").strip()
     cleaned = re.sub(r"^```(?:html)?\s*", "", cleaned, flags=re.I).strip()
     cleaned = re.sub(r"\s*```$", "", cleaned).strip()
@@ -1063,8 +1096,9 @@ def generate_content_ai_suggestion(
     )
     if f_early == "content":
         system += (
-            " Field content: chỉ HTML thuần (h1–h3, p, list, table, figure+alt, FAQ, checklist SEO,"
-            " gợi ý link nội/ngoài, JSON-LD schema); không markdown, không lời dẫn ngoài thẻ."
+            " Field content: chỉ HTML thuần (h1–h3, p, list, table, figure+alt, FAQ,"
+            " gợi ý link nội/ngoài, JSON-LD schema); KHÔNG thêm section Checklist SEO trong bài;"
+            " không markdown, không lời dẫn ngoài thẻ."
         )
     elif f_early in {"title", "meta_description", "slug", "outline_content"}:
         system += " Tuân thủ đúng giới hạn độ dài và định dạng field; trả về đúng 1 output, không giải thích."
@@ -1083,8 +1117,9 @@ def generate_content_ai_suggestion(
     if f0 == "content" and not str(out or "").strip():
         rescue_user = (
             "Bạn vừa trả output rỗng. Hãy trả về NGAY 1 bài HTML đầy đủ cho cùng SOURCE.\n"
-            "Bắt buộc: 1 <h1>, ≥4 <h2>, keyword trong 100 từ đầu, FAQ, checklist SEO,"
-            " ít nhất 1 list/table, figure+alt mỗi H2, gợi ý internal/external link, JSON-LD schema.\n"
+            "Bắt buộc: 1 <h1>, ≥4 <h2>, keyword trong 100 từ đầu, FAQ,"
+            " ít nhất 1 list/table, figure+alt mỗi H2, gợi ý internal/external link, JSON-LD schema."
+            " Không thêm section Checklist SEO.\n"
             "Chỉ trả về HTML sạch, không markdown, không giải thích.\n"
             "\n=== SOURCE ===\n"
             f"{source_blob}\n"

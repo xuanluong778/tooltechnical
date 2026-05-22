@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 tool = ROOT / "templates" / "seo_tool.html"
 text = tool.read_text(encoding="utf-8")
-partial = (ROOT / "templates" / "partials" / "beeseo_auth_modal.html").read_text(encoding="utf-8")
+partial = (ROOT / "templates" / "partials" / "digiseo_auth_modal.html").read_text(encoding="utf-8")
 
 start = text.find('    <div class="auth-modal" id="authModal" hidden>')
 end = text.find('    <motion class="auth-modal account-mini-modal"', start)
